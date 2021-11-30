@@ -27,12 +27,12 @@ public abstract class CommonView extends JPanel {
         menuBar.add(Box.createHorizontalGlue());
         menuBar.add(mnMenu);
         if (user.getSesso().contains("M")) {
-            mnMenu.setIcon(IconImage.ADD_PATIENT.getImageIcon());
+            mnMenu.setIcon(IconImage.RICOVERO.getImageIcon());
         } else {
-            mnMenu.setIcon(IconImage.ADD_PATIENT.getImageIcon());
+            mnMenu.setIcon(IconImage.RICOVERO.getImageIcon());
         }
         
-        JMenuItem mntmAccount = new JMenuItem("User", IconImage.ADD_PATIENT.getImageIcon());
+        JMenuItem mntmAccount = new JMenuItem("User", IconImage.RICOVERO.getImageIcon());
         mnMenu.add(mntmAccount);
         
        /* mntmAccount.addActionListener(new ActionListener() {
@@ -44,7 +44,7 @@ public abstract class CommonView extends JPanel {
         JSeparator separator = new JSeparator();
         mnMenu.add(separator);
 
-        JMenuItem mntmLogout = new JMenuItem("Logout", IconImage.ADD_PATIENT.getImageIcon());
+        JMenuItem mntmLogout = new JMenuItem("Logout", IconImage.RICOVERO.getImageIcon());
         mnMenu.add(mntmLogout);
         mntmLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

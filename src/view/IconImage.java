@@ -3,7 +3,7 @@ import javax.swing.ImageIcon;
 
 public enum IconImage {
 
-    ADD_PATIENT("add-patient.png");
+    RICOVERO("ricovero.png");
 
 	private static String PATH = "/images/";
     private String pathImage;
