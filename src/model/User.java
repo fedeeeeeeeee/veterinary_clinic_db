@@ -1,14 +1,29 @@
 package model;
 
+import java.util.List;
+import java.util.Optional;
+
 /**
- * This interface represents a user.
+ * This interface represents a user (medical staff).
  */
 public interface User extends Person {
-    
-	// da capire come gestire il sale 
+
+	// l'username è la mail --> String getUsername();
 	
-    String getUsername();
-    
-    void setUsername(String username);
+	String getSalt();
+	
+	String getHashPassword();
+
+	int getYearsOnTheJob();
+	
+	Optional<List<String>> getSpecializations();
+
+	void setSalt(String salt);
+	
+	void setHashPassword(String password);
+
+	void setYearsOnTheJob(int years);
+
+	void setSpecialization(String specialization);
 
 }
