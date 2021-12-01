@@ -7,11 +7,10 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 	
     public Connection getMySQLConnection() {
-        final String dbName  = "dentaldata";
+        final String dbName  = "clinicaveterinaria";
 
         final String driver = "com.mysql.cj.jdbc.Driver";
-        final String dbUri = "jdbc:mysql://localhost:3306/" + dbName
-                + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+        final String dbUri = "jdbc:mysql://localhost:3306/" + dbName + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         final String userName = "root";
         final String password = "password";
 

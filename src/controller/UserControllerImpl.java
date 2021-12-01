@@ -13,8 +13,7 @@ public class UserControllerImpl implements UserController {
 	
 	@Override
 	public boolean checkUser(String username, char[] password, String professione) {
-		//return this.userTable.findUser(username, password, professione);
-		return true;
+		return this.userTable.findUser(username, password, professione);
 	}
 
 }

@@ -5,9 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-
 import database.DatabaseConnection;
-import model.User;
 
 public class UserTableImpl implements UserTable {
 
@@ -26,7 +24,7 @@ public class UserTableImpl implements UserTable {
         
         Optional<PreparedStatement> statement = Optional.empty();
                 
-        final String query = "select * from " + personaleTableName + " where username=?";
+        final String query = "select * from " + personaleTableName + " where e_mail=?";
         
         try {
             statement = Optional.of(connection.prepareStatement(query));

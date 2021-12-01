@@ -20,10 +20,6 @@ public class MainPage extends CommonView {
     private static final long serialVersionUID = 1L;
     private JFrame frame;
 
-    /**
-     * Create the application.
-     * @param frame 
-     */
     public MainPage(final JFrame frame) {
         this.frame = frame;
         frame.getContentPane().removeAll();
@@ -32,9 +28,6 @@ public class MainPage extends CommonView {
         initialize();
     }
 
-    /**
-     * Initialize the contents of the frame.
-     */
     private void initialize() {
         
         JLabel lblDentalData = new JLabel("Clinica Veterinaria");
