@@ -26,11 +26,6 @@ public abstract class CommonView extends JPanel {
         JMenu mnMenu = new JMenu("Account");
         menuBar.add(Box.createHorizontalGlue());
         menuBar.add(mnMenu);
-        if (user.getSesso().contains("M")) {
-            mnMenu.setIcon(IconImage.RICOVERO.getImageIcon());
-        } else {
-            mnMenu.setIcon(IconImage.RICOVERO.getImageIcon());
-        }
         
         JMenuItem mntmAccount = new JMenuItem("User", IconImage.RICOVERO.getImageIcon());
         mnMenu.add(mntmAccount);

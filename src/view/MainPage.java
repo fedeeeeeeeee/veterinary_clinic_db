@@ -89,7 +89,7 @@ public class MainPage extends CommonView {
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().add(new Register(frame));
             }
-        });
+        });*/
        
         btnLogin.addActionListener(new ActionListener() {
             @Override
@@ -97,7 +97,7 @@ public class MainPage extends CommonView {
                 frame.getContentPane().add(new Login(frame));
             }
 
-        });*/
+        });
         frame.getContentPane().setLayout(groupLayout);
     }
 }
