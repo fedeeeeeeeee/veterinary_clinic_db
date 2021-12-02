@@ -71,8 +71,12 @@ public class Login extends JPanel {
         sendButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
         sendButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	if(controller.checkUser(textFieldUsername.getText(), passwordField.getPassword(), vetButton.getText())) {
+            	if(controller.checkUser(textFieldUsername.getText(), passwordField.getPassword())) {
             		JOptionPane.showMessageDialog(frame, "User found", "OK!", JOptionPane.ERROR_MESSAGE);
+            		// user = controller.checkUser(textFieldUsername.getText(), passwordField.getPassword()))
+            		// if user.isPresent  o user!= false 
+            		//  ruolo = controller..getRuolo(textFieldUsername.getText());
+            		// variabile globale utente loggato = medico e bla bla (vetButton.getText())
             	} else {
             		JOptionPane.showMessageDialog(frame, "User not found", "Error!", JOptionPane.ERROR_MESSAGE);
             	}

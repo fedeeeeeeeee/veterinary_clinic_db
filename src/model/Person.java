@@ -19,9 +19,9 @@ public interface Person {
     
     public int getIndirizzoNumero();
     
-    public String getIndirizzoCap();
+    public int getIndirizzoCap();
     
-    public String getTelefono();
+    public int getTelefono();
     
     public String getEmail();
     
@@ -40,9 +40,9 @@ public interface Person {
     public void setIndirizzoCitta(String citta);
     
     public void setDataNascita(String dataNascita);
-   
-    public void setTelefono(String telefono);
-    
+       
     public void setEmail(String email);
+
+	public void setTelefono(int telefono);
 
 }

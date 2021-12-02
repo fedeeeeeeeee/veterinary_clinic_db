@@ -1,7 +1,10 @@
 package controller;
 
+import java.util.Optional;
+
 import database.UserTable;
 import database.UserTableImpl;
+import model.UserImpl;
 
 public class UserControllerImpl implements UserController {
 
@@ -12,8 +15,8 @@ public class UserControllerImpl implements UserController {
 	}
 	
 	@Override
-	public boolean checkUser(String username, char[] password, String professione) {
-		return this.userTable.findUser(username, password, professione);
+	public boolean checkUser(String username, char[] password) {
+		return this.userTable.findUser(username, password);
 	}
 
 }
