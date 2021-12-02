@@ -38,6 +38,7 @@ Thumbs.db
 # Applications
 *.app
 *.exe
+.classpath
 *.war
 
 # Large media files
