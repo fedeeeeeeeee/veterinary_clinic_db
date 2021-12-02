@@ -59,7 +59,6 @@ public class UserTableImpl implements UserTable {
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println(e);
 		}
-		System.out.println("password generata " + generatedPassword);
 		return generatedPassword;
 	}
 
@@ -81,10 +80,10 @@ public class UserTableImpl implements UserTable {
 				String passwordHash = generateHash(password, result.getString("sale"));
 
 				if (result.getString("password").equals(passwordHash)) {
-					System.out.println("la password è corretta");
+					System.out.println("la password Ã¨ corretta");
 					isPresent = true;
 				} else {
-					System.out.println("la password non è corretta");
+					System.out.println("la password non Ã¨ corretta");
 					isPresent = false;
 				}
 			} else {

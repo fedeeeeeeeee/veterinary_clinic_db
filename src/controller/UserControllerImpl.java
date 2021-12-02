@@ -1,10 +1,7 @@
 package controller;
 
-import java.util.Optional;
-
 import database.UserTable;
 import database.UserTableImpl;
-import model.UserImpl;
 
 public class UserControllerImpl implements UserController {
 
