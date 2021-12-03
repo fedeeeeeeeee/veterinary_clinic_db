@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+
+import utility.ValidityFieldsChecker;
+
 import java.awt.GridLayout;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -20,6 +23,10 @@ import javax.swing.JSpinner;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class Register extends JPanel {
@@ -37,12 +44,15 @@ public class Register extends JPanel {
 	private JTextField textFieldCitta;
 	private JTextField textFieldCap;
 	private JTextField textFieldTelefono;
+	
+	private ValidityFieldsChecker check;
 
 	public Register(JFrame frame) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 		this.frame = frame;
+		this.check = new ValidityFieldsChecker();
 
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
@@ -98,25 +108,19 @@ public class Register extends JPanel {
 				.addContainerGap()));
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		
-		JButton btnNewButton = new JButton("BACK");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton backButton = new JButton("BACK");
+		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().add(new MainPage(frame));
 			}
 		});
-		lowerPanel.add(btnNewButton, BorderLayout.WEST);
+		lowerPanel.add(backButton, BorderLayout.WEST);
 		
-		JButton btnNewButton_1 = new JButton("ENTER");
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				// TODO
-			}
-		});
-		lowerPanel.add(btnNewButton_1, BorderLayout.EAST);
+
 		
-		JLabel lblNewLabel_1 = new JLabel("Registrazione");
-		lblNewLabel_1.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-		upperPanel.add(lblNewLabel_1);
+		JLabel titleLabel = new JLabel("Registrazione");
+		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		upperPanel.add(titleLabel);
 		ruoloPanel.setLayout(new GridLayout(2, 2, 0, 0));
 		
 		JLabel labelAnniServizio = new JLabel("Anni di servizio");
@@ -156,7 +160,7 @@ public class Register extends JPanel {
 		labelNome.setLabelFor(textFieldNome);
 		anagraficaPanel.add(textFieldNome);
 		
-		//textFieldNome.setColumns(10);
+		textFieldNome.setColumns(10);
 		JLabel labelCognome = new JLabel("Cognome");
 		anagraficaPanel.add(labelCognome);
 
@@ -164,7 +168,7 @@ public class Register extends JPanel {
 		labelCognome.setLabelFor(textFieldCognome);
 		anagraficaPanel.add(textFieldCognome);
 		
-		//textFieldCognome.setColumns(10);
+		textFieldCognome.setColumns(10);
 		JLabel labelCf = new JLabel("CF");
 		anagraficaPanel.add(labelCf);
 		
@@ -220,6 +224,37 @@ public class Register extends JPanel {
 		labelTelefono.setLabelFor(textFieldTelefono);
 		anagraficaPanel.add(textFieldTelefono);
 		textFieldTelefono.setColumns(10);
+		
+
+		JButton sendButton = new JButton("SEND");
+		sendButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 if(check.checkCF(textFieldCodiceFiscale.getText())
+						 && check.checkEmail(textFieldEmail.getText())
+						 && check.checkPhoneNumber(textFieldTelefono.getText())
+						 && check.checkNotEmpty(textFieldNome.getText())
+						 && check.checkNotEmpty(textFieldCognome.getText())
+						 && check.checkNotEmpty(textFieldVia.getText())
+						 && check.checkNumber(textFieldNumeroCivico.getText())
+						 && check.checkNotEmpty(textFieldNumeroCivico.getText())
+						 && check.checkCap(textFieldCap.getText())
+						 && check.checkNotEmpty(textFieldCap.getText())
+						 && check.checkNotEmpty(textFieldCitta.getText())
+						 && spinner.getValue() != null
+						 //&& comboBox.getSelectedItem() != null
+						 ) {
+					 // vado alla prossima schermata ---> utente registrato correttamente
+					 System.out.println("tutto ok");
+				 } else {
+					 // errore di compilazione della form
+					 System.out.println("errore");
+				 }
+			}
+		});
+		lowerPanel.add(sendButton, BorderLayout.EAST);
+		
+		
+		
 		
 		// importante per il design
 		//setLayout(groupLayout);
