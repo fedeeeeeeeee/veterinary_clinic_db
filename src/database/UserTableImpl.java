@@ -24,6 +24,7 @@ public class UserTableImpl implements UserTable {
 		this.personaleTableName = "personale";
 	}
 
+	// per registrazione
 	private String generateSalt() {
 		int lenght = 4;
 		String abcCapitals = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -80,10 +81,10 @@ public class UserTableImpl implements UserTable {
 				String passwordHash = generateHash(password, result.getString("sale"));
 
 				if (result.getString("password").equals(passwordHash)) {
-					System.out.println("la password è corretta");
+					System.out.println("password corretta");
 					isPresent = true;
 				} else {
-					System.out.println("la password non è corretta");
+					System.out.println("password non corretta");
 					isPresent = false;
 				}
 			} else {

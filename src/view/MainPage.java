@@ -30,34 +30,34 @@ public class MainPage extends CommonView {
 
     private void initialize() {
         
-        JLabel lblDentalData = new JLabel("Clinica Veterinaria");
-        lblDentalData.setHorizontalAlignment(SwingConstants.CENTER);
-        lblDentalData.setForeground(Color.DARK_GRAY);
-        lblDentalData.setFont(new Font("Caladea", Font.PLAIN, 90));
+        JLabel titleLabel = new JLabel("Clinica Veterinaria");
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setForeground(Color.DARK_GRAY);
+        titleLabel.setFont(new Font("Caladea", Font.PLAIN, 70));
         
-        JButton btnRegister = new JButton("Register");
-        btnRegister.setFont(new Font("Tahoma", Font.PLAIN, 40));
+        JButton registerButton = new JButton("Register");
+        registerButton.setFont(new Font("Tahoma", Font.PLAIN, 40));
         
-        JButton btnLogin = new JButton("Login");
-        btnLogin.setFont(new Font("Tahoma", Font.PLAIN, 40));
+        JButton loginButton = new JButton("Login");
+        loginButton.setFont(new Font("Tahoma", Font.PLAIN, 40));
         
         JLabel label = new JLabel("");
-       // label.setIcon(IconImage.TOOTH.getImageIcon());
+        label.setIcon(IconImage.RICOVERO.getImageIcon());
         
         GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
         groupLayout.setHorizontalGroup(
             groupLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(groupLayout.createSequentialGroup()
                     .addGap(191)
-                    .addComponent(lblDentalData, GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
+                    .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
                     .addPreferredGap(ComponentPlacement.RELATED)
                     .addComponent(label, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGap(200))
                 .addGroup(groupLayout.createSequentialGroup()
                     .addGap(209)
-                    .addComponent(btnLogin, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addComponent(loginButton, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
                     .addGap(108)
-                    .addComponent(btnRegister, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addComponent(registerButton, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
                     .addGap(223))
         );
         groupLayout.setVerticalGroup(
@@ -67,24 +67,24 @@ public class MainPage extends CommonView {
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
                         .addComponent(label, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(groupLayout.createSequentialGroup()
-                            .addComponent(lblDentalData, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGap(22)))
                     .addGap(51)
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-                        .addComponent(btnLogin, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnRegister, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(registerButton, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
                     .addGap(125))
         );
         
-         /*
-       btnRegister.addActionListener(new ActionListener() {
+      
+        registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().add(new Register(frame));
             }
-        });*/
+        });
        
-        btnLogin.addActionListener(new ActionListener() {
+        loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.getContentPane().add(new Login(frame));
