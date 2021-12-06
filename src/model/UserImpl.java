@@ -13,7 +13,7 @@ public class UserImpl implements User{
 	private String indirizzoVia;
 	private int indirizzoCap;
 	private int indirizzoNumero;
-	private int telefono;
+	private long telefono;
 	private String email;
 	private String sale;
 	private String hashPassword;
@@ -62,7 +62,7 @@ public class UserImpl implements User{
 	}
 
 	@Override
-	public int getTelefono() {
+	public long getTelefono() {
 		return this.telefono;
 	}
 
@@ -119,7 +119,7 @@ this.dataNascita = dataNascita;
 	}
 
 	@Override
-	public void setTelefono(int telefono) {
+	public void setTelefono(long telefono) {
 		this.telefono = telefono;		
 	}
 
@@ -139,7 +139,7 @@ this.dataNascita = dataNascita;
 	}
 
 	@Override
-	public int getYearsOnTheJob() {
+	public int getAnniDiServizio() {
 		return this.yearOnTheJob;
 	}
 
@@ -170,7 +170,7 @@ this.dataNascita = dataNascita;
 	}
 
 	@Override
-	public void setYearsOnTheJob(int years) {
+	public void setAnniDiServizio(int years) {
 		this.yearOnTheJob = years;
 	}
 

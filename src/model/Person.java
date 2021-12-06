@@ -21,7 +21,7 @@ public interface Person {
     
     public int getIndirizzoCap();
     
-    public int getTelefono();
+    public long getTelefono();
     
     public String getEmail();
     
@@ -43,6 +43,6 @@ public interface Person {
        
     public void setEmail(String email);
 
-	public void setTelefono(int telefono);
+	public void setTelefono(long numero);
 
 }

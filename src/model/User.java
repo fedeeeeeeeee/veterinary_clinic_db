@@ -14,7 +14,7 @@ public interface User extends Person {
 
 	String getHashPassword();
 
-	int getYearsOnTheJob();
+	int getAnniDiServizio();
 	
 	Optional<List<String>> getSpecializations();
 
@@ -26,7 +26,7 @@ public interface User extends Person {
 	
 	void setHashPassword(String password);
 
-	void setYearsOnTheJob(int years);
+	void setAnniDiServizio(int years);
 
 	void setSpecialization(String specialization);
 

@@ -8,6 +8,7 @@ import model.UserImpl;
 // la view chiama UserController che chiama UserTable 
 public interface UserController {
 
-    boolean checkUser(String username, char[] password);
-     
+    boolean checkUser(String username, String password);
+    
+    void addNewUser(User user);
 }

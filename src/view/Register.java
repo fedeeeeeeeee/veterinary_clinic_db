@@ -7,6 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
+import com.toedter.calendar.JDateChooser;
+
+import controller.UserController;
+import controller.UserControllerImpl;
+import model.User;
+import model.UserImpl;
 import utility.ValidityFieldsChecker;
 
 import java.awt.GridLayout;
@@ -23,8 +29,7 @@ import javax.swing.JSpinner;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.awt.event.ActionEvent;
@@ -38,21 +43,22 @@ public class Register extends JPanel {
 	private JTextField textFieldNome;
 	private JTextField textFieldCognome;
 	private JTextField textFieldCodiceFiscale;
-	private JTextField textFieldDataNascita;
 	private JTextField textFieldVia;
 	private JTextField textFieldNumeroCivico;
 	private JTextField textFieldCitta;
 	private JTextField textFieldCap;
 	private JTextField textFieldTelefono;
-	
 	private ValidityFieldsChecker check;
+	private User user;
+	private UserController controller;
 
-	public Register(JFrame frame) {
+	public Register(JFrame frame) {		
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.check = new ValidityFieldsChecker();
+		this.controller = new UserControllerImpl();
 
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
@@ -180,10 +186,9 @@ public class Register extends JPanel {
 		JLabel labelDataNascita = new JLabel("Data di nascita");
 		anagraficaPanel.add(labelDataNascita);
 		
-		textFieldDataNascita = new JTextField();
-		labelDataNascita.setLabelFor(textFieldDataNascita);
-		anagraficaPanel.add(textFieldDataNascita);
-		textFieldDataNascita.setColumns(10);
+		JDateChooser dateChooser = new JDateChooser();
+		labelDataNascita.setLabelFor(dateChooser);
+		anagraficaPanel.add(dateChooser);
 
 		JLabel labelVia = new JLabel("Via");
 		anagraficaPanel.add(labelVia);
@@ -224,50 +229,60 @@ public class Register extends JPanel {
 		labelTelefono.setLabelFor(textFieldTelefono);
 		anagraficaPanel.add(textFieldTelefono);
 		textFieldTelefono.setColumns(10);
-		
 
 		JButton sendButton = new JButton("SEND");
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 if(check.checkCF(textFieldCodiceFiscale.getText())
-						 && check.checkEmail(textFieldEmail.getText())
-						 && check.checkPhoneNumber(textFieldTelefono.getText())
-						 && check.checkNotEmpty(textFieldNome.getText())
-						 && check.checkNotEmpty(textFieldCognome.getText())
-						 && check.checkNotEmpty(textFieldVia.getText())
-						 && check.checkNumber(textFieldNumeroCivico.getText())
-						 && check.checkNotEmpty(textFieldNumeroCivico.getText())
-						 && check.checkCap(textFieldCap.getText())
-						 && check.checkNotEmpty(textFieldCap.getText())
-						 && check.checkNotEmpty(textFieldCitta.getText())
-						 && spinner.getValue() != null
-						 //&& comboBox.getSelectedItem() != null
-						 ) {
-					 // vado alla prossima schermata ---> utente registrato correttamente
-					 System.out.println("tutto ok");
-				 } else {
-					 // errore di compilazione della form
-					 System.out.println("errore");
-				 }
+				if (check.checkCF(textFieldCodiceFiscale.getText()) && check.checkEmail(textFieldEmail.getText())
+						&& check.checkPhoneNumber(textFieldTelefono.getText())
+						&& check.checkNotEmpty(textFieldNome.getText())
+						&& check.checkNotEmpty(textFieldCognome.getText())
+						&& check.checkNotEmpty(textFieldVia.getText())
+						&& check.checkNumber(textFieldNumeroCivico.getText())
+						&& check.checkNotEmpty(textFieldNumeroCivico.getText())
+						&& check.checkCap(textFieldCap.getText()) && check.checkNotEmpty(textFieldCap.getText())
+						&& check.checkNotEmpty(textFieldCitta.getText()) && spinner.getValue() != null
+						&& dateChooser.getDate() != null
+				// && comboBox.getSelectedItem() != null
+				) {
+					// vado alla prossima schermata ---> utente registrato correttamente
+					System.out.println("tutto ok");
+
+					user = new UserImpl();
+
+					user.setNome(textFieldNome.getText());
+					user.setCognome(textFieldCognome.getText());
+					user.setCF(textFieldCodiceFiscale.getText());
+					user.setIndirizzoVia(textFieldVia.getText());
+					user.setIndirizzoNumero(Integer.valueOf(textFieldNumeroCivico.getText()));
+					user.setIndirizzoCitta(textFieldCitta.getText());
+					user.setIndirizzoCap(Integer.valueOf(textFieldCap.getText()));
+
+					dateChooser.setDateFormatString("yyyy-MM-dd");
+
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					String date = format.format(dateChooser.getDate());
+					user.setDataNascita(date);
+					user.setIndirizzoCitta(textFieldCitta.getText());
+					user.setTelefono(Long.valueOf(textFieldTelefono.getText()));
+					user.setEmail(textFieldEmail.getText());
+					user.setHashPassword(String.valueOf(passwordField.getPassword()));
+
+					controller.addNewUser(user);
+				} else {
+					// errore di compilazione della form
+					System.out.println("errore");
+				}
 			}
 		});
 		lowerPanel.add(sendButton, BorderLayout.EAST);
-		
-		
-		
-		
+
 		// importante per il design
 		//setLayout(groupLayout);
 
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		
-		
-		// per dopo initialize();
 	}
 
-	private void initialize() {
-		// TODO Auto-generated method stub
-
-	}
 }

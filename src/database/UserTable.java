@@ -1,8 +1,10 @@
 package database;
 
+import model.User;
+
 public interface UserTable {
 	
-    boolean findUser(String username, char[] password);
+    boolean findUser(String username, String password);
 
-    boolean newUser(String username, char[] password);
+	boolean addNewUser(User user);
 }

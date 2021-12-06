@@ -2,6 +2,7 @@ package controller;
 
 import database.UserTable;
 import database.UserTableImpl;
+import model.User;
 
 public class UserControllerImpl implements UserController {
 
@@ -12,8 +13,17 @@ public class UserControllerImpl implements UserController {
 	}
 	
 	@Override
-	public boolean checkUser(String username, char[] password) {
+	public boolean checkUser(String username, String password) {
 		return this.userTable.findUser(username, password);
+	}
+
+	@Override
+	public void addNewUser(User user) {
+		if (this.userTable.addNewUser(user)) {
+			System.out.println("utente inserito correttamente");
+		} else {
+			System.out.println("errore inserimento utente");
+		}
 	}
 
 }
