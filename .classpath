@@ -7,10 +7,12 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/fedep/eclipse-workspace/clinicaveterinaria/mysql-connector-java-8.0.20.jar">
+	<classpathentry kind="lib" path="/Users/sararagnetti/workspace/eclipse-workspace/clinicaveterinaria/mysql-connector-java-8.0.20.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="jgoodies-common-1.2.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

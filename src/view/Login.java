@@ -71,7 +71,7 @@ public class Login extends JPanel {
         sendButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
         sendButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	if(controller.checkUser(textFieldUsername.getText(), passwordField.getPassword())) {
+            	if(controller.checkUser(textFieldUsername.getText(), String.valueOf(passwordField.getPassword()))) {
             		JOptionPane.showMessageDialog(frame, "User found", "OK!", JOptionPane.ERROR_MESSAGE);
             		// user = controller.checkUser(textFieldUsername.getText(), passwordField.getPassword()))
             		// if user.isPresent  o user!= false 
