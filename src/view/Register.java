@@ -119,9 +119,7 @@ public class Register extends JPanel {
 			}
 		});
 		lowerPanel.add(backButton, BorderLayout.WEST);
-		
 
-		
 		JLabel titleLabel = new JLabel("Registrazione");
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
 		upperPanel.add(titleLabel);

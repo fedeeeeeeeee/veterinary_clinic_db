@@ -23,7 +23,6 @@ import controller.UserController;
 import controller.UserControllerImpl;
 
 import javax.swing.border.EtchedBorder;
-import javax.swing.JRadioButton;
 
 public class Login extends JPanel {
 
@@ -31,11 +30,7 @@ public class Login extends JPanel {
     private JFrame frame;
     private JTextField textFieldUsername;
     private JPasswordField passwordField;
-    //private List<JRadioButton> medicalStaff = new ArrayList<>();
-    
-    private JRadioButton vetButton;
-    //private JRadioButton rdbtnAssistente;
-    
+        
     private UserController controller;
 
     public Login(JFrame frame) {
@@ -73,10 +68,6 @@ public class Login extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	if(controller.checkUser(textFieldUsername.getText(), String.valueOf(passwordField.getPassword()))) {
             		JOptionPane.showMessageDialog(frame, "User found", "OK!", JOptionPane.ERROR_MESSAGE);
-            		// user = controller.checkUser(textFieldUsername.getText(), passwordField.getPassword()))
-            		// if user.isPresent  o user!= false 
-            		//  ruolo = controller..getRuolo(textFieldUsername.getText());
-            		// variabile globale utente loggato = medico e bla bla (vetButton.getText())
             	} else {
             		JOptionPane.showMessageDialog(frame, "User not found", "Error!", JOptionPane.ERROR_MESSAGE);
             	}
@@ -109,41 +100,20 @@ public class Login extends JPanel {
         lblPassword_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
         panelLogin.add(lblPassword_1);
         
+        /*
         JPanel panelProfessione = new JPanel();
         panelProfessione.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Professione", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
         panelProfessione.setLayout(new GridLayout(0, 2, 0, 0));
+         */
+        passwordField = new JPasswordField();
+        panelLogin.add(passwordField);
         
-        vetButton = new JRadioButton("Medico");
-        //this.medicalStaff.add(medicoButton);
-        vetButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        vetButton.addActionListener(new ActionListener() {
+        JLabel lbl2 = new JLabel("");
+        panelLogin.add(lbl2);
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JRadioButton rdbn = (JRadioButton) e.getSource();
-                if (rdbn.isSelected()) {
-                	//rdbtnAssistente.setSelected(false);
-                }
-            }
-            
-        });
-       panelProfessione.add(vetButton);
         
-       /* 
-        rdbtnAssistente = new JRadioButton("Assistente");
-        rdbtnAssistente.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        rdbtnAssistente.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JRadioButton rdbn = (JRadioButton) e.getSource();
-                if (rdbn.isSelected()) {
-                    rdbtnMedico.setSelected(false);
-                }
-            }
-        });
-        panelProfessione.add(rdbtnAssistente);*/
-            
+        
+        // GROUP LAYOUT
        GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
        groupLayout.setHorizontalGroup(
        	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -159,10 +129,10 @@ public class Login extends JPanel {
        				.addGroup(groupLayout.createSequentialGroup()
        					.addGap(141)
        					.addComponent(loginLabel))
-       				.addGroup(groupLayout.createSequentialGroup()
-       					.addGap(200)
-       					.addComponent(panelProfessione, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE)))
-       			.addGap(55))
+       				//.addGroup(groupLayout.createSequentialGroup()
+       					//.addGap(200)
+       					//.addComponent(panelProfessione, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE)))
+       			.addGap(55)))
        );
        groupLayout.setVerticalGroup(
        	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -173,18 +143,13 @@ public class Login extends JPanel {
        			.addGap(81)
        			.addComponent(panelLogin, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
        			.addGap(18)
-       			.addComponent(panelProfessione, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-       			.addGap(54)
+       			//.addComponent(panelProfessione, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+       			//.addGap(54)
        			.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
        			.addGap(84))
        );
        
-       passwordField = new JPasswordField();
-       panelLogin.add(passwordField);
-       
-       JLabel lbl2 = new JLabel("");
-       panelLogin.add(lbl2);
-
+    
        GroupLayout gl_panel = new GroupLayout(panel);
        gl_panel.setHorizontalGroup(
            gl_panel.createParallelGroup(Alignment.LEADING)

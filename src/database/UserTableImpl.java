@@ -214,9 +214,8 @@ public class UserTableImpl implements UserTable {
 			statement = Optional.of(connection.prepareStatement(query));
 			final ResultSet result = statement.get().executeQuery();
 			
-			while (result.next()) { // prima riga | seconda riga
+			while (result.next()) {
 				ruoli.add(result.getString("ruolo"));
-				System.out.println(result.getString("ruolo"));
 			}
 			result.close();
 		} catch (SQLException e) {
