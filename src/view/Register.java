@@ -29,9 +29,7 @@ import javax.swing.JSpinner;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class Register extends JPanel {
@@ -136,10 +134,11 @@ public class Register extends JPanel {
 		labelAnniServizio.setLabelFor(spinner);
 		ruoloPanel.add(spinner);
 		
-		JLabel labelRuolo = new JLabel("");
+		JLabel labelRuolo = new JLabel("Ruolo");
 		ruoloPanel.add(labelRuolo);
 		
-		JComboBox comboBox = new JComboBox();
+		String[] ruoli = controller.getAllRuoli().toArray(new String[0]);		
+		JComboBox<String> comboBox = new JComboBox<String>(ruoli);
 		labelRuolo.setLabelFor(comboBox);
 		ruoloPanel.add(comboBox);
 
@@ -243,7 +242,7 @@ public class Register extends JPanel {
 						&& check.checkCap(textFieldCap.getText()) && check.checkNotEmpty(textFieldCap.getText())
 						&& check.checkNotEmpty(textFieldCitta.getText()) && spinner.getValue() != null
 						&& dateChooser.getDate() != null
-				// && comboBox.getSelectedItem() != null
+				&& comboBox.getSelectedItem() != null
 				) {
 					// vado alla prossima schermata ---> utente registrato correttamente
 					System.out.println("tutto ok");
@@ -257,7 +256,7 @@ public class Register extends JPanel {
 					user.setIndirizzoNumero(Integer.valueOf(textFieldNumeroCivico.getText()));
 					user.setIndirizzoCitta(textFieldCitta.getText());
 					user.setIndirizzoCap(Integer.valueOf(textFieldCap.getText()));
-
+					user.setRuolo(comboBox.getSelectedItem().toString());
 					dateChooser.setDateFormatString("yyyy-MM-dd");
 
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");

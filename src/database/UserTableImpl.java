@@ -10,7 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
@@ -141,7 +143,8 @@ public class UserTableImpl implements UserTable {
             String passwordHash = this.generateHash(user.getHashPassword(),salt.substring(1, salt.length() - 1));
             statement.get().setString(11,passwordHash);
             statement.get().setString(12, salt.substring(1, salt.length() - 1));
-            statement.get().setString(13, "tecnico");
+           // statement.get().setString(13, "tecnico");
+            statement.get().setString(13, user.getRuolo());
             statement.get().setString(14, user.getDataNascita());
             statement.get().executeUpdate();
         } catch (SQLException e) {
@@ -199,4 +202,37 @@ public class UserTableImpl implements UserTable {
 		return isPresent;
 	}
 
+	@Override
+	public List<String> getAllRuoli() {
+		List<String> ruoli = new ArrayList<>();
+		
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		final String query = "select distinct ruolo from " + personaleTableName ;
+		
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			final ResultSet result = statement.get().executeQuery();
+			
+			while (result.next()) { // prima riga | seconda riga
+				ruoli.add(result.getString("ruolo"));
+				System.out.println(result.getString("ruolo"));
+			}
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				//return false;
+			}
+		}
+		return ruoli;
+	}
 }

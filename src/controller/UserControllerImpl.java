@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import database.UserTable;
 import database.UserTableImpl;
 import model.User;
@@ -24,6 +26,11 @@ public class UserControllerImpl implements UserController {
 		} else {
 			System.out.println("errore inserimento utente");
 		}
+	}
+
+	@Override
+	public List<String> getAllRuoli() {
+		return userTable.getAllRuoli();
 	}
 
 }
