@@ -48,6 +48,8 @@ public class UserTableImpl implements UserTable {
 		return response;
 	}
 
+	
+	
 	private String generateHash(String password, String salt) {
 		String generatedPassword = null;
 		try {
@@ -66,12 +68,9 @@ public class UserTableImpl implements UserTable {
 
 	@Override
 	public boolean findUser(String email, String password) {
-		//System.out.println("pw inserita" + password);
-
 		final Connection connection = this.dataSource.getMySQLConnection();
 		boolean isPresent = false;
 		Optional<PreparedStatement> statement = Optional.empty();
-
 		final String query = "select sale , password from " + personaleTableName + " where e_mail=?";
 
 		try {
@@ -87,9 +86,6 @@ public class UserTableImpl implements UserTable {
 					System.out.println("password corretta");
 					isPresent = true;
 				} else {
-					System.out.println("pw inserita   " + password);
-					System.out.println(passwordHash);
-					System.out.println("sale res2   " + result.getString("sale"));
 					System.out.println("password non corretta");
 					isPresent = false;
 				}
@@ -142,13 +138,14 @@ public class UserTableImpl implements UserTable {
             statement.get().setInt(10, user.getAnniDiServizio());
           
             String salt = this.generateSalt();  
-
-            statement.get().setString(11, this.generateHash(user.getHashPassword(), salt));
+            String passwordHash = this.generateHash(user.getHashPassword(),salt.substring(1, salt.length() - 1));
+            statement.get().setString(11,passwordHash);
             statement.get().setString(12, salt.substring(1, salt.length() - 1));
             statement.get().setString(13, "tecnico");
             statement.get().setString(14, user.getDataNascita());
             statement.get().executeUpdate();
         } catch (SQLException e) {
+        	System.out.println("eccezione INSERIMENTO UTENTE "+e);
             return false;
         } finally {
             try {
@@ -159,7 +156,7 @@ public class UserTableImpl implements UserTable {
                     connection.close();
                 }
             } catch (SQLException e) {
-            	System.out.println("sotto"+e);
+            	System.out.println("eccezione INSERIMENTO UTENTE statement"+e);
                 return false;
             }
         }
