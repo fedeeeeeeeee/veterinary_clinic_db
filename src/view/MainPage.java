@@ -87,7 +87,9 @@ public class MainPage extends CommonView {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.getContentPane().add(new Login(frame));
+               // frame.getContentPane().add(new Login(frame)); GIUSTOO
+                frame.getContentPane().add(new Home(frame));
+                
             }
 
         });

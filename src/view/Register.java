@@ -266,6 +266,7 @@ public class Register extends JPanel {
 					user.setHashPassword(String.valueOf(passwordField.getPassword()));
 
 					controller.addNewUser(user);
+					  frame.getContentPane().add(new Home(frame));
 				} else {
 					// errore di compilazione della form
 					System.out.println("errore");

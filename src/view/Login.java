@@ -67,7 +67,8 @@ public class Login extends JPanel {
         sendButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	if(controller.checkUser(textFieldUsername.getText(), String.valueOf(passwordField.getPassword()))) {
-            		JOptionPane.showMessageDialog(frame, "User found", "OK!", JOptionPane.ERROR_MESSAGE);
+            		//JOptionPane.showMessageDialog(frame, "User found", "OK!", JOptionPane.ERROR_MESSAGE);
+            		 frame.getContentPane().add(new Home(frame));
             	} else {
             		JOptionPane.showMessageDialog(frame, "User not found", "Error!", JOptionPane.ERROR_MESSAGE);
             	}
