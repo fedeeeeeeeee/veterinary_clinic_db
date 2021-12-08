@@ -65,7 +65,7 @@ public class Home extends JPanel {
 		JButton appuntamentiBtn = new JButton("APPUNTAMENTI");
 		appuntamentiBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  frame.getContentPane().add(new Appuntamenti(frame));
+				  frame.getContentPane().add(new GestioneAppuntamento(frame));
 			}
 		});
 		
