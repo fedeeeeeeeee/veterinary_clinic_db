@@ -78,39 +78,26 @@ public class GestioneAppuntamento extends JPanel {
 		
 		table = new JTable();
 		List<Appuntamento> listPrestazioni = prestazioneController.getAllPrestazioni();
-		DefaultTableModel model = new DefaultTableModel();
+		DefaultTableModel model =  (DefaultTableModel) table.getModel();
 		
-		listPrestazioni.forEach(x->{
-			model.addRow(new Object[] {
-					x.getNomeAnimale(),
-					x.getData(),
-					x.getOra(),
+		model.addColumn("Animale");
+		model.addColumn("Data");
+		model.addColumn("Ora");
+		model.addColumn("Prestazione");
+		model.addColumn("Nome");
+		model.addColumn("Cognome");
+
+		listPrestazioni.forEach(x -> {
+			model.addRow(new Object[] { 
+					x.getNomeAnimale(), 
+					x.getData(), x.getOra(), 
 					x.getPrestazione(),
-					x.getNomeVeterinario(),
-					x.getCognomeVeterinario()
-					
-			}
-					);
+					x.getNomeVeterinario(), 
+					x.getCognomeVeterinario() 
+			});
 		});
-	
-		/*
-	
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				
-			},
-			new String[] {
-				"Animale", "Data", "Ora", "Prestazione", "Nome", "Cognome"
-			}
-		) {
-			Class[] columnTypes = new Class[] {
-				String.class, Object.class, Object.class, Object.class, Object.class, Object.class, Object.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		*/
+		
+		//table.setModel(model);
 		scrollPane.setViewportView(table);
 
 		JButton backButton = new JButton("BACK");
