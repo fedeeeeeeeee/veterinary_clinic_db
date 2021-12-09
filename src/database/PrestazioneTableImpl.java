@@ -29,7 +29,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome "
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione_su_animale.codAnimale, prestazione_su_animale.codTipoPrestazione "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data=effettua.data "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -53,6 +53,8 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				app.setPrestazione(result.getString(2));
 				app.setNomeVeterinario(result.getString(5));
 				app.setCognomeVeterinario(result.getString(6));
+				app.setCodAnimale(result.getInt(7));
+				app.setCodTipoPrestazione(result.getInt(8));
 				prestazioni.add(app);
 			}
 

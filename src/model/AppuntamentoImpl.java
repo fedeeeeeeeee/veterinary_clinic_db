@@ -8,6 +8,9 @@ public class AppuntamentoImpl implements Appuntamento {
 	private String ora;
 	private String nomeVeterinario;
 	private String cognomeVeterinario;
+	
+	private int codAnimale;
+	private int codPrestazione;
 
 	@Override
 	public String getNomeAnimale() {
@@ -67,6 +70,22 @@ public class AppuntamentoImpl implements Appuntamento {
 	@Override
 	public void setCognomeVeterinario(String cognomeVeterinario) {
 		this.cognomeVeterinario = cognomeVeterinario;
+	}
+
+	@Override
+	public void addInfermiere(User infermiere) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setCodAnimale(int codAnimale) { // questi non vengono visualizzati in Gestione Appuntamento ma ci servono per fare le select nelle altre pagine
+		this.codAnimale= codAnimale;
+	}
+
+	@Override
+	public void setCodTipoPrestazione(int codPrestazione) {
+		this.codPrestazione= codPrestazione;		
 	}
 
 }
