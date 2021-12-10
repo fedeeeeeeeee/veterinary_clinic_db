@@ -165,7 +165,5 @@ public class Login extends JPanel {
                    .addContainerGap(389, Short.MAX_VALUE)));
        panel.setLayout(gl_panel);
        frame.getContentPane().setLayout(groupLayout);
-      
-     
     }
 }

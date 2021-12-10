@@ -32,7 +32,7 @@ import controller.PrestazioneControllerImpl;
 import model.Appuntamento;
 import java.awt.GridLayout;
 
-public class NuovoAppuntamento extends JPanel {
+public class NuovoAppuntamento extends CommonView {
 
 		private static final long serialVersionUID = -83378890947911750L;
 		private JFrame frame;
@@ -155,5 +155,7 @@ public class NuovoAppuntamento extends JPanel {
 			// importante per la visualizzazione ---> commentare GroupLayout groupLayout =
 		new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
+		this.initCommonView(frame);
+
 		}
 	}

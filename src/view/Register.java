@@ -280,7 +280,6 @@ public class Register extends JPanel {
 
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
-		
 	}
 
 }

@@ -10,15 +10,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
-import model.User;
-
 public abstract class CommonView extends JPanel {
     
     protected JMenuBar menuBar;
-
+    
     private static final long serialVersionUID = 1L;
     
-    public void initCommonView(final JFrame frame, final User user) {
+    public void initCommonView(final JFrame frame) {
         
         menuBar = new JMenuBar();
         frame.setJMenuBar(menuBar);
@@ -46,6 +44,6 @@ public abstract class CommonView extends JPanel {
                 frame.setJMenuBar(null);
                 frame.getContentPane().add(new MainPage(frame));
             }
-        });
+        });        
     }
 }

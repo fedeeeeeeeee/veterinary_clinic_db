@@ -44,7 +44,7 @@ import java.awt.GridLayout;
 import java.awt.Component;
 import com.toedter.calendar.JDateChooser;
 
-public class GestioneAppuntamento extends JPanel {
+public class GestioneAppuntamento extends CommonView {
 
 	private static final long serialVersionUID = -83378890947911750L;
 	private JFrame frame;
@@ -221,5 +221,6 @@ public class GestioneAppuntamento extends JPanel {
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout =
 	new GroupLayout(this);
 	frame.getContentPane().setLayout(groupLayout);
+	this.initCommonView(frame);
 	}
 }

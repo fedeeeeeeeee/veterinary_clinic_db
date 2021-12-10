@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class Home extends JPanel {
+public class Home extends CommonView {
 	 
 	private static final long serialVersionUID = -3398122590862316754L;
 	private JFrame frame;
@@ -76,5 +76,6 @@ public class Home extends JPanel {
 
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
+		this.initCommonView(frame);
 	}
 }

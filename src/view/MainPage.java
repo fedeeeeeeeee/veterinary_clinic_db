@@ -94,5 +94,6 @@ public class MainPage extends CommonView {
 
         });
         frame.getContentPane().setLayout(groupLayout);
+        this.initCommonView(frame);
     }
 }
