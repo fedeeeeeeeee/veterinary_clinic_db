@@ -2,7 +2,8 @@ package view;
 import javax.swing.ImageIcon;
 
 public enum IconImage {
-
+	
+	BACK("back.png"),
     RICOVERO("ricovero.png");
 
 	private static String PATH = "/images/";

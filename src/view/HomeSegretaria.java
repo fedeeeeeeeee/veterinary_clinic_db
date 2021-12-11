@@ -30,27 +30,28 @@ public class HomeSegretaria extends CommonView {
 		JPanel centerPanel = new JPanel();
 
 		// per la visualizzazione
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		//GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		// utile per il design
-		//GroupLayout groupLayout = new GroupLayout(this);
+		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
 					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(upperPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1130, Short.MAX_VALUE)
-						.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 1007, Short.MAX_VALUE))
-						.addComponent(lowerPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1130, Short.MAX_VALUE))
-					.addGap(24))
+							.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE))
+						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE)
+						.addComponent(lowerPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap()
+					.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
 					.addGap(1)
-					.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 391, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 205, GroupLayout.PREFERRED_SIZE)
+					.addGap(198)
 					.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 					.addGap(72))
 		);
@@ -58,7 +59,7 @@ public class HomeSegretaria extends CommonView {
 		
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		
-		JButton backButton = new JButton("LOGOUT");
+		JButton backButton = new JButton("BACK");
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				  frame.getContentPane().add(new MainPage(frame));
@@ -76,10 +77,10 @@ public class HomeSegretaria extends CommonView {
 		
 		lowerPanel.add(appuntamentiBtn, BorderLayout.EAST);
 		// importante per il design
-		//setLayout(groupLayout);
+		setLayout(groupLayout);
 
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
-		frame.getContentPane().setLayout(groupLayout);
+		//frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame);
 	}
 }

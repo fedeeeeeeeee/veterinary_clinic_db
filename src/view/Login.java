@@ -10,20 +10,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.GridLayout;
 import javax.swing.SwingConstants;
-import javax.swing.border.TitledBorder;
-
 import controller.UserController;
 import controller.UserControllerImpl;
 import model.User;
-
-import javax.swing.border.EtchedBorder;
 
 public class Login extends JPanel {
 

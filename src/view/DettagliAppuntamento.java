@@ -155,6 +155,5 @@ public class DettagliAppuntamento extends CommonView {
 		new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame);
-
 		}
 	}
