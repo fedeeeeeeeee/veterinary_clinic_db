@@ -7,6 +7,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 import com.toedter.calendar.JDateChooser;
 import controller.UserController;
 import controller.UserControllerImpl;
@@ -68,36 +72,49 @@ public class Register extends JPanel {
            int h = frame.getSize().height;
            int x = (dim.width-w)/2;
            int y = (dim.height-h)/2;
-           // width 1000, height 600);
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+           GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+           
 		// utile per il design
-		//GroupLayout groupLayout = new GroupLayout(this);
+          // GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, (int)(w), GroupLayout.PREFERRED_SIZE)
-								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, (int)(w),  GroupLayout.PREFERRED_SIZE)
-								.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, (int)(w),  GroupLayout.PREFERRED_SIZE))
+								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, (int)(w*0.99), GroupLayout.PREFERRED_SIZE)
+								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, (int)(w*0.99),  GroupLayout.PREFERRED_SIZE)
+								.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, (int)(w*0.99),  GroupLayout.PREFERRED_SIZE))
 						.addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.3), GroupLayout.PREFERRED_SIZE)
-						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.5), GroupLayout.PREFERRED_SIZE)
+						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.2), GroupLayout.PREFERRED_SIZE)
+						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.65), GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.1), GroupLayout.PREFERRED_SIZE)
 						.addContainerGap()));
-		centerPanel.setLayout(new GridLayout(2, 2, 0, 0));
+		
+		centerPanel.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(50dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(50dlu;default)"),},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),}));
+		
+		
 		JPanel anagraficaPanel = new JPanel();
-		centerPanel.add(anagraficaPanel);
-		//centerPanel.add(new JLabel(""));
-
 		anagraficaPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Anagrafica", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		anagraficaPanel.setLayout(new GridLayout(5, 4, 0, 0));
-
+		
 		JLabel labelNome = new JLabel("Nome");
-		labelNome.setHorizontalAlignment(SwingConstants.LEFT);
+		labelNome.setHorizontalAlignment(SwingConstants.RIGHT);
 		anagraficaPanel.add(labelNome);
 
 		textFieldNome = new JTextField();
@@ -106,6 +123,7 @@ public class Register extends JPanel {
 
 		textFieldNome.setColumns(10);
 		JLabel labelCognome = new JLabel("Cognome");
+		labelCognome.setHorizontalAlignment(SwingConstants.RIGHT);
 		anagraficaPanel.add(labelCognome);
 
 		textFieldCognome = new JTextField();
@@ -114,6 +132,7 @@ public class Register extends JPanel {
 
 		textFieldCognome.setColumns(10);
 		JLabel labelCf = new JLabel("CF");
+		labelCf.setHorizontalAlignment(SwingConstants.RIGHT);
 		anagraficaPanel.add(labelCf);
 
 		textFieldCodiceFiscale = new JTextField();
@@ -126,6 +145,7 @@ public class Register extends JPanel {
 
 		JDateChooser dateChooser = new JDateChooser();
 		labelDataNascita.setLabelFor(dateChooser);
+		labelDataNascita.setHorizontalAlignment(SwingConstants.RIGHT);
 		anagraficaPanel.add(dateChooser);
 
 		JLabel labelVia = new JLabel("Via");
@@ -133,6 +153,7 @@ public class Register extends JPanel {
 
 		textFieldVia = new JTextField();
 		labelVia.setLabelFor(textFieldVia);
+		labelVia.setHorizontalAlignment(SwingConstants.RIGHT);
 		anagraficaPanel.add(textFieldVia);
 		textFieldVia.setColumns(10);
 
@@ -141,6 +162,7 @@ public class Register extends JPanel {
 
 		textFieldNumeroCivico = new JTextField();
 		labelNumeroCivico.setLabelFor(textFieldNumeroCivico);
+		labelNumeroCivico.setHorizontalAlignment(SwingConstants.RIGHT);
 		anagraficaPanel.add(textFieldNumeroCivico);
 		textFieldNumeroCivico.setColumns(10);
 
@@ -149,14 +171,16 @@ public class Register extends JPanel {
 
 		textFieldCitta = new JTextField();
 		labelCitta.setLabelFor(textFieldCitta);
+		labelCitta.setHorizontalAlignment(SwingConstants.RIGHT);
 		anagraficaPanel.add(textFieldCitta);
 		textFieldCitta.setColumns(10);
 
-		JLabel lblNewLabel = new JLabel("CAP");
-		anagraficaPanel.add(lblNewLabel);
+		JLabel labelCap = new JLabel("CAP");
+		anagraficaPanel.add(labelCap);
 
 		textFieldCap = new JTextField();
-		lblNewLabel.setLabelFor(textFieldCap);
+		labelCap.setLabelFor(textFieldCap);
+		labelCap.setHorizontalAlignment(SwingConstants.RIGHT);
 		anagraficaPanel.add(textFieldCap);
 		textFieldCap.setColumns(10);
 
@@ -165,34 +189,37 @@ public class Register extends JPanel {
 
 		textFieldTelefono = new JTextField();
 		labelTelefono.setLabelFor(textFieldTelefono);
+		labelTelefono.setHorizontalAlignment(SwingConstants.RIGHT);
 		anagraficaPanel.add(textFieldTelefono);
 		textFieldTelefono.setColumns(10);
 
 		JPanel datiAccessoPanel = new JPanel();
-		centerPanel.add(datiAccessoPanel);
 		datiAccessoPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null),
 				"Dati di accesso", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
-		datiAccessoPanel.setLayout(new GridLayout(2, 2, 0, 0));
+		datiAccessoPanel.setLayout(new GridLayout(2, 2, 5, 1));
 
 		JLabel labelEmail = new JLabel("E-mail");
 		datiAccessoPanel.add(labelEmail);
+		labelEmail.setHorizontalAlignment(SwingConstants.RIGHT);
 		JLabel labelPassword = new JLabel("Password");
 		textFieldEmail = new JTextField();
 		datiAccessoPanel.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 		datiAccessoPanel.add(labelPassword);
+		labelPassword.setHorizontalAlignment(SwingConstants.RIGHT);
 		passwordField = new JPasswordField();
 		datiAccessoPanel.add(passwordField);
 
 		JPanel ruoloPanel = new JPanel();
-		centerPanel.add(ruoloPanel);
 		ruoloPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Ruolo",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		ruoloPanel.setLayout(new GridLayout(2, 2, 0, 0));
+		ruoloPanel.setLayout(new GridLayout(2, 2, 5, 1));
 
 		JLabel labelAnniServizio = new JLabel("Anni di servizio");
 		ruoloPanel.add(labelAnniServizio);
+		labelAnniServizio.setHorizontalAlignment(SwingConstants.RIGHT);
+
 
 		JSpinner spinner = new JSpinner();
 		labelAnniServizio.setLabelFor(spinner);
@@ -202,6 +229,7 @@ public class Register extends JPanel {
 		ruoloPanel.add(labelRuolo);
 		JComboBox<String> comboBox = new JComboBox<>();
 		labelRuolo.setLabelFor(comboBox);
+		labelRuolo.setHorizontalAlignment(SwingConstants.RIGHT);
 		ruoloPanel.add(comboBox);
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 
@@ -221,6 +249,19 @@ public class Register extends JPanel {
 		for (int i = 0; i < ruoli.length; i++) {
 			comboBox.addItem(ruoli[i]);
 		}
+
+		JPanel panelSx = new JPanel();
+		centerPanel.add(panelSx, "2, 2, 1, 3, fill, fill");
+		panelSx.setMinimumSize(new Dimension(20,6));
+		
+		centerPanel.add(anagraficaPanel, "4, 2, 3, 1, fill, fill");
+		
+		JPanel panelDx = new JPanel();
+		centerPanel.add(panelDx, "8, 2, 1, 3, fill, fill");
+		
+		centerPanel.add(datiAccessoPanel, "4, 4, fill, fill");
+		
+		centerPanel.add(ruoloPanel, "6, 4, fill, fill");
 
 		JButton sendButton = new JButton("SEND");
 		sendButton.addActionListener(new ActionListener() {
@@ -275,13 +316,14 @@ public class Register extends JPanel {
 				}
 			}
 		});
-		lowerPanel.add(sendButton, BorderLayout.EAST);
 
+		lowerPanel.add(sendButton, BorderLayout.EAST);
+		
 		// importante per il design
 		//setLayout(groupLayout);
 
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout =
-		  new GroupLayout(this);
-		 frame.getContentPane().setLayout(groupLayout);
+		new GroupLayout(this);
+		frame.getContentPane().setLayout(groupLayout);
 	}
 }
