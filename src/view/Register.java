@@ -242,9 +242,7 @@ public class Register extends JPanel {
 						&& dateChooser.getDate() != null
 				&& comboBox.getSelectedItem() != null
 				) {
-					// vado alla prossima schermata ---> utente registrato correttamente
 					System.out.println("tutto ok");
-
 					user = new UserImpl();
 
 					user.setNome(textFieldNome.getText());
@@ -266,7 +264,7 @@ public class Register extends JPanel {
 					user.setHashPassword(String.valueOf(passwordField.getPassword()));
 
 					controller.addNewUser(user);
-					  frame.getContentPane().add(new Home(frame));
+					frame.getContentPane().add(new Home(frame, user));
 				} else {
 					// errore di compilazione della form
 					System.out.println("errore");

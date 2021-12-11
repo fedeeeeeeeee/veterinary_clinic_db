@@ -1,12 +1,9 @@
 package controller;
 
 import java.util.List;
-import java.util.Optional;
-
 import model.User;
-import model.UserImpl;
 
-// la view chiama UserController che chiama UserTable 
+
 public interface UserController {
 
     boolean checkUser(String username, String password);
@@ -14,4 +11,6 @@ public interface UserController {
     void addNewUser(User user);
     
     List<String> getAllRuoli();
+
+	User getUser(String username);
 }

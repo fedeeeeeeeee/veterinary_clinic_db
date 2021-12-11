@@ -18,6 +18,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
 import model.Appuntamento;
+import model.User;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -50,12 +51,14 @@ public class GestioneAppuntamento extends CommonView {
 	private JFrame frame;
 	private PrestazioneController prestazioneController;
 	private JTable table;
-
-	public GestioneAppuntamento(final JFrame frame) {
+	private User user;
+	
+	public GestioneAppuntamento(final JFrame frame, User user) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 		this.frame = frame;
+		this.user = user;
 		this.prestazioneController = new PrestazioneControllerImpl();
 		
 		JPanel upperPanel = new JPanel();
@@ -180,7 +183,7 @@ public class GestioneAppuntamento extends CommonView {
 					      
 				            //System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
 					        //System.out.println("index" + firstIndex);
-					        frame.getContentPane().add(new NuovoAppuntamento(frame));
+					        frame.getContentPane().add(new DettagliAppuntamento(frame, user));
 					        listPrestazioni.get(firstIndex); // tipo Appuntamento
 					       // JOptionPane.showMessageDialog(null, "Do you want to modify  line" + firstIndex + "?");
 					      //  System.out.println("index" + firstIndex);
@@ -209,7 +212,7 @@ public class GestioneAppuntamento extends CommonView {
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new MainPage(frame));
+				frame.getContentPane().add(new Home(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));

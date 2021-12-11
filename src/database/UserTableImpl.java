@@ -18,6 +18,7 @@ import java.util.Random;
 
 import database.DatabaseConnection;
 import model.User;
+import model.UserImpl;
 
 public class UserTableImpl implements UserTable {
 
@@ -50,8 +51,6 @@ public class UserTableImpl implements UserTable {
 		return response;
 	}
 
-	
-	
 	private String generateHash(String password, String salt) {
 		String generatedPassword = null;
 		try {
@@ -116,54 +115,54 @@ public class UserTableImpl implements UserTable {
 	@Override
 	public boolean addNewUser(User user) {
 		final Connection connection = this.dataSource.getMySQLConnection();
-		
+
 		// controllo se l'utente esiste
-		if(this.checkIfUserExists(user.getCF())) {
+		if (this.checkIfUserExists(user.getCF())) {
 			System.out.println("Utente già presente");
 			return false;
 		}
-		
+
 		Optional<PreparedStatement> statement = Optional.empty();
-        String query = "insert into " + personaleTableName + " (CF, nome, cognome, ind_citta, ind_via, ind_numero, ind_cap, telefono, e_mail, anniDiServizio, password, sale, ruolo, dataDiNascita) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        
-        try {
-            statement = Optional.of(connection.prepareStatement(query));
-            statement.get().setString(1, user.getCF());
-            statement.get().setString(2, user.getNome());
-            statement.get().setString(3, user.getCognome());
-            statement.get().setString(4, user.getIndirizzoCitta());
-            statement.get().setString(5, user.getIndirizzoVia());
-            statement.get().setInt(6, user.getIndirizzoNumero());
-            statement.get().setInt(7, user.getIndirizzoCap());
-            statement.get().setLong(8, user.getTelefono());
-            statement.get().setString(9, user.getEmail());
-            statement.get().setInt(10, user.getAnniDiServizio());
-          
-            String salt = this.generateSalt();  
-            String passwordHash = this.generateHash(user.getHashPassword(),salt.substring(1, salt.length() - 1));
-            statement.get().setString(11,passwordHash);
-            statement.get().setString(12, salt.substring(1, salt.length() - 1));
-           // statement.get().setString(13, "tecnico");
-            statement.get().setString(13, user.getRuolo());
-            statement.get().setString(14, user.getDataNascita());
-            statement.get().executeUpdate();
-        } catch (SQLException e) {
-        	System.out.println("eccezione INSERIMENTO UTENTE "+e);
-            return false;
-        } finally {
-            try {
-                if (statement.isPresent()) {
-                    statement.get().close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-            	System.out.println("eccezione INSERIMENTO UTENTE statement"+e);
-                return false;
-            }
-        }
-        return true;
+		String query = "insert into " + personaleTableName
+				+ " (CF, nome, cognome, ind_citta, ind_via, ind_numero, ind_cap, telefono, e_mail, anniDiServizio, password, sale, ruolo, dataDiNascita) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, user.getCF());
+			statement.get().setString(2, user.getNome());
+			statement.get().setString(3, user.getCognome());
+			statement.get().setString(4, user.getIndirizzoCitta());
+			statement.get().setString(5, user.getIndirizzoVia());
+			statement.get().setInt(6, user.getIndirizzoNumero());
+			statement.get().setInt(7, user.getIndirizzoCap());
+			statement.get().setLong(8, user.getTelefono());
+			statement.get().setString(9, user.getEmail());
+			statement.get().setInt(10, user.getAnniDiServizio());
+
+			String salt = this.generateSalt();
+			String passwordHash = this.generateHash(user.getHashPassword(), salt.substring(1, salt.length() - 1));
+			statement.get().setString(11, passwordHash);
+			statement.get().setString(12, salt.substring(1, salt.length() - 1));
+			statement.get().setString(13, user.getRuolo());
+			statement.get().setString(14, user.getDataNascita());
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("eccezione INSERIMENTO UTENTE " + e);
+			return false;
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO UTENTE statement" + e);
+				return false;
+			}
+		}
+		return true;
 	}
 
 	private boolean checkIfUserExists(String cf) {
@@ -205,15 +204,15 @@ public class UserTableImpl implements UserTable {
 	@Override
 	public List<String> getAllRuoli() {
 		List<String> ruoli = new ArrayList<>();
-		
+
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		final String query = "select distinct ruolo from " + personaleTableName ;
-		
+		final String query = "select distinct ruolo from " + personaleTableName;
+
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
 			final ResultSet result = statement.get().executeQuery();
-			
+
 			while (result.next()) {
 				ruoli.add(result.getString("ruolo"));
 			}
@@ -229,9 +228,53 @@ public class UserTableImpl implements UserTable {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				//return false;
+				// return false;
 			}
 		}
 		return ruoli;
+	}
+
+	@Override
+	public User getUser(String username) {
+
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		final String query = "select * from " + personaleTableName;
+		User user = new UserImpl();
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			final ResultSet result = statement.get().executeQuery();
+			if (result.next()) {
+				user.setCF(result.getString("CF"));
+				user.setAnniDiServizio(result.getInt("anniDiServizio"));
+				user.setNome(result.getString("nome"));
+				user.setCognome(result.getString("cognome"));
+				user.setDataNascita(result.getString("dataDiNascita"));
+				user.setIndirizzoCitta(result.getString("ind_citta"));
+				user.setIndirizzoCap(result.getInt("ind_cap"));
+				user.setIndirizzoNumero(result.getInt("ind_numero"));
+				user.setIndirizzoVia(result.getString("ind_via"));
+				user.setTelefono(result.getLong("telefono"));
+				user.setEmail(result.getString("e_mail"));
+				user.setRuolo(result.getString("ruolo"));
+				user.setHashPassword(result.getString("password"));
+				user.setSalt(result.getString("sale"));
+			}
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return user;
 	}
 }

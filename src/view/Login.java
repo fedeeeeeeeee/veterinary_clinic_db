@@ -21,6 +21,7 @@ import javax.swing.border.TitledBorder;
 
 import controller.UserController;
 import controller.UserControllerImpl;
+import model.User;
 
 import javax.swing.border.EtchedBorder;
 
@@ -30,8 +31,8 @@ public class Login extends JPanel {
     private JFrame frame;
     private JTextField textFieldUsername;
     private JPasswordField passwordField;
-        
     private UserController controller;
+    private User user;
 
     public Login(JFrame frame) {
         frame.getContentPane().removeAll();
@@ -68,7 +69,9 @@ public class Login extends JPanel {
             public void actionPerformed(ActionEvent e) {
             	if(controller.checkUser(textFieldUsername.getText(), String.valueOf(passwordField.getPassword()))) {
             		//JOptionPane.showMessageDialog(frame, "User found", "OK!", JOptionPane.ERROR_MESSAGE);
-            		 frame.getContentPane().add(new Home(frame));
+            		 
+            		 user = controller.getUser(textFieldUsername.getText());
+            		 frame.getContentPane().add(new Home(frame, user));
             	} else {
             		JOptionPane.showMessageDialog(frame, "User not found", "Error!", JOptionPane.ERROR_MESSAGE);
             	}
@@ -101,11 +104,6 @@ public class Login extends JPanel {
         lblPassword_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
         panelLogin.add(lblPassword_1);
         
-        /*
-        JPanel panelProfessione = new JPanel();
-        panelProfessione.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Professione", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-        panelProfessione.setLayout(new GridLayout(0, 2, 0, 0));
-         */
         passwordField = new JPasswordField();
         panelLogin.add(passwordField);
         
@@ -114,7 +112,7 @@ public class Login extends JPanel {
 
         
         
-        // GROUP LAYOUT
+       // GROUP LAYOUT
        GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
        groupLayout.setHorizontalGroup(
        	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -144,8 +142,6 @@ public class Login extends JPanel {
        			.addGap(81)
        			.addComponent(panelLogin, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
        			.addGap(18)
-       			//.addComponent(panelProfessione, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
-       			//.addGap(54)
        			.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
        			.addGap(84))
        );

@@ -10,21 +10,25 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import model.User;
+
 public class Home extends CommonView {
 	 
 	private static final long serialVersionUID = -3398122590862316754L;
 	private JFrame frame;
-
+	private User user;
 	
-	public Home(final JFrame frame) {
+	public Home(final JFrame frame, User user) {
+
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
-		 this.frame = frame;
+		this.frame = frame;
+		this.user = user;
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel centerPanel = new JPanel();
-		
+
 		// per la visualizzazione
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		// utile per il design
@@ -65,7 +69,7 @@ public class Home extends CommonView {
 		JButton appuntamentiBtn = new JButton("APPUNTAMENTI");
 		appuntamentiBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  frame.getContentPane().add(new GestioneAppuntamento(frame));
+				  frame.getContentPane().add(new GestioneAppuntamento(frame, user));
 			}
 		});
 		

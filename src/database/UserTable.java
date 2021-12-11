@@ -11,4 +11,6 @@ public interface UserTable {
 	boolean addNewUser(User user);
 	
 	List<String> getAllRuoli();
+
+	User getUser(String username);
 }

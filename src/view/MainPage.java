@@ -2,12 +2,16 @@ package view;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.SwingConstants;
+
+import model.User;
+
 import java.awt.Color;
 
 import javax.swing.GroupLayout;
@@ -15,7 +19,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class MainPage extends CommonView {
+public class MainPage extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JFrame frame;
@@ -87,13 +91,10 @@ public class MainPage extends CommonView {
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               // frame.getContentPane().add(new Login(frame)); GIUSTOO
-                frame.getContentPane().add(new Home(frame));
-                
+               frame.getContentPane().add(new Login(frame));  
             }
 
         });
         frame.getContentPane().setLayout(groupLayout);
-        this.initCommonView(frame);
     }
 }

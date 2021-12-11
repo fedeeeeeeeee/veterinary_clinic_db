@@ -30,19 +30,22 @@ import com.toedter.calendar.JDateChooser;
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
 import model.Appuntamento;
+import model.User;
+
 import java.awt.GridLayout;
 
-public class NuovoAppuntamento extends CommonView {
+public class DettagliAppuntamento extends CommonView {
 
 		private static final long serialVersionUID = -83378890947911750L;
 		private JFrame frame;
 		private PrestazioneController prestazioneController;
-		
-		public NuovoAppuntamento(final JFrame frame) {
+		private User user;
+		public DettagliAppuntamento(final JFrame frame, User user) {
 			frame.getContentPane().removeAll();
 			frame.getContentPane().validate();
 			frame.getContentPane().repaint();
 			this.frame = frame;
+			this.user = user;
 			this.prestazioneController = new PrestazioneControllerImpl();
 			
 			JPanel upperPanel = new JPanel();
@@ -143,7 +146,7 @@ public class NuovoAppuntamento extends CommonView {
 			backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			backButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					frame.getContentPane().add(new MainPage(frame));
+					frame.getContentPane().add(new GestioneAppuntamento(frame, user));
 				}
 			});
 			lowerPanel.setLayout(new BorderLayout(0, 0));
