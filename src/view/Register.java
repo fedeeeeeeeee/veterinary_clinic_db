@@ -1,21 +1,20 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-
 import com.toedter.calendar.JDateChooser;
-
 import controller.UserController;
 import controller.UserControllerImpl;
 import model.User;
 import model.UserImpl;
 import utility.ValidityFieldsChecker;
-
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -50,7 +49,7 @@ public class Register extends JPanel {
 	private User user;
 	private UserController controller;
 
-	public Register(JFrame frame) {		
+	public Register(JFrame frame) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
@@ -60,91 +59,122 @@ public class Register extends JPanel {
 
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
+
+		JPanel centerPanel = new JPanel();
+
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+
+		   int w = frame.getSize().width;
+           int h = frame.getSize().height;
+           int x = (dim.width-w)/2;
+           int y = (dim.height-h)/2;
+           // width 1000, height 600);
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		// utile per il design
+		//GroupLayout groupLayout = new GroupLayout(this);
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, (int)(w), GroupLayout.PREFERRED_SIZE)
+								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, (int)(w),  GroupLayout.PREFERRED_SIZE)
+								.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, (int)(w),  GroupLayout.PREFERRED_SIZE))
+						.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.3), GroupLayout.PREFERRED_SIZE)
+						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.5), GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.1), GroupLayout.PREFERRED_SIZE)
+						.addContainerGap()));
+		centerPanel.setLayout(new GridLayout(2, 2, 0, 0));
 		JPanel anagraficaPanel = new JPanel();
+		centerPanel.add(anagraficaPanel);
+		//centerPanel.add(new JLabel(""));
+
 		anagraficaPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Anagrafica", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		anagraficaPanel.setLayout(new GridLayout(5, 4, 0, 0));
+
+		JLabel labelNome = new JLabel("Nome");
+		labelNome.setHorizontalAlignment(SwingConstants.LEFT);
+		anagraficaPanel.add(labelNome);
+
+		textFieldNome = new JTextField();
+		labelNome.setLabelFor(textFieldNome);
+		anagraficaPanel.add(textFieldNome);
+
+		textFieldNome.setColumns(10);
+		JLabel labelCognome = new JLabel("Cognome");
+		anagraficaPanel.add(labelCognome);
+
+		textFieldCognome = new JTextField();
+		labelCognome.setLabelFor(textFieldCognome);
+		anagraficaPanel.add(textFieldCognome);
+
+		textFieldCognome.setColumns(10);
+		JLabel labelCf = new JLabel("CF");
+		anagraficaPanel.add(labelCf);
+
+		textFieldCodiceFiscale = new JTextField();
+		labelCf.setLabelFor(textFieldCodiceFiscale);
+		anagraficaPanel.add(textFieldCodiceFiscale);
+		textFieldCodiceFiscale.setColumns(10);
+
+		JLabel labelDataNascita = new JLabel("Data di nascita");
+		anagraficaPanel.add(labelDataNascita);
+
+		JDateChooser dateChooser = new JDateChooser();
+		labelDataNascita.setLabelFor(dateChooser);
+		anagraficaPanel.add(dateChooser);
+
+		JLabel labelVia = new JLabel("Via");
+		anagraficaPanel.add(labelVia);
+
+		textFieldVia = new JTextField();
+		labelVia.setLabelFor(textFieldVia);
+		anagraficaPanel.add(textFieldVia);
+		textFieldVia.setColumns(10);
+
+		JLabel labelNumeroCivico = new JLabel("Nr.");
+		anagraficaPanel.add(labelNumeroCivico);
+
+		textFieldNumeroCivico = new JTextField();
+		labelNumeroCivico.setLabelFor(textFieldNumeroCivico);
+		anagraficaPanel.add(textFieldNumeroCivico);
+		textFieldNumeroCivico.setColumns(10);
+
+		JLabel labelCitta = new JLabel("Citta");
+		anagraficaPanel.add(labelCitta);
+
+		textFieldCitta = new JTextField();
+		labelCitta.setLabelFor(textFieldCitta);
+		anagraficaPanel.add(textFieldCitta);
+		textFieldCitta.setColumns(10);
+
+		JLabel lblNewLabel = new JLabel("CAP");
+		anagraficaPanel.add(lblNewLabel);
+
+		textFieldCap = new JTextField();
+		lblNewLabel.setLabelFor(textFieldCap);
+		anagraficaPanel.add(textFieldCap);
+		textFieldCap.setColumns(10);
+
+		JLabel labelTelefono = new JLabel("Telefono");
+		anagraficaPanel.add(labelTelefono);
+
+		textFieldTelefono = new JTextField();
+		labelTelefono.setLabelFor(textFieldTelefono);
+		anagraficaPanel.add(textFieldTelefono);
+		textFieldTelefono.setColumns(10);
 
 		JPanel datiAccessoPanel = new JPanel();
+		centerPanel.add(datiAccessoPanel);
 		datiAccessoPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null),
 				"Dati di accesso", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
-		JPanel ruoloPanel = new JPanel();
-		ruoloPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Ruolo",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		
-
-		// utile per il design
-		//GroupLayout groupLayout = new GroupLayout(this);
-		
-		
-		// per la visualizzazione
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(upperPanel,
-								GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE))
-						.addGroup(groupLayout.createSequentialGroup().addContainerGap().addComponent(lowerPanel,
-								GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, groupLayout.createSequentialGroup().addGap(27)
-								.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(anagraficaPanel, GroupLayout.PREFERRED_SIZE, 701,
-												GroupLayout.PREFERRED_SIZE)
-										.addGroup(groupLayout.createSequentialGroup()
-												.addComponent(datiAccessoPanel, GroupLayout.PREFERRED_SIZE, 434,
-														GroupLayout.PREFERRED_SIZE)
-												.addPreferredGap(ComponentPlacement.UNRELATED).addComponent(ruoloPanel,
-														GroupLayout.PREFERRED_SIZE, 264, GroupLayout.PREFERRED_SIZE)))
-								.addPreferredGap(ComponentPlacement.RELATED, 17, Short.MAX_VALUE)))
-				.addContainerGap()));
-		
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
-				.createSequentialGroup().addGap(5)
-				.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE).addGap(3)
-				.addComponent(anagraficaPanel, GroupLayout.PREFERRED_SIZE, 168, GroupLayout.PREFERRED_SIZE)
-				.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-				.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(datiAccessoPanel, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE)
-						.addComponent(ruoloPanel, GroupLayout.PREFERRED_SIZE, 108, GroupLayout.PREFERRED_SIZE))
-				.addPreferredGap(ComponentPlacement.RELATED)
-				.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 67, GroupLayout.PREFERRED_SIZE)
-				.addContainerGap()));
-		lowerPanel.setLayout(new BorderLayout(0, 0));
-		
-		JButton backButton = new JButton("BACK");
-		backButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-                frame.getContentPane().add(new MainPage(frame));
-			}
-		});
-		lowerPanel.add(backButton, BorderLayout.WEST);
-
-		JLabel titleLabel = new JLabel("Registrazione");
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-		upperPanel.add(titleLabel);
-		ruoloPanel.setLayout(new GridLayout(2, 2, 0, 0));
-		
-		JLabel labelAnniServizio = new JLabel("Anni di servizio");
-		ruoloPanel.add(labelAnniServizio);
-		
-		JSpinner spinner = new JSpinner();
-		labelAnniServizio.setLabelFor(spinner);
-		ruoloPanel.add(spinner);
-		
-		JLabel labelRuolo = new JLabel("Ruolo");
-		ruoloPanel.add(labelRuolo);
-		
-		String[] ruoli = controller.getAllRuoli().toArray(new String[0]);		
-		JComboBox<String> comboBox = new JComboBox<String>(ruoli);
-		labelRuolo.setLabelFor(comboBox);
-		ruoloPanel.add(comboBox);
-
-		
 		datiAccessoPanel.setLayout(new GridLayout(2, 2, 0, 0));
-		anagraficaPanel.setLayout(new GridLayout(5, 4, 0, 0));
-		
-		
+
 		JLabel labelEmail = new JLabel("E-mail");
 		datiAccessoPanel.add(labelEmail);
 		JLabel labelPassword = new JLabel("Password");
@@ -154,78 +184,43 @@ public class Register extends JPanel {
 		datiAccessoPanel.add(labelPassword);
 		passwordField = new JPasswordField();
 		datiAccessoPanel.add(passwordField);
-		
-		JLabel labelNome = new JLabel("Nome");
-		labelNome.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(labelNome);
 
-		textFieldNome = new JTextField();
-		labelNome.setLabelFor(textFieldNome);
-		anagraficaPanel.add(textFieldNome);
-		
-		textFieldNome.setColumns(10);
-		JLabel labelCognome = new JLabel("Cognome");
-		anagraficaPanel.add(labelCognome);
+		JPanel ruoloPanel = new JPanel();
+		centerPanel.add(ruoloPanel);
+		ruoloPanel.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null), "Ruolo",
+				TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		ruoloPanel.setLayout(new GridLayout(2, 2, 0, 0));
 
-		textFieldCognome = new JTextField();
-		labelCognome.setLabelFor(textFieldCognome);
-		anagraficaPanel.add(textFieldCognome);
-		
-		textFieldCognome.setColumns(10);
-		JLabel labelCf = new JLabel("CF");
-		anagraficaPanel.add(labelCf);
-		
-		textFieldCodiceFiscale = new JTextField();
-		labelCf.setLabelFor(textFieldCodiceFiscale);
-		anagraficaPanel.add(textFieldCodiceFiscale);
-		textFieldCodiceFiscale.setColumns(10);
-		
-		JLabel labelDataNascita = new JLabel("Data di nascita");
-		anagraficaPanel.add(labelDataNascita);
-		
-		JDateChooser dateChooser = new JDateChooser();
-		labelDataNascita.setLabelFor(dateChooser);
-		anagraficaPanel.add(dateChooser);
+		JLabel labelAnniServizio = new JLabel("Anni di servizio");
+		ruoloPanel.add(labelAnniServizio);
 
-		JLabel labelVia = new JLabel("Via");
-		anagraficaPanel.add(labelVia);
-		
-		textFieldVia = new JTextField();
-		labelVia.setLabelFor(textFieldVia);
-		anagraficaPanel.add(textFieldVia);
-		textFieldVia.setColumns(10);
+		JSpinner spinner = new JSpinner();
+		labelAnniServizio.setLabelFor(spinner);
+		ruoloPanel.add(spinner);
 
-		JLabel labelNumeroCivico = new JLabel("Nr.");
-		anagraficaPanel.add(labelNumeroCivico);
-		
-		textFieldNumeroCivico = new JTextField();
-		labelNumeroCivico.setLabelFor(textFieldNumeroCivico);
-		anagraficaPanel.add(textFieldNumeroCivico);
-		textFieldNumeroCivico.setColumns(10);
+		JLabel labelRuolo = new JLabel("Ruolo");
+		ruoloPanel.add(labelRuolo);
+		JComboBox<String> comboBox = new JComboBox<>();
+		labelRuolo.setLabelFor(comboBox);
+		ruoloPanel.add(comboBox);
+		lowerPanel.setLayout(new BorderLayout(0, 0));
 
-		JLabel labelCitta = new JLabel("Citta");
-		anagraficaPanel.add(labelCitta);
-		
-		textFieldCitta = new JTextField();
-		labelCitta.setLabelFor(textFieldCitta);
-		anagraficaPanel.add(textFieldCitta);
-		textFieldCitta.setColumns(10);
+		JButton backButton = new JButton("BACK");
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frame.getContentPane().add(new MainPage(frame));
+			}
+		});
+		lowerPanel.add(backButton, BorderLayout.WEST);
 
-		JLabel lblNewLabel = new JLabel("CAP");
-		anagraficaPanel.add(lblNewLabel);
-		
-		textFieldCap = new JTextField();
-		lblNewLabel.setLabelFor(textFieldCap);
-		anagraficaPanel.add(textFieldCap);
-		textFieldCap.setColumns(10);
-		
-		JLabel labelTelefono = new JLabel("Telefono");
-		anagraficaPanel.add(labelTelefono);
-		
-		textFieldTelefono = new JTextField();
-		labelTelefono.setLabelFor(textFieldTelefono);
-		anagraficaPanel.add(textFieldTelefono);
-		textFieldTelefono.setColumns(10);
+		JLabel titleLabel = new JLabel("Registrazione");
+		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		upperPanel.add(titleLabel);
+
+		String[] ruoli = controller.getAllRuoli().toArray(new String[0]);
+		for (int i = 0; i < ruoli.length; i++) {
+			comboBox.addItem(ruoli[i]);
+		}
 
 		JButton sendButton = new JButton("SEND");
 		sendButton.addActionListener(new ActionListener() {
@@ -239,9 +234,7 @@ public class Register extends JPanel {
 						&& check.checkNotEmpty(textFieldNumeroCivico.getText())
 						&& check.checkCap(textFieldCap.getText()) && check.checkNotEmpty(textFieldCap.getText())
 						&& check.checkNotEmpty(textFieldCitta.getText()) && spinner.getValue() != null
-						&& dateChooser.getDate() != null
-				&& comboBox.getSelectedItem() != null
-				) {
+						&& dateChooser.getDate() != null && comboBox.getSelectedItem() != null) {
 					System.out.println("tutto ok");
 					user = new UserImpl();
 
@@ -264,7 +257,7 @@ public class Register extends JPanel {
 					user.setHashPassword(String.valueOf(passwordField.getPassword()));
 
 					controller.addNewUser(user);
-					
+
 					switch (user.getRuolo()) {
 					case "Veterinario":
 					case "Infermiere":
@@ -287,8 +280,8 @@ public class Register extends JPanel {
 		// importante per il design
 		//setLayout(groupLayout);
 
-		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
-		frame.getContentPane().setLayout(groupLayout);
+		// importante per la visualizzazione ---> commentare GroupLayout groupLayout =
+		  new GroupLayout(this);
+		 frame.getContentPane().setLayout(groupLayout);
 	}
-
 }
