@@ -264,7 +264,18 @@ public class Register extends JPanel {
 					user.setHashPassword(String.valueOf(passwordField.getPassword()));
 
 					controller.addNewUser(user);
-					frame.getContentPane().add(new Home(frame, user));
+					
+					switch (user.getRuolo()) {
+					case "Veterinario":
+					case "Infermiere":
+						// TODO
+						// frame.getContentPane().add(new Home(frame, user));
+						break;
+					case "Segretaria":
+						frame.getContentPane().add(new HomeSegretaria(frame, user));
+						break;
+					default:
+					}
 				} else {
 					// errore di compilazione della form
 					System.out.println("errore");

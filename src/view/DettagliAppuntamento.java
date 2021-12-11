@@ -137,11 +137,7 @@ public class DettagliAppuntamento extends CommonView {
 				}
 		    });
 		    */
-
 			
-			
-		
-
 			JButton backButton = new JButton("BACK");
 			backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 			backButton.addActionListener(new ActionListener() {

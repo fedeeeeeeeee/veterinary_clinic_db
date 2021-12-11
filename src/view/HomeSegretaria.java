@@ -12,13 +12,13 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import model.User;
 
-public class Home extends CommonView {
+public class HomeSegretaria extends CommonView {
 	 
 	private static final long serialVersionUID = -3398122590862316754L;
 	private JFrame frame;
 	private User user;
 	
-	public Home(final JFrame frame, User user) {
+	public HomeSegretaria(final JFrame frame, User user) {
 
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();

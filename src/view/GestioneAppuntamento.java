@@ -212,7 +212,7 @@ public class GestioneAppuntamento extends CommonView {
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new Home(frame, user));
+				frame.getContentPane().add(new HomeSegretaria(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
