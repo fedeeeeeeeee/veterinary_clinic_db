@@ -46,7 +46,7 @@ public class MainPage extends JPanel {
         loginButton.setFont(new Font("Tahoma", Font.PLAIN, 40));
         
         JLabel label = new JLabel("");
-        label.setIcon(IconImage.RICOVERO.getImageIcon());
+       // label.setIcon(IconImage.RICOVERO.getImageIcon());
         
         GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
         groupLayout.setHorizontalGroup(
@@ -84,7 +84,7 @@ public class MainPage extends JPanel {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.getContentPane().add(new Register(frame));
+                frame.getContentPane().add(new Register2(frame));
             }
         });
        
