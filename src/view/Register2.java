@@ -422,7 +422,7 @@ public class Register2 extends JPanel {
 						// frame.getContentPane().add(new Home(frame, user));
 						break;
 					case "Segretaria":
-						frame.getContentPane().add(new HomeSegretaria(frame, user));
+						frame.getContentPane().add(new HomeSegretariaOLD(frame, user));
 						break;
 					default:
 					}

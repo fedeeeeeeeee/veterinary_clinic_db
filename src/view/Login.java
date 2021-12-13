@@ -73,6 +73,7 @@ public class Login extends JPanel {
 						// frame.getContentPane().add(new Home(frame, user));
 						break;
 					case "Segretaria":
+						//frame.getContentPane().add(new HomeSegretaria(frame, user));
 						frame.getContentPane().add(new HomeSegretaria(frame, user));
 						break;
 					default:
