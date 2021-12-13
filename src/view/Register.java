@@ -72,10 +72,10 @@ public class Register extends JPanel {
            int h = frame.getSize().height;
            int x = (dim.width-w)/2;
            int y = (dim.height-h)/2;
-           GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+         //  GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
            
 		// utile per il design
-          // GroupLayout groupLayout = new GroupLayout(this);
+           GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -320,10 +320,10 @@ public class Register extends JPanel {
 		lowerPanel.add(sendButton, BorderLayout.EAST);
 		
 		// importante per il design
-		//setLayout(groupLayout);
+		setLayout(groupLayout);
 
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout =
-		new GroupLayout(this);
-		frame.getContentPane().setLayout(groupLayout);
+		//new GroupLayout(this);
+		//frame.getContentPane().setLayout(groupLayout);
 	}
 }
