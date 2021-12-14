@@ -121,6 +121,13 @@ public class RegistraPaziente extends JPanel {
 		gbc_addProprietarioButton.gridx = 8;
 		gbc_addProprietarioButton.gridy = 0;
 		centerPanel.add(addProprietarioButton, gbc_addProprietarioButton);
+				
+		addProprietarioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  frame.getContentPane().add(new AggiungiProprietario(frame, user));
+			}
+		});
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -164,6 +171,12 @@ public class RegistraPaziente extends JPanel {
 		centerPanel.add(addAnimaleButton, gbc_addAnimaleButton);
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		
+		addAnimaleButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  frame.getContentPane().add(new AggiungiAnimale(frame, user));
+			}
+		});
+		
 		JButton backButton = new JButton("BACK");
 		lowerPanel.add(backButton);
 		upperPanel.setLayout(new BorderLayout(0, 0));
@@ -182,6 +195,6 @@ public class RegistraPaziente extends JPanel {
 
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
-		//this.initCommonView(frame);
+		//extend common view poi --> this.initCommonView(frame);
 	}
 }
