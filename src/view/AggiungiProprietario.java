@@ -31,6 +31,8 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 import com.toedter.calendar.JDateChooser;
 
+import controller.ProprietarioController;
+import controller.ProprietarioControllerImpl;
 import controller.UserControllerImpl;
 import model.Person;
 import model.Proprietario;
@@ -53,15 +55,18 @@ public class AggiungiProprietario extends CommonView {
 	private JTextField textFieldTelefono;
 	private ValidityFieldsChecker check;
 	private Person proprietario;
+	private ProprietarioController controller;
+	private User user;
 	
 	public AggiungiProprietario(JFrame frame, User user) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 		this.frame = frame;
+		this.user = user;
 		this.check = new ValidityFieldsChecker();
 		this.proprietario = new Proprietario();
-		//this.controller = new UserControllerImpl();
+		this.controller = new ProprietarioControllerImpl();
 		
 		
 		JPanel upperPanel = new JPanel();
@@ -242,26 +247,25 @@ public class AggiungiProprietario extends CommonView {
 						&& check.checkNotEmpty(textFieldCitta.getText())) {
 					System.out.println("tutto ok");
 					
-					/*user = new UserImpl();
+					proprietario = new Proprietario();
 
-					user.setNome(textFieldNome.getText());
-					user.setCognome(textFieldCognome.getText());
-					user.setCF(textFieldCodiceFiscale.getText());
-					user.setIndirizzoVia(textFieldVia.getText());
-					user.setIndirizzoNumero(Integer.valueOf(textFieldNumeroCivico.getText()));
-					user.setIndirizzoCitta(textFieldCitta.getText());
-					user.setIndirizzoCap(Integer.valueOf(textFieldCap.getText()));
+					proprietario.setNome(textFieldNome.getText());
+					proprietario.setCognome(textFieldCognome.getText());
+					proprietario.setCF(textFieldCodiceFiscale.getText());
+					proprietario.setIndirizzoVia(textFieldVia.getText());
+					proprietario.setIndirizzoNumero(Integer.valueOf(textFieldNumeroCivico.getText()));
+					proprietario.setIndirizzoCitta(textFieldCitta.getText());
+					proprietario.setIndirizzoCap(Integer.valueOf(textFieldCap.getText()));
+					
 					dateChooser.setDateFormatString("yyyy-MM-dd");
-
 					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					String date = format.format(dateChooser.getDate());
-					user.setDataNascita(date);
-					user.setIndirizzoCitta(textFieldCitta.getText());
-					user.setTelefono(Long.valueOf(textFieldTelefono.getText()));
-					user.setEmail(textFieldEmail.getText());
-					user.setHashPassword(String.valueOf(passwordField.getPassword()));*/
+					proprietario.setDataNascita(date);
+					proprietario.setIndirizzoCitta(textFieldCitta.getText());
+					proprietario.setTelefono(Long.valueOf(textFieldTelefono.getText()));
+					proprietario.setEmail(textFieldEmail.getText());
 
-					//controller.addNewUser(user);
+					controller.addNewProprietario(proprietario);
 
 				} else {
 					// errore di compilazione della form
@@ -270,7 +274,7 @@ public class AggiungiProprietario extends CommonView {
 			}
 		});
 
-		lowerPanel.add(sendButton, BorderLayout.EAST);
+		centerPanel.add(sendButton, "5, 3, 3, 2, center, center");
 		
 		// importante per il design
 		//setLayout(groupLayout);
