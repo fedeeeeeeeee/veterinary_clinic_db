@@ -4,6 +4,7 @@ import java.util.List;
 
 import database.AnimaleTable;
 import database.AnimaleTableImpl;
+import utility.Pair;
 
 
 public class PazienteControllerImpl implements PazienteController {
@@ -13,9 +14,17 @@ public class PazienteControllerImpl implements PazienteController {
 	public PazienteControllerImpl() {
 		this.animaleTable = new AnimaleTableImpl();
 	}
+	
 	@Override
 	public List<String> getAllPropietariCf() {
 		return this.animaleTable.getAllPropietariCf();
 	}
+
+	@Override
+	public List<Pair<String, String>> getNomeAndRazzaByProprietario(String cf) {
+		return animaleTable.getNomeAndRazzaByProprietario(cf);
+	}
+	
+
 
 }

@@ -5,6 +5,8 @@ import javax.swing.JScrollPane;
 
 import model.Appuntamento;
 import model.User;
+import utility.Pair;
+
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.BoxLayout;
@@ -18,6 +20,8 @@ import javax.swing.JComboBox;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -134,15 +138,22 @@ public class RegistraPaziente extends JPanel {
 		model.addColumn("Animale");
 		model.addColumn("Razza");
 
-		model.addRow(new Object[] { 
-				"gatto", 
-				"siamese", 
-		});
-		model.addRow(new Object[] { 
-				"2", 
-				"23", 
-		});
+		comboBox.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				model.setRowCount(0);
+				List<Pair<String, String>> list = pazienteController.getNomeAndRazzaByProprietario(comboBox.getSelectedItem().toString());
+				list.forEach(x-> {
+					model.addRow(new Object[] { 
+							x.getX(), 
+							x.getY(), 
+					});
+				});
+				
+			}
 			
+		});
 				
 		JButton addAnimaleButton = new JButton("Aggiungi animale");
 		GridBagConstraints gbc_addAnimaleButton = new GridBagConstraints();
