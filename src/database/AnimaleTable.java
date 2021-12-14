@@ -2,6 +2,7 @@ package database;
 
 import java.util.List;
 
+import model.Animale;
 import utility.Pair;
 
 public interface AnimaleTable {
@@ -10,4 +11,7 @@ public interface AnimaleTable {
 
 	List<Pair<String, String>> getNomeAndRazzaByProprietario(String cf);
 
+	void addNewAnimale(Animale animale);
+
+	
 }

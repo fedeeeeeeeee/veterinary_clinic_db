@@ -26,8 +26,8 @@ import javax.swing.JTable;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.table.DefaultTableModel;
 
-import controller.PazienteController;
-import controller.PazienteControllerImpl;
+import controller.AnimaleController;
+import controller.AnimaleControllerImpl;
 import controller.ProprietarioController;
 import controller.ProprietarioControllerImpl;
 
@@ -40,7 +40,7 @@ public class RegistraPaziente extends JPanel {
 	private JFrame frame;
 	private User user;
 	private JTable table;
-	private PazienteController pazienteController;
+	private AnimaleController animaleController;
 	private ProprietarioController proprietarioController;
 
 
@@ -53,7 +53,7 @@ public class RegistraPaziente extends JPanel {
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
-		this.pazienteController = new PazienteControllerImpl();
+		this.animaleController = new AnimaleControllerImpl();
 		this.proprietarioController = new ProprietarioControllerImpl();
 		
 		JPanel upperPanel = new JPanel();
@@ -113,9 +113,6 @@ public class RegistraPaziente extends JPanel {
 		gbc_comboBox.gridy = 0;
 		centerPanel.add(comboBox, gbc_comboBox);
 	
-		/**
-		 * jdoifnbifoe
-		 */
 		List<String> listCF = proprietarioController.getAllPropietariCf();
 		listCF.forEach(x-> {
 			comboBox.addItem(x);
@@ -156,7 +153,7 @@ public class RegistraPaziente extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				model.setRowCount(0);
-				List<Pair<String, String>> list = pazienteController.getNomeAndRazzaByProprietario(comboBox.getSelectedItem().toString());
+				List<Pair<String, String>> list = animaleController.getNomeAndRazzaByProprietario(comboBox.getSelectedItem().toString());
 				list.forEach(x-> {
 					model.addRow(new Object[] { 
 							x.getX(), 
@@ -179,7 +176,9 @@ public class RegistraPaziente extends JPanel {
 		
 		addAnimaleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  frame.getContentPane().add(new AggiungiAnimale(frame, user));
+				if(comboBox.getSelectedIndex() != -1) {
+					frame.getContentPane().add(new AggiungiAnimale(frame, user, comboBox.getSelectedItem().toString()));
+				}
 			}
 		});
 		

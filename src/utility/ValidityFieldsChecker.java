@@ -6,6 +6,7 @@ public class ValidityFieldsChecker {
             "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                     + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
     private static final String NUMERIC_PATTERN = "[0-9]+";
+    private static final String FLOAT_PATTERN = "[-+]?[0-9]*\\.?[0-9]+";
     private static final int PHONE_NUMBER = 10;
     private static final int CAP = 5;
     private static final int CF = 16;
@@ -32,6 +33,11 @@ public class ValidityFieldsChecker {
     
     public boolean checkNotEmpty(final String field) {
         return field.length() != 0 && field != null;
+    }
+    
+    public boolean checkFloatFieldsValue(String value) {
+		return value.matches(FLOAT_PATTERN);
+    	
     }
     
 }

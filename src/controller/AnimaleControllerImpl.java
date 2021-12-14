@@ -6,16 +6,18 @@ import database.AnimaleTable;
 import database.AnimaleTableImpl;
 import database.ProprietarioTable;
 import database.ProprietarioTableImpl;
+import model.Animale;
+import model.User;
 import utility.Pair;
 
 
-public class PazienteControllerImpl implements PazienteController {
+public class AnimaleControllerImpl implements AnimaleController {
 
 	private AnimaleTable animaleTable;
 	private ProprietarioTable proprietarioTable;
 
 	
-	public PazienteControllerImpl() {
+	public AnimaleControllerImpl() {
 		this.animaleTable = new AnimaleTableImpl();
 		this.proprietarioTable = new ProprietarioTableImpl();
 
@@ -30,7 +32,9 @@ public class PazienteControllerImpl implements PazienteController {
 	public List<Pair<String, String>> getNomeAndRazzaByProprietario(String cf) {
 		return animaleTable.getNomeAndRazzaByProprietario(cf);
 	}
-	
 
-
+	@Override
+	public void addNewAnimale(Animale animale) {
+		this.animaleTable.addNewAnimale(animale);
+	}
 }

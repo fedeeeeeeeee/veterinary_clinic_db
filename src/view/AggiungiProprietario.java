@@ -12,12 +12,10 @@ import java.text.SimpleDateFormat;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
@@ -33,18 +31,15 @@ import com.toedter.calendar.JDateChooser;
 
 import controller.ProprietarioController;
 import controller.ProprietarioControllerImpl;
-import controller.UserControllerImpl;
 import model.Person;
 import model.Proprietario;
 import model.User;
-import model.UserImpl;
 import utility.ValidityFieldsChecker;
 
 public class AggiungiProprietario extends CommonView {
 
 	private JFrame frame;
 	private JTextField textFieldEmail;
-	private JPasswordField passwordField;
 	private JTextField textFieldNome;
 	private JTextField textFieldCognome;
 	private JTextField textFieldCodiceFiscale;
@@ -78,11 +73,8 @@ public class AggiungiProprietario extends CommonView {
 
 		int w = frame.getSize().width;
 		int h = frame.getSize().height;
-		int x = (dim.width - w) / 2;
-		int y = (dim.height - h) / 2;
-		
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-           
+
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());           
 		// utile per il design
         // GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -244,7 +236,8 @@ public class AggiungiProprietario extends CommonView {
 						&& check.checkNotEmpty(textFieldNumeroCivico.getText())
 						&& check.checkCap(textFieldCap.getText()) 
 						&& check.checkNotEmpty(textFieldCap.getText())
-						&& check.checkNotEmpty(textFieldCitta.getText())) {
+						&& check.checkNotEmpty(textFieldCitta.getText())
+						&& dateChooser.getDate() != null) {
 					System.out.println("tutto ok");
 					
 					proprietario = new Proprietario();
