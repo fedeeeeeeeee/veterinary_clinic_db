@@ -215,7 +215,7 @@ public class AggiungiProprietario extends CommonView {
 		JButton backButton = new JButton("BACK");
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new MainPage(frame));
+				frame.getContentPane().add(new RegistraPaziente(frame, user));
 			}
 		});
 		lowerPanel.add(backButton, BorderLayout.WEST);
@@ -266,6 +266,9 @@ public class AggiungiProprietario extends CommonView {
 					proprietario.setEmail(textFieldEmail.getText());
 
 					controller.addNewProprietario(proprietario);
+					// paziente inserito correttamente
+					frame.getContentPane().add(new RegistraPaziente(frame, user));
+
 
 				} else {
 					// errore di compilazione della form

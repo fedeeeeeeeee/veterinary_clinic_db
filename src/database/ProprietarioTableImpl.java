@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import model.Person;
@@ -99,5 +101,37 @@ public class ProprietarioTableImpl implements ProprietarioTable {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public List<String> getAllPropietariCf() {
+		List<String> cf = new ArrayList<>();
+
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		final String query = "select cf from " + tableName;
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			final ResultSet result = statement.get().executeQuery();
+
+			while (result.next()) {
+				cf.add(result.getString("cf"));
+			}
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return cf;
 	}
 }

@@ -20,8 +20,6 @@ import javax.swing.JComboBox;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.List;
 
 import javax.swing.JTable;
@@ -30,6 +28,8 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.PazienteController;
 import controller.PazienteControllerImpl;
+import controller.ProprietarioController;
+import controller.ProprietarioControllerImpl;
 
 public class RegistraPaziente extends JPanel {
 
@@ -41,6 +41,8 @@ public class RegistraPaziente extends JPanel {
 	private User user;
 	private JTable table;
 	private PazienteController pazienteController;
+	private ProprietarioController proprietarioController;
+
 
 	/**
 	 * Create the panel.
@@ -52,6 +54,7 @@ public class RegistraPaziente extends JPanel {
 		this.frame = frame;
 		this.user = user;
 		this.pazienteController = new PazienteControllerImpl();
+		this.proprietarioController = new ProprietarioControllerImpl();
 		
 		JPanel upperPanel = new JPanel();
 		
@@ -109,8 +112,11 @@ public class RegistraPaziente extends JPanel {
 		gbc_comboBox.gridx = 4;
 		gbc_comboBox.gridy = 0;
 		centerPanel.add(comboBox, gbc_comboBox);
-		
-		List<String> listCF = pazienteController.getAllPropietariCf();
+	
+		/**
+		 * jdoifnbifoe
+		 */
+		List<String> listCF = proprietarioController.getAllPropietariCf();
 		listCF.forEach(x-> {
 			comboBox.addItem(x);
 		});

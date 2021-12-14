@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import database.ProprietarioTable;
 import database.ProprietarioTableImpl;
 import model.Person;
@@ -18,5 +20,10 @@ public class ProprietarioControllerImpl implements ProprietarioController {
 		} else {
 			System.out.println("errore inserimento proprietario");
 		}
+	}
+	
+	@Override
+	public List<String> getAllPropietariCf() {
+		return this.proprietarioTable.getAllPropietariCf();
 	}
 }

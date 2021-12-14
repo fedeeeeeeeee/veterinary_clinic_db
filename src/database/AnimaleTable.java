@@ -6,7 +6,7 @@ import utility.Pair;
 
 public interface AnimaleTable {
 
-	List<String> getAllPropietariCf();
+	// solo proprietari che hanno un cane --> List<String> getAllPropietariCf();
 
 	List<Pair<String, String>> getNomeAndRazzaByProprietario(String cf);
 

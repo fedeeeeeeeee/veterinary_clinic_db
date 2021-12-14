@@ -20,7 +20,7 @@ public class AnimaleTableImpl implements AnimaleTable {
 		this.animaleTableName = "animale";
 	}
 	
-	@Override
+	/*@Override
 	public List<String> getAllPropietariCf() {
 		List<String> cf = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class AnimaleTableImpl implements AnimaleTable {
 			}
 		}
 		return cf;
-	}
+	}*/
 
 	@Override
 	public List<Pair<String, String>> getNomeAndRazzaByProprietario(final String CF) {
