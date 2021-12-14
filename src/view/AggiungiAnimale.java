@@ -8,6 +8,7 @@ import controller.AnimaleControllerImpl;
 import model.Animale;
 import model.AnimaleImpl;
 import model.User;
+import utility.ReadTextToHashMap;
 import utility.ValidityFieldsChecker;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -22,7 +23,15 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
@@ -253,6 +262,36 @@ public class AggiungiAnimale extends JPanel {
 		gbc_comboBoxRazza.gridy = 7;
 		animalePanel.add(comboBoxRazza, gbc_comboBoxRazza);
 		
+		
+		Map<String, List<String>> map = new HashMap<>();
+		map = ReadTextToHashMap.HashMapFromTextFile();
+		for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+			System.out.println(entry.getKey() + " : " + entry.getValue());
+		}
+		/*BufferedReader in;
+        String line;
+		try {
+			in = new BufferedReader(new FileReader("src/utility/animali.text"));
+			 while ((line = in.readLine()) != null) {
+		            String columns[] = line.split("\t");
+		            if (!map.containsKey(columns[0])) {
+		            	List<String> list = new ArrayList<>();
+		            	list.add(columns[2]);
+		            	map.put(columns[0], list);
+		            } else {
+		            	map.get(columns[0]).add(columns[2]);
+		            }
+		        }
+		        in.close();
+		        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+					System.out.println(entry.getKey() + " : " + entry.getValue());
+				}
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}*/
+        
 		JButton btnNewButton = new JButton("SAVE");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
