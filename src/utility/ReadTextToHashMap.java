@@ -28,7 +28,10 @@ public class ReadTextToHashMap {
 				
 				List<String> values = new ArrayList<>();
 				for(int i=0; i<parts.length; i++) {
-					values.add(Stream.of(parts[i].substring(parts[i].indexOf(" "), parts[i].length())).collect(Collectors.joining(",")));
+					String[] array = parts[i].substring(parts[i].indexOf(" ")).split(",");
+					for(int j = 0; j<array.length; j++) {
+						values.add(array[j]);
+					}
 				}
 				map.put(key, values);
 			}
