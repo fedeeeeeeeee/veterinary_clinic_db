@@ -14,16 +14,10 @@ public class ReadTextToHashMap {
 		BufferedReader br = null;
 
 		try {
-			// create BufferedReader object from the File
 			br = new BufferedReader(new FileReader(new File(filePath)));
-
 			String line = null;
-
-			// read file line by line
 			while ((line = br.readLine()) != null) {
-
-				// split the line by ;
-				String[] parts = line.split(";");
+				String[] parts = line.split("\\r?\\n");
 				String key = parts[0].substring(0, parts[0].indexOf(":"));
 				
 				List<String> values = new ArrayList<>();
@@ -47,4 +41,51 @@ public class ReadTextToHashMap {
 		}
 		return map;
 	}
+	
+	public static void writeOnFile(Optional<String> key, Optional<Pair<String, String>> value) {
+		BufferedWriter bv = null;
+		try {
+			bv = new BufferedWriter(new FileWriter(new File(filePath)));
+			if(key.isPresent()) {
+				// scrivi nuova chiave nel file
+				bv.append(key.get());
+				bv.append(":");
+			} else if(value.isPresent()) {
+				// scrivi nuovo valore
+				
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void listaMap(HashMap<String, List<String>> map) {
+		if (map != null) {
+			try (FileWriter writer = new FileWriter(filePath, true)) {
+				for (String key : map.keySet()) {
+					List<String> value = map.get(key);
+					/*if (value == null) {
+						System.out.println("Warning: " + key + " in listaMap.");
+						value = "Not sure";
+					}*/
+					writer.write(key.trim());
+					writer.write(":");
+					value.forEach(v-> {
+						try {
+							writer.write(v.trim() + ",");
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					});
+					writer.write('\n');
+				}
+				writer.close();
+			} catch (IOException e) {
+				System.out.println("Issue: " + filePath + " in listaMap");
+			}
+		} else {
+			System.out.println("Null map passed to listaMap.");
+		}
+	}
+
 }
