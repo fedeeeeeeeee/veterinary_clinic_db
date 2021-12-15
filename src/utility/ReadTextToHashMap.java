@@ -1,6 +1,8 @@
 package utility;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -59,7 +61,7 @@ public class ReadTextToHashMap {
 		}
 	}
 	
-	public void listaMap(HashMap<String, List<String>> map) {
+	public static void listaMap(Map<String, List<String>> map) {
 		if (map != null) {
 			try (FileWriter writer = new FileWriter(filePath, true)) {
 				for (String key : map.keySet()) {
@@ -85,6 +87,22 @@ public class ReadTextToHashMap {
 			}
 		} else {
 			System.out.println("Null map passed to listaMap.");
+		}
+	}
+	
+	
+	public static void addKeyOrValueToFile(Optional<String> key, Optional<Pair<String, String>> value) {
+			try (FileWriter writer = new FileWriter(filePath, true)) {
+				
+				if(key.isPresent()) {
+					writer.append(key.get() + ": " + '\n');
+				} else if(value.isPresent()) {
+
+				}
+								
+				writer.close();
+			} catch (IOException e) {
+				System.out.println("Issue: " + filePath + " in listaMap");
 		}
 	}
 

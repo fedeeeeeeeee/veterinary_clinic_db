@@ -8,6 +8,7 @@ import controller.AnimaleControllerImpl;
 import model.Animale;
 import model.AnimaleImpl;
 import model.User;
+import utility.Pair;
 import utility.ReadTextToHashMap;
 import utility.ValidityFieldsChecker;
 import javax.swing.GroupLayout;
@@ -21,13 +22,16 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
@@ -36,6 +40,7 @@ import java.awt.Insets;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JOptionPane;
 
 public class AggiungiAnimale extends JPanel {
 
@@ -100,7 +105,7 @@ public class AggiungiAnimale extends JPanel {
 				"Animale", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		centerPanel.add(animalePanel);
 		GridBagLayout gbl_animalePanel = new GridBagLayout();
-		gbl_animalePanel.columnWidths = new int[]{143, 170, 17, 0, 0};
+		gbl_animalePanel.columnWidths = new int[]{143, 170, 40, 0, 0};
 		gbl_animalePanel.rowHeights = new int[]{0, 16, 22, 130, 13, 16, 23, 16, 0};
 		gbl_animalePanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_animalePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
@@ -244,13 +249,30 @@ public class AggiungiAnimale extends JPanel {
 		comboBoxSpecie.setSelectedIndex(-1);		
 		labelSpecie.setLabelFor(comboBoxSpecie);
 		
-		JButton addSpecieButton = new JButton("ADD");
+		JButton addSpecieButton = new JButton("+");
 		GridBagConstraints gbc_addSpecieButton = new GridBagConstraints();
 		gbc_addSpecieButton.anchor = GridBagConstraints.ABOVE_BASELINE;
 		gbc_addSpecieButton.insets = new Insets(0, 0, 5, 5);
 		gbc_addSpecieButton.gridx = 2;
 		gbc_addSpecieButton.gridy = 6;
 		animalePanel.add(addSpecieButton, gbc_addSpecieButton);
+		addSpecieButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String result = (String)JOptionPane.showInputDialog(
+			               frame,
+			               "Inserisci nuova specie", 
+			               "Nuova specie",            
+			               JOptionPane.PLAIN_MESSAGE,
+			               null,            
+			               null, 
+			               "");
+				map.put(result, new ArrayList<>());
+				ReadTextToHashMap.addKeyOrValueToFile(Optional.of(result), Optional.empty());
+				comboBoxSpecie.addItem(result);
+			}
+		});
 		
 		JButton resetSpecieButton = new JButton("RESET");
 		GridBagConstraints gbc_resetSpecieButton = new GridBagConstraints();
@@ -258,8 +280,6 @@ public class AggiungiAnimale extends JPanel {
 		gbc_resetSpecieButton.gridx = 3;
 		gbc_resetSpecieButton.gridy = 6;
 		animalePanel.add(resetSpecieButton, gbc_resetSpecieButton);
-
-		//textFieldSpecie.setEnabled(false);
 		
 		JLabel labelRazza = new JLabel("Razza");
 		GridBagConstraints gbc_labelRazza = new GridBagConstraints();
@@ -279,13 +299,57 @@ public class AggiungiAnimale extends JPanel {
 		comboBoxRazza.setEnabled(false);
 		labelRazza.setLabelFor(comboBoxRazza);
 		
-		JButton addRazzaButton = new JButton("ADD");
+		JButton addRazzaButton = new JButton("+");
 		GridBagConstraints gbc_addRazzaButton = new GridBagConstraints();
 		gbc_addRazzaButton.anchor = GridBagConstraints.ABOVE_BASELINE;
 		gbc_addRazzaButton.insets = new Insets(0, 0, 0, 5);
 		gbc_addRazzaButton.gridx = 2;
 		gbc_addRazzaButton.gridy = 7;
 		animalePanel.add(addRazzaButton, gbc_addRazzaButton);
+		
+	 
+		addRazzaButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			/*String result = (String)JOptionPane.showInputDialog(
+			               frame,
+			               "Inserisci nuova razza", 
+			               "Nuova razza",            
+			               JOptionPane.PLAIN_MESSAGE,
+			               null,            
+			               null, 
+			               "");
+				map.put(result, new ArrayList<>());
+				ReadTextToHashMap.addKeyOrValueToFile(Optional.empty(), Optional.of(result));
+				comboBoxRazza.addItem(result);*/
+				
+				JComboBox<String> specie = new JComboBox<>();
+				JTextField razza = new JTextField();
+				map.keySet().forEach(k-> specie.addItem(k));
+				Object[] message = { 
+						"Seleziona specie", specie, 
+						"Inserisci razza", razza, 
+						};
+				int option = JOptionPane.showConfirmDialog(frame, message, "Nuova razza", JOptionPane.OK_CANCEL_OPTION);
+				if (option == JOptionPane.OK_OPTION) {
+
+					String key = specie.getSelectedItem().toString();
+					String value = razza.getText();
+					System.out.println("ciao");
+					if(map.containsKey(key)) {
+						map.get(key).add(value);
+						ReadTextToHashMap.addKeyOrValueToFile(Optional.empty(), Optional.of(new Pair<>(key, value)));
+						if (((DefaultComboBoxModel) comboBoxRazza.getModel()).getIndexOf(value) == -1) {
+							comboBoxRazza.addItem(value);
+						}
+						comboBoxRazza.setSelectedIndex(-1);
+					}
+				
+				}
+
+			}
+		});
 		
 		JButton resetRazzaButton = new JButton("RESET");
 		GridBagConstraints gbc_resetRazzaButton = new GridBagConstraints();
@@ -399,7 +463,7 @@ public class AggiungiAnimale extends JPanel {
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		// importante per il design
-		//setLayout(groupLayout);
+		// setLayout(groupLayout);
 
 		// importante per la visualizzazione 
 		frame.getContentPane().setLayout(groupLayout);
