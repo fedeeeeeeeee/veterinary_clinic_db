@@ -56,7 +56,6 @@ public class AggiungiAnimale extends JPanel {
 	private Animale animale;
 	private ValidityFieldsChecker check;
 	private String selectedCf;
-	private JTextField textFieldSpecie;
 
 	public AggiungiAnimale(JFrame frame, User user, String selectedCf) {
 		frame.getContentPane().removeAll();
@@ -269,7 +268,8 @@ public class AggiungiAnimale extends JPanel {
 			               null, 
 			               "");
 				map.put(result, new ArrayList<>());
-				ReadTextToHashMap.addKeyOrValueToFile(Optional.of(result), Optional.empty());
+				ReadTextToHashMap.listaMap(map);
+				//ReadTextToHashMap.addKeyOrValueToFile(Optional.of(result), Optional.empty());
 				comboBoxSpecie.addItem(result);
 			}
 		});
@@ -311,19 +311,7 @@ public class AggiungiAnimale extends JPanel {
 		addRazzaButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-			/*String result = (String)JOptionPane.showInputDialog(
-			               frame,
-			               "Inserisci nuova razza", 
-			               "Nuova razza",            
-			               JOptionPane.PLAIN_MESSAGE,
-			               null,            
-			               null, 
-			               "");
-				map.put(result, new ArrayList<>());
-				ReadTextToHashMap.addKeyOrValueToFile(Optional.empty(), Optional.of(result));
-				comboBoxRazza.addItem(result);*/
-				
+			public void actionPerformed(ActionEvent e) {				
 				JComboBox<String> specie = new JComboBox<>();
 				JTextField razza = new JTextField();
 				map.keySet().forEach(k-> specie.addItem(k));
@@ -336,16 +324,14 @@ public class AggiungiAnimale extends JPanel {
 
 					String key = specie.getSelectedItem().toString();
 					String value = razza.getText();
-					System.out.println("ciao");
 					if(map.containsKey(key)) {
 						map.get(key).add(value);
-						ReadTextToHashMap.addKeyOrValueToFile(Optional.empty(), Optional.of(new Pair<>(key, value)));
-						if (((DefaultComboBoxModel) comboBoxRazza.getModel()).getIndexOf(value) == -1) {
+						ReadTextToHashMap.listaMap(map);
+						if (((DefaultComboBoxModel<String>) comboBoxRazza.getModel()).getIndexOf(value) == -1) {
 							comboBoxRazza.addItem(value);
 						}
 						comboBoxRazza.setSelectedIndex(-1);
 					}
-				
 				}
 
 			}

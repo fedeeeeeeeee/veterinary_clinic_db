@@ -62,24 +62,21 @@ public class ReadTextToHashMap {
 	}
 	
 	public static void listaMap(Map<String, List<String>> map) {
+		emptyFile();
 		if (map != null) {
 			try (FileWriter writer = new FileWriter(filePath, true)) {
+				StringBuilder sb = new StringBuilder();
 				for (String key : map.keySet()) {
 					List<String> value = map.get(key);
-					/*if (value == null) {
-						System.out.println("Warning: " + key + " in listaMap.");
-						value = "Not sure";
-					}*/
 					writer.write(key.trim());
-					writer.write(":");
-					value.forEach(v-> {
-						try {
-							writer.write(v.trim() + ",");
-						} catch (IOException e) {
-							e.printStackTrace();
+					writer.write(": ");
+					for(int j = 0; j<value.size(); j++) {
+						if(j==value.size()-1) {
+							writer.write(value.get(j) + '\n');
+						} else {
+							writer.write(value.get(j) + ",");
 						}
-					});
-					writer.write('\n');
+					}
 				}
 				writer.close();
 			} catch (IOException e) {
@@ -91,6 +88,15 @@ public class ReadTextToHashMap {
 	}
 	
 	
+	private static void emptyFile() {
+		try {
+			FileWriter w = new FileWriter(filePath, false);
+			w.close();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
+
 	public static void addKeyOrValueToFile(Optional<String> key, Optional<Pair<String, String>> value) {
 			try (FileWriter writer = new FileWriter(filePath, true)) {
 				
