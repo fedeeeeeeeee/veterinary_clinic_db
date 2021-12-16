@@ -267,7 +267,6 @@ public class AggiungiAnimale extends JPanel {
 			               "");
 				map.put(result, new ArrayList<>());
 				ReadTextToHashMap.writeMapToFile(map);
-				//ReadTextToHashMap.addKeyOrValueToFile(Optional.of(result), Optional.empty());
 				comboBoxSpecie.addItem(result);
 			}
 		});
