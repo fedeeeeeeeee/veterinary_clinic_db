@@ -8,7 +8,6 @@ import controller.AnimaleControllerImpl;
 import model.Animale;
 import model.AnimaleImpl;
 import model.User;
-import utility.Pair;
 import utility.ReadTextToHashMap;
 import utility.ValidityFieldsChecker;
 import javax.swing.GroupLayout;
@@ -31,7 +30,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.GridBagLayout;
@@ -66,7 +64,7 @@ public class AggiungiAnimale extends JPanel {
 		this.selectedCf = selectedCf;
 		this.check = new ValidityFieldsChecker();
 		this.controller = new AnimaleControllerImpl();
-		map = ReadTextToHashMap.HashMapFromTextFile();
+		map = ReadTextToHashMap.hashMapFromTextFile();
 		
 		JPanel upperPanel = new JPanel();
 		JPanel centerPanel = new JPanel();
@@ -268,7 +266,7 @@ public class AggiungiAnimale extends JPanel {
 			               null, 
 			               "");
 				map.put(result, new ArrayList<>());
-				ReadTextToHashMap.listaMap(map);
+				ReadTextToHashMap.writeMapToFile(map);
 				//ReadTextToHashMap.addKeyOrValueToFile(Optional.of(result), Optional.empty());
 				comboBoxSpecie.addItem(result);
 			}
@@ -306,7 +304,7 @@ public class AggiungiAnimale extends JPanel {
 		gbc_addRazzaButton.gridx = 2;
 		gbc_addRazzaButton.gridy = 7;
 		animalePanel.add(addRazzaButton, gbc_addRazzaButton);
-		
+		addRazzaButton.setEnabled(false);
 	 
 		addRazzaButton.addActionListener(new ActionListener() {
 
@@ -314,9 +312,11 @@ public class AggiungiAnimale extends JPanel {
 			public void actionPerformed(ActionEvent e) {				
 				JComboBox<String> specie = new JComboBox<>();
 				JTextField razza = new JTextField();
-				map.keySet().forEach(k-> specie.addItem(k));
+				specie.addItem(comboBoxSpecie.getSelectedItem().toString());
+				specie.setSelectedItem(comboBoxSpecie.getSelectedItem().toString());
+				//map.keySet().forEach(k-> specie.addItem(k));
 				Object[] message = { 
-						"Seleziona specie", specie, 
+						"Specie", specie, 
 						"Inserisci razza", razza, 
 						};
 				int option = JOptionPane.showConfirmDialog(frame, message, "Nuova razza", JOptionPane.OK_CANCEL_OPTION);
@@ -326,7 +326,7 @@ public class AggiungiAnimale extends JPanel {
 					String value = razza.getText();
 					if(map.containsKey(key)) {
 						map.get(key).add(value);
-						ReadTextToHashMap.listaMap(map);
+						ReadTextToHashMap.writeMapToFile(map);
 						if (((DefaultComboBoxModel<String>) comboBoxRazza.getModel()).getIndexOf(value) == -1) {
 							comboBoxRazza.addItem(value);
 						}
@@ -358,6 +358,7 @@ public class AggiungiAnimale extends JPanel {
 				comboBoxSpecie.setEnabled(true);
 				comboBoxSpecie.setSelectedIndex(-1);
 				comboBoxRazza.setEnabled(false);
+				addRazzaButton.setEnabled(false);
 				comboBoxRazza.removeAllItems();
 			}
 			
@@ -374,6 +375,7 @@ public class AggiungiAnimale extends JPanel {
 				}
 								
 				comboBoxRazza.setEnabled(true);
+				addRazzaButton.setEnabled(true);
 				if(comboBoxSpecie.getSelectedIndex() != -1) {
 						map.entrySet().stream()	
 							  .filter(entry-> entry.getKey().equals(comboBoxSpecie.getSelectedItem().toString()))

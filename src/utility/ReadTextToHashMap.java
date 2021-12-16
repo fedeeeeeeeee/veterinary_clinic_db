@@ -1,16 +1,12 @@
 package utility;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ReadTextToHashMap {
 	final static String filePath = "src/utility/animale.txt";
 	
-	public static Map<String, List<String>> HashMapFromTextFile() {
+	public static Map<String, List<String>> hashMapFromTextFile() {
 
 		Map<String, List<String>> map = new HashMap<>();
 		BufferedReader br = null;
@@ -44,28 +40,10 @@ public class ReadTextToHashMap {
 		return map;
 	}
 	
-	public static void writeOnFile(Optional<String> key, Optional<Pair<String, String>> value) {
-		BufferedWriter bv = null;
-		try {
-			bv = new BufferedWriter(new FileWriter(new File(filePath)));
-			if(key.isPresent()) {
-				// scrivi nuova chiave nel file
-				bv.append(key.get());
-				bv.append(":");
-			} else if(value.isPresent()) {
-				// scrivi nuovo valore
-				
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void listaMap(Map<String, List<String>> map) {
+	public static void writeMapToFile(Map<String, List<String>> map) {
 		emptyFile();
 		if (map != null) {
 			try (FileWriter writer = new FileWriter(filePath, true)) {
-				StringBuilder sb = new StringBuilder();
 				for (String key : map.keySet()) {
 					List<String> value = map.get(key);
 					writer.write(key.trim());
@@ -94,21 +72,6 @@ public class ReadTextToHashMap {
 			w.close();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		}
-	}
-
-	public static void addKeyOrValueToFile(Optional<String> key, Optional<Pair<String, String>> value) {
-			try (FileWriter writer = new FileWriter(filePath, true)) {
-				
-				if(key.isPresent()) {
-					writer.append(key.get() + ": " + '\n');
-				} else if(value.isPresent()) {
-
-				}
-								
-				writer.close();
-			} catch (IOException e) {
-				System.out.println("Issue: " + filePath + " in listaMap");
 		}
 	}
 

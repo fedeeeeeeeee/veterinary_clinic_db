@@ -1,5 +1,5 @@
-Gatto: Soriano,Siamese
-Tartaruga: Testuggine
-Pesce: Pesce rosso
-Maialino: Maialino nano
-Cane: Labrador retriever,Golden retriever,Carlino,Terranova
+Gatto:  Soriano,Siamese
+Tartaruga:  Testuggine
+Pesce:  Pesce rosso
+Maialino:  Maialino nano
+Cane:  Labrador retriever,Golden retriever,Carlino,Terranova
