@@ -265,9 +265,12 @@ public class AggiungiAnimale extends JPanel {
 			               null,            
 			               null, 
 			               "");
-				map.put(result, new ArrayList<>());
-				ReadTextToHashMap.writeMapToFile(map);
-				comboBoxSpecie.addItem(result);
+				if(result!=null) {
+					map.put(result, new ArrayList<>());
+					ReadTextToHashMap.writeMapToFile(map);
+					comboBoxSpecie.addItem(result);
+				}
+			
 			}
 		});
 		
@@ -313,7 +316,6 @@ public class AggiungiAnimale extends JPanel {
 				JTextField razza = new JTextField();
 				specie.addItem(comboBoxSpecie.getSelectedItem().toString());
 				specie.setSelectedItem(comboBoxSpecie.getSelectedItem().toString());
-				//map.keySet().forEach(k-> specie.addItem(k));
 				Object[] message = { 
 						"Specie", specie, 
 						"Inserisci razza", razza, 
