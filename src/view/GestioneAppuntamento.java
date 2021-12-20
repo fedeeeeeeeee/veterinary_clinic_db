@@ -160,8 +160,8 @@ public class GestioneAppuntamento extends CommonView {
 		
 		JButton button = new JButton();
 		//button.addActionListener(showOrder);
-	    table.getColumn("Modifica").setCellRenderer(new ButtonRenderer());
-	    table.getColumn("Modifica").setCellEditor(new ButtonEditor(new JCheckBox(), button));
+	    table.getColumn("Modifica").setCellRenderer(new ButtonRenderer("Modifica"));//
+	    table.getColumn("Modifica").setCellEditor(new ButtonEditor(new JCheckBox(), button, "Modifica"));
 	    
 	    /*
 	    table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {

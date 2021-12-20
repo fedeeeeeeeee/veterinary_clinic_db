@@ -13,9 +13,12 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
 	/**
 	 * 
 	 */
+	
 	private static final long serialVersionUID = 1L;
+	private String nameButton;
 	//private JButton button;
-	public ButtonRenderer() {
+	public ButtonRenderer(String nameButton) {
+		this.nameButton = nameButton;
 		//this.button = button;
 		setOpaque(true);
 	}
@@ -27,7 +30,8 @@ class ButtonRenderer extends JButton implements TableCellRenderer {
 		ImageIcon icon = new ImageIcon("resources"+ System.getProperty("file.separator") + "images"+ System.getProperty("file.separator") + "information-button.png");
 		setIcon(icon);
 		*/
-		setText((value == null) ? "Modify" : value.toString());
+		setText((value == null) ? this.nameButton : value.toString());
+		//setText((value == null) ? "Modify" : value.toString());
 		return this;
 	}
 
@@ -41,10 +45,12 @@ class ButtonEditor extends DefaultCellEditor {
 	private static final long serialVersionUID = 1L;
 	private String label;
 	private JButton button;
+	private String nameButton;
 	
-	public ButtonEditor(JCheckBox checkBox, JButton button) {
+	public ButtonEditor(JCheckBox checkBox, JButton button, String nameButton) {
 		super(checkBox);
 		this.button = button;
+		this.nameButton = nameButton;
 	}
 
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
@@ -52,8 +58,8 @@ class ButtonEditor extends DefaultCellEditor {
 		ImageIcon icon = new ImageIcon("resources"+ System.getProperty("file.separator") + "images"+ System.getProperty("file.separator") + "information-button.png");
 		button.setIcon(icon);
 		*/
-		label = (value == null) ? "Modify" : value.toString();
-		
+		//label = (value == null) ? "Modify" : value.toString();
+		label = (value == null) ? this.nameButton : value.toString();
 		button.setText(label);
 		
 		return button;
