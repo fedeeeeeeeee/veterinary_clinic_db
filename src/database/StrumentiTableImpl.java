@@ -172,7 +172,7 @@ public class StrumentiTableImpl implements StrumentiTable{
 					stru.setDescrizione(result.getString(3));
 					stru.setDataScadenza(result.getString(4));
 					stru.setQuantità(result.getInt(5));
-					
+					System.out.println(result.getInt(1));
 					strumenti.add(stru);
 				}
 				result.close();	

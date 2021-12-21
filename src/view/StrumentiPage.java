@@ -8,8 +8,15 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.swing.Action;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -34,7 +41,6 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import controller.StrumentiController;
 import controller.StrumentiControllerImpl;
-import model.Appuntamento;
 import model.Strumento;
 import model.User;
 import javax.swing.SwingConstants;
@@ -42,7 +48,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
 
 public class StrumentiPage extends JPanel {
@@ -50,8 +55,9 @@ public class StrumentiPage extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private User user;
-	private JTextField fieldRicerca;
+	private JTextField searchBar;
 	private JTable table;
+	private JScrollPane scrollPane;
 	private StrumentiController strumentiController;
 	private List<Strumento> listStrumenti;
 	
@@ -114,16 +120,46 @@ public class StrumentiPage extends JPanel {
        //editMostra.setMnemonic("S");
       // JMenu editScaduti = new JMenu("Scaduti");
        //JMenu editInScadenza = new JMenu("In Scadenza");
-       fieldRicerca = new JTextField();
-       fieldRicerca.setText("Ricerca Strumento");
+       searchBar = new JTextField();
+       searchBar.setText("Ricerca Strumento");
+       searchBar.addFocusListener((FocusListener) new FocusListener() {
+
+		@Override
+		public void focusGained(FocusEvent e) {
+			if(searchBar.getText().equals("Ricerca Strumento") ) {
+			searchBar.setText("");
+			}
+		}
+		@Override
+		public void focusLost(FocusEvent e) {			
+			if(searchBar.getText().equals("") ) {
+				searchBar.setText("Ricerca Strumento");
+				}
+		}
+    	   
+       });
+       searchBar.addActionListener(new ActionListener() {
+    	   @Override
+    	   public void actionPerformed(ActionEvent e) {
+    		  //if(searchBar.getText().equals("Ricerca Strumento")){
+    			  searchBar.setText("");
+    		 // }
+    	   }
+       });
+      
        JButton buttonVai = new JButton("Vai");
-       
+       buttonVai.addActionListener(new ActionListener() {
+    	   @Override
+    	   public void actionPerformed(ActionEvent e) {
+    		   search(e);
+    	   }
+       });
+    	   
+			
        buttonVai.setBackground(Color.LIGHT_GRAY);
        buttonVai.setForeground(Color.BLACK);
-       //menuBar.add(editScaduti);
-      // menuBar.add(editInScadenza);
        menuBar.add(menuMostra);
-       menuBar.add(fieldRicerca);
+       menuBar.add(searchBar);
        menuBar.add(buttonVai);
 
        JButton orderAsc = new JButton (IconImage.ARROW.getImageIcon() );
@@ -156,7 +192,7 @@ public class StrumentiPage extends JPanel {
 		gbl_centerPanel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		this.scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 2;
 		gbc_scrollPane.gridwidth = 3;
@@ -167,40 +203,10 @@ public class StrumentiPage extends JPanel {
 		
 	
 
-		
-		JButton button = new JButton();
 		this.initTable();
-	    table.getColumn("Aggiungi").setCellRenderer(new ButtonRenderer("Aggiungi"));
-	    table.getColumn("Aggiungi").setCellEditor(new ButtonEditor(new JCheckBox(), button, "Aggiungi"));
-	    
 	    this.listStrumenti = strumentiController.getAllStrumenti();
 	    this.createTable(model, listStrumenti);
-	    /*
-		listStrumenti.forEach(x -> {
-			model.addRow(new Object[] { 
-					x.getCodStrumento(),
-					x.getNome(),
-					x.getDescrizione(),
-					x.getDataScadenza(),
-					x.getQuantità(),
-			});
-		});
-		*/
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-					table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-				        public void valueChanged(ListSelectionEvent event) {
-				        	ListSelectionModel lsm = (ListSelectionModel)event.getSource();
-					        int firstIndex = event.getFirstIndex();
-					        listStrumenti.get(firstIndex); // tipo Appuntamento
-					        String nome =   listStrumenti.get(firstIndex).getNome();
-					        JOptionPane.showMessageDialog(null, "Quanti " + nome + "vuoi aggiungere"  + "?");
-				        }
-				    });
-			}
-		});
-		
-		
+
 		
 		//table.setModel(model);
 		scrollPane.setViewportView(table);
@@ -211,42 +217,24 @@ public class StrumentiPage extends JPanel {
 	       JMenuItem itemScaduti = new JMenuItem("Scaduti"); //, new ImageIcon("cut-java-image.gif"));
 	       JMenuItem itemInScadenza = new JMenuItem("In Scadenza");
 	       JMenuItem itemInEsaurimento = new JMenuItem("In Esaurimento");
+	       JMenuItem all = new JMenuItem("Tutti");
+	       
 	       itemScaduti.addActionListener((e) -> {
-	    	   this.listStrumenti.clear();
-	    	   this.listStrumenti = strumentiController.getStrumentiScaduti();
-	    	   System.out.println(this.listStrumenti);
-	    	   table.clearSelection();
-	    	   this.initTable();
-	    	   model.setRowCount(0);
-	      	   this.createTable(model, listStrumenti);
+	    	   this.resetAndDraw(strumentiController.getStrumentiScaduti());
 	         });
+	       
 	       itemInScadenza.addActionListener((e) -> {
-	    	   this.listStrumenti.clear();
-	    	   this.listStrumenti = strumentiController.getStrumentiInScadenza();    	   
-	    	   System.out.println(this.listStrumenti);
-	    	   table.clearSelection();
-	    	   this.initTable();
-	    	   model.setRowCount(0);
-	      	   this.createTable(model, listStrumenti);
+	    	   this.resetAndDraw(strumentiController.getStrumentiInScadenza());    	   
 	       });
-	       itemScaduti.addActionListener((e) -> {
-	    	   this.listStrumenti.clear();
-	    	   this.listStrumenti = strumentiController.getStrumentiScaduti();
-	    	   System.out.println(this.listStrumenti);
-	    	   table.clearSelection();
-	    	   this.initTable();
-	    	   model.setRowCount(0);
-	      	   this.createTable(model, listStrumenti);
-	         });
-	       itemInEsaurimento.addItemListener((e) -> {
-	    	   this.listStrumenti.clear();
-	    	   this.listStrumenti = strumentiController.getStrumentiInEsaurimento();    	   
-	    	   System.out.println(this.listStrumenti);
-	    	   table.clearSelection();
-	    	   this.initTable();
-	    	   model.setRowCount(0);
-	      	   this.createTable(model, listStrumenti);
+	       
+	       itemInEsaurimento.addActionListener((e) -> {
+	    	   this.resetAndDraw(strumentiController.getStrumentiInEsaurimento());    	   
 	       });
+	       
+	      all.addActionListener((e) -> {
+	    	  this.resetAndDraw(strumentiController.getAllStrumenti());
+	       });
+	      menuMostra.add(all);
 	       menuMostra.add(itemScaduti);
 	       menuMostra.add(itemInScadenza);
 	       menuMostra.addSeparator();
@@ -269,6 +257,22 @@ public class StrumentiPage extends JPanel {
 		new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 }
+	
+	
+	
+	
+	private void resetAndDraw(List<Strumento> allStrumenti) {
+ 	   this.listStrumenti.clear();
+ 	   this.listStrumenti = allStrumenti;
+ 	   table.clearSelection();
+ 	   model.setRowCount(0);
+   	   this.createTable(model, listStrumenti);	
+   	 scrollPane.setViewportView(table);
+	}
+
+
+
+
 	private void createTable(DefaultTableModel model, List<Strumento> list) {
 		list.forEach(x -> {
 			model.addRow(new Object[] { 
@@ -281,6 +285,9 @@ public class StrumentiPage extends JPanel {
 		});
 	}
 	
+	
+	
+	
 	private void initTable () {
 		this.table = new JTable(); 
 		this.model =  (DefaultTableModel) table.getModel();
@@ -290,5 +297,40 @@ public class StrumentiPage extends JPanel {
 		model.addColumn("Scadenza");
 		model.addColumn("Quantità");
 		model.addColumn("Aggiungi");
+		
+		JButton button = new JButton();
+	    table.getColumn("Aggiungi").setCellRenderer(new ButtonRenderer("Aggiungi"));
+	    table.getColumn("Aggiungi").setCellEditor(new ButtonEditor(new JCheckBox(), button, "Aggiungi"));
+	    
+	    button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+				        public void valueChanged(ListSelectionEvent event) {
+				        	//ListSelectionModel lsm = (ListSelectionModel)event.getSource();
+					        int firstIndex = event.getFirstIndex();
+					        listStrumenti.get(firstIndex); // tipo Appuntamento
+					        String nome =   listStrumenti.get(firstIndex).getNome();
+					        JOptionPane.showMessageDialog(null, "Quanti " + nome + "vuoi aggiungere"  + "?");
+				        }
+				    });
+			}
+		});
+	}
+	
+	public void  search(ActionEvent e) { //action
+		List<Strumento> lista = new ArrayList<Strumento>();
+		//listStrumenti.clear();
+		lista.addAll(searchList(searchBar.getText(), listStrumenti));
+		this.resetAndDraw(lista);
+	}
+
+
+
+
+	private List<Strumento> searchList(String searchWords, List<Strumento> listOfStrumento) {
+		List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" ") );
+		return listOfStrumento.stream().filter(input ->{ 
+			return searchWordsArray.stream().allMatch(word -> input.getNome().toLowerCase().contains(word.toLowerCase()));
+		}).collect(Collectors.toList());
 	}
 }
