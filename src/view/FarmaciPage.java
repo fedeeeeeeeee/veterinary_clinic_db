@@ -215,8 +215,8 @@ public class FarmaciPage extends JPanel {
 	       JMenuItem itemInEsaurimento = new JMenuItem("In Esaurimento");
 	       JMenuItem itemFarmaci = new JMenuItem("Farmaci");
 	       JMenuItem itemVaccini = new JMenuItem("Vaccini");
-	       
 	       JMenuItem all = new JMenuItem("Tutti");
+	       JMenuItem acquistati = new JMenuItem("Acquistati");
 	       
 	       itemScaduti.addActionListener((e) -> {
 	    	   this.resetAndDraw(farmaciController.getFarmaciScaduti());
@@ -234,7 +234,18 @@ public class FarmaciPage extends JPanel {
 	      all.addActionListener((e) -> {
 	    	  this.resetAndDraw(farmaciController.getAllFarmaci());
 	       });
+	      acquistati.addActionListener((e) -> {
+	    	  this.resetAndDraw(farmaciController.getFarmaciAcquistati());
+	       });
+	      itemFarmaci.addActionListener((e) -> {
+	    	  this.resetAndDraw(farmaciController.getOnlyFarmaci());
+	       });
+	      itemVaccini.addActionListener((e) -> {
+	    	  this.resetAndDraw(farmaciController.getAllVaccini());
+	       });
 	      menuMostra.add(all);
+	      menuMostra.add(acquistati);
+	      menuMostra.addSeparator();
 	       menuMostra.add(itemScaduti);
 	       menuMostra.add(itemInScadenza);
 	       menuMostra.addSeparator();
@@ -294,7 +305,7 @@ public class FarmaciPage extends JPanel {
 	private void initTable () {
 		this.table = new JTable(); 
 		this.model =  (DefaultTableModel) table.getModel();
-		model.addColumn("Cod Lotto");
+		model.addColumn("CodLotto");
 		model.addColumn("Farmaco");
 		model.addColumn("Descrizione");
 		model.addColumn("Scadenza");

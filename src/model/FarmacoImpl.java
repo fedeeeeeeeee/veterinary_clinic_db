@@ -3,12 +3,14 @@ package model;
 public class FarmacoImpl implements Farmaco {
 
 	private int codFarmaco;
-	private String nomeFarmaco;
+	
 	private int codLotto;
+	private String nomeFarmaco;
+	private String descrizione;
 	private String dataScadenza;
 	private int disponibilita;
 	private String tipoFarmaco;
-	private String descrizione;
+	
 	
 	@Override
 	public String getNomeFarmaco() {

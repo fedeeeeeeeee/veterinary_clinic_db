@@ -2,38 +2,56 @@ package controller;
 
 import java.util.List;
 
+import database.FarmaciTable;
+import database.FarmaciTableImpl;
 import model.Farmaco;
 
 public class FarmaciControllerImpl implements FarmaciController {
 
+	private FarmaciTable farmaciTable;
+	
+	public FarmaciControllerImpl() {
+		this.farmaciTable = new FarmaciTableImpl();
+	}
+	
 	@Override
 	public List<Farmaco> getAllFarmaci() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.farmaciTable.getAllFarmaci();
 	}
 
 	@Override
 	public List<Farmaco> getFarmaciScaduti() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.farmaciTable.getFarmaciScaduti();
 	}
 
 	@Override
 	public List<Farmaco> getFarmaciInScadenza() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.farmaciTable.getFarmaciInScadenza();
 	}
 
 	@Override
 	public List<Farmaco> getFarmaciInEsaurimento() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.farmaciTable.getFarmaciInEsaurimento();
 	}
 
 	@Override
 	public void updateQuantità(Farmaco farmaco, int q) {
-		// TODO Auto-generated method stub
+		this.farmaciTable.updateQuantità(farmaco, q);
+	}
 
+	@Override
+	public List<Farmaco> getAllVaccini() {
+		return this.farmaciTable.getAllVaccini();
+	}
+
+	@Override
+	public List<Farmaco> getOnlyFarmaci() {
+		return this.farmaciTable.getOnlyFarmaci();
+	}
+
+	@Override
+	public List<Farmaco> getFarmaciAcquistati() {
+		return this.farmaciTable.getFarmaciAcquistati();
 	}
 
 }

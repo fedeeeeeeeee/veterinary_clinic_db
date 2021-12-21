@@ -89,7 +89,7 @@ public class MagazzinoPage extends JPanel {
           centerPanel.add(btnFarmaci);
           btnFarmaci.addActionListener(new ActionListener() {
             	public void actionPerformed(ActionEvent e) {
-            		 frame.getContentPane().add(new StrumentiPage(frame, user));
+            		 frame.getContentPane().add(new FarmaciPage(frame, user));
             	}
             });
           btnFarmaci.setFont(new Font("Tahoma", Font.PLAIN, 20));
