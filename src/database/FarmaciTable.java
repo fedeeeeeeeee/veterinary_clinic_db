@@ -21,6 +21,8 @@ public interface FarmaciTable {
 	List<Farmaco> getOnlyFarmaci();
 
 	List<Farmaco> getFarmaciAcquistati();
+
+	List<Farmaco> getFarmaciMaiAcquistati();
 	
 	//void addNewLotto(Lotto lotto);
 }

@@ -54,4 +54,9 @@ public class FarmaciControllerImpl implements FarmaciController {
 		return this.farmaciTable.getFarmaciAcquistati();
 	}
 
+	@Override
+	public List<Farmaco> getFarmaciMaiAcquistati() {
+		return this.farmaciTable.getFarmaciMaiAcquistati();
+	}
+
 }

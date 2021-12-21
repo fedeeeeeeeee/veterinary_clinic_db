@@ -20,6 +20,7 @@ import javax.swing.Action;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -89,7 +90,7 @@ public class FarmaciPage extends JPanel {
        		.addGroup(groupLayout.createSequentialGroup()
        			.addContainerGap()
        			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-       				.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE)
+       				.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE)
        				.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE)
        				.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE))
        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -111,13 +112,15 @@ public class FarmaciPage extends JPanel {
        upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
        middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
        upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] {
-       		ColumnSpec.decode("900px"),},
+       		ColumnSpec.decode("950px"),},
        	new RowSpec[] {
        		RowSpec.decode("25px"),}));
     
        JMenuBar menuBar = new JMenuBar();
        upperMiddlePanel.add(menuBar, "1, 1, fill, top");
        JMenu menuMostra = new JMenu("Mostra");
+       JMenu menuSeleziona = new JMenu("Seleziona");
+       
        searchBar = new JTextField();
        searchBar.setText("Ricerca Farmaco");
        searchBar.addFocusListener((FocusListener) new FocusListener() {
@@ -155,6 +158,7 @@ public class FarmaciPage extends JPanel {
        buttonVai.setBackground(Color.LIGHT_GRAY);
        buttonVai.setForeground(Color.BLACK);
        menuBar.add(menuMostra);
+       menuBar.add(menuSeleziona);
        menuBar.add(searchBar);
        menuBar.add(buttonVai);
 
@@ -213,46 +217,159 @@ public class FarmaciPage extends JPanel {
 	       JMenuItem itemScaduti = new JMenuItem("Scaduti"); //, new ImageIcon("cut-java-image.gif"));
 	       JMenuItem itemInScadenza = new JMenuItem("In Scadenza");
 	       JMenuItem itemInEsaurimento = new JMenuItem("In Esaurimento");
-	       JMenuItem itemFarmaci = new JMenuItem("Farmaci");
-	       JMenuItem itemVaccini = new JMenuItem("Vaccini");
+	       JCheckBoxMenuItem itemFarmaci = new JCheckBoxMenuItem("Farmaci");
+	       itemFarmaci.setSelected(true);
+	       JCheckBoxMenuItem itemVaccini = new JCheckBoxMenuItem("Vaccini");
+	       itemVaccini.setSelected(true);
 	       JMenuItem all = new JMenuItem("Tutti");
 	       JMenuItem acquistati = new JMenuItem("Acquistati");
-	       
+	       JMenuItem maiAcquistati = new JMenuItem("Non Acquistati");
+
 	       itemScaduti.addActionListener((e) -> {
-	    	   this.resetAndDraw(farmaciController.getFarmaciScaduti());
+	    	   if((itemFarmaci.isSelected() && itemVaccini.isSelected()) || ( !itemFarmaci.isSelected() && !itemVaccini.isSelected())) {
+	    		   this.resetAndDraw(farmaciController.getFarmaciScaduti());
+	    	   } else {
+	    		   if(itemFarmaci.isSelected()) {
+	    			   List<Farmaco> list = farmaciController.getFarmaciScaduti();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Farmaco".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }else {
+	    			   List<Farmaco> list = farmaciController.getFarmaciScaduti();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Vaccino".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }
+	    	   }
 	         });
 	       
 	       itemInScadenza.addActionListener((e) -> {
-	    	   this.resetAndDraw(farmaciController.getFarmaciInScadenza());    	   
+	    	   if((itemFarmaci.isSelected() && itemVaccini.isSelected()) || ( !itemFarmaci.isSelected() && !itemVaccini.isSelected())) {
+	    		   this.resetAndDraw(farmaciController.getFarmaciInScadenza());
+	    	   } else {
+	    		   if(itemFarmaci.isSelected()) {
+	    			   List<Farmaco> list = farmaciController.getFarmaciInScadenza();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Farmaco".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }else {
+	    			   List<Farmaco> list = farmaciController.getFarmaciInScadenza();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Vaccino".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }
+	    	   } 
 	       });
 	       
 	       itemInEsaurimento.addActionListener((e) -> {
-
-	    	   this.resetAndDraw(farmaciController.getFarmaciInEsaurimento());    	   
+	    	   if((itemFarmaci.isSelected() && itemVaccini.isSelected()) || ( !itemFarmaci.isSelected() && !itemVaccini.isSelected())) {
+	    		   this.resetAndDraw(farmaciController.getFarmaciInEsaurimento());
+	    	   } else {
+	    		   if(itemFarmaci.isSelected()) {
+	    			   List<Farmaco> list = farmaciController.getFarmaciInEsaurimento();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Farmaco".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }else {
+	    			   List<Farmaco> list = farmaciController.getFarmaciInEsaurimento();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Vaccino".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }
+	    	   } 
 	       });
 	       
 	      all.addActionListener((e) -> {
-	    	  this.resetAndDraw(farmaciController.getAllFarmaci());
+	    	  if((itemFarmaci.isSelected() && itemVaccini.isSelected()) || ( !itemFarmaci.isSelected() && !itemVaccini.isSelected())) {
+	    		   this.resetAndDraw(farmaciController.getAllFarmaci());
+	    	   } else {
+	    		   if(itemFarmaci.isSelected()) {
+	    			   List<Farmaco> list = farmaciController.getAllFarmaci();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Farmaco".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }else {
+	    			   List<Farmaco> list = farmaciController.getAllFarmaci();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Vaccino".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }
+	    	   } 
 	       });
 	      acquistati.addActionListener((e) -> {
-	    	  this.resetAndDraw(farmaciController.getFarmaciAcquistati());
+	    	  if((itemFarmaci.isSelected() && itemVaccini.isSelected()) || ( !itemFarmaci.isSelected() && !itemVaccini.isSelected())) {
+	    		   this.resetAndDraw(farmaciController.getFarmaciAcquistati());
+	    	   } else {
+	    		   if(itemFarmaci.isSelected()) {
+	    			   List<Farmaco> list = farmaciController.getFarmaciAcquistati();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Farmaco".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }else {
+	    			   List<Farmaco> list = farmaciController.getFarmaciAcquistati();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Vaccino".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }
+	    	   } 
 	       });
-	      itemFarmaci.addActionListener((e) -> {
-	    	  this.resetAndDraw(farmaciController.getOnlyFarmaci());
+	      maiAcquistati.addActionListener((e) -> {
+	    	  if((itemFarmaci.isSelected() && itemVaccini.isSelected()) || ( !itemFarmaci.isSelected() && !itemVaccini.isSelected())) {
+	    		   this.resetAndDraw(farmaciController.getFarmaciMaiAcquistati());
+	    	   } else {
+	    		   if(itemFarmaci.isSelected()) {
+	    			   List<Farmaco> list = farmaciController.getFarmaciMaiAcquistati();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Farmaco".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }else {
+	    			   List<Farmaco> list = farmaciController.getFarmaciMaiAcquistati();
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Vaccino".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  this.resetAndDraw(filtrato);
+	    		   }
+	    	   } 
+	       });
+	      itemFarmaci.addActionListener((e) -> { // prova a togliere
+	    	  if((itemFarmaci.isSelected() && itemVaccini.isSelected()) || ( !itemFarmaci.isSelected() && !itemVaccini.isSelected())) {
+	    		  List<Farmaco> list = this.listFarmaci.stream().collect(Collectors.toList());
+	    		   this.resetAndDraw(list);
+	    	   } else {
+	    		   if(itemFarmaci.isSelected()) {
+	    			  
+	    			   List<Farmaco> list = this.listFarmaci;
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Farmaco".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
+	    		      	   this.createTable(model, filtrato);	
+	    		      	 scrollPane.setViewportView(table);
+	    		   }else {
+	    			 List<Farmaco> list = this.listFarmaci.stream().collect(Collectors.toList());
+	    			   //List<Farmaco> list = this.listFarmaci;
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Vaccino".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
+	    		      	   this.createTable(model, filtrato);	
+	    		      	 scrollPane.setViewportView(table);
+	    		   }
+	    	   } 
 	       });
 	      itemVaccini.addActionListener((e) -> {
-	    	  this.resetAndDraw(farmaciController.getAllVaccini());
+	    	  if((itemFarmaci.isSelected() && itemVaccini.isSelected()) || ( !itemFarmaci.isSelected() && !itemVaccini.isSelected())) {
+	    		  List<Farmaco> list = this.listFarmaci.stream().collect(Collectors.toList());
+	    		   this.resetAndDraw(list);
+	    	   } else {
+	    		   if(itemFarmaci.isSelected()) {
+	    			   List<Farmaco> list = this.listFarmaci.stream().collect(Collectors.toList());
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Farmaco".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	  model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
+	    		      	   this.createTable(model, filtrato);	
+	    		      	 scrollPane.setViewportView(table);
+	    		   }else {
+	    			   List<Farmaco> list = this.listFarmaci.stream().collect(Collectors.toList());
+	    		    	  List<Farmaco> filtrato =  list.stream().filter(farmaco -> "Vaccino".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
+	    		    	   model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
+	    		      	   this.createTable(model, filtrato);	
+	    		      	 scrollPane.setViewportView(table);
+	    		   }
+	    	   } 
 	       });
 	      menuMostra.add(all);
 	      menuMostra.add(acquistati);
+	      menuMostra.add(maiAcquistati);
 	      menuMostra.addSeparator();
 	       menuMostra.add(itemScaduti);
 	       menuMostra.add(itemInScadenza);
 	       menuMostra.addSeparator();
 	       menuMostra.add(itemInEsaurimento);
-	       menuMostra.addSeparator();
-	       menuMostra.add(itemFarmaci);
-	       menuMostra.add(itemVaccini);
+	       menuSeleziona.add(itemFarmaci);
+	       menuSeleziona.add(itemVaccini);
 	       
 	       JPanel panelAdd = new JPanel();
 	       middlePanel.add(panelAdd, BorderLayout.SOUTH);
@@ -285,9 +402,9 @@ public class FarmaciPage extends JPanel {
 	
 	
 	
-	private void resetAndDraw(List<Farmaco> allFarmacii) {
+	private void resetAndDraw(List<Farmaco> allFarmaci) {
  	   this.listFarmaci.clear();
- 	   this.listFarmaci = allFarmacii;
+ 	   this.listFarmaci = allFarmaci;
  	   //table.clearSelection();
  	   model.setRowCount(0);
    	   this.createTable(model, listFarmaci);	
