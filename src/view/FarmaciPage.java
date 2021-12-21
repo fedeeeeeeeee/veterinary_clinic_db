@@ -254,6 +254,16 @@ public class FarmaciPage extends JPanel {
 	       menuMostra.add(itemFarmaci);
 	       menuMostra.add(itemVaccini);
 	       
+	       JPanel panelAdd = new JPanel();
+	       middlePanel.add(panelAdd, BorderLayout.SOUTH);
+	       
+	       JButton btnNewFarmaco = new JButton("Aggiungi");
+	       panelAdd.add(btnNewFarmaco);
+	       btnNewFarmaco.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					frame.getContentPane().add(new NewLotto(frame, user));
+				}
+			});
 	       //----fine ---- MENUU
 		/*LOWER PANEL */
 		JButton sendButton = new JButton("BACK");
