@@ -33,4 +33,9 @@ public class StrumentiControllerImpl implements StrumentiController {
 	public List<Strumento> getStrumentiInEsaurimento() {
 		return this.strumentiTable.getStrumentiInEsaurimento();
 	}
+
+	@Override
+	public void updateQuantità(Strumento strumento, int q) {
+		this.strumentiTable.updateQuantità( strumento, q);
+	}
 }

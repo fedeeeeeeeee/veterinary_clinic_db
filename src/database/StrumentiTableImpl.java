@@ -172,7 +172,7 @@ public class StrumentiTableImpl implements StrumentiTable{
 					stru.setDescrizione(result.getString(3));
 					stru.setDataScadenza(result.getString(4));
 					stru.setQuantità(result.getInt(5));
-					System.out.println(result.getInt(1));
+
 					strumenti.add(stru);
 				}
 				result.close();	
@@ -190,5 +190,32 @@ public class StrumentiTableImpl implements StrumentiTable{
 				}
 			}
 			return strumenti;
+	}
+
+	@Override
+	public void updateQuantità(Strumento strumento, int q) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		 final String query = "update strumento set quantitaInMagazzino = ? "
+		 		+ "where  (codStrumento = ?) ";
+		 
+			try {
+				statement = Optional.of(connection.prepareStatement(query));
+				statement.get().setInt(1, (strumento.getQuantità() + q));
+		           statement.get().setInt(2, strumento.getCodStrumento());
+		           statement.get().executeUpdate();   
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+				}
+			}
 	}
 }

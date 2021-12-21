@@ -60,7 +60,7 @@ public class StrumentiPage extends JPanel {
 	private JScrollPane scrollPane;
 	private StrumentiController strumentiController;
 	private List<Strumento> listStrumenti;
-	
+	private int selectedStrumento;
 	private DefaultTableModel model;
 	/**
 	 * Create the panel.
@@ -228,6 +228,7 @@ public class StrumentiPage extends JPanel {
 	       });
 	       
 	       itemInEsaurimento.addActionListener((e) -> {
+
 	    	   this.resetAndDraw(strumentiController.getStrumentiInEsaurimento());    	   
 	       });
 	       
@@ -264,7 +265,7 @@ public class StrumentiPage extends JPanel {
 	private void resetAndDraw(List<Strumento> allStrumenti) {
  	   this.listStrumenti.clear();
  	   this.listStrumenti = allStrumenti;
- 	   table.clearSelection();
+ 	   //table.clearSelection();
  	   model.setRowCount(0);
    	   this.createTable(model, listStrumenti);	
    	 scrollPane.setViewportView(table);
@@ -301,22 +302,30 @@ public class StrumentiPage extends JPanel {
 		JButton button = new JButton();
 	    table.getColumn("Aggiungi").setCellRenderer(new ButtonRenderer("Aggiungi"));
 	    table.getColumn("Aggiungi").setCellEditor(new ButtonEditor(new JCheckBox(), button, "Aggiungi"));
-	    
-	    button.addActionListener(new ActionListener() {
+
+		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-				        public void valueChanged(ListSelectionEvent event) {
-				        	//ListSelectionModel lsm = (ListSelectionModel)event.getSource();
-					        int firstIndex = event.getFirstIndex();
-					        listStrumenti.get(firstIndex); // tipo Appuntamento
-					        String nome =   listStrumenti.get(firstIndex).getNome();
-					        JOptionPane.showMessageDialog(null, "Quanti " + nome + "vuoi aggiungere"  + "?");
-				        }
-				    });
+
+				table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+					public void valueChanged(ListSelectionEvent event) {
+						selectedStrumento = event.getFirstIndex();
+						System.out.println(selectedStrumento);
+					}
+				});
+				
+				String nome = listStrumenti.get(selectedStrumento).getNome();
+				Integer[] options = { 5, 10, 20, 30, 50, 100 };
+				Object q = JOptionPane.showInputDialog(null, "Quanti " + nome + " vuoi aggiungere ?",
+						"Update magazzino", JOptionPane.QUESTION_MESSAGE, null, options, 0);
+				if (q != null) { // x o annulla
+					int quantità = (int) q;
+					strumentiController.updateQuantità(listStrumenti.get(selectedStrumento), quantità);
+					 resetAndDraw(strumentiController.getAllStrumenti());
+				}
 			}
 		});
 	}
-	
+
 	public void  search(ActionEvent e) { //action
 		List<Strumento> lista = new ArrayList<Strumento>();
 		//listStrumenti.clear();

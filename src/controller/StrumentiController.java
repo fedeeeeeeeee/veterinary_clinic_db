@@ -13,6 +13,8 @@ public interface StrumentiController {
 	List<Strumento> getStrumentiInScadenza();
 	
 	List<Strumento> getStrumentiInEsaurimento();
+
+	void updateQuantità(Strumento strumento, int q);
 	
 	
 }
