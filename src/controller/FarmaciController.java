@@ -1,0 +1,20 @@
+package controller;
+
+import java.util.List;
+
+import model.Farmaco;
+
+public interface FarmaciController {
+
+	List<Farmaco> getAllFarmaci();
+
+	List<Farmaco> getFarmaciScaduti();
+
+	List<Farmaco> getFarmaciInScadenza();
+
+	List<Farmaco> getFarmaciInEsaurimento();
+
+	void updateQuantità(Farmaco farmaco, int q);
+	
+	//void addNewLotto(Lotto lotto);
+}
