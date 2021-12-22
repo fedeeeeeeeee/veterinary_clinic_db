@@ -115,6 +115,7 @@ public class HomeSegretaria extends CommonView {
 		magazzinoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				  frame.getContentPane().add(new MagazzinoPage(frame, user));
+				  
 			}
 		});
 		
