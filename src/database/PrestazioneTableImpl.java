@@ -29,6 +29,8 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
+		
+		// rivedi query, perchè c'è il ?
 		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione_su_animale.codAnimale, prestazione_su_animale.codTipoPrestazione "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data=effettua.data "

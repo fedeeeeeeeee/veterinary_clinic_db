@@ -9,10 +9,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.BoxLayout;
-
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -21,6 +17,7 @@ import java.awt.event.ActionListener;
 
 public class HomeSegretaria extends CommonView {
 
+	private static final long serialVersionUID = -8240597628451997179L;
 	private JFrame frame;
 	private User user;
 	
