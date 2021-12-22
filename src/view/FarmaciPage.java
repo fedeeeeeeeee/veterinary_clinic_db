@@ -120,6 +120,7 @@ public class FarmaciPage extends JPanel {
        upperMiddlePanel.add(menuBar, "1, 1, fill, top");
        JMenu menuMostra = new JMenu("Mostra");
        JMenu menuSeleziona = new JMenu("Seleziona");
+       JMenu menuAggiungi = new JMenu("Aggiungi");
        
        searchBar = new JTextField();
        searchBar.setText("Ricerca Farmaco");
@@ -218,12 +219,15 @@ public class FarmaciPage extends JPanel {
 	       JMenuItem itemInScadenza = new JMenuItem("In Scadenza");
 	       JMenuItem itemInEsaurimento = new JMenuItem("In Esaurimento");
 	       JCheckBoxMenuItem itemFarmaci = new JCheckBoxMenuItem("Farmaci");
+	       JMenuItem itemAddFarmaco = new JMenuItem("Aggiungi Farmaco");
+	       JMenuItem itemAddLotto = new JMenuItem("Aggiungi Lotto");
 	       itemFarmaci.setSelected(true);
 	       JCheckBoxMenuItem itemVaccini = new JCheckBoxMenuItem("Vaccini");
 	       itemVaccini.setSelected(true);
 	       JMenuItem all = new JMenuItem("Tutti");
 	       JMenuItem acquistati = new JMenuItem("Acquistati");
 	       JMenuItem maiAcquistati = new JMenuItem("Non Acquistati");
+	    
 
 	       itemScaduti.addActionListener((e) -> {
 	    	   if((itemFarmaci.isSelected() && itemVaccini.isSelected()) || ( !itemFarmaci.isSelected() && !itemVaccini.isSelected())) {
@@ -370,6 +374,20 @@ public class FarmaciPage extends JPanel {
 	       menuMostra.add(itemInEsaurimento);
 	       menuSeleziona.add(itemFarmaci);
 	       menuSeleziona.add(itemVaccini);
+	       menuAggiungi.add(itemAddFarmaco);
+	       menuAggiungi.add(itemAddLotto);
+	       itemAddFarmaco.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					// new Farmaco
+					frame.getContentPane().add(new NewLotto(frame, user));
+				}
+			});
+	       
+	       itemAddLotto.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					frame.getContentPane().add(new NewLotto(frame, user));
+				}
+			});
 	       
 	       JPanel panelAdd = new JPanel();
 	       middlePanel.add(panelAdd, BorderLayout.SOUTH);

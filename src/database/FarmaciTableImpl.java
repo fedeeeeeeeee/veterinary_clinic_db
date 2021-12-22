@@ -390,6 +390,4 @@ public class FarmaciTableImpl implements FarmaciTable {
 			}
 			return farmaci;
 		}
-
-
 }

@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -15,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -26,6 +28,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import model.Farmaco;
 import model.User;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
@@ -35,6 +38,8 @@ import com.toedter.calendar.JDateChooser;
 
 import controller.FarmaciController;
 import controller.FarmaciControllerImpl;
+import controller.LottoController;
+import controller.LottoControllerImpl;
 
 public class NewLotto extends JPanel {
 
@@ -42,6 +47,7 @@ public class NewLotto extends JPanel {
 	private JFrame frame;
 	private User user;
 	private FarmaciController farmaciController;
+	private LottoController lottoController;
 	/**
 	 * Create the panel.
 	 */
@@ -53,6 +59,7 @@ public class NewLotto extends JPanel {
 		this.frame = frame;
 		this.user = user;
 		this.farmaciController = new FarmaciControllerImpl();
+		this.lottoController = new LottoControllerImpl();
 		
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
@@ -85,7 +92,7 @@ public class NewLotto extends JPanel {
           
           JPanel formPanel = new JPanel();
           formPanel.setBorder(new EmptyBorder(50, 50, 50, 50));
-          centerPanel.add(formPanel, BorderLayout.CENTER);
+          centerPanel.add(formPanel, BorderLayout.NORTH);
           formPanel.setLayout(new FormLayout(new ColumnSpec[] {
           		FormSpecs.RELATED_GAP_COLSPEC,
           		FormSpecs.DEFAULT_COLSPEC,
@@ -119,19 +126,28 @@ public class NewLotto extends JPanel {
           farmacoPanel.add(lblFarmaco);
           
       	JComboBox<String> comboBox = new JComboBox<>();
+      	
           farmacoPanel.add(comboBox);
-      	String[] farmaci = farmaciController.getAllFarmaci().toArray(new String[0]);
-		for (int i = 0; i < farmaci.length; i++) {
-			comboBox.addItem(farmaci[i]);
-		}
-		
+      	List<Farmaco> farmaci = lottoController.getAllDistinctFarmaci();
+      	for (Farmaco farmaco : farmaci ) {
+      		comboBox.addItem(farmaco.getCodFarmaco() + " - " + farmaco.getNomeFarmaco());
+      	}
+	
           JLabel lblDescrizione = new JLabel("Descrizione");
           farmacoPanel.add(lblDescrizione);
           //comboBox.getSelectedItem().get
           
           JTextPane textDescrizione = new JTextPane();
-          farmacoPanel.add(textDescrizione);
+          JScrollPane jsp = new JScrollPane(textDescrizione);
+          farmacoPanel.add(jsp);
           
+      	comboBox.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Farmaco farmacoSelected = farmaci.get(comboBox.getSelectedIndex());
+				/*String farmacoSelected = comboBox.getSelectedItem().toString(); String[] parts = farmacoSelected.split(" - "); String part1 = parts[0]; // codFarmaco String part2 = parts[1]; // cod*/
+			textDescrizione.setText(farmacoSelected.getDescrizione());
+			}
+		});
           JPanel lottoPanel = new JPanel();
           lottoPanel.setBorder(new TitledBorder(
     				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
