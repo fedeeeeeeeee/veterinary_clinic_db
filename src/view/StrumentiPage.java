@@ -69,6 +69,7 @@ public class StrumentiPage extends JPanel {
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
+		
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 //GroupLayout groupLayout = new GroupLayout(this);
@@ -99,9 +100,7 @@ public class StrumentiPage extends JPanel {
 		upperMiddlePanel.add(menuBar, "1, 1, fill, top");
 		JMenu menuMostra = new JMenu("Mostra");
 		JMenu menuAggiungi = new JMenu("Aggiungi");
-//editMostra.setMnemonic("S");
-// JMenu editScaduti = new JMenu("Scaduti");
-//JMenu editInScadenza = new JMenu("In Scadenza");
+
 		searchBar = new JTextField();
 		searchBar.setText("Ricerca Strumento");
 		searchBar.addFocusListener((FocusListener) new FocusListener() {
@@ -161,6 +160,7 @@ public class StrumentiPage extends JPanel {
 		gbl_centerPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_centerPanel.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
 		centerPanel.setLayout(gbl_centerPanel);
+		
 		this.scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 2;
@@ -174,7 +174,8 @@ public class StrumentiPage extends JPanel {
 		this.createTable(model, listStrumenti);
 //table.setModel(model);
 		scrollPane.setViewportView(table);
-		/*------fine-------- table */
+		
+/*------fine-------- table */
 // -----inizio ----- MENUU--- listener
 		JMenuItem itemScaduti = new JMenuItem("Scaduti"); // , new ImageIcon("cut-java-image.gif"));
 		JMenuItem itemInScadenza = new JMenuItem("In Scadenza");

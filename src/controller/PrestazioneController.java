@@ -10,7 +10,7 @@ public interface PrestazioneController {
 
 	//visualizzare appuntamenti/prestazioni 
 	List<Appuntamento> getAllPrestazioni();
-	List<Appuntamento>getPrestazioniInData(Date data);
+	List<Appuntamento>getPrestazioniInData(String dataformat);
 	//List<String>getPrestazioneDiAnimale(Animale animale );
 	List<Appuntamento> getPrestazioneDiVeterinario(User veterinario);
 	

@@ -23,9 +23,8 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 	}
 
 	@Override
-	public List<Appuntamento> getPrestazioniInData(Date data) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Appuntamento> getPrestazioniInData(String data) {
+		return this.prestazioneTable.getPrestazioniInData(data);
 	}
 
 	@Override

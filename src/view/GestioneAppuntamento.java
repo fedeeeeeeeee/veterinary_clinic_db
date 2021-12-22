@@ -3,7 +3,16 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -12,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.EmptyBorder;
 
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
@@ -24,28 +34,47 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ListSelectionModel;
+import javax.swing.MenuSelectionManager;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JTextPane;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.plaf.multi.MultiMenuItemUI;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
 import java.awt.Component;
+import java.awt.Dimension;
+
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
+import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 public class GestioneAppuntamento extends CommonView {
 
 	private static final long serialVersionUID = -83378890947911750L;
 	private JFrame frame;
-	private PrestazioneController prestazioneController;
-	private JTable table;
 	private User user;
+	private JTextField searchBar;
+	private JTable table;	
+	private JScrollPane scrollPane;
+	private PrestazioneController prestazioneController;
+	private List<Appuntamento> listAppuntamenti;
+	private int selectedStrumento;
+	private DefaultTableModel model;
+private boolean first; 
+	private String saved;
 	
 	public GestioneAppuntamento(final JFrame frame, User user) {
 		frame.getContentPane().removeAll();
@@ -54,74 +83,124 @@ public class GestioneAppuntamento extends CommonView {
 		this.frame = frame;
 		this.user = user;
 		this.prestazioneController = new PrestazioneControllerImpl();
-		
+		this.selectedStrumento = -1;
+		this.first = true;
+		this.saved = "";
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
-		JPanel centerPanel = new JPanel();
-
-		// per la visualizzazione
+		JPanel middlePanel = new JPanel();
+		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+		JCalendar dateChooser = new JCalendar();
+		this.saved = dateChooser.getDate().toString();
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		// utile per il design
 		//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
 				.createSequentialGroup()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
 						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
-						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 				.addGap(24)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE).addGap(44)
-						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE).addGap(84)
-						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE).addGap(0)));
-		upperPanel.setLayout(new BorderLayout(0, 0));
+						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE).addGap(44)
+						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE).addGap(84)
+						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE).addGap(0)));
 		
-		JLabel lblNewLabel = new JLabel("Appointment");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 35));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		upperPanel.add(lblNewLabel, BorderLayout.CENTER);
 		
-		JPanel menu = new JPanel();
-		upperPanel.add(menu, BorderLayout.SOUTH);
+		//------MENU BAR------
+				middlePanel.setLayout(new BorderLayout(0, 0));
+				JPanel upperMiddlePanel = new JPanel();
+				upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
+				middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
+				upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("900px"), },
+						new RowSpec[] { RowSpec.decode("25px"), }));
+				JMenuBar menuBar = new JMenuBar();
+		//frame.setJMenuBar(menuBar);
+				upperMiddlePanel.add(menuBar, "1, 1, fill, top");
+				JMenu menuMostra = new JMenu("Mostra");
+				JMenu menuAggiungi = new JMenu("Azioni");
+
+				searchBar = new JTextField();
+				searchBar.setText("Ricerca Strumento");
+				searchBar.addFocusListener((FocusListener) new FocusListener() {
+					@Override
+					public void focusGained(FocusEvent e) {
+						if (searchBar.getText().equals("Ricerca Animale")) {
+							searchBar.setText("");
+						}
+					}
+
+					@Override
+					public void focusLost(FocusEvent e) {
+						if (searchBar.getText().equals("")) {
+							searchBar.setText("Ricerca Animale");
+						}
+					}
+				});
+				searchBar.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+		//if(searchBar.getText().equals("Ricerca Strumento")){
+						searchBar.setText("");
+		// }
+					}
+				});
+				JButton buttonVai = new JButton("Vai");
+				buttonVai.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						search(e);
+					}
+				});
+				//JDateChooser dateChooser = new JDateChooser();
+				
+				dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
+			          
+					@Override
+			          public void propertyChange(PropertyChangeEvent evt) {
+							if( !saved.equals( dateChooser.getDate().toString()) ) {
+								saved = dateChooser.getDate().toString();
+								System.out.println(dateChooser.getDate().toString());
+								//TODO query database data 
+								//DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
+								//String dataformat = formatter.format(LocalDateTime.now());
+								//	this.resetAndDraw(prestazioneController.getPrestazioniInData(dataformat));
+							}
+						
+					
+			          }
+
+			      });
+				dateChooser.setSize(20, 20);
+				BorderLayout borderLayout = (BorderLayout) dateChooser.getLayout();
+				buttonVai.setBackground(Color.LIGHT_GRAY);
+				buttonVai.setForeground(Color.BLACK);
+				menuBar.add(menuMostra);
+				menuBar.add(menuAggiungi);
+				//menuBar.add(dateChooser);
+				menuBar.add(searchBar);
+				menuBar.add(buttonVai);
+				JButton orderAsc = new JButton(IconImage.ARROW.getImageIcon());
+				orderAsc.setBackground(Color.LIGHT_GRAY);
+				orderAsc.setForeground(Color.BLACK);
+				//menuBar.add(orderAsc);
+				JPanel centerPanel = new JPanel();
+				centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+				middlePanel.add(centerPanel, BorderLayout.CENTER);
+				upperPanel.setLayout(new BorderLayout(0, 0));
+				
+				JLabel titleLabel = new JLabel("Appointment");
+				titleLabel.setBounds(409, 58, 194, 52);
+				titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
+				titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+				titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+				upperPanel.add(titleLabel, BorderLayout.CENTER);
 		
-		JButton todayButton = new JButton("Today");
-		todayButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		todayButton.setHorizontalAlignment(SwingConstants.LEFT);
-		todayButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		
-		JButton btnNewButton_1 = new JButton("All");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		menu.add(btnNewButton_1);
-		menu.add(todayButton);
 		
-		JButton btnNewButton = new JButton("This week");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		menu.add(btnNewButton);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setSize(20, 20);
-		BorderLayout borderLayout = (BorderLayout) dateChooser.getLayout();
-		menu.add(dateChooser);
-		
-		JPanel panelUtente = new JPanel();
-		upperPanel.add(panelUtente, BorderLayout.NORTH);
-		panelUtente.setLayout(new BoxLayout(panelUtente, BoxLayout.X_AXIS));
-		
-		JLabel lblUtente = new JLabel("Utente");
-		lblUtente.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblUtente.setHorizontalAlignment(SwingConstants.LEFT);
-		panelUtente.add(lblUtente);
-		
-		JLabel lblRuolo = new JLabel("Ruolo");
-		lblRuolo.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblRuolo.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		lblRuolo.setVerticalAlignment(SwingConstants.TOP);
-		lblRuolo.setHorizontalAlignment(SwingConstants.LEFT);
-		panelUtente.add(lblRuolo);
+		/*------TABLE */
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
 		gbl_centerPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
 		gbl_centerPanel.rowHeights = new int[]{0, 0, 0};
@@ -137,73 +216,68 @@ public class GestioneAppuntamento extends CommonView {
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 0;
 		centerPanel.add(scrollPane, gbc_scrollPane);
-		
-		table = new JTable();
-		List<Appuntamento> listPrestazioni = prestazioneController.getAllPrestazioni();
-		DefaultTableModel model =  (DefaultTableModel) table.getModel();
-		
-		
-		model.addColumn("Animale");
-		model.addColumn("Data");
-		model.addColumn("Ora");
-		model.addColumn("Prestazione");
-		model.addColumn("Nome");
-		model.addColumn("Cognome");
-		model.addColumn("Modifica");
-
-		
-		JButton button = new JButton();
-		//button.addActionListener(showOrder);
-	    table.getColumn("Modifica").setCellRenderer(new ButtonRenderer("Modifica"));//
-	    table.getColumn("Modifica").setCellEditor(new ButtonEditor(new JCheckBox(), button, "Modifica"));
-	    
-	    /*
-	    table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				ListSelectionModel lsm = (ListSelectionModel)e.getSource();
-		        int firstIndex = e.getFirstIndex();
-		        int lastIndex = e.getLastIndex();
-		        System.out.println("first" + firstIndex);
-			}
-	    });
-	    */
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-					table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-				        public void valueChanged(ListSelectionEvent event) {
-				        	ListSelectionModel lsm = (ListSelectionModel)event.getSource();
-					        int firstIndex = event.getFirstIndex();
-					      
-				            //System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-					        //System.out.println("index" + firstIndex);
-					        frame.getContentPane().add(new DettagliAppuntamento(frame, user));
-					        listPrestazioni.get(firstIndex); // tipo Appuntamento
-					       // JOptionPane.showMessageDialog(null, "Do you want to modify  line" + firstIndex + "?");
-					      //  System.out.println("index" + firstIndex);
-				        }
-				    });
-				
-			}
-		});
-		
-		
-		listPrestazioni.forEach(x -> {
-			model.addRow(new Object[] { 
-					x.getNomeAnimale(), 
-					x.getData(), 
-					x.getOra(), 
-					x.getPrestazione(),
-					x.getNomeVeterinario(), 
-					x.getCognomeVeterinario(),
-			});
-		});
-		
-		//table.setModel(model);
+		this.initTable();
+		this.listAppuntamenti = this.prestazioneController.getAllPrestazioni();
+		this.createTable(model, listAppuntamenti);
 		scrollPane.setViewportView(table);
+	
+//  frame.getContentPane().add(new DettagliAppuntamento(frame, user));
+
+		/*------fine-------- table */
+		// -----inizio ----- MENUU--- listener
+			JMenu subMenuSeleziona = new JMenu("Seleziona giorno");
+			menuMostra.add(subMenuSeleziona);
+				JMenuItem itemOggi = new JMenuItem("Oggi"); // , new ImageIcon("cut-java-image.gif"));
+				JMenuItem itemSettimana = new JMenuItem("Settimana Corrente");
+				JMenuItem itemMese = new JMenuItem("Mese Corrente");
+				JMenuItem itemTutti = new JMenuItem("Tutti");
+				JMenuItem itemNuovoAppuntamento = new JMenuItem("Aggiungi Nuovo Appuntamento");
+				JMenuItem itemDettagliAppuntamento = new JMenuItem("Modifica Appuntamento");
+		// itemModQuantita.setIcon(null);
+				itemOggi.addActionListener((e) -> {
+					DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
+					String dataformat = formatter.format(LocalDateTime.now());
+					this.resetAndDraw(prestazioneController.getPrestazioniInData(dataformat));
+				});
+				itemSettimana.addActionListener((e) -> {
+					//TODO
+					//this.resetAndDraw(prestazioneController.getPrestazioneSettimana());
+				});
+				itemMese.addActionListener((e) -> {
+					//TODO
+					//this.resetAndDraw(prestazioneController.getPrestazioneMese());
+				});
+				itemTutti.addActionListener((e) -> {
+					this.resetAndDraw(prestazioneController.getAllPrestazioni() );
+				});
+				itemDettagliAppuntamento.addActionListener((e) -> {
+					if (this.selectedStrumento != -1) {
+						Appuntamento appuntamento = listAppuntamenti.get(selectedStrumento);
+						//TODO
+						//frame.getContentPane().add(new DettagliAppuntamento(frame, user,appuntamento ));
+					} else {
+						JOptionPane.showMessageDialog(null, "Non hai selezionato alcun appuntamento ");
+					}
+				});
+				itemNuovoAppuntamento.addActionListener((e) -> {
+						//frame.getContentPane().add(new NuovoAppuntamento(frame, user ));
+				});
+				menuMostra.add(itemTutti);
+				menuMostra.add(itemOggi);
+				menuMostra.add(itemSettimana);
+				menuMostra.add(itemMese);
+				menuMostra.add(subMenuSeleziona);
+				subMenuSeleziona.add(dateChooser);
+				//menuMostra.add(dateChooser);
+				menuAggiungi.add(itemNuovoAppuntamento);
+				menuAggiungi.add(itemDettagliAppuntamento);
+			
+		//----fine ---- MENUU
+
 
 		JButton backButton = new JButton("BACK");
-		backButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		backButton.setHorizontalAlignment(SwingConstants.LEFT);
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new HomeSegretaria(frame, user));
@@ -211,13 +285,65 @@ public class GestioneAppuntamento extends CommonView {
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(backButton, BorderLayout.WEST);
-
-		// importante per il design
+		
 	//setLayout(groupLayout);
-
-		// importante per la visualizzazione ---> commentare GroupLayout groupLayout =
 	new GroupLayout(this);
 	frame.getContentPane().setLayout(groupLayout);
 	this.initCommonView(frame);
 	}
+
+private void resetAndDraw(List<Appuntamento> allAppuntamento) {
+	this.listAppuntamenti.clear();
+	this.listAppuntamenti = allAppuntamento;
+//table.clearSelection();
+	model.setRowCount(0);
+	this.createTable(model, listAppuntamenti);
+	scrollPane.setViewportView(table);
+}
+
+private void createTable(DefaultTableModel model, List<Appuntamento> list) {
+	list.forEach(x -> {
+		model.addRow(new Object[] { 
+					x.getNomeAnimale(), 
+					x.getData(), 
+					x.getOra(), 
+					x.getPrestazione(),
+					x.getNomeVeterinario(), 
+					x.getCognomeVeterinario(),
+				});
+	});
+}
+
+private void initTable() {
+	this.table = new JTable();
+	this.model = (DefaultTableModel) table.getModel();
+	model.addColumn("Animale");
+	model.addColumn("Data");
+	model.addColumn("Ora");
+	model.addColumn("Prestazione");
+	model.addColumn("Nome");
+	model.addColumn("Cognome");
+	model.addColumn("Modifica");		
+	table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		public void valueChanged(ListSelectionEvent event) {
+			selectedStrumento = event.getFirstIndex();
+			System.out.println(selectedStrumento);
+		}
+	});
+}
+
+public void search(ActionEvent e) { // action
+	List<Appuntamento> lista = new ArrayList<Appuntamento>();
+//listStrumenti.clear();
+	lista.addAll(searchList(searchBar.getText(), listAppuntamenti));
+	this.resetAndDraw(lista);
+}
+
+private List<Appuntamento> searchList(String searchWords, List<Appuntamento> listOfAppuntamenti) {
+	List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
+	return listOfAppuntamenti.stream().filter(input -> {
+		return searchWordsArray.stream()
+				.allMatch(word -> input.getNomeAnimale().toLowerCase().contains(word.toLowerCase()));
+	}).collect(Collectors.toList());
+}
 }
