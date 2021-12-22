@@ -161,7 +161,7 @@ public class NewLotto extends JPanel {
           JSpinner spinConfezioni = new JSpinner();
           lottoPanel.add(spinConfezioni);
           
-          JLabel lblQuantita = new JLabel("Quantit‡ in Confezione");
+          JLabel lblQuantita = new JLabel("Quantit√† in Confezione");
           lottoPanel.add(lblQuantita);
           
           JSpinner spinner = new JSpinner();
