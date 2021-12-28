@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,38 +28,27 @@ import controller.PrestazioneControllerImpl;
 import model.Appuntamento;
 import model.User;
 
-import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
-import javax.swing.MenuSelectionManager;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JTextPane;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.plaf.multi.MultiMenuItemUI;
 
-import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
-import java.awt.GridLayout;
 import java.awt.Toolkit;
-import java.awt.Component;
 import java.awt.Dimension;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 import com.toedter.calendar.JCalendar;
-import com.toedter.calendar.JDateChooser;
 
 public class GestioneAppuntamento extends CommonView {
 
@@ -166,8 +154,6 @@ private boolean first;
 								SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 								resetAndDraw(prestazioneController.getPrestazioniInData(df.format(dateChooser.getDate())));
 							}
-						
-					
 			          }
 
 			      });

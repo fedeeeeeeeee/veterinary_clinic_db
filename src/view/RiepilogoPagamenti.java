@@ -4,6 +4,9 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -13,27 +16,41 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
+import model.Appuntamento;
 import model.User;
 import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import javax.swing.JScrollPane;
+
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.RowSpec;
 import com.toedter.calendar.JDateChooser;
+
+import controller.PrestazioneController;
+import controller.PrestazioneControllerImpl;
+
 import java.awt.GridBagConstraints;
 
 public class RiepilogoPagamenti extends JPanel {
 
-
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private User user;
-	private JTable tableTutti;
-	private JTable tableMensili;
-	private JTable tableAnnuali;
-	private JTable tableOggi;
-	private JTable tablePeriodo;
+	private List<Appuntamento> listAppuntamenti;
+	private DefaultTableModel model;
+	private PrestazioneController prestazioneController;
+	private JTable table;	
+	private JScrollPane scrollPane;
 	
 	public RiepilogoPagamenti(final JFrame frame, User user) {
 		frame.getContentPane().removeAll();
@@ -41,135 +58,156 @@ public class RiepilogoPagamenti extends JPanel {
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
+		this.prestazioneController = new PrestazioneControllerImpl();
 		
 		JPanel upperPanel = new JPanel();
-		
-		JPanel centerPanel = new JPanel();
-		
+		JPanel middlePanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 
-		// per la visualizzazione
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		// utile per il design
 		//GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
+				.createSequentialGroup()
+				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGap(24)));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
-						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-							.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-								.addComponent(upperPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 556, Short.MAX_VALUE)
-								.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 443, Short.MAX_VALUE))
-							.addGap(1)))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-					.addGap(4))
-		);
+						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE).addGap(44)
+						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE).addGap(84)
+						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE).addGap(0)));
+		
+		middlePanel.setLayout(new BorderLayout(0, 0));
+		JPanel upperMiddlePanel = new JPanel();
+		upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
+		middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
+		
+		upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("900px"), },
+				new RowSpec[] { RowSpec.decode("25px"), }));
+		
+		JMenuBar menuBar = new JMenuBar();
+		upperMiddlePanel.add(menuBar, "1, 1, fill, top");
+		JMenu menuMostra = new JMenu("Mostra");
+		JMenu menuAggiungi = new JMenu("Azioni");
+		menuBar.add(menuMostra);
+		menuBar.add(menuAggiungi);
+		        
+		JPanel centerPanel = new JPanel();
+		centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+		middlePanel.add(centerPanel, BorderLayout.CENTER);
+		
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		
-		JLabel lblNewLabel = new JLabel("Riepilogo pagamenti");
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		upperPanel.add(lblNewLabel, BorderLayout.CENTER);
-		
-			
-			
-			 JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		        tabbedPane.setBounds(centerPanel.getBounds().x, centerPanel.getBounds().y, centerPanel.getBounds().width, centerPanel.getBounds().height);
-		        frame.getContentPane().add(tabbedPane);
-		        
-		        JPanel allPagamentiTab = new JPanel();
-		        tabbedPane.addTab("Tutti", null, allPagamentiTab, "Tutti");
-		        allPagamentiTab.setLayout(new GridLayout(1, 0, 0, 0));
-		        
-		        JScrollPane scrollPane = new JScrollPane();
-		        allPagamentiTab.add(scrollPane);
-		        
-		        tableTutti = new JTable();
-		        scrollPane.setViewportView(tableTutti);
-		        
-		        JPanel mensiliPanel = new JPanel();
-		        tabbedPane.addTab("Mensili", null, mensiliPanel, null);
-		        mensiliPanel.setLayout(new GridLayout(1, 0, 0, 0));
-		        
-		        JScrollPane scrollPaneMensili = new JScrollPane();
-		        mensiliPanel.add(scrollPaneMensili);
-		        
-		        tableMensili = new JTable();
-		        scrollPaneMensili.setViewportView(tableMensili);
-		        
-		        JPanel annualiTab = new JPanel();
-		        tabbedPane.addTab("Annuali", null, annualiTab, "Annuali");
-		        annualiTab.setLayout(new GridLayout(1, 0, 0, 0));
-		        
-		        JScrollPane scrollPaneAnnuali = new JScrollPane();
-		        annualiTab.add(scrollPaneAnnuali);
-		        
-		        tableAnnuali = new JTable();
-		        scrollPaneAnnuali.setViewportView(tableAnnuali);
-		    	        
-		        JPanel oggiTab = new JPanel();
-		        tabbedPane.addTab("Oggi", null, oggiTab, "Oggi");
+		JLabel titleLabel = new JLabel("Pagamenti");
+		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
-		        oggiTab.setLayout(new GridLayout(1, 0, 0, 0));
-		        
-		        JScrollPane scrollPaneOggi = new JScrollPane();
-		        oggiTab.add(scrollPaneOggi);
-		        
-		        tableOggi = new JTable();
-		        scrollPaneOggi.setViewportView(tableOggi);
-		        
-		        JPanel periodoTab = new JPanel();
-		        tabbedPane.addTab("Periodo", null, periodoTab, "Periodo");
-		        periodoTab.setLayout(new BorderLayout(0, 0));
-		        
-		        JPanel panelSu = new JPanel();
-		        periodoTab.add(panelSu, BorderLayout.NORTH);
-		        panelSu.setLayout(new GridLayout(1, 0, 0, 0));
-		        
-		        JDateChooser dateChooser = new JDateChooser();
-		        panelSu.add(dateChooser);
-		        
-		        JDateChooser dateChooser_1 = new JDateChooser();
-		        panelSu.add(dateChooser_1);
-		        
-		        JPanel panelGiu = new JPanel();
-		        periodoTab.add(panelGiu, BorderLayout.CENTER);
-		        panelGiu.setLayout(new GridLayout(1, 0, 0, 0));
-		        
-		        JScrollPane scrollPanePeriodo = new JScrollPane();
-		        panelGiu.add(scrollPanePeriodo);
-		        
-		        tablePeriodo = new JTable();
-		        scrollPanePeriodo.setViewportView(tablePeriodo);
-		        
-		        centerPanel.add(tabbedPane);
-
+		/*------TABLE */
+		GridBagLayout gbl_centerPanel = new GridBagLayout();
+		gbl_centerPanel.columnWidths = new int[]{0, 0, 0, 0, 0};
+		gbl_centerPanel.rowHeights = new int[]{0, 0, 0};
+		gbl_centerPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_centerPanel.rowWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		centerPanel.setLayout(gbl_centerPanel);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridheight = 2;
+		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridy = 0;
+		centerPanel.add(scrollPane, gbc_scrollPane);
+		
+		this.initTable();
+		this.listAppuntamenti = this.prestazioneController.getAllPrestazioni();
+		this.createTable(model, listAppuntamenti);
+		scrollPane.setViewportView(table);
+		
+		/*------fine-------- table */
+		// -----inizio ----- MENUU--- listener
+		JMenu subMenuSeleziona = new JMenu("Periodo");
+		menuMostra.add(subMenuSeleziona);
+			JMenuItem itemOggi = new JMenuItem("Oggi"); // , new ImageIcon("cut-java-image.gif"));
+			JMenuItem itemMese = new JMenuItem("Mensili");
+			JMenuItem itemAnno = new JMenuItem("Annuali");
+			JMenuItem itemTutti = new JMenuItem("Tutti");
+			DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
+			String dataformat = formatter.format(LocalDateTime.now());
+			itemOggi.addActionListener((e) -> {
+				
+				//this.resetAndDraw(prestazioneController.getPrestazioniInData(dataformat));
+				//TODO
+			});
+			itemMese.addActionListener((e) -> {
+				//TODO
+			});
+			itemAnno.addActionListener((e) -> {
+				//TODO
+				});
+			itemTutti.addActionListener((e) -> {
+				//TODO
+			});
+			
+			menuMostra.add(itemTutti);
+			menuMostra.add(itemOggi);
+			menuMostra.add(itemAnno);
+			menuMostra.add(itemMese);
+			menuMostra.add(subMenuSeleziona);
+			//----fine ---- MENUU
 			
 		JButton backButton = new JButton("BACK");
+		backButton.setHorizontalAlignment(SwingConstants.LEFT);
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  frame.getContentPane().add(new MainPage(frame));
+				  frame.getContentPane().add(new HomeSegretaria(frame,user));
 			}
 		});
-		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
-		lowerPanel.add(backButton);
-		
+		lowerPanel.setLayout(new BorderLayout(0, 0));
+		lowerPanel.add(backButton, BorderLayout.WEST);
 				
-		// importante per il design
 		//setLayout(groupLayout);
-
-		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		//this.initCommonView(frame);
 	}
+
+private void resetAndDraw(List<Appuntamento> allAppuntamento) {
+	this.listAppuntamenti.clear();
+	this.listAppuntamenti = allAppuntamento;
+		//table.clearSelection();
+	model.setRowCount(0);
+	this.createTable(model, listAppuntamenti);
+	//scrollPane.setViewportView(table);
+}
+
+private void createTable(DefaultTableModel model, List<Appuntamento> list) {
+			list.forEach(x -> {
+				model.addRow(new Object[] { 
+					x.getNomeAnimale(), 
+					x.getData(), 
+					x.getOra(), 
+					x.getPrestazione(),
+					x.getNomeVeterinario(), 
+					x.getCognomeVeterinario(),
+				});
+			});
+}
+
+private void initTable() {
+	this.table = new JTable();
+	this.model = (DefaultTableModel) table.getModel();
+	model.addColumn("Animale");
+	model.addColumn("Data");
+	model.addColumn("Ora");
+	model.addColumn("Prestazione");
+	model.addColumn("Nome");
+	model.addColumn("Cognome");
+
+}
+
 }
