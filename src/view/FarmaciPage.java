@@ -103,14 +103,14 @@ public class FarmaciPage extends JPanel {
        			.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
        			.addPreferredGap(ComponentPlacement.RELATED)
        			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
-       			.addContainerGap())
-       );
+       			.addContainerGap()));
+      
        //------MENU BAR------
        middlePanel.setLayout(new BorderLayout(0, 0));
-       
        JPanel upperMiddlePanel = new JPanel();
        upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
        middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
+       
        upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] {
        		ColumnSpec.decode("950px"),},
        	new RowSpec[] {
@@ -166,7 +166,7 @@ public class FarmaciPage extends JPanel {
        JButton orderAsc = new JButton (IconImage.ARROW.getImageIcon() );
        orderAsc.setBackground(Color.LIGHT_GRAY);
        orderAsc.setForeground(Color.BLACK);
-       menuBar.add(orderAsc);
+      // menuBar.add(orderAsc);
 
        
        
@@ -175,13 +175,13 @@ public class FarmaciPage extends JPanel {
        middlePanel.add(centerPanel, BorderLayout.CENTER);
        
        
-		upperPanel.setLayout(null);
+		upperPanel.setLayout(new BorderLayout(0, 0));
 		JLabel titleLabel = new JLabel("Farmaci");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-		upperPanel.add(titleLabel);
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		
 		/*-------------- TABLE */
@@ -202,14 +202,10 @@ public class FarmaciPage extends JPanel {
 		gbc_scrollPane.gridy = 0;
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		
-	
 
 		this.initTable();
 	    this.listFarmaci = farmaciController.getAllFarmaci();
 	    this.createTable(model, listFarmaci);
-
-		
-		//table.setModel(model);
 		scrollPane.setViewportView(table);
 		
 		/*------fine-------- table */
@@ -425,8 +421,8 @@ public class FarmaciPage extends JPanel {
  	   this.listFarmaci = allFarmaci;
  	   //table.clearSelection();
  	   model.setRowCount(0);
-   	   this.createTable(model, listFarmaci);	
-   	 scrollPane.setViewportView(table);
+   	   this.createTable(model, listFarmaci);
+   	 //scrollPane.setViewportView(table);
 	}
 
 

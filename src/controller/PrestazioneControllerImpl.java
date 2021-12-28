@@ -39,4 +39,23 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		return false;
 	}
 
+
+	@Override
+	public List<Appuntamento> getPrestazioneSettimana(String data) {
+		return this.prestazioneTable.getPrestazioneSettiamana(data);
+	}
+
+
+	@Override
+	public List<Appuntamento> getPrestazioneMese(String data) {
+		return this.prestazioneTable.getPrestazioneMese(data);
+	}
+
+
+	@Override
+	public List<Appuntamento> getPrestazione(String data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

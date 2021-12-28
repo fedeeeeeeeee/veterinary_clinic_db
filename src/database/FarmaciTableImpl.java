@@ -122,11 +122,11 @@ public class FarmaciTableImpl implements FarmaciTable {
 			 		+ "on lotto_acquistato.codFarmaco=farmaco.codFarmaco "
 			 		+ "where dataDiScadenza <= ?";
 		 List<Farmaco> farmaci = new ArrayList<>();
-		 
 			try {
-				
+			
 				DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 				String dataformat = formatter.format(LocalDateTime.now());
+				System.out.println(dataformat);
 				statement = Optional.of(connection.prepareStatement(query));
 			    statement.get().setString(1,dataformat);
 				final ResultSet result = statement.get().executeQuery();

@@ -14,6 +14,9 @@ public interface PrestazioneController {
 	//List<String>getPrestazioneDiAnimale(Animale animale );
 	List<Appuntamento> getPrestazioneDiVeterinario(User veterinario);
 	
+	List<Appuntamento> getPrestazioneSettimana(String data);
+	List<Appuntamento> getPrestazioneMese(String data);
+	List<Appuntamento> getPrestazione(String data);
 	
 	// aggiungere appuntamenti
 	boolean addNewPrestazione(Appuntamento appuntamento);

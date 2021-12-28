@@ -17,4 +17,9 @@ public interface PrestazioneTable {
 		
 		
 		boolean addNewPrestazione(Appuntamento appuntamento);
+
+		List<Appuntamento> getPrestazioneMese(String data);
+
+		List<Appuntamento> getPrestazioneSettiamana(String data);
+
 }
