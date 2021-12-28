@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -29,6 +30,8 @@ import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
 import model.Farmaco;
+import model.Lotto;
+import model.LottoImpl;
 import model.User;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridBagLayout;
@@ -52,6 +55,7 @@ public class NewLotto extends JPanel {
 	private User user;
 	private FarmaciController farmaciController;
 	private LottoController lottoController;
+	private Lotto lotto;
 	/**
 	 * Create the panel.
 	 */
@@ -203,6 +207,25 @@ public class NewLotto extends JPanel {
           centerPanel.add(panel, BorderLayout.SOUTH);
           
           JButton btnSave = new JButton("Salva");
+          btnSave.addActionListener(new ActionListener(){
+        		public void actionPerformed(ActionEvent e) {
+        			if(dateChooser.getDate()!= null) {
+        				lotto = new LottoImpl();
+        				lotto.setCodLotto(0);
+        				lotto.setNumeroConfezioni((int) spinConfezioni.getValue());
+        				lotto.setQuantitaPerConfezione((int)spinner.getValue());
+        			
+        				lotto.setCodFarmaco(farmaci.get(comboBox.getSelectedIndex()).getCodFarmaco());
+        				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+    					String date = format.format(dateChooser.getDate());
+        				lotto.setDataScadenza(date);
+        				
+        				lottoController.addNewLotto(lotto);
+        				
+        				 frame.getContentPane().add(new FarmaciPage(frame, user));
+        			}
+        		}
+          });
           panel.add(btnSave);
 
 		

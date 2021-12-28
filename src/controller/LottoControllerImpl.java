@@ -21,7 +21,16 @@ private LottoTable lottoTable;
 
 	@Override
 	public void addNewLotto(Lotto lotto) {
-		this.lottoTable.addNewLotto(lotto);
+		if(this.lottoTable.addNewLotto(lotto)) {
+			//TODO
+			// lotto aggiunto correttamento
+			//aggiorna quantita in famrqaco 
+			// if(aggiornamento) 
+			// ok aggioa
+		} else {
+			// lotto non aggiunto correttamento
+		}
+		
 
 	}
 

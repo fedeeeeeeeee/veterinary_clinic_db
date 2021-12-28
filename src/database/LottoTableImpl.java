@@ -14,9 +14,11 @@ import model.Lotto;
 
 public class LottoTableImpl implements LottoTable {
 	private DatabaseConnection dataSource;
-
+	private String tableName;
+	
 	public LottoTableImpl() {
 		this.dataSource = new DatabaseConnection();
+		this.tableName = "lotto_acquistato";
 	}
 
 	@Override
@@ -60,9 +62,38 @@ public class LottoTableImpl implements LottoTable {
 	}
 
 	@Override
-	public void addNewLotto(Lotto lotto) {
-		// TODO Auto-generated method stub
+	public boolean addNewLotto(Lotto lotto) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
 
+		final String query = " insert into " +  tableName +" (codLotto, numeroConfezioni, quantitaPerConfezione, dataDiScadenza, codFarmaco) values (?,?,?,?,?) ";
+		
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1,0);
+			statement.get().setInt(2, lotto.getNumeroConfezioni());
+			statement.get().setInt(3, lotto.getQuantitaPerConfezione());
+			statement.get().setString(4,lotto.getDataScadenza());
+			statement.get().setInt(5, lotto.getCodFarmaco());
+			
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+				return false;
+			}
+		}
+		return true;
 	}
-
 }

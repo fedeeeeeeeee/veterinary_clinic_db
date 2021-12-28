@@ -9,6 +9,6 @@ public interface LottoTable {
 
 	List<Farmaco> getAllDistinctFarmaci();
 	
-	void addNewLotto(Lotto lotto); // dentro bisogna fare un update delle quantità
+	boolean addNewLotto(Lotto lotto); // dentro bisogna fare un update delle quantitï¿½
 	
 }
