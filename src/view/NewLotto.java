@@ -40,6 +40,10 @@ import controller.FarmaciController;
 import controller.FarmaciControllerImpl;
 import controller.LottoController;
 import controller.LottoControllerImpl;
+import net.miginfocom.swing.MigLayout;
+import com.jgoodies.forms.layout.Sizes;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class NewLotto extends JPanel {
 
@@ -66,8 +70,8 @@ public class NewLotto extends JPanel {
 		JPanel centerPanel = new JPanel();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         
-        GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-        //GroupLayout groupLayout = new GroupLayout(this);
+      GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+       //GroupLayout groupLayout = new GroupLayout(this);
           groupLayout.setHorizontalGroup(
           	groupLayout.createParallelGroup(Alignment.LEADING)
           		.addGroup(groupLayout.createSequentialGroup()
@@ -95,19 +99,11 @@ public class NewLotto extends JPanel {
           centerPanel.add(formPanel, BorderLayout.NORTH);
           formPanel.setLayout(new FormLayout(new ColumnSpec[] {
           		FormSpecs.RELATED_GAP_COLSPEC,
-          		FormSpecs.DEFAULT_COLSPEC,
+          		ColumnSpec.decode("max(100dlu;pref)"),
           		FormSpecs.RELATED_GAP_COLSPEC,
-          		FormSpecs.DEFAULT_COLSPEC,
+          		new ColumnSpec(ColumnSpec.CENTER, Sizes.bounded(Sizes.PREFERRED, Sizes.constant("277dlu", true), Sizes.constant("200dlu", true)), 1),
           		FormSpecs.RELATED_GAP_COLSPEC,
-          		FormSpecs.DEFAULT_COLSPEC,
-          		FormSpecs.RELATED_GAP_COLSPEC,
-          		ColumnSpec.decode("default:grow"),
-          		FormSpecs.RELATED_GAP_COLSPEC,
-          		FormSpecs.DEFAULT_COLSPEC,
-          		FormSpecs.RELATED_GAP_COLSPEC,
-          		FormSpecs.DEFAULT_COLSPEC,
-          		FormSpecs.RELATED_GAP_COLSPEC,
-          		FormSpecs.DEFAULT_COLSPEC,},
+          		ColumnSpec.decode("max(100dlu;pref)"),},
           	new RowSpec[] {
           		FormSpecs.RELATED_GAP_ROWSPEC,
           		RowSpec.decode("default:grow"),
@@ -119,59 +115,89 @@ public class NewLotto extends JPanel {
   				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
   				"Farmaco", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 
-          formPanel.add(farmacoPanel, "8, 2, fill, fill");
-          farmacoPanel.setLayout(new GridLayout(2, 2, 0, 0));
-          
-          JLabel lblFarmaco = new JLabel("Farmaco");
-          farmacoPanel.add(lblFarmaco);
+          formPanel.add(farmacoPanel, "4, 2, center, fill");
+          GridBagLayout gbl_farmacoPanel = new GridBagLayout();
+          gbl_farmacoPanel.columnWidths = new int[]{149, 145, 0};
+          gbl_farmacoPanel.rowHeights = new int[]{23, 49, 0};
+          gbl_farmacoPanel.columnWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+          gbl_farmacoPanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+          farmacoPanel.setLayout(gbl_farmacoPanel);
+      	
+      	JLabel lblFarmaco = new JLabel("Farmaco");
+      	lblFarmaco.setHorizontalAlignment(SwingConstants.CENTER);
+      	GridBagConstraints gbc_lblFarmaco = new GridBagConstraints();
+      	gbc_lblFarmaco.fill = GridBagConstraints.BOTH;
+      	gbc_lblFarmaco.insets = new Insets(0, 0, 5, 5);
+      	gbc_lblFarmaco.gridx = 0;
+      	gbc_lblFarmaco.gridy = 0;
+      	farmacoPanel.add(lblFarmaco, gbc_lblFarmaco);
           
       	JComboBox<String> comboBox = new JComboBox<>();
       	
-          farmacoPanel.add(comboBox);
+          GridBagConstraints gbc_comboBox = new GridBagConstraints();
+          gbc_comboBox.fill = GridBagConstraints.BOTH;
+          gbc_comboBox.insets = new Insets(0, 0, 5, 0);
+          gbc_comboBox.gridx = 1;
+          gbc_comboBox.gridy = 0;
+          farmacoPanel.add(comboBox, gbc_comboBox);
+          
+    
+          
+          JLabel lblDescrizione = new JLabel("Descrizione");
+          lblDescrizione.setHorizontalAlignment(SwingConstants.CENTER);
+          GridBagConstraints gbc_lblDescrizione = new GridBagConstraints();
+          gbc_lblDescrizione.fill = GridBagConstraints.BOTH;
+          gbc_lblDescrizione.insets = new Insets(0, 0, 0, 5);
+          gbc_lblDescrizione.gridx = 0;
+          gbc_lblDescrizione.gridy = 1;
+          farmacoPanel.add(lblDescrizione, gbc_lblDescrizione);
       	List<Farmaco> farmaci = lottoController.getAllDistinctFarmaci();
       	for (Farmaco farmaco : farmaci ) {
       		comboBox.addItem(farmaco.getCodFarmaco() + " - " + farmaco.getNomeFarmaco());
       	}
-	
-          JLabel lblDescrizione = new JLabel("Descrizione");
-          farmacoPanel.add(lblDescrizione);
           //comboBox.getSelectedItem().get
           
           JTextPane textDescrizione = new JTextPane();
+        	comboBox.addActionListener(new ActionListener() {
+    			public void actionPerformed(ActionEvent e) {
+    				Farmaco farmacoSelected = farmaci.get(comboBox.getSelectedIndex());
+    				/*String farmacoSelected = comboBox.getSelectedItem().toString(); String[] parts = farmacoSelected.split(" - "); String part1 = parts[0]; // codFarmaco String part2 = parts[1]; // cod*/
+    			textDescrizione.setText(farmacoSelected.getDescrizione());
+    			}
+    		});
           JScrollPane jsp = new JScrollPane(textDescrizione);
-          farmacoPanel.add(jsp);
-          
-      	comboBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Farmaco farmacoSelected = farmaci.get(comboBox.getSelectedIndex());
-				/*String farmacoSelected = comboBox.getSelectedItem().toString(); String[] parts = farmacoSelected.split(" - "); String part1 = parts[0]; // codFarmaco String part2 = parts[1]; // cod*/
-			textDescrizione.setText(farmacoSelected.getDescrizione());
-			}
-		});
+          GridBagConstraints gbc_jsp = new GridBagConstraints();
+          gbc_jsp.fill = GridBagConstraints.BOTH;
+          gbc_jsp.gridx = 1;
+          gbc_jsp.gridy = 1;
+          farmacoPanel.add(jsp, gbc_jsp);
           JPanel lottoPanel = new JPanel();
           lottoPanel.setBorder(new TitledBorder(
     				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
     				"Lotto", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-          formPanel.add(lottoPanel, "8, 4, fill, fill");
-          lottoPanel.setLayout(new GridLayout(3, 2, 0, 0));
+          formPanel.add(lottoPanel, "4, 4, center, fill");
+          lottoPanel.setLayout(new MigLayout("", "[217.00px][112.00][64.00px][-10.00]", "[20px][20px][20px]"));
           
           JLabel lblConfezioni = new JLabel("Confezioni");
-          lottoPanel.add(lblConfezioni);
+          lblConfezioni.setHorizontalAlignment(SwingConstants.CENTER);
+          lottoPanel.add(lblConfezioni, "cell 0 0,grow");
           
           JSpinner spinConfezioni = new JSpinner();
-          lottoPanel.add(spinConfezioni);
+          lottoPanel.add(spinConfezioni, "cell 2 0,grow");
           
           JLabel lblQuantita = new JLabel("Quantità in Confezione");
-          lottoPanel.add(lblQuantita);
+          lblQuantita.setHorizontalAlignment(SwingConstants.CENTER);
+          lottoPanel.add(lblQuantita, "cell 0 1,alignx center,growy");
           
           JSpinner spinner = new JSpinner();
-          lottoPanel.add(spinner);
+          lottoPanel.add(spinner, "cell 2 1,grow");
           
           JLabel chooserDataScadenza = new JLabel("Data di Scadenza");
-          lottoPanel.add(chooserDataScadenza);
+          chooserDataScadenza.setHorizontalAlignment(SwingConstants.CENTER);
+          lottoPanel.add(chooserDataScadenza, "cell 0 2,grow");
           
           JDateChooser dateChooser = new JDateChooser();
-          lottoPanel.add(dateChooser);
+          lottoPanel.add(dateChooser, "cell 1 2 2 1,grow");
           
           JPanel panel = new JPanel();
           centerPanel.add(panel, BorderLayout.SOUTH);
@@ -181,7 +207,7 @@ public class NewLotto extends JPanel {
 
 		
           upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
-  		JLabel titleLabel = new JLabel("Magazzino");
+  		JLabel titleLabel = new JLabel("Nuovo Lotto");
   		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
   		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
   		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
@@ -200,7 +226,7 @@ public class NewLotto extends JPanel {
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 		
 		//setLayout(groupLayout);
-	new GroupLayout(this);
+		new GroupLayout(this);
 	frame.getContentPane().setLayout(groupLayout);
 	}
 }
