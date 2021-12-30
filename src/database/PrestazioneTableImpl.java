@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -92,7 +94,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	public List<Appuntamento> getPrestazioniInData(String data) {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome "
+		 final String query = "select animale.nome, prestazione.nome,prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione.durataMedia "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data= ? "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -116,6 +118,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 					app.setOra(result.getString(4));
 					app.setNomeVeterinario(result.getString(5));
 					app.setCognomeVeterinario(result.getString(6));
+					app.setDurata(result.getString(7));
 					
 					prestazioni.add(app);
 				}
@@ -137,6 +140,61 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			}
 			return prestazioni;
 		}
+	
+	@Override
+	public List<Appuntamento> getFuturePrestazioni() {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data,  ora, personale.nome, personale.cognome, prestazione.durataMedia "
+	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
+	        		+ "where prestazione_su_animale.data>= ? "
+	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
+	        		+ "and prestazione_su_animale.codTipoPrestazione = effettua.codTipoPrestazione "
+	        		+ "and animale.codAnimale=effettua.codAnimale  "
+	        		+ "and prestazione.codPrestazione = effettua.codTipoPrestazione "
+	        		+ "and personale.CF=effettua.CF "
+	        		+ "and personale.ruolo=?"; 
+		 List<Appuntamento> prestazioni = new ArrayList<>();
+			DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE;
+			String data = formatter.format( LocalDateTime.now());
+			try {
+				statement = Optional.of(connection.prepareStatement(query));
+				
+				statement.get().setString(1, data);
+				statement.get().setString(2, "Veterinario");
+				final ResultSet result = statement.get().executeQuery();
+				
+				while (result.next()) {
+					Appuntamento app = new AppuntamentoImpl();
+					app.setNomeAnimale(result.getString(1));
+					app.setPrestazione(result.getString(2));
+					app.setData(result.getString(3));
+					app.setOra(result.getString(4));
+					app.setNomeVeterinario(result.getString(5));
+					app.setCognomeVeterinario(result.getString(6));
+					app.setDurata(result.getString(7));
+					
+					prestazioni.add(app);
+				}
+
+				result.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					System.out.println("errore sql");
+				}
+			}
+			return prestazioni;
+		}
+	
 	@Override
 	public List<Appuntamento> getPrestazioneMese(String data) {
 

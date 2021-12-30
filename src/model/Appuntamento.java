@@ -25,10 +25,14 @@ public interface Appuntamento {
 	void setNomeVeterinario(String nomeVeterinario);
 
 	void setCognomeVeterinario(String cognomeVeterinario);
-	
+
 	void addInfermiere(User infermiere); // add table effettua
 
 	void setCodAnimale(int codAnimale);
 
 	void setCodTipoPrestazione(int codPrestazione);
+
+	void setDurata(String durata);
+
+	String getDurata();
 }

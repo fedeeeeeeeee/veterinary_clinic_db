@@ -20,6 +20,7 @@ public interface PrestazioneController {
 	
 	// aggiungere appuntamenti
 	boolean addNewPrestazione(Appuntamento appuntamento);
+	List<Appuntamento> getFuturePrestazioni();
 	
 	
 }

@@ -8,6 +8,7 @@ public class AppuntamentoImpl implements Appuntamento {
 	private String ora;
 	private String nomeVeterinario;
 	private String cognomeVeterinario;
+	private String durata;
 	
 	private int codAnimale;
 	private int codPrestazione;
@@ -88,4 +89,14 @@ public class AppuntamentoImpl implements Appuntamento {
 		this.codPrestazione= codPrestazione;		
 	}
 
+	@Override
+	public String getDurata() {
+		return durata;
+	}
+	
+	@Override
+	public void setDurata(String durata) {
+		this.durata = durata;
+	}
+	
 }

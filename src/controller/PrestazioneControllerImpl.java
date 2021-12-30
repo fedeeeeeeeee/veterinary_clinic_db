@@ -58,4 +58,10 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		return null;
 	}
 
+
+	@Override
+	public List<Appuntamento> getFuturePrestazioni() {
+		return this.prestazioneTable.getFuturePrestazioni();
+	}
+
 }

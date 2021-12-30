@@ -152,6 +152,7 @@ private boolean first;
 								saved = dateChooser.getDate().toString();
 								System.out.println(dateChooser.getDate().toString());
 								SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
 								resetAndDraw(prestazioneController.getPrestazioniInData(df.format(dateChooser.getDate())));
 							}
 			          }
@@ -249,7 +250,7 @@ private boolean first;
 					}
 				});
 				itemNuovoAppuntamento.addActionListener((e) -> {
-						//frame.getContentPane().add(new NuovoAppuntamento(frame, user ));
+						frame.getContentPane().add(new NuovoAppuntamento(frame, user ));
 				});
 				menuMostra.add(itemTutti);
 				menuMostra.add(itemOggi);

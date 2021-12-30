@@ -22,4 +22,6 @@ public interface PrestazioneTable {
 
 		List<Appuntamento> getPrestazioneSettiamana(String data);
 
+		List<Appuntamento> getFuturePrestazioni();
+
 }
