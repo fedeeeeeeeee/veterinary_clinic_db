@@ -277,4 +277,40 @@ public class UserTableImpl implements UserTable {
 		}
 		return user;
 	}
+
+	@Override
+	public List<User> getAllPersonaleByRuolo(String ruolo) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		final String query = "select nome, cognome from personale where ruolo = ? ";
+		
+		List<User> list = new ArrayList<>();
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, ruolo);
+
+			final ResultSet result = statement.get().executeQuery();
+			while (result.next()) {
+				User user = new UserImpl();
+				user.setNome(result.getString("nome"));
+				user.setCognome(result.getString("cognome"));
+				list.add(user);
+			}
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return list;
+	}
 }

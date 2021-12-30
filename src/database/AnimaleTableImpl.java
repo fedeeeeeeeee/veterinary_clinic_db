@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import model.Animale;
+import model.AnimaleImpl;
 import utility.Pair;
 
 public class AnimaleTableImpl implements AnimaleTable {
@@ -120,6 +121,46 @@ public class AnimaleTableImpl implements AnimaleTable {
 				System.out.println("eccezione INSERIMENTO ANIMALE statement" + e);
 			}
 		}
+	}
+
+	@Override
+	public List<Animale> getAllAnimali() {
+
+		List<Animale> list = new ArrayList<>();
+
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		final String query = "SELECT * FROM animale INNER JOIN proprietario on animale.cf = proprietario.cf";
+
+		try {			
+			statement = Optional.of(connection.prepareStatement(query));
+
+			final ResultSet result = statement.get().executeQuery();
+
+			while (result.next()) {
+				Animale animale = new AnimaleImpl();
+				animale.setNome(result.getString("animale.nome"));
+				animale.setNomeProprietario(result.getString("proprietario.nome"));
+				animale.setCognomeProprietario(result.getString("cognome"));
+				animale.setTelefono(result.getLong("telefono"));
+				
+				list.add(animale);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				 e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 }

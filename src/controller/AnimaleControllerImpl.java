@@ -37,4 +37,9 @@ public class AnimaleControllerImpl implements AnimaleController {
 	public void addNewAnimale(Animale animale) {
 		this.animaleTable.addNewAnimale(animale);
 	}
+
+	@Override
+	public List<Animale> getAllAnimali() {
+		return this.animaleTable.getAllAnimali();
+	}
 }

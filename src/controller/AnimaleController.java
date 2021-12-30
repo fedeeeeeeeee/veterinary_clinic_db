@@ -14,4 +14,6 @@ public interface AnimaleController {
 
     void addNewAnimale(Animale animale);
 
+	List<Animale> getAllAnimali();
+
 }

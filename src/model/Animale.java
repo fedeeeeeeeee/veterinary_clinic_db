@@ -1,7 +1,7 @@
 package model;
 
 public interface Animale {
-	
+
 	String getNome();
 
 	String getGenere();
@@ -13,10 +13,14 @@ public interface Animale {
 	float getPeso();
 
 	String getRazza();
-	
+
 	String getSpecie();
-		
+
 	String getCf();
+
+	String getNomeProprietario();
+
+	String getCognomeProprietario();
 
 	void setNome(String nome);
 
@@ -29,8 +33,16 @@ public interface Animale {
 	void setPeso(float peso);
 
 	void setRazza(String razza);
-	
+
 	void setSpecie(String specie);
-		
+
 	void setCf(String cf);
+
+	void setNomeProprietario(String nomeProprietario);
+
+	void setCognomeProprietario(String cognomeProprietario);
+
+	long getTelefono();
+
+	void setTelefono(long telefono);
 }

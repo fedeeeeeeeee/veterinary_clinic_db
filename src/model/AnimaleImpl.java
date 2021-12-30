@@ -9,6 +9,9 @@ public class AnimaleImpl implements Animale {
 	private String razza;
 	private String specie;
 	private String cf;
+	private String nomeProprietario;
+	private String cognomeProprietario;
+	private long telefono;
 	
 	@Override
 	public String getNome() {
@@ -88,5 +91,35 @@ public class AnimaleImpl implements Animale {
 	@Override
 	public void setCf(String cf) {
 		this.cf = cf;
+	}
+	
+	@Override
+	public String getNomeProprietario() {
+		return nomeProprietario;
+	}
+
+	@Override
+	public void setNomeProprietario(String nomeProprietario) {
+		this.nomeProprietario = nomeProprietario;
+	}
+
+	@Override
+	public String getCognomeProprietario() {
+		return cognomeProprietario;
+	}
+
+	@Override
+	public void setCognomeProprietario(String cognomeProprietario) {
+		this.cognomeProprietario = cognomeProprietario;
+	}
+
+	@Override
+	public long getTelefono() {
+		return telefono;
+	}
+
+	@Override
+	public void setTelefono(long telefono) {
+		this.telefono = telefono;
 	}
 }

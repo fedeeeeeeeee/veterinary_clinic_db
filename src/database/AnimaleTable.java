@@ -13,5 +13,7 @@ public interface AnimaleTable {
 
 	void addNewAnimale(Animale animale);
 
+	List<Animale> getAllAnimali();
+
 	
 }

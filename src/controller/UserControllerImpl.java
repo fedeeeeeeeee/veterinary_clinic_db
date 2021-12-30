@@ -38,4 +38,9 @@ public class UserControllerImpl implements UserController {
 		return userTable.getUser(username);
 	}
 
+	@Override
+	public List<User> getAllPersonaleByRuolo(String ruolo) {
+		return userTable.getAllPersonaleByRuolo(ruolo);
+	}
+
 }

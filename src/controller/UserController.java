@@ -13,4 +13,6 @@ public interface UserController {
     List<String> getAllRuoli();
 
 	User getUser(String username);
+
+	List<User> getAllPersonaleByRuolo(String string);
 }
