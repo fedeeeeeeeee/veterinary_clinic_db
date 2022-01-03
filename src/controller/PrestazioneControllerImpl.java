@@ -5,15 +5,21 @@ import java.util.List;
 
 import database.PrestazioneTable;
 import database.PrestazioneTableImpl;
+import database.TipoPrestazioneTable;
+import database.TipoPrestazioneTableImpl;
 import model.Appuntamento;
+import model.Prestazione;
 import model.User;
 
 public class PrestazioneControllerImpl implements PrestazioneController {
 
 	private PrestazioneTable prestazioneTable;
+	private TipoPrestazioneTable tipoPrestazioneTable;
 	
 	public PrestazioneControllerImpl() {
 		this.prestazioneTable = new PrestazioneTableImpl();
+		this.tipoPrestazioneTable = new TipoPrestazioneTableImpl();
+
 	}
 	
 	
@@ -62,6 +68,12 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 	@Override
 	public List<Appuntamento> getFuturePrestazioni() {
 		return this.prestazioneTable.getFuturePrestazioni();
+	}
+
+
+	@Override
+	public List<Prestazione> getAllTipiDiPrestazione() {
+		return this.tipoPrestazioneTable.getAllTipiDiPrestazione();
 	}
 
 }

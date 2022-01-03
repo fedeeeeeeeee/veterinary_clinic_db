@@ -14,8 +14,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import javax.swing.GroupLayout;
@@ -36,7 +38,10 @@ import controller.UserController;
 import controller.UserControllerImpl;
 import model.Animale;
 import model.Appuntamento;
+import model.Prestazione;
 import model.User;
+import utility.Pair;
+
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 
@@ -52,6 +57,8 @@ import com.github.lgooddatepicker.components.TimePicker;
 import com.toedter.calendar.JDateChooser;;
 
 public class NuovoAppuntamento extends JPanel {
+
+	private static final long serialVersionUID = 693737436773825328L;
 	private JFrame frame;
 	private User user;
 	private PrestazioneController prestazioneController;
@@ -66,10 +73,10 @@ public class NuovoAppuntamento extends JPanel {
 	private List<User> listInfermieri;
 	private UserController userController;
 	private String selectedInfermiere;
-	
+	private List<Prestazione> listTipiPrestazione;
 	private JTextField textFieldTelefono;
 	private JTextField textFieldRicerca;
-	private String saved;
+	private String saved = "";
 
 	public NuovoAppuntamento(JFrame frame, User user) {
 		frame.getContentPane().removeAll();
@@ -84,8 +91,6 @@ public class NuovoAppuntamento extends JPanel {
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
-
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
@@ -332,14 +337,14 @@ public class NuovoAppuntamento extends JPanel {
 		gbc_lblTipoPrestazione.gridy = 6;
 		scrollPanelLeft.add(lblTipoPrestazione, gbc_lblTipoPrestazione);
 
-		JComboBox comboBoxPrestazione = new JComboBox();
+		JComboBox<String> comboBoxTipoPrestazione = new JComboBox<>();
 		GridBagConstraints gbc_comboBoxPrestazione = new GridBagConstraints();
 		gbc_comboBoxPrestazione.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxPrestazione.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxPrestazione.gridx = 6;
 		gbc_comboBoxPrestazione.gridy = 6;
-		scrollPanelLeft.add(comboBoxPrestazione, gbc_comboBoxPrestazione);
-
+		scrollPanelLeft.add(comboBoxTipoPrestazione, gbc_comboBoxPrestazione);
+		
 		JLabel lblNomPrestazione = new JLabel("Nome Prestazione");
 		GridBagConstraints gbc_lblNomPrestazione = new GridBagConstraints();
 		gbc_lblNomPrestazione.gridwidth = 3;
@@ -348,14 +353,51 @@ public class NuovoAppuntamento extends JPanel {
 		gbc_lblNomPrestazione.gridy = 7;
 		scrollPanelLeft.add(lblNomPrestazione, gbc_lblNomPrestazione);
 
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBoxNomePrestazione = new JComboBox<>();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 6;
 		gbc_comboBox.gridy = 7;
-		scrollPanelLeft.add(comboBox, gbc_comboBox);
+		scrollPanelLeft.add(comboBoxNomePrestazione, gbc_comboBox);
 
+		comboBoxNomePrestazione.setEnabled(false);
+		
+		this.listTipiPrestazione = new ArrayList<>();
+		this.listTipiPrestazione = this.prestazioneController.getAllTipiDiPrestazione();
+
+		
+		Map<Integer, Pair<String, String>> map = new HashMap<>();
+		
+		for (Prestazione prestazione : listTipiPrestazione) {
+			map.put(prestazione.getCodPrestazione(), new Pair<>(prestazione.getTipoPrestazione(), prestazione.getNomePrestazione()));
+		}
+		
+		listTipiPrestazione.stream()
+				.map(e-> e.getTipoPrestazione())
+				.distinct()
+				.forEach(x->{
+					comboBoxTipoPrestazione.addItem(x);
+		});
+		
+		comboBoxTipoPrestazione.setSelectedIndex(-1);
+		
+		comboBoxTipoPrestazione.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				comboBoxNomePrestazione.setEnabled(true);
+				comboBoxNomePrestazione.removeAllItems();
+				for (Map.Entry<Integer, Pair<String, String>> pair : map.entrySet()) {
+					if(pair.getValue().getX().equals(comboBoxTipoPrestazione.getSelectedItem().toString())) {
+						comboBoxNomePrestazione.addItem(pair.getValue().getY());
+					}
+				}
+				comboBoxNomePrestazione.setSelectedIndex(-1);
+			}
+			
+		});
+		
 		JSeparator separator_1 = new JSeparator();
 		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
 		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
@@ -488,7 +530,7 @@ public class NuovoAppuntamento extends JPanel {
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new MagazzinoPage(frame, user));
+				frame.getContentPane().add(new GestioneAppuntamento(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
@@ -502,7 +544,15 @@ public class NuovoAppuntamento extends JPanel {
 		JButton saveButton = new JButton("SAVE");
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// salva nuovo appuntamento su DB
+				System.out.println(comboBoxNomePrestazione.getSelectedIndex());
+
+				Pair<String, String> p = new Pair<>(comboBoxTipoPrestazione.getSelectedItem().toString(), comboBoxNomePrestazione.getSelectedItem().toString());	
+				if(map.containsValue(p)) {
+					int codice = map.entrySet().stream()
+							.filter(en-> en.getValue().equals(p))
+							.findFirst()
+							.get().getKey();
+				}		
 			}
 		});
 		savePanel.add(saveButton);
