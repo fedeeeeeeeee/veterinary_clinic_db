@@ -24,4 +24,8 @@ public interface FarmaciController {
 	//void addNewLotto(Lotto lotto);
 
 	List<Farmaco> getFarmaciMaiAcquistati();
+	
+	List<String> getAllTypeFarmaco();
+
+	void addNewFarmaci(Farmaco farmaco);
 }

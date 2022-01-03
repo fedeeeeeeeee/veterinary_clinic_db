@@ -8,7 +8,8 @@ public enum IconImage {
 	
 	BACK("back.png"),
     RICOVERO("ricovero.png"),
-	ARROW("arrows-sort.png");
+	ARROW("arrows-sort.png"),
+	INFO("info.png");
 	
 	private static String PATH = "resources/images/";
 	private String path;

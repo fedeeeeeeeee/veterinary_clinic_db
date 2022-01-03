@@ -29,4 +29,8 @@ public interface Farmaco {
 	public int getCodFarmaco();
 
 	public void setCodFarmaco(int codFarmaco);
+
+	String getCopertura();
+
+	void setCopertura(String copertura);
 }

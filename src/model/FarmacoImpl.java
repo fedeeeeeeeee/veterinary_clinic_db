@@ -10,7 +10,7 @@ public class FarmacoImpl implements Farmaco {
 	private String dataScadenza;
 	private int disponibilita;
 	private String tipoFarmaco;
-	
+	private String copertura;
 	
 	@Override
 	public String getNomeFarmaco() {
@@ -67,5 +67,15 @@ public class FarmacoImpl implements Farmaco {
 	@Override
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
+	}
+	
+	@Override
+	public String getCopertura() {
+		return copertura;
+	}
+	
+	@Override
+	public void setCopertura(String copertura) {
+		this.copertura = copertura;
 	}
 }

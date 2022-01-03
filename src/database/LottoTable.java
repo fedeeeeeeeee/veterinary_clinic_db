@@ -11,4 +11,5 @@ public interface LottoTable {
 	
 	boolean addNewLotto(Lotto lotto); // dentro bisogna fare un update delle quantit�
 	
+	boolean updateQuantitaAFarmaci(Lotto lotto);
 }

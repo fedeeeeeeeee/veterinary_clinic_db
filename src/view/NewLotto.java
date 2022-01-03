@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,8 +22,10 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.text.NumberFormatter;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
@@ -162,6 +165,7 @@ public class NewLotto extends JPanel {
           //comboBox.getSelectedItem().get
           
           JTextPane textDescrizione = new JTextPane();
+          textDescrizione.setEditable(false);
         	comboBox.addActionListener(new ActionListener() {
     			public void actionPerformed(ActionEvent e) {
     				Farmaco farmacoSelected = farmaci.get(comboBox.getSelectedIndex());
@@ -187,13 +191,18 @@ public class NewLotto extends JPanel {
           lottoPanel.add(lblConfezioni, "cell 0 0,grow");
           
           JSpinner spinConfezioni = new JSpinner();
+          spinConfezioni.setModel(new SpinnerNumberModel(0, 0, null, 1));
+         JFormattedTextField txt = ((JSpinner.NumberEditor) spinConfezioni.getEditor()).getTextField();
+         ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
           lottoPanel.add(spinConfezioni, "cell 2 0,grow");
           
           JLabel lblQuantita = new JLabel("Quantità in Confezione");
           lblQuantita.setHorizontalAlignment(SwingConstants.CENTER);
           lottoPanel.add(lblQuantita, "cell 0 1,alignx center,growy");
           
-          JSpinner spinner = new JSpinner();
+          JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
+          JFormattedTextField txt2 = ((JSpinner.NumberEditor) spinner.getEditor()).getTextField();
+          ((NumberFormatter) txt.getFormatter()).setAllowsInvalid(false);
           lottoPanel.add(spinner, "cell 2 1,grow");
           
           JLabel chooserDataScadenza = new JLabel("Data di Scadenza");
@@ -209,7 +218,7 @@ public class NewLotto extends JPanel {
           JButton btnSave = new JButton("Salva");
           btnSave.addActionListener(new ActionListener(){
         		public void actionPerformed(ActionEvent e) {
-        			if(dateChooser.getDate()!= null) {
+        			if(dateChooser.getDate()!= null && !spinner.getValue().equals(0) && !spinConfezioni.getValue().equals(0) ) {
         				lotto = new LottoImpl();
         				lotto.setCodLotto(0);
         				lotto.setNumeroConfezioni((int) spinConfezioni.getValue());
@@ -250,6 +259,6 @@ public class NewLotto extends JPanel {
 		
 		//setLayout(groupLayout);
 		new GroupLayout(this);
-	frame.getContentPane().setLayout(groupLayout);
+		frame.getContentPane().setLayout(groupLayout);
 	}
 }

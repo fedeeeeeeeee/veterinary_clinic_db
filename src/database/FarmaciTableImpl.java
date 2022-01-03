@@ -18,10 +18,11 @@ import model.StrumentoImpl;
 public class FarmaciTableImpl implements FarmaciTable {
 
 	private DatabaseConnection dataSource;
-	
+	private String tableNameFarmaco;
 	
 	public FarmaciTableImpl() {
 		this.dataSource = new DatabaseConnection();
+		this.tableNameFarmaco = "farmaco";
 	}
 	
 	@Override
@@ -390,4 +391,76 @@ public class FarmaciTableImpl implements FarmaciTable {
 			}
 			return farmaci;
 		}
+
+	@Override
+	public List<String> getAllTypeFarmaco() {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		 final String query =  " select distinct tipoFarmaco "
+			 		+ "from farmaco ";
+		 List<String> farmaci = new ArrayList<>();
+		 
+			try {
+				statement = Optional.of(connection.prepareStatement(query));
+				final ResultSet result = statement.get().executeQuery();
+				
+				while (result.next()) {
+					farmaci.add(result.getString(1));
+				}
+				result.close();	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					System.out.println("errore sql");
+				}
+			}
+			return farmaci;
+		}
+
+	@Override
+	public void addNewFarmaco(Farmaco farmaco) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		final String query = " insert into " +  tableNameFarmaco +" (codFarmaco, nome, descrizione, disponibilita, tipoFarmaco, copertura) values (?,?,?,?,?,?) ";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1,0);
+			statement.get().setString(2, farmaco.getNomeFarmaco());
+			statement.get().setString(3, farmaco.getDescrizione());
+			statement.get().setInt(4, farmaco.getDisponibilita());
+			statement.get().setString(5, farmaco.getTipoFarmaco());
+			if(farmaco.getTipoFarmaco().isEmpty()) {
+				statement.get().setString(6, null);
+			} else { 
+				statement.get().setString(6, farmaco.getCopertura());
+			}
+			
+			
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+			}
+		}
+	}
 }

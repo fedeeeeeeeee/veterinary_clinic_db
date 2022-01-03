@@ -160,6 +160,7 @@ public class FarmaciPage extends JPanel {
        buttonVai.setForeground(Color.BLACK);
        menuBar.add(menuMostra);
        menuBar.add(menuSeleziona);
+       menuBar.add(menuAggiungi);
        menuBar.add(searchBar);
        menuBar.add(buttonVai);
 
@@ -375,7 +376,7 @@ public class FarmaciPage extends JPanel {
 	       itemAddFarmaco.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					// new Farmaco
-					frame.getContentPane().add(new NewLotto(frame, user));
+					frame.getContentPane().add(new NuovoFarmacoPage(frame, user));
 				}
 			});
 	       
@@ -388,13 +389,6 @@ public class FarmaciPage extends JPanel {
 	       JPanel panelAdd = new JPanel();
 	       middlePanel.add(panelAdd, BorderLayout.SOUTH);
 	       
-	       JButton btnNewFarmaco = new JButton("Aggiungi");
-	       panelAdd.add(btnNewFarmaco);
-	       btnNewFarmaco.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					frame.getContentPane().add(new NewLotto(frame, user));
-				}
-			});
 	       //----fine ---- MENUU
 		/*LOWER PANEL */
 		JButton sendButton = new JButton("BACK");

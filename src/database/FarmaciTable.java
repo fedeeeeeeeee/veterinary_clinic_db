@@ -23,6 +23,10 @@ public interface FarmaciTable {
 	List<Farmaco> getFarmaciAcquistati();
 
 	List<Farmaco> getFarmaciMaiAcquistati();
+
+	List<String> getAllTypeFarmaco();
+
+	void addNewFarmaco(Farmaco farmaco);
 	
 	//void addNewLotto(Lotto lotto);
 }

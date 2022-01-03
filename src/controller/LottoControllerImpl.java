@@ -22,13 +22,13 @@ private LottoTable lottoTable;
 	@Override
 	public void addNewLotto(Lotto lotto) {
 		if(this.lottoTable.addNewLotto(lotto)) {
-			//TODO
-			// lotto aggiunto correttamento
-			//aggiorna quantita in famrqaco 
-			// if(aggiornamento) 
-			// ok aggioa
+			if(this.lottoTable.updateQuantitaAFarmaci(lotto)) {
+				System.out.println("aggiorna quantita farmaci OK ");
+			}else { 
+				System.out.println("aggiorna quantita farmaci ERRORE ");
+			}
 		} else {
-			// lotto non aggiunto correttamento
+			System.out.println("'aggiunta del lotto ERRORE");
 		}
 		
 
