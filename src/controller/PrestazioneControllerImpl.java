@@ -73,4 +73,10 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		return this.tipoPrestazioneTable.getAllTipiDiPrestazione();
 	}
 
+
+	@Override
+	public void addEffettua(Appuntamento app) {
+		this.prestazioneTable.addEffettua(app);
+	}
+
 }

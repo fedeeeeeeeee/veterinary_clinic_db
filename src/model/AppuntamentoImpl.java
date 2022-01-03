@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AppuntamentoImpl implements Appuntamento {
 
 	private String nomeAnimale;
@@ -11,7 +14,7 @@ public class AppuntamentoImpl implements Appuntamento {
 	private String durata;
 	private int codAnimale;
 	private int codPrestazione;
-
+	private List<User> list = new ArrayList<>();
 	
 	@Override
 	public int getCodPrestazione() {
@@ -114,6 +117,18 @@ public class AppuntamentoImpl implements Appuntamento {
 	@Override
 	public void setDurata(String durata) {
 		this.durata = durata;
+	}
+
+
+	@Override
+	public List<User> getAllMediciEInfermieri() {
+		return this.list;
+	}
+
+
+	@Override
+	public void setAllMediciEInfermieri(List<User> list) {
+		this.list = list;
 	}
 	
 }

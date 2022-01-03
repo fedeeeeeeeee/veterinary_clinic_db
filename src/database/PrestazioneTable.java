@@ -1,7 +1,5 @@
 package database;
 
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import model.Appuntamento;
@@ -24,5 +22,7 @@ public interface PrestazioneTable {
 		List<Appuntamento> getFuturePrestazioni();
 
 		boolean addNewAppuntamento(Appuntamento appuntamento);
+
+		void addEffettua(Appuntamento app);
 
 }

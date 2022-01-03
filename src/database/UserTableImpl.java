@@ -282,7 +282,7 @@ public class UserTableImpl implements UserTable {
 	public List<User> getAllPersonaleByRuolo(String ruolo) {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		final String query = "select nome, cognome from personale where ruolo = ? ";
+		final String query = "select nome, cognome, CF from personale where ruolo = ? ";
 		
 		List<User> list = new ArrayList<>();
 
@@ -295,6 +295,7 @@ public class UserTableImpl implements UserTable {
 				User user = new UserImpl();
 				user.setNome(result.getString("nome"));
 				user.setCognome(result.getString("cognome"));
+				user.setCF(result.getString("CF"));
 				list.add(user);
 			}
 			result.close();

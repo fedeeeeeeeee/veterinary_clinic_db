@@ -27,4 +27,6 @@ public interface PrestazioneController {
 	
 	List<Prestazione> getAllTipiDiPrestazione();
 
+	void addEffettua(Appuntamento app);
+
 }

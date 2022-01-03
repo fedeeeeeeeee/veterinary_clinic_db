@@ -429,6 +429,44 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		return true;
 	}
 
+	@Override
+	public void addEffettua(Appuntamento appuntamento) {
+		appuntamento.getAllMediciEInfermieri().forEach(x-> {
+			final Connection connection = this.dataSource.getMySQLConnection();
+
+			// controllo data+ora+vet
+			
+			Optional<PreparedStatement> statement = Optional.empty();
+			String query = "insert into effettua"
+					+ " (codAnimale, codTipoPrestazione, data, CF) values (?,?,?,?)";
+
+			try {
+				
+				statement = Optional.of(connection.prepareStatement(query));
+				statement.get().setInt(1, appuntamento.getCodAnimale());
+				statement.get().setInt(2, appuntamento.getCodPrestazione());
+				statement.get().setString(3, appuntamento.getData());
+				statement.get().setString(4, x.getCF());
+		
+				statement.get().executeUpdate();
+			} catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO EFFETTUA " + e);
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					System.out.println("eccezione INSERIMENTO EFFETTUA statement" + e);
+				}
+			}
+		});
+		
+	}
+
 
 
 }

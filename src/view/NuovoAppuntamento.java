@@ -442,7 +442,6 @@ public class NuovoAppuntamento extends JPanel {
 		
 		this.listVeterinari = new ArrayList<>();
 		this.listVeterinari = this.userController.getAllPersonaleByRuolo("Veterinario");
-		System.out.println(listVeterinari);
 		
 		for (User u : listVeterinari) {
 			comboBoxVeterinario.addItem(u.getNome() + " " + u.getCognome());
@@ -566,11 +565,8 @@ public class NuovoAppuntamento extends JPanel {
 					app.setCodAnimale(listAnimali.get(comboBoxAnimale.getSelectedIndex()).getCodAnimale());
 					
 					Pair<String, String> p = new Pair<>(comboBoxTipoPrestazione.getSelectedItem().toString(), comboBoxNomePrestazione.getSelectedItem().toString());	
-
 					app.setCodPrestazione(map.entrySet().stream().filter(en-> en.getValue().equals(p)).findFirst().get().getKey());
 					
-					System.out.println(timePicker.getTime());
-
 					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 					String date = df.format(dateChooser.getDate());
 					app.setData(date);
@@ -578,7 +574,15 @@ public class NuovoAppuntamento extends JPanel {
 					
 					prestazioneController.addNewAppuntamento(app);
 					
-					// fai stesse cose su tabella effettua
+					List<User> list = new ArrayList<>();
+					list.add(listInfermieri.get(comboBoxInfermiere.getSelectedIndex()));
+					if(comboBoxInfermiere2.getSelectedIndex() != -1) {
+						list.add(listInfermieri.get(comboBoxInfermiere2.getSelectedIndex()));
+					}
+					list.add(listVeterinari.get(comboBoxVeterinario.getSelectedIndex()));
+					app.setAllMediciEInfermieri(list);
+					
+					prestazioneController.addEffettua(app);
 				}
 			}
 		});

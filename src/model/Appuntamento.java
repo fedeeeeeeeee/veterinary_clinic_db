@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public interface Appuntamento {
 	int getCodPrestazione();
 
@@ -18,6 +20,8 @@ public interface Appuntamento {
 	String getCognomeVeterinario();
 
 	String getDurata();
+	
+	List<User> getAllMediciEInfermieri();
 
 	void setNomeAnimale(String nomeAnimale);
 
@@ -40,5 +44,7 @@ public interface Appuntamento {
 	void setDurata(String durata);
 
 	void setCodPrestazione(int codPrestazione);
+	
+	void setAllMediciEInfermieri(List<User> list); 
 
 }
