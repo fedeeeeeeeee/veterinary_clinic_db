@@ -214,6 +214,9 @@ public class StrumentiPage extends JPanel {
 				JOptionPane.showMessageDialog(null, "Non hai selezionato alcuno strumento ");
 			}
 		});
+		itemAddStrumento.addActionListener((e) -> {
+			frame.getContentPane().add(new NuovoStrumentoPage(frame, user));
+		});
 		menuMostra.add(all);
 		menuMostra.add(itemScaduti);
 		menuMostra.add(itemInScadenza);
