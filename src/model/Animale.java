@@ -1,6 +1,8 @@
 package model;
 
 public interface Animale {
+	
+	int getCodAnimale();
 
 	String getNome();
 
@@ -45,4 +47,6 @@ public interface Animale {
 	long getTelefono();
 
 	void setTelefono(long telefono);
+	
+	void setCodAnimale(int cod);
 }

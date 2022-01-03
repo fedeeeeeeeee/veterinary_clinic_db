@@ -17,12 +17,12 @@ public interface PrestazioneTable {
 		
 		List<Appuntamento> getPrestazioneDiVeterinario(User veterinario);
 		
-		boolean addNewPrestazione(Appuntamento appuntamento);
-
 		List<Appuntamento> getPrestazioneMese(String data);
 
 		List<Appuntamento> getPrestazioneSettiamana(String data);
 
 		List<Appuntamento> getFuturePrestazioni();
+
+		boolean addNewAppuntamento(Appuntamento appuntamento);
 
 }

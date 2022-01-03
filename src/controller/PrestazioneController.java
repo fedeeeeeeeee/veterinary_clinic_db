@@ -21,8 +21,7 @@ public interface PrestazioneController {
 
 	List<Appuntamento> getPrestazione(String data);
 
-	// aggiungere appuntamenti
-	boolean addNewPrestazione(Appuntamento appuntamento);
+	boolean addNewAppuntamento(Appuntamento appuntamento);
 
 	List<Appuntamento> getFuturePrestazioni();
 	

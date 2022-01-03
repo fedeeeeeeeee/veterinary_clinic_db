@@ -9,9 +9,26 @@ public class AppuntamentoImpl implements Appuntamento {
 	private String nomeVeterinario;
 	private String cognomeVeterinario;
 	private String durata;
-	
 	private int codAnimale;
 	private int codPrestazione;
+
+	
+	@Override
+	public int getCodPrestazione() {
+		return codPrestazione;
+	}
+
+	
+	@Override
+	public void setCodPrestazione(int codPrestazione) {
+		this.codPrestazione = codPrestazione;
+	}
+
+	
+	@Override
+	public int getCodAnimale() {
+		return codAnimale;
+	}
 
 	@Override
 	public String getNomeAnimale() {

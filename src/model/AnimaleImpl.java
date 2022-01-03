@@ -12,6 +12,7 @@ public class AnimaleImpl implements Animale {
 	private String nomeProprietario;
 	private String cognomeProprietario;
 	private long telefono;
+	private int codAnimale;
 	
 	@Override
 	public String getNome() {
@@ -121,5 +122,15 @@ public class AnimaleImpl implements Animale {
 	@Override
 	public void setTelefono(long telefono) {
 		this.telefono = telefono;
+	}
+
+	@Override
+	public int getCodAnimale() {
+		return this.codAnimale;
+	}
+
+	@Override
+	public void setCodAnimale(int cod) {
+		this.codAnimale = cod;
 	}
 }

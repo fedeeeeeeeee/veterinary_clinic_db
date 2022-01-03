@@ -1,6 +1,9 @@
 package model;
 
 public interface Appuntamento {
+	int getCodPrestazione();
+
+	int getCodAnimale();
 
 	String getNomeAnimale();
 
@@ -13,6 +16,8 @@ public interface Appuntamento {
 	String getNomeVeterinario();
 
 	String getCognomeVeterinario();
+
+	String getDurata();
 
 	void setNomeAnimale(String nomeAnimale);
 
@@ -34,5 +39,6 @@ public interface Appuntamento {
 
 	void setDurata(String durata);
 
-	String getDurata();
+	void setCodPrestazione(int codPrestazione);
+
 }

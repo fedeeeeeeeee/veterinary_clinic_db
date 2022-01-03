@@ -389,9 +389,44 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	}
 
 	@Override
-	public boolean addNewPrestazione(Appuntamento appuntamento) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addNewAppuntamento(Appuntamento appuntamento) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+
+		// controllo data+ora+vet
+		
+		Optional<PreparedStatement> statement = Optional.empty();
+		String query = "insert into prestazione_su_animale"
+				+ " (codAnimale, codTipoPrestazione, data, ora, rilevazioneAltezza, rilevazionePeso) values (?,?,?,?,?,?)";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, appuntamento.getCodAnimale());
+			statement.get().setInt(2, appuntamento.getCodPrestazione());
+			statement.get().setString(3, appuntamento.getData());
+			statement.get().setString(4, appuntamento.getOra());
+			
+			// va bene string se tipo=float???
+			statement.get().setString(5, null);
+			statement.get().setString(6, null);
+	
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("eccezione INSERIMENTO APPUNTAMENTO " + e);
+			return false;
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO APPUNTAMENTO statement" + e);
+				return false;
+			}
+		}
+		return true;
 	}
 
 

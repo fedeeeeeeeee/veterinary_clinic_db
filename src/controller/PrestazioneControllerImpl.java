@@ -1,6 +1,4 @@
 package controller;
-
-import java.sql.Date;
 import java.util.List;
 
 import database.PrestazioneTable;
@@ -40,9 +38,8 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 	}
 
 	@Override
-	public boolean addNewPrestazione(Appuntamento appuntamento) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addNewAppuntamento(Appuntamento appuntamento) {
+		return this.prestazioneTable.addNewAppuntamento(appuntamento);
 	}
 
 
