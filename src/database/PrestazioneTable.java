@@ -24,5 +24,7 @@ public interface PrestazioneTable {
 		boolean addNewAppuntamento(Appuntamento appuntamento);
 
 		void addEffettua(Appuntamento app);
+		
+		List<String> getVeterinariNonDisponibili(String date, String time, String durata);
 
 }

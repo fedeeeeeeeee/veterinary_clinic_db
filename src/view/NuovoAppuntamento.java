@@ -21,6 +21,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -37,7 +38,6 @@ import model.Animale;
 import model.Appuntamento;
 import model.AppuntamentoImpl;
 import model.Prestazione;
-import model.PrestazioneImpl;
 import model.User;
 import utility.Pair;
 import utility.ValidityFieldsChecker;
@@ -54,6 +54,8 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 
 import com.github.lgooddatepicker.components.TimePicker;
+import com.github.lgooddatepicker.optionalusertools.TimeChangeListener;
+import com.github.lgooddatepicker.zinternaltools.TimeChangeEvent;
 import com.toedter.calendar.JDateChooser;;
 
 public class NuovoAppuntamento extends JPanel {
@@ -64,7 +66,6 @@ public class NuovoAppuntamento extends JPanel {
 	private PrestazioneController prestazioneController;
 	private JTextField textFieldNomeProprietario;
 	private JTable table;
-	private JTextField searchBar;
 	private DefaultTableModel model;
 	private List<Appuntamento> listAppuntamenti;
 	private List<Animale> listAnimali;
@@ -75,10 +76,52 @@ public class NuovoAppuntamento extends JPanel {
 	private String selectedInfermiere;
 	private List<Prestazione> listTipiPrestazione;
 	private JTextField textFieldTelefono;
-	private JTextField textFieldRicerca;
 	private String saved = "";
 	private ValidityFieldsChecker checker;
+	private int codTipoPrestazione;
+	private JComboBox<String> comboBoxVeterinario;
+	private List<String> vetNonDisponibili;
+	
+	private void resetAndDraw(List<Appuntamento> allAppuntamento) {
+		this.listAppuntamenti.clear();
+		this.listAppuntamenti = allAppuntamento;
+		model.setRowCount(0);
+		this.createTable(model, listAppuntamenti);
+		// scrollPane.setViewportView(table);
+	}
 
+	private void createTable(DefaultTableModel model, List<Appuntamento> list) {
+		list.forEach(x -> {
+			model.addRow(new Object[] { 
+					x.getNomeAnimale(), 
+					x.getData(), 
+					x.getOra(), 
+					x.getDurata(),
+					x.getNomeVeterinario(), 
+					x.getCognomeVeterinario(), 
+			});
+		});
+	}
+
+	private void initTable() {
+		this.table = new JTable();
+		this.model = (DefaultTableModel) table.getModel();
+		model.addColumn("Animale");
+		model.addColumn("Data");
+		model.addColumn("Ora");
+		model.addColumn("Durata");
+		model.addColumn("Nome ");
+		model.addColumn("Cognome");
+	}
+	
+	private List<Appuntamento> searchList(String searchWords, List<Appuntamento> listOfAppuntamenti) {
+		List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
+		return listOfAppuntamenti.stream()
+				 .filter(input -> {
+					 return searchWordsArray.stream().allMatch(word -> input.getNomeAnimale().toLowerCase().contains(word.toLowerCase()));
+		}).collect(Collectors.toList());
+	}
+	
 	public NuovoAppuntamento(JFrame frame, User user) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
@@ -127,7 +170,6 @@ public class NuovoAppuntamento extends JPanel {
 		JDateChooser dateChooserRicerca = new JDateChooser();
 		dateChooserRicerca.setDateFormatString("yyyy-MM-dd");
 		dateChooserRicerca.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
-
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if (dateChooserRicerca.getDate() != null) {
@@ -137,21 +179,18 @@ public class NuovoAppuntamento extends JPanel {
 				}
 			}
 		});
+		
 		menuPanel.add(dateChooserRicerca);
 		JSeparator separator_2 = new JSeparator();
 		menuPanel.add(separator_2);
 
-		textFieldRicerca = new JTextField();
-		menuPanel.add(textFieldRicerca);
-		textFieldRicerca.setColumns(10);
-
-		JButton btnNewButton_1 = new JButton("Vai");
+		/*JButton btnNewButton_1 = new JButton("Vai");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				search(e);
 			}
 		});
-		menuPanel.add(btnNewButton_1);
+		menuPanel.add(btnNewButton_1);*/
 
 		JPanel panelAppuntamenti = new JPanel();
 		scrollPanelRight.add(panelAppuntamenti, BorderLayout.CENTER);
@@ -177,32 +216,6 @@ public class NuovoAppuntamento extends JPanel {
 		this.listAppuntamenti = this.prestazioneController.getFuturePrestazioni();
 		this.createTable(model, listAppuntamenti);
 		scrollPane.setViewportView(table);
-
-		/*------fine-------- table */
-		searchBar = new JTextField();
-		searchBar.setText("Ricerca Animale");
-		searchBar.addFocusListener((FocusListener) new FocusListener() {
-
-			@Override
-			public void focusGained(FocusEvent e) {
-				if (searchBar.getText().equals("Ricerca Animale")) {
-					searchBar.setText("");
-				}
-			}
-
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (searchBar.getText().equals("")) {
-					searchBar.setText("Ricerca Animale");
-				}
-			}
-		});
-		searchBar.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				searchBar.setText("");
-			}
-		});
 
 		/* FINE search bar */
 
@@ -238,7 +251,6 @@ public class NuovoAppuntamento extends JPanel {
 			comboBoxAnimale.addItem(animale.getNome());
 		}
 		comboBoxAnimale.setSelectedIndex(-1);
-		
 		comboBoxAnimale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Animale animaleSelected = listAnimali.get(comboBoxAnimale.getSelectedIndex());
@@ -305,6 +317,8 @@ public class NuovoAppuntamento extends JPanel {
 
 		JDateChooser dateChooser = new JDateChooser();
 
+		
+		
 		GridBagConstraints gbc_dateChooser = new GridBagConstraints();
 		gbc_dateChooser.anchor = GridBagConstraints.NORTH;
 		gbc_dateChooser.insets = new Insets(0, 0, 5, 5);
@@ -331,6 +345,7 @@ public class NuovoAppuntamento extends JPanel {
 		gbc_timePicker.gridy = 5;
 		scrollPanelLeft.add(timePicker, gbc_timePicker);
 
+        
 		JLabel lblTipoPrestazione = new JLabel("Tipo Prestazione");
 		GridBagConstraints gbc_lblTipoPrestazione = new GridBagConstraints();
 		gbc_lblTipoPrestazione.gridwidth = 3;
@@ -368,12 +383,10 @@ public class NuovoAppuntamento extends JPanel {
 		this.listTipiPrestazione = new ArrayList<>();
 		this.listTipiPrestazione = this.prestazioneController.getAllTipiDiPrestazione();
 
-		
 		Map<Integer, Pair<String, String>> map = new HashMap<>();
-		
-		for (Prestazione prestazione : listTipiPrestazione) {
-			map.put(prestazione.getCodPrestazione(), new Pair<>(prestazione.getTipoPrestazione(), prestazione.getNomePrestazione()));
-		}
+		listTipiPrestazione.forEach(elem-> {
+			map.put(elem.getCodPrestazione(), new Pair<>(elem.getTipoPrestazione(), elem.getNomePrestazione()));
+		});
 		
 		listTipiPrestazione.stream()
 				.map(e-> e.getTipoPrestazione())
@@ -432,7 +445,7 @@ public class NuovoAppuntamento extends JPanel {
 		gbc_lblInfermiere.gridy = 10;
 		scrollPanelLeft.add(lblInfermiere, gbc_lblInfermiere);
 
-		JComboBox<String> comboBoxVeterinario = new JComboBox<>();
+		comboBoxVeterinario = new JComboBox<>();
 		GridBagConstraints gbc_comboBoxVeterinario = new GridBagConstraints();
 		gbc_comboBoxVeterinario.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxVeterinario.fill = GridBagConstraints.HORIZONTAL;
@@ -442,10 +455,9 @@ public class NuovoAppuntamento extends JPanel {
 		
 		this.listVeterinari = new ArrayList<>();
 		this.listVeterinari = this.userController.getAllPersonaleByRuolo("Veterinario");
-		
-		for (User u : listVeterinari) {
+		listVeterinari.forEach(u-> {
 			comboBoxVeterinario.addItem(u.getNome() + " " + u.getCognome());
-		}		
+		});	
 		comboBoxVeterinario.setSelectedIndex(-1);
 
 		JComboBox<String> comboBoxInfermiere = new JComboBox<>();
@@ -455,15 +467,13 @@ public class NuovoAppuntamento extends JPanel {
 		gbc_comboBoxInfermiere.gridx = 6;
 		gbc_comboBoxInfermiere.gridy = 11;
 		scrollPanelLeft.add(comboBoxInfermiere, gbc_comboBoxInfermiere);
+		
 		this.listInfermieri = new ArrayList<>();
 		this.listInfermieri = this.userController.getAllPersonaleByRuolo("Infermiere");
-
-		for (User u : listInfermieri) {
+		listInfermieri.forEach(u-> {
 			comboBoxInfermiere.addItem(u.getNome() + " " + u.getCognome());
-		}	
+		});
 		comboBoxInfermiere.setSelectedIndex(-1);
-
-
 		
 		JButton addInfermiereButton = new JButton("+");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -473,7 +483,6 @@ public class NuovoAppuntamento extends JPanel {
 		scrollPanelLeft.add(addInfermiereButton, gbc_btnNewButton);
 		
 		comboBoxInfermiere.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				addInfermiereButton.setEnabled(true);
@@ -499,7 +508,6 @@ public class NuovoAppuntamento extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(addInfermiereButton.getText() == "+") {
 					addInfermiereButton.setText("-");
-					
 					if (comboBoxInfermiere.getSelectedItem() != null) {
 						comboBoxInfermiere2.setVisible(true);
 						selectedInfermiere = comboBoxInfermiere.getSelectedItem().toString();
@@ -511,7 +519,6 @@ public class NuovoAppuntamento extends JPanel {
 										comboBoxInfermiere2.addItem(x.getNome() + " " + x.getCognome());
 									});
 						}
-
 					}
 				} else {
 					addInfermiereButton.setText("+");
@@ -521,7 +528,7 @@ public class NuovoAppuntamento extends JPanel {
 				}				
 			}
 		});
-
+		
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
@@ -544,13 +551,12 @@ public class NuovoAppuntamento extends JPanel {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 		
-		
-		
 		JPanel savePanel = new JPanel();
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
 		
 		JButton saveButton = new JButton("SAVE");
 		saveButton.addActionListener(new ActionListener() {
+
 			public void actionPerformed(ActionEvent e) {
 				if(comboBoxAnimale.getSelectedIndex() != -1
 						&& comboBoxTipoPrestazione.getSelectedIndex() != -1
@@ -560,32 +566,56 @@ public class NuovoAppuntamento extends JPanel {
 						&& dateChooser.getDate() != null
 						&& timePicker.getTime() != null) {
 					
-					
-					Appuntamento app = new AppuntamentoImpl();
-					app.setCodAnimale(listAnimali.get(comboBoxAnimale.getSelectedIndex()).getCodAnimale());
-					
-					Pair<String, String> p = new Pair<>(comboBoxTipoPrestazione.getSelectedItem().toString(), comboBoxNomePrestazione.getSelectedItem().toString());	
-					app.setCodPrestazione(map.entrySet().stream().filter(en-> en.getValue().equals(p)).findFirst().get().getKey());
-					
 					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 					String date = df.format(dateChooser.getDate());
-					app.setData(date);
-					app.setOra(timePicker.getTime().toString());
+					Pair<String, String> p = new Pair<>(comboBoxTipoPrestazione.getSelectedItem().toString(), comboBoxNomePrestazione.getSelectedItem().toString());	
+					codTipoPrestazione = map.entrySet().stream().filter(en-> en.getValue().equals(p)).findFirst().get().getKey();
 					
-					prestazioneController.addNewAppuntamento(app);
-					
-					List<User> list = new ArrayList<>();
-					list.add(listInfermieri.get(comboBoxInfermiere.getSelectedIndex()));
-					if(comboBoxInfermiere2.getSelectedIndex() != -1) {
-						list.add(listInfermieri.get(comboBoxInfermiere2.getSelectedIndex()));
+					if(checkDisponibilitaVeterinario(date, timePicker.getTime().toString())) {
+						Appuntamento app = new AppuntamentoImpl();
+						app.setCodAnimale(listAnimali.get(comboBoxAnimale.getSelectedIndex()).getCodAnimale());
+						app.setCodPrestazione(codTipoPrestazione);
+						app.setData(date);
+						app.setOra(timePicker.getTime().toString());
+						
+						prestazioneController.addNewAppuntamento(app);
+						
+						List<User> list = new ArrayList<>();
+						list.add(listInfermieri.get(comboBoxInfermiere.getSelectedIndex()));
+						if(comboBoxInfermiere2.getSelectedIndex() != -1) {
+							list.add(listInfermieri.get(comboBoxInfermiere2.getSelectedIndex()));
+						}
+						list.add(listVeterinari.get(comboBoxVeterinario.getSelectedIndex()));
+						app.setAllMediciEInfermieri(list);
+						
+						prestazioneController.addEffettua(app);
+						
+						// DOBBIAMO CAPIRE QUANDO MEMORIZZARE L'APPUNTAMENTO SUL DATABASE
+						// DOPO CLICK OK OPPURE QUANDO VIENE SELEZIONATO UN VET DISPONIBILE
+						
+						
+						
+					} else {
+						// show dialog
+
+						List<String> list = listVeterinari.stream()
+								.filter(vet -> !vetNonDisponibili.contains(vet.getNome() + " " + vet.getCognome()))
+								.map(v -> v.getNome() + " " + v.getCognome())
+								.collect(Collectors.toList());
+
+						String[] options = new String[list.size()];
+						list.toArray(options);
+						
+						String n = (String) JOptionPane.showInputDialog(null,
+								"Il Veterinario selezionato non è disponibile. Seleziona uno dei seguenti dalla lista",
+								"Disponibilità Veterinari", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 					}
-					list.add(listVeterinari.get(comboBoxVeterinario.getSelectedIndex()));
-					app.setAllMediciEInfermieri(list);
-					
-					prestazioneController.addEffettua(app);
+				
 				}
 			}
 		});
+		
+		
 		savePanel.add(saveButton);
 		
 		//setLayout(groupLayout);
@@ -594,49 +624,16 @@ public class NuovoAppuntamento extends JPanel {
 		// this.initCommonView(frame);
 	}
 
-	private void resetAndDraw(List<Appuntamento> allAppuntamento) {
-		this.listAppuntamenti.clear();
-		this.listAppuntamenti = allAppuntamento;
-		model.setRowCount(0);
-		this.createTable(model, listAppuntamenti);
-		// scrollPane.setViewportView(table);
+	private boolean checkDisponibilitaVeterinario(String date, String time) {
+		String durata = listTipiPrestazione.stream()
+				.filter(p-> p.getCodPrestazione() == this.codTipoPrestazione)
+				.map(p-> p.getDurataMedia())
+				.collect(Collectors.toList()).get(0);
+		
+		vetNonDisponibili = prestazioneController.getVeterinariNonDisponibili(date, time, durata);
+		System.out.println(prestazioneController.getVeterinariNonDisponibili(date, time, durata));
+		
+		return !vetNonDisponibili.contains(this.comboBoxVeterinario.getSelectedItem().toString());
 	}
-
-	private void createTable(DefaultTableModel model, List<Appuntamento> list) {
-		list.forEach(x -> {
-			model.addRow(new Object[] { 
-					x.getNomeAnimale(), 
-					x.getData(), 
-					x.getOra(), 
-					x.getDurata(),
-					x.getNomeVeterinario(), 
-					x.getCognomeVeterinario(), 
-			});
-		});
-	}
-
-	private void initTable() {
-		this.table = new JTable();
-		this.model = (DefaultTableModel) table.getModel();
-		model.addColumn("Animale");
-		model.addColumn("Data");
-		model.addColumn("Ora");
-		model.addColumn("Durata");
-		model.addColumn("Nome ");
-		model.addColumn("Cognome");
-	}
-
-	public void search(ActionEvent e) { // action
-		List<Appuntamento> lista = new ArrayList<Appuntamento>();
-		lista.addAll(searchList(searchBar.getText(), listAppuntamenti));
-		this.resetAndDraw(lista);
-	}
-
-	private List<Appuntamento> searchList(String searchWords, List<Appuntamento> listOfAppuntamenti) {
-		List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
-		return listOfAppuntamenti.stream().filter(input -> {
-			return searchWordsArray.stream()
-					.allMatch(word -> input.getNomeAnimale().toLowerCase().contains(word.toLowerCase()));
-		}).collect(Collectors.toList());
-	}
+	
 }

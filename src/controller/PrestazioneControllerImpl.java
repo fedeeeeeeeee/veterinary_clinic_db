@@ -79,4 +79,10 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		this.prestazioneTable.addEffettua(app);
 	}
 
+
+	@Override
+	public List<String> getVeterinariNonDisponibili(String date, String time, String durata) {
+		return this.prestazioneTable.getVeterinariNonDisponibili(date, time, durata);
+	}
+
 }

@@ -467,6 +467,56 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		
 	}
 
+	@Override
+	public List<String> getVeterinariNonDisponibili(String date, String time, String durata) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+
+		 final String query = "select personale.nome, personale.cognome, effettua.cf "
+		 		+ "from effettua, personale "
+		 		+ "where (codAnimale, codTipoPrestazione, data) in "
+		 		+ "(select codAnimale, codTipoPrestazione, data from prestazione_su_animale, prestazione "
+	        	+ "where data = ? "
+	        	+ "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione "
+	        	+ "and ? between prestazione_su_animale.ora and addtime(prestazione_su_animale.ora, prestazione.durataMedia) "
+	        	+ "or ora between ? and addtime(?, ?)) "
+	        	+ "and effettua.cf = personale.cf " 
+	        	+ "and personale.ruolo = ?";
+		 
+		 List<String> veterianariNonDisponibili = new ArrayList<>();
+			try {
+				statement = Optional.of(connection.prepareStatement(query));
+				statement.get().setString(1, date);
+				statement.get().setString(2, time);
+				statement.get().setString(3, time);
+				statement.get().setString(4, time);
+				statement.get().setString(5, durata);
+				statement.get().setString(6, "Veterinario");
+
+				final ResultSet result = statement.get().executeQuery();
+				
+				while (result.next()) {
+					String veterianario = result.getString("nome") + " " + result.getString("cognome");
+					veterianariNonDisponibili.add(veterianario);
+				}
+
+				result.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+				}
+			}
+			return veterianariNonDisponibili;
+	}
 
 
 }
