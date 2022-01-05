@@ -27,7 +27,6 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.table.DefaultTableModel;
-
 import controller.AnimaleController;
 import controller.AnimaleControllerImpl;
 import controller.PrestazioneController;
@@ -40,24 +39,16 @@ import model.AppuntamentoImpl;
 import model.Prestazione;
 import model.User;
 import utility.Pair;
-import utility.ValidityFieldsChecker;
-
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
-
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
 import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
-
 import com.github.lgooddatepicker.components.TimePicker;
-import com.github.lgooddatepicker.optionalusertools.TimeChangeListener;
-import com.github.lgooddatepicker.zinternaltools.TimeChangeEvent;
 import com.toedter.calendar.JDateChooser;
-import java.awt.Component;;
 
 public class NuovoAppuntamento extends JPanel {
 
@@ -571,7 +562,7 @@ public class NuovoAppuntamento extends JPanel {
 					Appuntamento app = new AppuntamentoImpl();
 
 					if(checkDisponibilitaVeterinario(date, timePicker.getTime().toString())) {
-						app.getAnimale().setCodAnimale(listAnimali.get(comboBoxAnimale.getSelectedIndex()).getCodAnimale()); //TODO controlla
+						app.setAnimale(listAnimali.get(comboBoxAnimale.getSelectedIndex()));						
 						app.setCodPrestazione(codTipoPrestazione);
 						app.setData(date);
 						app.setOra(timePicker.getTime().toString());					

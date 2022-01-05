@@ -147,9 +147,11 @@ public class AnimaleTableImpl implements AnimaleTable {
 				proprietario.setNome(result.getString("proprietario.nome"));
 				proprietario.setCognome(result.getString("cognome"));
 				proprietario.setTelefono(result.getLong("telefono"));
+				
 				animale.setProprietario(proprietario);
 
 				animale.setCodAnimale(result.getInt("codAnimale"));
+				
 				list.add(animale);
 			}
 		} catch (SQLException e) {
