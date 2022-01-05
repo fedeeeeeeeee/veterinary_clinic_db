@@ -10,6 +10,8 @@ import java.util.Optional;
 
 import model.Animale;
 import model.AnimaleImpl;
+import model.Person;
+import model.Proprietario;
 import utility.Pair;
 
 public class AnimaleTableImpl implements AnimaleTable {
@@ -140,9 +142,13 @@ public class AnimaleTableImpl implements AnimaleTable {
 			while (result.next()) {
 				Animale animale = new AnimaleImpl();
 				animale.setNome(result.getString("animale.nome"));
-				animale.setNomeProprietario(result.getString("proprietario.nome"));
-				animale.setCognomeProprietario(result.getString("cognome"));
-				animale.setTelefono(result.getLong("telefono"));
+				Person proprietario = new Proprietario();
+				proprietario.setCF(result.getString("cf"));
+				proprietario.setNome(result.getString("proprietario.nome"));
+				proprietario.setCognome(result.getString("cognome"));
+				proprietario.setTelefono(result.getLong("telefono"));
+				animale.setProprietario(proprietario);
+
 				animale.setCodAnimale(result.getInt("codAnimale"));
 				list.add(animale);
 			}

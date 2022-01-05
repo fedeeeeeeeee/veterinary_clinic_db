@@ -20,9 +20,9 @@ public interface Animale {
 
 	String getCf();
 
-	String getNomeProprietario();
+//	String getNomeProprietario();
 
-	String getCognomeProprietario();
+	//String getCognomeProprietario();
 
 	void setNome(String nome);
 
@@ -40,13 +40,18 @@ public interface Animale {
 
 	void setCf(String cf);
 
-	void setNomeProprietario(String nomeProprietario);
+	//void setNomeProprietario(String nomeProprietario);
 
-	void setCognomeProprietario(String cognomeProprietario);
+	//void setCognomeProprietario(String cognomeProprietario);
 
-	long getTelefono();
+	//long getTelefono();
 
-	void setTelefono(long telefono);
+	//void setTelefono(long telefono);
 	
 	void setCodAnimale(int cod);
+
+
+	Person getProprietario();
+
+	void setProprietario(Person proprietario);
 }

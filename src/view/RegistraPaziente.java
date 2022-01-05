@@ -113,7 +113,7 @@ public class RegistraPaziente extends JPanel {
 		gbc_comboBox.gridy = 0;
 		centerPanel.add(comboBox, gbc_comboBox);
 	
-		List<String> listCF = proprietarioController.getAllPropietariCf();
+		List<String> listCF = proprietarioController.getAllProprietariCf();
 		listCF.forEach(x-> {
 			comboBox.addItem(x);
 		});

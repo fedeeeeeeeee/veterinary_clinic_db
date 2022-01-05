@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import model.Person;
+import model.Proprietario;
 
 public class ProprietarioTableImpl implements ProprietarioTable {
 	
@@ -133,5 +134,41 @@ public class ProprietarioTableImpl implements ProprietarioTable {
 			}
 		}
 		return cf;
+	}
+
+	@Override
+	public Person getProprietario(String cf) {
+		
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		final String query = "select * from " +tableName + " where CF=? ";
+		Person proprietario = new Proprietario();
+		
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, cf);
+			final ResultSet result = statement.get().executeQuery();
+			
+			if (result.next()) {
+			proprietario.setCF(cf);
+			proprietario.setNome(result.getString("nome"));
+			proprietario.setCognome(result.getString("cognome"));
+			proprietario.setTelefono(result.getLong("telefono"));
+			}
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return proprietario;
 	}
 }

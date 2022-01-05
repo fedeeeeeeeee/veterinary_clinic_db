@@ -22,10 +22,18 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import controller.AnimaleController;
+import controller.AnimaleControllerImpl;
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
+import controller.ProprietarioController;
+import controller.ProprietarioControllerImpl;
 import model.Appuntamento;
+import model.Person;
+import model.Proprietario;
 import model.User;
 
 import java.awt.GridBagLayout;
@@ -59,11 +67,12 @@ public class GestioneAppuntamento extends CommonView {
 	private JTable table;	
 	private JScrollPane scrollPane;
 	private PrestazioneController prestazioneController;
+	private ProprietarioController proprietarioController;
 	private List<Appuntamento> listAppuntamenti;
-	private int selectedStrumento;
 	private DefaultTableModel model;
 private boolean first; 
 	private String saved;
+	private int selectedAppuntamento;
 	
 	public GestioneAppuntamento(final JFrame frame, User user) {
 		frame.getContentPane().removeAll();
@@ -71,8 +80,9 @@ private boolean first;
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
+		this.proprietarioController = new ProprietarioControllerImpl();
 		this.prestazioneController = new PrestazioneControllerImpl();
-		
+		this.selectedAppuntamento = -1;
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
@@ -241,10 +251,14 @@ private boolean first;
 					this.resetAndDraw(prestazioneController.getAllPrestazioni() );
 				});
 				itemDettagliAppuntamento.addActionListener((e) -> {
-					if (this.selectedStrumento != -1) {
-						//Appuntamento appuntamento = listAppuntamenti.get(selectedStrumento);
-						//TODO
-						//frame.getContentPane().add(new DettagliAppuntamento(frame, user,appuntamento ));
+					if (this.selectedAppuntamento != -1) {
+						Appuntamento appuntamento = listAppuntamenti.get(selectedAppuntamento);
+						Person proprietario = new Proprietario();
+						System.out.println(appuntamento.getAnimale().getCf());
+						proprietario = proprietarioController.getProprietario(appuntamento.getAnimale().getCf());
+						
+						appuntamento.getAnimale().setProprietario(proprietario);
+						frame.getContentPane().add(new ModifyAppuntamento(frame, user,appuntamento ));
 					} else {
 						JOptionPane.showMessageDialog(null, "Non hai selezionato alcun appuntamento ");
 					}
@@ -294,12 +308,12 @@ private void resetAndDraw(List<Appuntamento> allAppuntamento) {
 private void createTable(DefaultTableModel model, List<Appuntamento> list) {
 			list.forEach(x -> {
 				model.addRow(new Object[] { 
-					x.getNomeAnimale(), 
+						x.getAnimale().getNome(),
 					x.getData(), 
 					x.getOra(), 
 					x.getPrestazione(),
-					x.getNomeVeterinario(), 
-					x.getCognomeVeterinario(),
+					x.getVeterinario().getNome(),
+					x.getVeterinario().getCognome(),
 				});
 			});
 }
@@ -313,14 +327,13 @@ private void initTable() {
 	model.addColumn("Prestazione");
 	model.addColumn("Nome");
 	model.addColumn("Cognome");
-	/*
 	model.addColumn("Modifica");		
 	table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		public void valueChanged(ListSelectionEvent event) {
-			selectedStrumento = event.getFirstIndex();
-			System.out.println(selectedStrumento);
+			selectedAppuntamento = event.getFirstIndex();
+			System.out.println(selectedAppuntamento);
 		}
-	});*/
+	});
 }
 
 public void search(ActionEvent e) { // action
@@ -334,7 +347,7 @@ private List<Appuntamento> searchList(String searchWords, List<Appuntamento> lis
 	List<String> searchWordsArray = Arrays.asList(searchWords.trim().split(" "));
 	return listOfAppuntamenti.stream().filter(input -> {
 		return searchWordsArray.stream()
-				.allMatch(word -> input.getNomeAnimale().toLowerCase().contains(word.toLowerCase()));
+				.allMatch(word -> input.getAnimale().getNome().toLowerCase().contains(word.toLowerCase()));
 	}).collect(Collectors.toList());
 }
 }
