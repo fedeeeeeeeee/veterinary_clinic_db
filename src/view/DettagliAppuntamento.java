@@ -40,7 +40,7 @@ public class DettagliAppuntamento extends CommonView {
 		private JFrame frame;
 		private PrestazioneController prestazioneController;
 		private User user;
-		public DettagliAppuntamento(final JFrame frame, User user) {
+		public DettagliAppuntamento(final JFrame frame, User user, Appuntamento app) {
 			frame.getContentPane().removeAll();
 			frame.getContentPane().validate();
 			frame.getContentPane().repaint();

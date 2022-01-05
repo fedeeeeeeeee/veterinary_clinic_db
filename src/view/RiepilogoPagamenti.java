@@ -188,12 +188,12 @@ private void resetAndDraw(List<Appuntamento> allAppuntamento) {
 private void createTable(DefaultTableModel model, List<Appuntamento> list) {
 			list.forEach(x -> {
 				model.addRow(new Object[] { 
-					x.getNomeAnimale(), 
+						x.getAnimale().getNome(),
 					x.getData(), 
 					x.getOra(), 
 					x.getPrestazione(),
-					x.getNomeVeterinario(), 
-					x.getCognomeVeterinario(),
+					x.getVeterinario().getNome(),
+					x.getVeterinario().getCognome(),
 				});
 			});
 }

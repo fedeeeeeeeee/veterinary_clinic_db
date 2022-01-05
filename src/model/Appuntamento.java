@@ -3,27 +3,27 @@ package model;
 import java.util.List;
 
 public interface Appuntamento {
+	Animale getAnimale();
+	void setAnimale(Animale animale);
+	
 	int getCodPrestazione();
 
-	int getCodAnimale();
+	//int getCodAnimale();
 
-	String getNomeAnimale();
+	//String getNomeAnimale();
 
 	String getPrestazione();
 
 	String getData();
 
 	String getOra();
-
-	String getNomeVeterinario();
-
-	String getCognomeVeterinario();
+	User getVeterinario( );
 
 	String getDurata();
 	
 	List<User> getAllMediciEInfermieri();
 
-	void setNomeAnimale(String nomeAnimale);
+	//void setNomeAnimale(String nomeAnimale);
 
 	void setPrestazione(String prestazione);
 
@@ -31,13 +31,9 @@ public interface Appuntamento {
 
 	void setOra(String ora);
 
-	void setNomeVeterinario(String nomeVeterinario);
-
-	void setCognomeVeterinario(String cognomeVeterinario);
-
 	void addInfermiere(User infermiere); // add table effettua
 
-	void setCodAnimale(int codAnimale);
+//	void setCodAnimale(int codAnimale);
 
 	void setCodTipoPrestazione(int codPrestazione);
 
@@ -45,6 +41,8 @@ public interface Appuntamento {
 
 	void setCodPrestazione(int codPrestazione);
 	
-	void setAllMediciEInfermieri(List<User> list); 
+	void setAllMediciEInfermieri(List<User> list);
+
+	void setVeterinario(User veterinario); 
 
 }

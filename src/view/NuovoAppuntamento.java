@@ -84,12 +84,12 @@ public class NuovoAppuntamento extends JPanel {
 	private void createTable(DefaultTableModel model, List<Appuntamento> list) {
 		list.forEach(x -> {
 			model.addRow(new Object[] { 
-					x.getNomeAnimale(), 
+					x.getAnimale().getNome(),
 					x.getData(), 
 					x.getOra(), 
 					x.getDurata(),
-					x.getNomeVeterinario(), 
-					x.getCognomeVeterinario(), 
+					x.getVeterinario().getNome(),
+					x.getVeterinario().getCognome(),
 			});
 		});
 	}
@@ -254,8 +254,8 @@ public class NuovoAppuntamento extends JPanel {
 		comboBoxAnimale.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Animale animaleSelected = listAnimali.get(comboBoxAnimale.getSelectedIndex());
-				textFieldNomeProprietario.setText(animaleSelected.getNomeProprietario() + " " + animaleSelected.getCognomeProprietario());
-				textFieldTelefono.setText(String.valueOf(animaleSelected.getTelefono()));
+				textFieldNomeProprietario.setText(animaleSelected.getProprietario().getNome()+ " " + animaleSelected.getProprietario().getCognome());
+				textFieldTelefono.setText(String.valueOf(animaleSelected.getProprietario().getTelefono()));
 			}
 		});
 
@@ -571,7 +571,7 @@ public class NuovoAppuntamento extends JPanel {
 					Appuntamento app = new AppuntamentoImpl();
 
 					if(checkDisponibilitaVeterinario(date, timePicker.getTime().toString())) {
-						app.setCodAnimale(listAnimali.get(comboBoxAnimale.getSelectedIndex()).getCodAnimale());
+						app.getAnimale().setCodAnimale(listAnimali.get(comboBoxAnimale.getSelectedIndex()).getCodAnimale()); //TODO controlla
 						app.setCodPrestazione(codTipoPrestazione);
 						app.setData(date);
 						app.setOra(timePicker.getTime().toString());					

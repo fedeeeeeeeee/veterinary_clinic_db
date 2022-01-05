@@ -10,4 +10,6 @@ public interface ProprietarioTable {
 
 	List<String> getAllPropietariCf();
 
+	Person getProprietario(String cf);
+
 }

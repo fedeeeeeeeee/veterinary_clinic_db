@@ -1,6 +1,8 @@
 package model;
 
 public class AnimaleImpl implements Animale {
+	
+	private int codAnimale;
 	private String nome;
 	private String genere;
 	private String dataNascita;
@@ -8,12 +10,21 @@ public class AnimaleImpl implements Animale {
 	private float peso;
 	private String razza;
 	private String specie;
-	private String cf;
-	private String nomeProprietario;
-	private String cognomeProprietario;
-	private long telefono;
-	private int codAnimale;
 	
+	private String cf; // person
+	//private String nomeProprietario;// person
+	//private String cognomeProprietario;// person
+	private Person proprietario;
+	//private long telefono;// person
+	
+	@Override
+	public void setProprietario(Person proprietario) {
+		this.proprietario = proprietario;
+	}
+	@Override
+	public Person getProprietario() {
+		return this.proprietario;
+	}
 	@Override
 	public String getNome() {
 		return nome;
@@ -93,7 +104,7 @@ public class AnimaleImpl implements Animale {
 	public void setCf(String cf) {
 		this.cf = cf;
 	}
-	
+	/*
 	@Override
 	public String getNomeProprietario() {
 		return nomeProprietario;
@@ -123,7 +134,7 @@ public class AnimaleImpl implements Animale {
 	public void setTelefono(long telefono) {
 		this.telefono = telefono;
 	}
-
+*/
 	@Override
 	public int getCodAnimale() {
 		return this.codAnimale;

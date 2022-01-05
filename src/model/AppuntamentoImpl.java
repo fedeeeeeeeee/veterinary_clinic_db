@@ -4,16 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppuntamentoImpl implements Appuntamento {
+	
 
-	private String nomeAnimale;
+	private Animale animale;
+	private User veterinario; 
+	
+	//private int codAnimale;
+	//private String nomeAnimale;
+
+	private int codPrestazione;
 	private String prestazione;
 	private String data;
 	private String ora;
-	private String nomeVeterinario;
-	private String cognomeVeterinario;
 	private String durata;
-	private int codAnimale;
-	private int codPrestazione;
+
 	private List<User> list = new ArrayList<>();
 	
 	@Override
@@ -27,7 +31,7 @@ public class AppuntamentoImpl implements Appuntamento {
 		this.codPrestazione = codPrestazione;
 	}
 
-	
+	/*
 	@Override
 	public int getCodAnimale() {
 		return codAnimale;
@@ -42,7 +46,7 @@ public class AppuntamentoImpl implements Appuntamento {
 	public void setNomeAnimale(String nomeAnimale) {
 		this.nomeAnimale = nomeAnimale;
 	}
-
+*/
 	@Override
 	public String getPrestazione() {
 		return prestazione;
@@ -72,7 +76,7 @@ public class AppuntamentoImpl implements Appuntamento {
 	public void setOra(String ora) {
 		this.ora = ora;
 	}
-
+/*
 	@Override
 	public String getNomeVeterinario() {
 		return nomeVeterinario;
@@ -92,18 +96,19 @@ public class AppuntamentoImpl implements Appuntamento {
 	public void setCognomeVeterinario(String cognomeVeterinario) {
 		this.cognomeVeterinario = cognomeVeterinario;
 	}
-
+*/
 	@Override
 	public void addInfermiere(User infermiere) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/*
 	@Override
 	public void setCodAnimale(int codAnimale) { // questi non vengono visualizzati in Gestione Appuntamento ma ci servono per fare le select nelle altre pagine
 		this.codAnimale= codAnimale;
 	}
-
+*/
 	@Override
 	public void setCodTipoPrestazione(int codPrestazione) {
 		this.codPrestazione= codPrestazione;		
@@ -129,6 +134,31 @@ public class AppuntamentoImpl implements Appuntamento {
 	@Override
 	public void setAllMediciEInfermieri(List<User> list) {
 		this.list = list;
+	}
+
+
+	@Override
+	public void setVeterinario(User veterinario) {
+		this.veterinario = veterinario;
+		
+	}
+	@Override
+	public User getVeterinario( ) {
+	 return veterinario;
+		
+	}
+
+
+	@Override
+	public Animale getAnimale() {
+		return this.animale;
+	}
+
+
+	@Override
+	public void setAnimale(Animale animale) {
+		this.animale = animale;
+		
 	}
 	
 }

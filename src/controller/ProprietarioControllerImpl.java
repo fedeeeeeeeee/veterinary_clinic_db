@@ -23,7 +23,11 @@ public class ProprietarioControllerImpl implements ProprietarioController {
 	}
 	
 	@Override
-	public List<String> getAllPropietariCf() {
+	public List<String> getAllProprietariCf() {
 		return this.proprietarioTable.getAllPropietariCf();
+	}
+	@Override
+	public Person getProprietario(String cf) {
+		return this.proprietarioTable.getProprietario(cf);
 	}
 }

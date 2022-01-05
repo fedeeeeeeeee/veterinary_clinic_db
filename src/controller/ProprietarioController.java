@@ -8,6 +8,8 @@ public interface ProprietarioController {
    
 	void addNewProprietario(Person proprietario);
 
-	List<String> getAllPropietariCf();
+	List<String> getAllProprietariCf();
+
+	Person getProprietario(String cf);
 
 }
