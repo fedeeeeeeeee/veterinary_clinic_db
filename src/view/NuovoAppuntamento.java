@@ -56,7 +56,8 @@ import javax.swing.JSeparator;
 import com.github.lgooddatepicker.components.TimePicker;
 import com.github.lgooddatepicker.optionalusertools.TimeChangeListener;
 import com.github.lgooddatepicker.zinternaltools.TimeChangeEvent;
-import com.toedter.calendar.JDateChooser;;
+import com.toedter.calendar.JDateChooser;
+import java.awt.Component;;
 
 public class NuovoAppuntamento extends JPanel {
 
@@ -163,24 +164,33 @@ public class NuovoAppuntamento extends JPanel {
 
 		JPanel menuPanel = new JPanel();
 		scrollPanelRight.add(menuPanel, BorderLayout.NORTH);
-		menuPanel.setLayout(new GridLayout(0, 4, 0, 0));
-
-		JDateChooser dateChooserRicerca = new JDateChooser();
-		dateChooserRicerca.setDateFormatString("yyyy-MM-dd");
-		dateChooserRicerca.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
-			@Override
-			public void propertyChange(PropertyChangeEvent evt) {
-				if (dateChooserRicerca.getDate() != null) {
-					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					String date = df.format(dateChooserRicerca.getDate());
-					resetAndDraw(prestazioneController.getPrestazioniInData(date));
-				}
-			}
-		});
+		GridBagLayout gbl_menuPanel = new GridBagLayout();
+		gbl_menuPanel.columnWidths = new int[]{0, 44, 93, 78, 54, 0, 0, 0, 137, 0};
+		gbl_menuPanel.rowHeights = new int[]{26, 0};
+		gbl_menuPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_menuPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		menuPanel.setLayout(gbl_menuPanel);
 		
-		menuPanel.add(dateChooserRicerca);
-		JSeparator separator_2 = new JSeparator();
-		menuPanel.add(separator_2);
+				JDateChooser dateChooserRicerca = new JDateChooser();
+				dateChooserRicerca.setDateFormatString("yyyy-MM-dd");
+				dateChooserRicerca.getDateEditor().addPropertyChangeListener(new PropertyChangeListener() {
+					@Override
+					public void propertyChange(PropertyChangeEvent evt) {
+						if (dateChooserRicerca.getDate() != null) {
+							SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+							String date = df.format(dateChooserRicerca.getDate());
+							resetAndDraw(prestazioneController.getPrestazioniInData(date));
+						}
+					}
+				});
+				
+				GridBagConstraints gbc_dateChooserRicerca = new GridBagConstraints();
+				gbc_dateChooserRicerca.gridwidth = 5;
+				gbc_dateChooserRicerca.insets = new Insets(0, 0, 0, 5);
+				gbc_dateChooserRicerca.fill = GridBagConstraints.BOTH;
+				gbc_dateChooserRicerca.gridx = 3;
+				gbc_dateChooserRicerca.gridy = 0;
+				menuPanel.add(dateChooserRicerca, gbc_dateChooserRicerca);
 		
 		JPanel panelAppuntamenti = new JPanel();
 		scrollPanelRight.add(panelAppuntamenti, BorderLayout.CENTER);
@@ -564,8 +574,7 @@ public class NuovoAppuntamento extends JPanel {
 						app.setCodAnimale(listAnimali.get(comboBoxAnimale.getSelectedIndex()).getCodAnimale());
 						app.setCodPrestazione(codTipoPrestazione);
 						app.setData(date);
-						app.setOra(timePicker.getTime().toString());
-						
+						app.setOra(timePicker.getTime().toString());					
 						
 						List<User> list = new ArrayList<>();
 						list.add(listInfermieri.get(comboBoxInfermiere.getSelectedIndex()));
@@ -602,9 +611,9 @@ public class NuovoAppuntamento extends JPanel {
 		
 		savePanel.add(saveButton);
 		
-		//setLayout(groupLayout);
+		// setLayout(groupLayout);
 		// new GroupLayout(this);
-		 frame.getContentPane().setLayout(groupLayout);
+		frame.getContentPane().setLayout(groupLayout);
 		// this.initCommonView(frame);
 	}
 	
