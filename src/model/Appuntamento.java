@@ -35,7 +35,7 @@ public interface Appuntamento {
 
 //	void setCodAnimale(int codAnimale);
 
-	void setCodTipoPrestazione(int codPrestazione);
+//	void setCodTipoPrestazione(int codPrestazione);
 
 	void setDurata(String durata);
 
@@ -43,6 +43,8 @@ public interface Appuntamento {
 	
 	void setAllMediciEInfermieri(List<User> list);
 
-	void setVeterinario(User veterinario); 
+	void setVeterinario(User veterinario);
+	String getTipoPrestazione();
+	void setTipoPrestazione(String tipoPrestazione); 
 
 }

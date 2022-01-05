@@ -8,11 +8,11 @@ public class AppuntamentoImpl implements Appuntamento {
 
 	private Animale animale;
 	private User veterinario; 
-	
-	//private int codAnimale;
-	//private String nomeAnimale;
 
 	private int codPrestazione;
+	private String tipoPrestazione;
+
+
 	private String prestazione;
 	private String data;
 	private String ora;
@@ -21,6 +21,16 @@ public class AppuntamentoImpl implements Appuntamento {
 	private List<User> list = new ArrayList<>();
 	
 	@Override
+	public String getTipoPrestazione() {
+		return tipoPrestazione;
+	}
+
+	@Override
+	public void setTipoPrestazione(String tipoPrestazione) {
+		this.tipoPrestazione = tipoPrestazione;
+	}
+
+	
 	public int getCodPrestazione() {
 		return codPrestazione;
 	}
@@ -108,12 +118,12 @@ public class AppuntamentoImpl implements Appuntamento {
 	public void setCodAnimale(int codAnimale) { // questi non vengono visualizzati in Gestione Appuntamento ma ci servono per fare le select nelle altre pagine
 		this.codAnimale= codAnimale;
 	}
-*/
+
 	@Override
 	public void setCodTipoPrestazione(int codPrestazione) {
 		this.codPrestazione= codPrestazione;		
 	}
-
+*/
 	@Override
 	public String getDurata() {
 		return durata;

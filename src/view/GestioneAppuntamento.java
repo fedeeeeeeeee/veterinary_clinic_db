@@ -160,7 +160,6 @@ private boolean first;
 			          public void propertyChange(PropertyChangeEvent evt) {
 							if( !saved.equals( dateChooser.getDate().toString()) ) {
 								saved = dateChooser.getDate().toString();
-								System.out.println(dateChooser.getDate().toString());
 								SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 								resetAndDraw(prestazioneController.getPrestazioniInData(df.format(dateChooser.getDate())));
@@ -254,7 +253,6 @@ private boolean first;
 					if (this.selectedAppuntamento != -1) {
 						Appuntamento appuntamento = listAppuntamenti.get(selectedAppuntamento);
 						Person proprietario = new Proprietario();
-						System.out.println(appuntamento.getAnimale().getCf());
 						proprietario = proprietarioController.getProprietario(appuntamento.getAnimale().getCf());
 						
 						appuntamento.getAnimale().setProprietario(proprietario);
@@ -331,7 +329,7 @@ private void initTable() {
 	table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		public void valueChanged(ListSelectionEvent event) {
 			selectedAppuntamento = event.getFirstIndex();
-			System.out.println(selectedAppuntamento);
+			//System.out.println(selectedAppuntamento);
 		}
 	});
 }
