@@ -612,5 +612,88 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			return infermieri;
 	}
 
+	@Override
+	public boolean updatePrestazioneSuAnimale(Appuntamento app, Appuntamento datiDiAppModificati) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		
+		final String query = "  update prestazione_su_animale set data=? , ora=? where data=? and codTipoPrestazione= ? and codAnimale=? ";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1,datiDiAppModificati.getData());
+			statement.get().setString(2, datiDiAppModificati.getOra());
+			statement.get().setString(3, app.getData());
+			statement.get().setInt(4, app.getCodPrestazione());
+			statement.get().setInt(5, app.getAnimale().getCodAnimale());
+			
+			
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean updateEffettua(Appuntamento app, Appuntamento datiDiAppModificati) {
+		// di data di veterinari e infermieri
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+	//	Optional<PreparedStatement> statement2 = Optional.empty();
+		
+		final String query = " SET FOREIGN_KEY_CHECKS=0; update effettua set data=? where data=? and codTipoPrestazione=? and codAnimale=? ;"
+				+ " update effettua set CF=? where data=? and codTipoPrestazione=? and codAnimale=? and CF=?  ; SET FOREIGN_KEY_CHECKS=1;";
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			System.out.println(datiDiAppModificati.getData());
+			System.out.println(app.getData());
+			
+		//	statement.get().setString(1, datiDiAppModificati.getData());
+			statement.get().setString(1, "2021-12-10");
+			statement.get().setString(2, app.getData());
+			statement.get().setInt(3, app.getCodPrestazione());
+			statement.get().setInt(4, app.getAnimale().getCodAnimale());
+		//	statement.get().executeUpdate();
+			
+		//	statement2 = Optional.of(connection.prepareStatement(query2));
+			statement.get().setString(5, datiDiAppModificati.getVeterinario().getCF());
+			statement.get().setString(6, app.getData());
+			statement.get().setInt(7, app.getCodPrestazione());
+			statement.get().setInt(8, app.getAnimale().getCodAnimale());
+			statement.get().setString(9, app.getVeterinario().getCF());
+		statement.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+				return false;
+			}
+		}
+		return true;
+	}
+
 
 }

@@ -91,4 +91,16 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		return this.prestazioneTable.getInfermieriPerAppuntamento( app);
 	}
 
+
+	@Override
+	public boolean updatePrestazioneSuAnimale(Appuntamento app, Appuntamento datiDiAppModificati) {
+		return this.prestazioneTable.updatePrestazioneSuAnimale( app, datiDiAppModificati);
+	}
+
+
+	@Override
+	public boolean updateEffettua(Appuntamento app, Appuntamento datiDiAppModificati) {
+		return this.prestazioneTable.updateEffettua( app, datiDiAppModificati);
+	}
+
 }

@@ -14,11 +14,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -32,6 +34,7 @@ import controller.PrestazioneControllerImpl;
 import controller.UserController;
 import controller.UserControllerImpl;
 import model.Appuntamento;
+import model.AppuntamentoImpl;
 import model.Prestazione;
 import model.User;
 import utility.Pair;
@@ -48,6 +51,7 @@ import javax.swing.JSeparator;
 
 import com.github.lgooddatepicker.components.TimePicker;
 import com.toedter.calendar.JDateChooser;
+import java.awt.Color;
 
 public class ModifyAppuntamento extends JPanel {
 
@@ -69,7 +73,7 @@ public class ModifyAppuntamento extends JPanel {
 	private JTextField textFieldTelefono;
 	//private int codTipoPrestazione;
 	private JComboBox<String> comboBoxVeterinario;
-	//private List<String> vetNonDisponibili;
+	private List<String> vetNonDisponibili;
 
 	private void createTable(DefaultTableModel model, List<Appuntamento> list) {
 		list.forEach(x -> {
@@ -83,7 +87,15 @@ public class ModifyAppuntamento extends JPanel {
 			});
 		});
 	}
-
+	private boolean checkDisponibilitaVeterinario(String date, String time) {
+		String durata = listTipiPrestazione.stream()
+				.filter(p-> p.getCodPrestazione() == app.getCodPrestazione())
+				.map(p-> p.getDurataMedia())
+				.collect(Collectors.toList()).get(0);		
+		vetNonDisponibili = prestazioneController.getVeterinariNonDisponibili(date, time, durata);
+		return !vetNonDisponibili.contains(this.comboBoxVeterinario.getSelectedItem().toString());
+	}
+	
 	private void initTable() {
 		this.table = new JTable();
 		this.model = (DefaultTableModel) table.getModel();
@@ -484,45 +496,29 @@ public class ModifyAppuntamento extends JPanel {
 		JPanel savePanel = new JPanel();
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
 		
-		JButton saveButton = new JButton("SAVE");
-		/*
-		saveButton.addActionListener(new ActionListener() {
+		
+		JButton modButton = new JButton("Modifica");
+		modButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if(comboBoxAnimale.getSelectedIndex() != -1
-						&& comboBoxTipoPrestazione.getSelectedIndex() != -1
-						&& comboBoxNomePrestazione.getSelectedIndex() != -1
-						&& comboBoxVeterinario.getSelectedIndex() != -1
-						&& comboBoxInfermiere.getSelectedIndex() != -1
+				if( comboBoxVeterinario.getSelectedIndex() != -1
 						&& dateChooser.getDate() != null
 						&& timePicker.getTime() != null) {
 					
 					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 					String date = df.format(dateChooser.getDate());
-					Pair<String, String> p = new Pair<>(comboBoxTipoPrestazione.getSelectedItem().toString(), comboBoxNomePrestazione.getSelectedItem().toString());	
-					codTipoPrestazione = map.entrySet().stream().filter(en-> en.getValue().equals(p)).findFirst().get().getKey();
 					
-					Appuntamento app = new AppuntamentoImpl();
-
+					Appuntamento datiDiAppModificati = new AppuntamentoImpl();
+					
 					if(checkDisponibilitaVeterinario(date, timePicker.getTime().toString())) {
-						app.getAnimale().setCodAnimale(listAnimali.get(comboBoxAnimale.getSelectedIndex()).getCodAnimale());
-						app.setCodPrestazione(codTipoPrestazione);
-						app.setData(date);
-						app.setOra(timePicker.getTime().toString());					
-						
-						List<User> list = new ArrayList<>();
-						list.add(listInfermieri.get(comboBoxInfermiere.getSelectedIndex()));
-						if(comboBoxInfermiere2.getSelectedIndex() != -1) {
-							list.add(listInfermieri.get(comboBoxInfermiere2.getSelectedIndex()));
-						}
-						list.add(listVeterinari.get(comboBoxVeterinario.getSelectedIndex()));
-						app.setAllMediciEInfermieri(list);
-						
-							
-						if(prestazioneController.addNewAppuntamento(app) && prestazioneController.addEffettua(app)) {
+						datiDiAppModificati.setData(date);
+						datiDiAppModificati.setOra(timePicker.getTime().toString());					
+						datiDiAppModificati.setVeterinario(listVeterinari.get(comboBoxVeterinario.getSelectedIndex()));
+							System.out.println(app.getCodPrestazione());
+						if(prestazioneController.updateEffettua(app, datiDiAppModificati) && prestazioneController.updatePrestazioneSuAnimale(app, datiDiAppModificati)) {
 							frame.getContentPane().add(new GestioneAppuntamento(frame, user));
 						} else {
-							JOptionPane.showMessageDialog(frame, "Si è verificato un errore nell'inserimento dell'appuntamaneto.", 
+							JOptionPane.showMessageDialog(frame, "Si è verificato un errore nell'aggiornamento dell'appuntamaneto.", 
 									"Attenzione!", JOptionPane.ERROR_MESSAGE);
 						}
 						
@@ -555,13 +551,15 @@ public class ModifyAppuntamento extends JPanel {
 			}
 		});
 		
-		*/
-		savePanel.add(saveButton);
+		savePanel.add(modButton);
+		
+		JButton delateButton = new JButton("Elimina");
+		delateButton.setForeground(new Color(178, 34, 34));
+		savePanel.add(delateButton);
 		
 		//setLayout(groupLayout);
 		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		// this.initCommonView(frame);
 	}
-	
 }

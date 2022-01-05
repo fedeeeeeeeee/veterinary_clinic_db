@@ -29,4 +29,8 @@ public interface PrestazioneTable {
 
 		List<String> getInfermieriPerAppuntamento(Appuntamento app);
 
+		boolean updatePrestazioneSuAnimale(Appuntamento app, Appuntamento datiDiAppModificati);
+
+		boolean updateEffettua(Appuntamento app, Appuntamento datiDiAppModificati);
+
 }

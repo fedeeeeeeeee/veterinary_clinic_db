@@ -63,6 +63,38 @@ public class LottoTableImpl implements LottoTable {
 		return farmaci;
 	}
 
+	private int getQuantitaFarmaco(int codFarmaco) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		int qtfarmaco = 0;
+		final String query = "select disponibilita from farmaco where codFarmaco = ?";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1,codFarmaco);
+			final ResultSet result = statement.get().executeQuery();
+		
+			
+			if (result.next()) {
+				qtfarmaco = result.getInt(1);
+			}
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+			}
+		}
+		return qtfarmaco;
+	}
 	@Override
 	public boolean addNewLotto(Lotto lotto) {
 		final Connection connection = this.dataSource.getMySQLConnection();
@@ -104,12 +136,14 @@ public class LottoTableImpl implements LottoTable {
 		Optional<PreparedStatement> statement = Optional.empty();
 
 		int quantita = lotto.getNumeroConfezioni() * lotto.getQuantitaPerConfezione();
-		System.out.println(quantita);
+		int oldQuantita = this.getQuantitaFarmaco(lotto.getCodFarmaco());
+		System.out.println(quantita+oldQuantita);
 		final String query = " update " +  tableNameFarmaco +" set disponibilita=? where codFarmaco=? ";
 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
-			statement.get().setInt(1,quantita);
+			int totQuantita = quantita+oldQuantita;
+			statement.get().setInt(1,totQuantita);
 			statement.get().setInt(2, lotto.getCodFarmaco());
 			
 			statement.get().executeUpdate();
