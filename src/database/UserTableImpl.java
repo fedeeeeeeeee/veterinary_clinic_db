@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-import database.DatabaseConnection;
 import model.User;
 import model.UserImpl;
 

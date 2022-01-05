@@ -12,8 +12,6 @@ import java.util.Optional;
 
 import model.Farmaco;
 import model.FarmacoImpl;
-import model.Strumento;
-import model.StrumentoImpl;
 
 public class FarmaciTableImpl implements FarmaciTable {
 

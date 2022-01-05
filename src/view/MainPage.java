@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.SwingConstants;
 
-import model.User;
-
 import java.awt.Color;
 
 import javax.swing.GroupLayout;

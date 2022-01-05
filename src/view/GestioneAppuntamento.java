@@ -24,9 +24,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import controller.AnimaleController;
-import controller.AnimaleControllerImpl;
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
 import controller.ProprietarioController;

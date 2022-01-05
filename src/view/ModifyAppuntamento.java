@@ -4,26 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
@@ -36,18 +31,14 @@ import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
 import controller.UserController;
 import controller.UserControllerImpl;
-import model.Animale;
 import model.Appuntamento;
-import model.AppuntamentoImpl;
 import model.Prestazione;
 import model.User;
 import utility.Pair;
-import utility.ValidityFieldsChecker;
 
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
@@ -56,10 +47,7 @@ import javax.swing.JTextField;
 import javax.swing.JSeparator;
 
 import com.github.lgooddatepicker.components.TimePicker;
-import com.github.lgooddatepicker.optionalusertools.TimeChangeListener;
-import com.github.lgooddatepicker.zinternaltools.TimeChangeEvent;
 import com.toedter.calendar.JDateChooser;
-import java.awt.Component;;
 
 public class ModifyAppuntamento extends JPanel {
 
@@ -72,17 +60,16 @@ public class ModifyAppuntamento extends JPanel {
 	private JTable table;
 	private DefaultTableModel model;
 	private List<Appuntamento> listAppuntamenti;
-	private List<Animale> listAnimali;
-	private AnimaleController animaleController;
+	//private List<Animale> listAnimali;
 	private List<User> listVeterinari;
 	private List<String> listInfermieri;
 	private UserController userController;
-	private String selectedInfermiere;
+	//private String selectedInfermiere;
 	private List<Prestazione> listTipiPrestazione;
 	private JTextField textFieldTelefono;
-	private int codTipoPrestazione;
+	//private int codTipoPrestazione;
 	private JComboBox<String> comboBoxVeterinario;
-	private List<String> vetNonDisponibili;
+	//private List<String> vetNonDisponibili;
 
 	private void createTable(DefaultTableModel model, List<Appuntamento> list) {
 		list.forEach(x -> {
@@ -125,7 +112,6 @@ public class ModifyAppuntamento extends JPanel {
 		this.frame = frame;
 		this.user = user;
 		this.app = app;
-		this.animaleController = new AnimaleControllerImpl();
 		this.prestazioneController = new PrestazioneControllerImpl();
 		this.userController = new UserControllerImpl();
 		this.listInfermieri = prestazioneController.getInfermieriPerAppuntamento(app);

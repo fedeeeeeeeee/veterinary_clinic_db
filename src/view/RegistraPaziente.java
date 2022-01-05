@@ -3,7 +3,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import model.Appuntamento;
 import model.User;
 import utility.Pair;
 
@@ -33,9 +32,6 @@ import controller.ProprietarioControllerImpl;
 
 public class RegistraPaziente extends JPanel {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5823886107710364208L;
 	private JFrame frame;
 	private User user;
@@ -44,9 +40,6 @@ public class RegistraPaziente extends JPanel {
 	private ProprietarioController proprietarioController;
 
 
-	/**
-	 * Create the panel.
-	 */
 	public RegistraPaziente(final JFrame frame, User user) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();

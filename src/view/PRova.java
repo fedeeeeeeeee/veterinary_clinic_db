@@ -12,7 +12,6 @@ import java.awt.Toolkit;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.plaf.DimensionUIResource;
 
 public class PRova extends JPanel {
 	private JFrame frame;
@@ -22,11 +21,7 @@ public class PRova extends JPanel {
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 		this.frame = frame;
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		   int w = frame.getSize().width;
-     int h = frame.getSize().height;
-     int x = (dim.width-w)/2;
-     int y = (dim.height-h)/2;
+		//Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
      
 		JPanel centerPanel = new JPanel();
 		//GroupLayout groupLayout = new GroupLayout(this);

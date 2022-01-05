@@ -15,7 +15,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
@@ -38,6 +37,7 @@ import utility.ValidityFieldsChecker;
 
 public class AggiungiProprietario extends CommonView {
 
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField textFieldEmail;
 	private JTextField textFieldNome;

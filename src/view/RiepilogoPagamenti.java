@@ -12,29 +12,24 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.Appuntamento;
 import model.User;
-import javax.swing.BoxLayout;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
-import java.awt.GridLayout;
 import javax.swing.JScrollPane;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-import com.toedter.calendar.JDateChooser;
 
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;

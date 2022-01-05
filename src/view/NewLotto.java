@@ -56,12 +56,10 @@ public class NewLotto extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private User user;
-	private FarmaciController farmaciController;
+	//private FarmaciController farmaciController;
 	private LottoController lottoController;
 	private Lotto lotto;
-	/**
-	 * Create the panel.
-	 */
+
 	public NewLotto(JFrame frame, User user)  {
 
 		frame.getContentPane().removeAll();
@@ -69,7 +67,7 @@ public class NewLotto extends JPanel {
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
-		this.farmaciController = new FarmaciControllerImpl();
+		//this.farmaciController = new FarmaciControllerImpl();
 		this.lottoController = new LottoControllerImpl();
 		
 		JPanel upperPanel = new JPanel();

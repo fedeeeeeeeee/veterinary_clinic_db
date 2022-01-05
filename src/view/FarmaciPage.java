@@ -1,5 +1,4 @@
 package view;
-/* completo*/
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -12,14 +11,10 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import javax.swing.Action;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,10 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
@@ -42,15 +34,11 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import controller.FarmaciController;
 import controller.FarmaciControllerImpl;
-import controller.StrumentiController;
-import controller.StrumentiControllerImpl;
 import model.Farmaco;
-import model.Strumento;
 import model.User;
 import javax.swing.SwingConstants;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -65,9 +53,8 @@ public class FarmaciPage extends JPanel {
 	private FarmaciController farmaciController;
 	private List<Farmaco> listFarmaci;
 	private DefaultTableModel model;
-	/**
-	 * Create the panel.
-	 */
+
+	
 	public FarmaciPage(JFrame frame, User user) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();

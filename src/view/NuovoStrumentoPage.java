@@ -4,8 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -19,10 +17,6 @@ import javax.swing.ScrollPaneConstants;
 
 import controller.FarmaciController;
 import controller.FarmaciControllerImpl;
-import model.Animale;
-import model.Farmaco;
-import model.FarmacoImpl;
-import model.LottoImpl;
 import model.User;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -32,31 +26,19 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JTextField;
-import javax.swing.JCheckBox;
-import javax.swing.JRadioButton;
-import javax.swing.JComboBox;
-import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
-import java.awt.Dimension;
-import java.awt.TextArea;
 import javax.swing.JTextArea;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
 
 public class NuovoStrumentoPage extends JPanel {
+
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private User user;
-	private FarmaciController farmaciController;
+	//private FarmaciController farmaciController;
 	private JTextField textNomeFarmaco;
 	private JTextField textField;
 	
@@ -66,7 +48,7 @@ public class NuovoStrumentoPage extends JPanel {
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
-		this.farmaciController = new FarmaciControllerImpl();
+		//this.farmaciController = new FarmaciControllerImpl();
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();

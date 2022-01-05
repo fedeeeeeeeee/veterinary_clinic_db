@@ -17,19 +17,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import model.User;
 import javax.swing.SwingConstants;
-import javax.swing.BoxLayout;
 import java.awt.GridLayout;
-import java.awt.CardLayout;
-import java.awt.GridBagLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.FlowLayout;
-import java.awt.Component;
-import javax.swing.Box;
 
 public class MagazzinoPage extends JPanel {
 
