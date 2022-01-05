@@ -27,4 +27,6 @@ public interface PrestazioneTable {
 		
 		List<String> getVeterinariNonDisponibili(String date, String time, String durata);
 
+		List<String> getInfermieriPerAppuntamento(Appuntamento app);
+
 }

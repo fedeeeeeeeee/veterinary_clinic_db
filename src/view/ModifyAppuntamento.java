@@ -8,10 +8,12 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +75,7 @@ public class ModifyAppuntamento extends JPanel {
 	private List<Animale> listAnimali;
 	private AnimaleController animaleController;
 	private List<User> listVeterinari;
-	private List<User> listInfermieri;
+	private List<String> listInfermieri;
 	private UserController userController;
 	private String selectedInfermiere;
 	private List<Prestazione> listTipiPrestazione;
@@ -114,14 +116,7 @@ public class ModifyAppuntamento extends JPanel {
 		// scrollPane.setViewportView(table);
 	}
 	
-	private boolean checkDisponibilitaVeterinario(String date, String time) {
-		String durata = listTipiPrestazione.stream()
-				.filter(p-> p.getCodPrestazione() == this.codTipoPrestazione)
-				.map(p-> p.getDurataMedia())
-				.collect(Collectors.toList()).get(0);		
-		vetNonDisponibili = prestazioneController.getVeterinariNonDisponibili(date, time, durata);
-		return !vetNonDisponibili.contains(this.comboBoxVeterinario.getSelectedItem().toString());
-	}
+
 	
 	public ModifyAppuntamento(JFrame frame, User user, Appuntamento app) {
 		frame.getContentPane().removeAll();
@@ -133,8 +128,7 @@ public class ModifyAppuntamento extends JPanel {
 		this.animaleController = new AnimaleControllerImpl();
 		this.prestazioneController = new PrestazioneControllerImpl();
 		this.userController = new UserControllerImpl();
-		System.out.println(app.getAnimale().getNome());
-		System.out.println(app.getAnimale().getProprietario().getNome());
+		this.listInfermieri = prestazioneController.getInfermieriPerAppuntamento(app);
 
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
@@ -240,40 +234,29 @@ public class ModifyAppuntamento extends JPanel {
 		gbc_lblAnimale.gridy = 1;
 		scrollPanelLeft.add(lblAnimale, gbc_lblAnimale);
 
-		JComboBox<String> comboBoxAnimale = new JComboBox<>();
+		JTextField textFieldAnimale = new JTextField();
 		GridBagConstraints gbc_comboBoxAnimale = new GridBagConstraints();
 		gbc_comboBoxAnimale.gridwidth = 3;
 		gbc_comboBoxAnimale.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxAnimale.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxAnimale.gridx = 4;
 		gbc_comboBoxAnimale.gridy = 1;
-		scrollPanelLeft.add(comboBoxAnimale, gbc_comboBoxAnimale);	
-		this.listAnimali = new ArrayList<>();
-		this.listAnimali = this.animaleController.getAllAnimali();
-	
-		for (Animale animale : listAnimali) {
-			comboBoxAnimale.addItem(animale.getNome());
-		}
-		comboBoxAnimale.setSelectedIndex(-1);
-		comboBoxAnimale.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Animale animaleSelected = listAnimali.get(comboBoxAnimale.getSelectedIndex());
-				textFieldNomeProprietario.setText(animaleSelected.getProprietario().getNome() + " " + animaleSelected.getProprietario().getCognome());
-				textFieldTelefono.setText(String.valueOf(animaleSelected.getProprietario().getTelefono()));
-			}
-		});
+		scrollPanelLeft.add(textFieldAnimale, gbc_comboBoxAnimale);	
 
+		textFieldAnimale.setText(this.app.getAnimale().getNome());
+		textFieldAnimale.setEditable(false);
 		
-		JLabel lblNewLabel_1 = new JLabel("Proprietario");
+		JLabel lblProprietario = new JLabel("Proprietario");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.gridwidth = 3;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 0;
 		gbc_lblNewLabel_1.gridy = 2;
-		scrollPanelLeft.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		scrollPanelLeft.add(lblProprietario, gbc_lblNewLabel_1);
 
 		textFieldNomeProprietario = new JTextField();
 		textFieldNomeProprietario.setEditable(false);
+		textFieldNomeProprietario.setText(app.getAnimale().getProprietario().getNome() + " " + app.getAnimale().getProprietario().getCognome() );
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 3;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
@@ -293,6 +276,7 @@ public class ModifyAppuntamento extends JPanel {
 
 		textFieldTelefono = new JTextField();
 		textFieldTelefono.setEditable(false);
+		textFieldTelefono.setText(String.valueOf(app.getAnimale().getProprietario().getTelefono()));
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.gridwidth = 3;
 		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
@@ -320,7 +304,15 @@ public class ModifyAppuntamento extends JPanel {
 		scrollPanelLeft.add(lblData, gbc_lblData);
 
 		JDateChooser dateChooser = new JDateChooser();
-		
+		dateChooser.setDateFormatString("yyyy-mm-dd");
+		Date data = new Date();
+		try {
+			data = new SimpleDateFormat("yyyy-mm-dd").parse(app.getData());
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		dateChooser.setDate(data);
 		GridBagConstraints gbc_dateChooser = new GridBagConstraints();
 		gbc_dateChooser.anchor = GridBagConstraints.NORTH;
 		gbc_dateChooser.insets = new Insets(0, 0, 5, 5);
@@ -337,9 +329,12 @@ public class ModifyAppuntamento extends JPanel {
 		scrollPanelLeft.add(lblOra, gbc_lblOra);
 
 		TimePicker timePicker = new TimePicker();
-		//timePicker.setText("Meeting time");
-		LocalTime local = LocalTime.now();
-		timePicker.setTime(local);
+		String[] ora = app.getOra().split(":");
+		String ore = ora[0]; 
+		String minuti = ora[1]; 
+		String secondi = ora[2]; 
+		LocalTime oldOra = LocalTime.of(Integer.valueOf(ore), Integer.valueOf(minuti), Integer.valueOf(secondi));
+		timePicker.setTime(oldOra);
 		GridBagConstraints gbc_timePicker = new GridBagConstraints();
 		gbc_timePicker.anchor = GridBagConstraints.NORTHWEST;
 		gbc_timePicker.insets = new Insets(0, 0, 5, 5);
@@ -355,13 +350,15 @@ public class ModifyAppuntamento extends JPanel {
 		gbc_lblTipoPrestazione.gridy = 6;
 		scrollPanelLeft.add(lblTipoPrestazione, gbc_lblTipoPrestazione);
 
-		JComboBox<String> comboBoxTipoPrestazione = new JComboBox<>();
+		JTextField textTipoPrestazione = new JTextField();
+		textTipoPrestazione.setText(app.getTipoPrestazione()); 
 		GridBagConstraints gbc_comboBoxPrestazione = new GridBagConstraints();
 		gbc_comboBoxPrestazione.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxPrestazione.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxPrestazione.gridx = 6;
 		gbc_comboBoxPrestazione.gridy = 6;
-		scrollPanelLeft.add(comboBoxTipoPrestazione, gbc_comboBoxPrestazione);
+		scrollPanelLeft.add(textTipoPrestazione, gbc_comboBoxPrestazione);
+		textTipoPrestazione.setEditable(false);
 		
 		JLabel lblNomPrestazione = new JLabel("Nome Prestazione");
 		GridBagConstraints gbc_lblNomPrestazione = new GridBagConstraints();
@@ -371,15 +368,15 @@ public class ModifyAppuntamento extends JPanel {
 		gbc_lblNomPrestazione.gridy = 7;
 		scrollPanelLeft.add(lblNomPrestazione, gbc_lblNomPrestazione);
 
-		JComboBox<String> comboBoxNomePrestazione = new JComboBox<>();
+		JTextField textNomePrestazione = new JTextField();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBox.gridx = 6;
 		gbc_comboBox.gridy = 7;
-		scrollPanelLeft.add(comboBoxNomePrestazione, gbc_comboBox);
-
-		comboBoxNomePrestazione.setEnabled(false);
+		scrollPanelLeft.add(textNomePrestazione, gbc_comboBox);
+		textNomePrestazione.setText(app.getPrestazione()); //TODO
+		textNomePrestazione.setEditable(false);
 		
 		this.listTipiPrestazione = new ArrayList<>();
 		this.listTipiPrestazione = this.prestazioneController.getAllTipiDiPrestazione();
@@ -389,30 +386,6 @@ public class ModifyAppuntamento extends JPanel {
 			map.put(elem.getCodPrestazione(), new Pair<>(elem.getTipoPrestazione(), elem.getNomePrestazione()));
 		});
 		
-		listTipiPrestazione.stream()
-				.map(e-> e.getTipoPrestazione())
-				.distinct()
-				.forEach(x->{
-					comboBoxTipoPrestazione.addItem(x);
-		});
-		
-		comboBoxTipoPrestazione.setSelectedIndex(-1);
-		
-		comboBoxTipoPrestazione.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				comboBoxNomePrestazione.setEnabled(true);
-				comboBoxNomePrestazione.removeAllItems();
-				for (Map.Entry<Integer, Pair<String, String>> pair : map.entrySet()) {
-					if(pair.getValue().getX().equals(comboBoxTipoPrestazione.getSelectedItem().toString())) {
-						comboBoxNomePrestazione.addItem(pair.getValue().getY());
-					}
-				}
-				comboBoxNomePrestazione.setSelectedIndex(-1);
-			}
-			
-		});
 		
 		JSeparator separator_1 = new JSeparator();
 		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
@@ -447,6 +420,7 @@ public class ModifyAppuntamento extends JPanel {
 		scrollPanelLeft.add(lblInfermiere, gbc_lblInfermiere);
 
 		comboBoxVeterinario = new JComboBox<>();
+
 		GridBagConstraints gbc_comboBoxVeterinario = new GridBagConstraints();
 		gbc_comboBoxVeterinario.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxVeterinario.fill = GridBagConstraints.HORIZONTAL;
@@ -459,22 +433,18 @@ public class ModifyAppuntamento extends JPanel {
 		listVeterinari.forEach(u-> {
 			comboBoxVeterinario.addItem(u.getNome() + " " + u.getCognome());
 		});	
-		comboBoxVeterinario.setSelectedIndex(-1);
+		comboBoxVeterinario.setSelectedItem(app.getVeterinario().getNome() + " " + app.getVeterinario().getCognome());
 
-		JComboBox<String> comboBoxInfermiere = new JComboBox<>();
+		
+		JTextField textInfermiere = new JTextField();
 		GridBagConstraints gbc_comboBoxInfermiere = new GridBagConstraints();
 		gbc_comboBoxInfermiere.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxInfermiere.fill = GridBagConstraints.HORIZONTAL;
 		gbc_comboBoxInfermiere.gridx = 6;
 		gbc_comboBoxInfermiere.gridy = 11;
-		scrollPanelLeft.add(comboBoxInfermiere, gbc_comboBoxInfermiere);
-		
-		this.listInfermieri = new ArrayList<>();
-		this.listInfermieri = this.userController.getAllPersonaleByRuolo("Infermiere");
-		listInfermieri.forEach(u-> {
-			comboBoxInfermiere.addItem(u.getNome() + " " + u.getCognome());
-		});
-		comboBoxInfermiere.setSelectedIndex(-1);
+		scrollPanelLeft.add(textInfermiere, gbc_comboBoxInfermiere);
+		textInfermiere.setText(listInfermieri.get(0));
+		textInfermiere.setEditable(false);
 		
 		JButton addInfermiereButton = new JButton("+");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
@@ -482,54 +452,27 @@ public class ModifyAppuntamento extends JPanel {
 		gbc_btnNewButton.gridx = 7;
 		gbc_btnNewButton.gridy = 11;
 		scrollPanelLeft.add(addInfermiereButton, gbc_btnNewButton);
+		addInfermiereButton.setVisible(false);
+		addInfermiereButton.setEnabled(false);
 		
-		comboBoxInfermiere.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				addInfermiereButton.setEnabled(true);
-			};
-		
-		});
-		
-		JComboBox<String> comboBoxInfermiere2 = new JComboBox<>();
-		GridBagConstraints gbc_comboBoxInfermiere_1 = new GridBagConstraints();
-		gbc_comboBoxInfermiere_1.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBoxInfermiere_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxInfermiere_1.gridx = 6;
-		gbc_comboBoxInfermiere_1.gridy = 12;
-		scrollPanelLeft.add(comboBoxInfermiere2, gbc_comboBoxInfermiere_1);
+		if ( listInfermieri.size() > 1) { 
+			JTextField textInfermiere2 = new JTextField();
+			GridBagConstraints gbc_comboBoxInfermiere_1 = new GridBagConstraints();
+			gbc_comboBoxInfermiere_1.insets = new Insets(0, 0, 5, 5);
+			gbc_comboBoxInfermiere_1.fill = GridBagConstraints.HORIZONTAL;
+			gbc_comboBoxInfermiere_1.gridx = 6;
+			gbc_comboBoxInfermiere_1.gridy = 12;
+			scrollPanelLeft.add(textInfermiere2, gbc_comboBoxInfermiere_1);
+			textInfermiere2.setText(listInfermieri.get(1));
+			textInfermiere2.setEditable(false);
+		}
+
 		splitPane.setOneTouchExpandable(true);
 		splitPane.setResizeWeight(0.5);
 		middlePanel.add(splitPane, BorderLayout.CENTER);
-		comboBoxInfermiere2.setVisible(false);	 
-		addInfermiereButton.setEnabled(false);
-				
-		addInfermiereButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(addInfermiereButton.getText() == "+") {
-					addInfermiereButton.setText("-");
-					if (comboBoxInfermiere.getSelectedItem() != null) {
-						comboBoxInfermiere2.setVisible(true);
-						selectedInfermiere = comboBoxInfermiere.getSelectedItem().toString();
-						comboBoxInfermiere.setEnabled(false);
-						if (comboBoxInfermiere2.getItemCount() == 0) {
-							listInfermieri.stream()
-									.filter(x -> !(x.getNome() + " " + x.getCognome()).equals(selectedInfermiere))
-									.forEach(x -> {
-										comboBoxInfermiere2.addItem(x.getNome() + " " + x.getCognome());
-									});
-						}
-					}
-				} else {
-					addInfermiereButton.setText("+");
-					comboBoxInfermiere.setEnabled(true);
-					comboBoxInfermiere2.removeAllItems();
-					comboBoxInfermiere2.setVisible(false);
-				}				
-			}
-		});
 		
+				
+	
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
@@ -556,6 +499,7 @@ public class ModifyAppuntamento extends JPanel {
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
 		
 		JButton saveButton = new JButton("SAVE");
+		/*
 		saveButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -625,11 +569,11 @@ public class ModifyAppuntamento extends JPanel {
 			}
 		});
 		
-		
+		*/
 		savePanel.add(saveButton);
 		
-		// setLayout(groupLayout);
-		// new GroupLayout(this);
+		//setLayout(groupLayout);
+		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		// this.initCommonView(frame);
 	}

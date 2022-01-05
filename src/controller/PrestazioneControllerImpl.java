@@ -85,4 +85,10 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		return this.prestazioneTable.getVeterinariNonDisponibili(date, time, durata);
 	}
 
+
+	@Override
+	public List<String> getInfermieriPerAppuntamento(Appuntamento app) {
+		return this.prestazioneTable.getInfermieriPerAppuntamento( app);
+	}
+
 }

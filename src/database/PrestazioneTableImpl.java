@@ -27,11 +27,9 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	
 	private DatabaseConnection dataSource;
 	private boolean isOk;
-	//private String prestazioneTableName;
 	
 	public PrestazioneTableImpl() {
 		this.dataSource = new DatabaseConnection();
-		//this.prestazioneTableName = "prestazione_su_animale";
 	}
 	
 	@Override
@@ -39,9 +37,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		
-		// rivedi query, perchè c'è il ?
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione_su_animale.codAnimale, prestazione_su_animale.codTipoPrestazione, personale.cf , animale.cf   "
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione_su_animale.codAnimale, prestazione_su_animale.codTipoPrestazione, personale.cf , animale.cf , prestazione.tipo "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data=effettua.data "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -60,30 +56,23 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			while (result.next()) {
 				Appuntamento app = new AppuntamentoImpl();
 				Animale animale = new AnimaleImpl();
-				/*
-				Person proprietario = new Proprietario();
-				proprietario.setCF(result.getString(10));
-				proprietario.setNome(result.getString(11));
-				proprietario.setCognome(result.getString(12));
-				proprietario.setTelefono(result.getLong(13));
-				animale.setProprietario(proprietario);
-				*/
 				animale.setNome(result.getString(1));
 				animale.setCodAnimale(result.getInt(7));
 				animale.setCf(result.getString(10));
-				app.setAnimale(animale);
-				
-				app.setData(result.getString(3));
-				app.setOra(result.getString(4));
-				app.setPrestazione(result.getString(2));
 				
 				User veterinario = new UserImpl();
 				veterinario.setCF(result.getString(9));
 				veterinario.setNome(result.getString(5));
 				veterinario.setCognome(result.getString(6));
-				app.setVeterinario(veterinario);
 				
-				app.setCodTipoPrestazione(result.getInt(8));
+				app.setAnimale(animale);
+				app.setData(result.getString(3));
+				app.setOra(result.getString(4));
+				app.setPrestazione(result.getString(2));
+				app.setVeterinario(veterinario);
+				app.setCodPrestazione(result.getInt(8)); //TODO controlla
+				app.setTipoPrestazione(result.getString(11));
+				
 				prestazioni.add(app);
 			}
 
@@ -108,7 +97,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	public List<Appuntamento> getPrestazioniInData(String data) {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione.durataMedia,  personale.cf, animale.codAnimale, animale.cf  "
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione.durataMedia,  personale.cf, animale.codAnimale, animale.cf, prestazione.tipo  "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data= ? "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -130,20 +119,20 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 					animale.setNome(result.getString(1));
 					animale.setCodAnimale(result.getInt(9));
 					animale.setCf(result.getString(10));
-					app.setAnimale(animale);
-					
-					app.setPrestazione(result.getString(2));
-					app.setData(result.getString(3));
-					app.setOra(result.getString(4));
-					
+
 					User veterinario = new UserImpl();
 					veterinario.setCF(result.getString(8));
 					veterinario.setNome(result.getString(5));
-					veterinario.setCognome(result.getString(6));
-					app.setVeterinario(veterinario);
+					veterinario.setCognome(result.getString(6));			
 
+					app.setPrestazione(result.getString(2));
+					app.setData(result.getString(3));
+					app.setOra(result.getString(4));
 					app.setDurata(result.getString(7));
+					app.setTipoPrestazione(result.getString(11));
 					
+					app.setVeterinario(veterinario);
+					app.setAnimale(animale);
 					prestazioni.add(app);
 				}
 
@@ -169,7 +158,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	public List<Appuntamento> getFuturePrestazioni() {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data,  ora, personale.nome, personale.cognome, prestazione.durataMedia, personale.cf, animale.codAnimale, animale.cf "
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data,  ora, personale.nome, personale.cognome, prestazione.durataMedia, personale.cf, animale.codAnimale, animale.cf, prestazione.tipo "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data>= ? "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -194,20 +183,20 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 					animale.setNome(result.getString(1));
 					animale.setCodAnimale(result.getInt(9));
 					animale.setCf(result.getString(10));
-					app.setAnimale(animale);
-					
-					app.setPrestazione(result.getString(2));
-					app.setData(result.getString(3));
-					app.setOra(result.getString(4));
-					
+
 					User veterinario = new UserImpl();
 					veterinario.setCF(result.getString(8));
 					veterinario.setNome(result.getString(5));
 					veterinario.setCognome(result.getString(6));
-					app.setVeterinario(veterinario);
 				
-					app.setDurata(result.getString(7));
+					app.setTipoPrestazione(result.getString(11));
+					app.setDurata(result.getString(7));	
+					app.setPrestazione(result.getString(2));
+					app.setData(result.getString(3));
+					app.setOra(result.getString(4));
 					
+					app.setVeterinario(veterinario);
+					app.setAnimale(animale);
 					prestazioni.add(app);
 				}
 
@@ -235,7 +224,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 	
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome,  personale.cf, animale.codAnimale, animale.cf  "
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome,  personale.cf, animale.codAnimale, animale.cf, prestazione.tipo  "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -258,20 +247,21 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 					animale.setNome(result.getString(1));
 					animale.setCodAnimale(result.getInt(8));
 					animale.setCf(result.getString(9));
-					app.setAnimale(animale);
-					
-					app.setPrestazione(result.getString(2));
-					app.setData(result.getString(3));
-					app.setOra(result.getString(4));
+				
 					User veterinario = new UserImpl();
 					veterinario.setCF(result.getString(7));
 					veterinario.setNome(result.getString(5));
 					veterinario.setCognome(result.getString(6));
-					app.setVeterinario(veterinario);
 					
+					app.setTipoPrestazione(result.getString(10));
+					app.setPrestazione(result.getString(2));
+					app.setData(result.getString(3));
+					app.setOra(result.getString(4));
+					
+					app.setVeterinario(veterinario);
+					app.setAnimale(animale);
 					prestazioni.add(app);
 				}
-
 				result.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -336,7 +326,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		String dateInizio = format.format( getWeekStartDate() );
 		String dateFine = format.format( getWeekEndDate() );
 		
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome,  personale.cf,  animale.codAnimale, animale.cf  "
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome,  personale.cf,  animale.codAnimale, animale.cf, prestazione.tipo  "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -359,18 +349,19 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 					animale.setNome(result.getString(1));
 					animale.setCodAnimale(result.getInt(8));
 					animale.setCf(result.getString(9));
-					app.setAnimale(animale);
-					
-					app.setPrestazione(result.getString(2));
-					app.setData(result.getString(3));
-					app.setOra(result.getString(4));
-					
+
 					User veterinario = new UserImpl();
 					veterinario.setCF(result.getString(7));
 					veterinario.setNome(result.getString(5));
 					veterinario.setCognome(result.getString(6));
-					app.setVeterinario(veterinario);
+
+					app.setPrestazione(result.getString(2));
+					app.setData(result.getString(3));
+					app.setOra(result.getString(4));
+					app.setTipoPrestazione(result.getString(11));
 					
+					app.setAnimale(animale);
+					app.setVeterinario(veterinario);
 					prestazioni.add(app);
 				}
 
@@ -397,7 +388,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		 final String query = "select distinct animale.nome, prestazione.nome, prestazione_su_animale.data, ora, animale.codAnimale, animale.cf "
+		 final String query = "select distinct animale.nome, prestazione.nome, prestazione_su_animale.data, ora, animale.codAnimale, animale.cf, prestazione.tipo "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data=effettua.data"
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -418,7 +409,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 					animale.setCodAnimale(result.getInt(5));
 					animale.setCf(result.getString(6));
 					app.setAnimale(animale);
-					
+					app.setTipoPrestazione(result.getString(7));
 					app.setData(result.getString(3));
 					app.setOra(result.getString(4));
 					app.setPrestazione(result.getString(2));
@@ -576,6 +567,53 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				}
 			}
 			return veterianariNonDisponibili;
+	}
+
+	@Override
+	public List<String> getInfermieriPerAppuntamento(Appuntamento app) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+
+		 final String query = "select * "
+		 		+ "from personale "
+		 		+ "inner join effettua  "
+		 		+ "on personale.cf = effettua.cf "
+	        	+ "where data = ? "
+	        	+ "and codTipoPrestazione = ? "
+	        	+ "and codAnimale = ? "
+	        	+ "and personale.ruolo = ? ";
+		 
+		 List<String> infermieri = new ArrayList<>();
+			try {
+				statement = Optional.of(connection.prepareStatement(query));
+				statement.get().setString(1, app.getData());
+				statement.get().setInt(2, app.getCodPrestazione());
+				statement.get().setInt(3, app.getAnimale().getCodAnimale());
+				statement.get().setString(4, "Infermiere");
+
+				final ResultSet result = statement.get().executeQuery();
+				
+				while (result.next()) {
+					String infermiere = result.getString("nome") + " " + result.getString("cognome");
+					infermieri.add(infermiere);
+				}
+
+				result.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+				}
+			}
+			return infermieri;
 	}
 
 

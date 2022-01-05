@@ -77,14 +77,14 @@ public class UserTableImpl implements UserTable {
 			final ResultSet result = statement.get().executeQuery();
 
 			if (result.next()) {
-				System.out.println("l'utente esiste");
+				//System.out.println("l'utente esiste");
 				String passwordHash = generateHash(password, result.getString("sale"));
 
 				if (result.getString("password").equals(passwordHash)) {
-					System.out.println("password corretta");
+					//System.out.println("password corretta");
 					isPresent = true;
 				} else {
-					System.out.println("password non corretta");
+					//System.out.println("password non corretta");
 					isPresent = false;
 				}
 			} else {
