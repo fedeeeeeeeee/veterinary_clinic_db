@@ -609,8 +609,6 @@ public class NuovoAppuntamento extends JPanel {
 							String result = (String) JOptionPane.showInputDialog(null,
 									"Il Veterinario selezionato non è disponibile. Selezionane uno dei seguenti dalla lista",
 									"Disponibilità Veterinari", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-							//app.setNomeVeterinario(result.substring(0, result.indexOf(" ")));
-							//app.setCognomeVeterinario(result.substring(result.indexOf(" ")+1, result.length()));
 							comboBoxVeterinario.setSelectedItem(result);
 						}
 					}
