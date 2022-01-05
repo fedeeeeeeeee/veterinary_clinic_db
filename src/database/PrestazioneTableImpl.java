@@ -21,6 +21,7 @@ import model.User;
 public class PrestazioneTableImpl implements PrestazioneTable {
 	
 	private DatabaseConnection dataSource;
+	private boolean isOk;
 	//private String prestazioneTableName;
 	
 	public PrestazioneTableImpl() {
@@ -430,7 +431,9 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	}
 
 	@Override
-	public void addEffettua(Appuntamento appuntamento) {
+	public boolean addEffettua(Appuntamento appuntamento) {
+		this.isOk = true;
+		
 		appuntamento.getAllMediciEInfermieri().forEach(x-> {
 			final Connection connection = this.dataSource.getMySQLConnection();
 
@@ -449,8 +452,9 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				statement.get().setString(4, x.getCF());
 		
 				statement.get().executeUpdate();
-			} catch (SQLException e) {
-				System.out.println("eccezione INSERIMENTO EFFETTUA " + e);
+			}  catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO effettua " + e);
+				isOk = false;
 			} finally {
 				try {
 					if (statement.isPresent()) {
@@ -460,11 +464,12 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 						connection.close();
 					}
 				} catch (SQLException e) {
-					System.out.println("eccezione INSERIMENTO EFFETTUA statement" + e);
+					System.out.println("eccezione INSERIMENTO effettua statement" + e);
+					isOk = false;
 				}
 			}
 		});
-		
+		return isOk;
 	}
 
 	@Override
@@ -479,8 +484,8 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		 		+ "(select codAnimale, codTipoPrestazione, data from prestazione_su_animale, prestazione "
 	        	+ "where data = ? "
 	        	+ "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione "
-	        	+ "and ? between prestazione_su_animale.ora and addtime(prestazione_su_animale.ora, prestazione.durataMedia) "
-	        	+ "or ora between ? and addtime(?, ?)) "
+	        	+ "and ( ? between prestazione_su_animale.ora and addtime(prestazione_su_animale.ora, prestazione.durataMedia) "
+	        	+ "or ora between ? and addtime(?, ?))) "
 	        	+ "and effettua.cf = personale.cf " 
 	        	+ "and personale.ruolo = ?";
 		 

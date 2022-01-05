@@ -75,8 +75,8 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 
 
 	@Override
-	public void addEffettua(Appuntamento app) {
-		this.prestazioneTable.addEffettua(app);
+	public boolean addEffettua(Appuntamento app) {
+		return this.prestazioneTable.addEffettua(app);
 	}
 
 

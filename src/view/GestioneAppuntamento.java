@@ -242,7 +242,7 @@ private boolean first;
 				});
 				itemDettagliAppuntamento.addActionListener((e) -> {
 					if (this.selectedStrumento != -1) {
-						Appuntamento appuntamento = listAppuntamenti.get(selectedStrumento);
+						//Appuntamento appuntamento = listAppuntamenti.get(selectedStrumento);
 						//TODO
 						//frame.getContentPane().add(new DettagliAppuntamento(frame, user,appuntamento ));
 					} else {

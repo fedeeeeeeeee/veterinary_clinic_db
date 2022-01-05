@@ -583,6 +583,16 @@ public class NuovoAppuntamento extends JPanel {
 						}
 						list.add(listVeterinari.get(comboBoxVeterinario.getSelectedIndex()));
 						app.setAllMediciEInfermieri(list);
+						
+							
+						if(prestazioneController.addNewAppuntamento(app) && prestazioneController.addEffettua(app)) {
+							frame.getContentPane().add(new GestioneAppuntamento(frame, user));
+						} else {
+							JOptionPane.showMessageDialog(frame, "Si è verificato un errore nell'inserimento dell'appuntamaneto.", 
+									"Attenzione!", JOptionPane.ERROR_MESSAGE);
+						}
+						
+
 					} else {
 						List<String> list = listVeterinari.stream()
 								.filter(vet -> !vetNonDisponibili.contains(vet.getNome() + " " + vet.getCognome()))
@@ -592,18 +602,21 @@ public class NuovoAppuntamento extends JPanel {
 						String[] options = new String[list.size()];
 						list.toArray(options);
 						
-						String result = (String) JOptionPane.showInputDialog(null,
-								"Il Veterinario selezionato non è disponibile. Selezionane uno dei seguenti dalla lista",
-								"Disponibilità Veterinari", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-						
-						app.setNomeVeterinario(result.substring(0, result.indexOf(" ")));
-						app.setCognomeVeterinario(result.substring(result.indexOf(" ")+1, result.length()));
-						
-						comboBoxVeterinario.setSelectedItem(result);
+						if(list.isEmpty()) {
+							JOptionPane.showMessageDialog(frame, "Nessun veterinario disponibile per quella data e ora. Controlla nella riquadro a destra le disponibilità", 
+									"Attenzione!", JOptionPane.WARNING_MESSAGE);
+						} else {
+							String result = (String) JOptionPane.showInputDialog(null,
+									"Il Veterinario selezionato non è disponibile. Selezionane uno dei seguenti dalla lista",
+									"Disponibilità Veterinari", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+							//app.setNomeVeterinario(result.substring(0, result.indexOf(" ")));
+							//app.setCognomeVeterinario(result.substring(result.indexOf(" ")+1, result.length()));
+							comboBoxVeterinario.setSelectedItem(result);
+						}
 					}
-					
-					prestazioneController.addNewAppuntamento(app);
-					prestazioneController.addEffettua(app);
+				} else {
+					JOptionPane.showMessageDialog(frame, "Si è verificato un errore nella compilazione del form. Ricontrollare i campi!", 
+							"Attenzione!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

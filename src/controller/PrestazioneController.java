@@ -27,7 +27,7 @@ public interface PrestazioneController {
 	
 	List<Prestazione> getAllTipiDiPrestazione();
 
-	void addEffettua(Appuntamento app);
+	boolean addEffettua(Appuntamento app);
 
 	List<String> getVeterinariNonDisponibili(String date, String time, String durata);
 
