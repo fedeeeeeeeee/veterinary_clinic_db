@@ -322,11 +322,10 @@ private void initTable() {
 	model.addColumn("Prestazione");
 	model.addColumn("Nome");
 	model.addColumn("Cognome");
-	model.addColumn("Modifica");		
+	//model.addColumn("Modifica");		
 	table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 		public void valueChanged(ListSelectionEvent event) {
-			selectedAppuntamento = event.getFirstIndex();
-			//System.out.println(selectedAppuntamento);
+			selectedAppuntamento 	= table.getSelectedRow();
 		}
 	});
 }

@@ -650,36 +650,38 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 
 	@Override
 	public boolean updateEffettua(Appuntamento app, Appuntamento datiDiAppModificati) {
-		// di data di veterinari e infermieri
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-	//	Optional<PreparedStatement> statement2 = Optional.empty();
-		
-		final String query = " SET FOREIGN_KEY_CHECKS=0; update effettua set data=? where data=? and codTipoPrestazione=? and codAnimale=? ;"
-				+ " update effettua set CF=? where data=? and codTipoPrestazione=? and codAnimale=? and CF=?  ; SET FOREIGN_KEY_CHECKS=1;";
+		Optional<PreparedStatement> statementCF = Optional.empty();
+
+		final String queryUpdateGenerica = " update effettua set data=? where data=? and codTipoPrestazione=? and codAnimale=? ";
 		try {
-			statement = Optional.of(connection.prepareStatement(query));
-			System.out.println(datiDiAppModificati.getData());
-			System.out.println(app.getData());
-			
-		//	statement.get().setString(1, datiDiAppModificati.getData());
-			statement.get().setString(1, "2021-12-10");
+			statement = Optional.of(connection.prepareStatement(queryUpdateGenerica));			
+			statement.get().setString(1, datiDiAppModificati.getData());
 			statement.get().setString(2, app.getData());
 			statement.get().setInt(3, app.getCodPrestazione());
 			statement.get().setInt(4, app.getAnimale().getCodAnimale());
-		//	statement.get().executeUpdate();
-			
-		//	statement2 = Optional.of(connection.prepareStatement(query2));
-			statement.get().setString(5, datiDiAppModificati.getVeterinario().getCF());
-			statement.get().setString(6, app.getData());
-			statement.get().setInt(7, app.getCodPrestazione());
-			statement.get().setInt(8, app.getAnimale().getCodAnimale());
-			statement.get().setString(9, app.getVeterinario().getCF());
-		statement.get().executeUpdate();
+			statement.get().executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
-		} finally {
+		}
+		
+		final String queryUpdateVeterinario = "update effettua set CF= ? where data= ? and codTipoPrestazione= ? and codAnimale= ? and CF= ?  ";
+		try {
+			statementCF = Optional.of(connection.prepareStatement(queryUpdateVeterinario));
+			statementCF.get().setString(1, datiDiAppModificati.getVeterinario().getCF());
+			statementCF.get().setString(2, datiDiAppModificati.getData());
+			statementCF.get().setInt(3, app.getCodPrestazione());
+			statementCF.get().setInt(4, app.getAnimale().getCodAnimale());
+			statementCF.get().setString(5, app.getVeterinario().getCF());
+			statementCF.get().executeUpdate();
+			
+		} catch (SQLException e1) {
+			System.out.println("errore modifica veterinario");
+			e1.printStackTrace();
+		} 
+		finally {
 			try {
 				if (statement.isPresent()) {
 					statement.get().close();
@@ -688,12 +690,11 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 					connection.close();
 				}
 			} catch (SQLException e) {
-				System.out.println("errore sql");
+				System.out.println("errore sql update in effettua");
 				return false;
 			}
 		}
 		return true;
 	}
-
 
 }

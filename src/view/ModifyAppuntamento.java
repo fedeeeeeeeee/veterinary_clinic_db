@@ -302,10 +302,11 @@ public class ModifyAppuntamento extends JPanel {
 		scrollPanelLeft.add(lblData, gbc_lblData);
 
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setDateFormatString("yyyy-mm-dd");
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		
 		Date data = new Date();
 		try {
-			data = new SimpleDateFormat("yyyy-mm-dd").parse(app.getData());
+			data = new SimpleDateFormat("yyyy-MM-dd").parse(app.getData());
 		} catch (ParseException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -441,6 +442,7 @@ public class ModifyAppuntamento extends JPanel {
 		gbc_comboBoxInfermiere.gridx = 6;
 		gbc_comboBoxInfermiere.gridy = 11;
 		scrollPanelLeft.add(textInfermiere, gbc_comboBoxInfermiere);
+	System.out.println(listInfermieri.size());
 		textInfermiere.setText(listInfermieri.get(0));
 		textInfermiere.setEditable(false);
 		
@@ -514,7 +516,7 @@ public class ModifyAppuntamento extends JPanel {
 						datiDiAppModificati.setData(date);
 						datiDiAppModificati.setOra(timePicker.getTime().toString());					
 						datiDiAppModificati.setVeterinario(listVeterinari.get(comboBoxVeterinario.getSelectedIndex()));
-							System.out.println(app.getCodPrestazione());
+						
 						if(prestazioneController.updateEffettua(app, datiDiAppModificati) && prestazioneController.updatePrestazioneSuAnimale(app, datiDiAppModificati)) {
 							frame.getContentPane().add(new GestioneAppuntamento(frame, user));
 						} else {

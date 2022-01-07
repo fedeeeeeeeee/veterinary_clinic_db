@@ -267,8 +267,7 @@ public class StrumentiPage extends JPanel {
 		model.addColumn("QuantitÃ ");
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
-				selectedStrumento = event.getFirstIndex();
-				System.out.println(selectedStrumento);
+				selectedStrumento 	= table.getSelectedRow();
 			}
 		});
 	}
