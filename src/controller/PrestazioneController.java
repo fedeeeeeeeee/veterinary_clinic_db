@@ -12,14 +12,9 @@ public interface PrestazioneController {
 
 	List<Appuntamento> getPrestazioniInData(String dataformat);
 
-	// List<String>getPrestazioneDiAnimale(Animale animale );
-	List<Appuntamento> getPrestazioneDiVeterinario(User veterinario);
-
 	List<Appuntamento> getPrestazioneSettimana(String data);
 
 	List<Appuntamento> getPrestazioneMese(String data);
-
-	List<Appuntamento> getPrestazione(String data);
 
 	boolean addNewAppuntamento(Appuntamento appuntamento);
 
@@ -36,5 +31,7 @@ public interface PrestazioneController {
 	boolean updatePrestazioneSuAnimale(Appuntamento app, Appuntamento datiDiAppModificati);
 
 	boolean updateEffettua(Appuntamento app, Appuntamento datiDiAppModificati);
+
+	boolean deleteAppointmnet(Appuntamento app);
 
 }

@@ -33,4 +33,6 @@ public interface PrestazioneTable {
 
 		boolean updateEffettua(Appuntamento app, Appuntamento datiDiAppModificati);
 
+		boolean deleteAppointmnet(Appuntamento app);
+
 }

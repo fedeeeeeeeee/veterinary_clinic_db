@@ -228,7 +228,7 @@ private boolean first;
 				JMenuItem itemMese = new JMenuItem("Mese Corrente");
 				JMenuItem itemTutti = new JMenuItem("Tutti");
 				JMenuItem itemNuovoAppuntamento = new JMenuItem("Aggiungi Nuovo Appuntamento");
-				JMenuItem itemDettagliAppuntamento = new JMenuItem("Modifica Appuntamento");
+				JMenuItem itemDettagliAppuntamento = new JMenuItem("Gestisci Appuntamento");
 				DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 				String dataformat = formatter.format(LocalDateTime.now());
 		// itemModQuantita.setIcon(null);

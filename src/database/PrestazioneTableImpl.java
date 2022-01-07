@@ -685,12 +685,63 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			try {
 				if (statement.isPresent()) {
 					statement.get().close();
+					statementCF.get().close();
 				}
 				if (connection != null) {
 					connection.close();
 				}
 			} catch (SQLException e) {
 				System.out.println("errore sql update in effettua");
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean deleteAppointmnet(Appuntamento app) { 
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statementEffettua = Optional.empty();
+		Optional<PreparedStatement> statementPrestazione = Optional.empty();
+		
+		final String queryEffettua = "DELETE FROM effettua WHERE codAnimale=? and codTipoPrestazione=? and data=?; ";
+		final String queryPrestazione = "DELETE FROM prestazione_su_animale WHERE codAnimale=? and codTipoPrestazione=? and data=?; ";
+	
+		try {
+			statementEffettua = Optional.of(connection.prepareStatement(queryEffettua));
+			statementEffettua.get().setString(3, app.getData());
+			statementEffettua.get().setInt(2, app.getCodPrestazione());
+			statementEffettua.get().setInt(1, app.getAnimale().getCodAnimale());
+			statementEffettua.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} 
+		
+
+		try {
+			statementPrestazione = Optional.of(connection.prepareStatement(queryPrestazione));
+			statementPrestazione.get().setString(3, app.getData());
+			statementPrestazione.get().setInt(2, app.getCodPrestazione());
+			statementPrestazione.get().setInt(1, app.getAnimale().getCodAnimale());
+			statementPrestazione.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} 
+		
+		
+		finally {
+			try {
+				if (statementEffettua.isPresent()) {
+					statementEffettua.get().close();
+					statementPrestazione.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
 				return false;
 			}
 		}

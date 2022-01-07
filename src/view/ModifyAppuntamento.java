@@ -476,7 +476,7 @@ public class ModifyAppuntamento extends JPanel {
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Nuovo Appuntamento");
+		JLabel titleLabel = new JLabel("Gestione Appuntamento");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -541,8 +541,6 @@ public class ModifyAppuntamento extends JPanel {
 							String result = (String) JOptionPane.showInputDialog(null,
 									"Il Veterinario selezionato non è disponibile. Selezionane uno dei seguenti dalla lista",
 									"Disponibilità Veterinari", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-							//app.setNomeVeterinario(result.substring(0, result.indexOf(" ")));
-							//app.setCognomeVeterinario(result.substring(result.indexOf(" ")+1, result.length()));
 							comboBoxVeterinario.setSelectedItem(result);
 						}
 					}
@@ -555,9 +553,21 @@ public class ModifyAppuntamento extends JPanel {
 		
 		savePanel.add(modButton);
 		
-		JButton delateButton = new JButton("Elimina");
-		delateButton.setForeground(new Color(178, 34, 34));
-		savePanel.add(delateButton);
+		JButton  deleteButton= new JButton("Elimina");
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int reply = JOptionPane.showConfirmDialog(frame, "Stai per eliminare questo appuntamento. Sei sicuro ? ", "Attenzione", JOptionPane.YES_NO_OPTION);
+				if (reply == JOptionPane.YES_OPTION) {
+					if(prestazioneController.deleteAppointmnet(app)) {
+						frame.getContentPane().add(new GestioneAppuntamento(frame, user));
+					}
+				} 
+			}
+		});
+
+		
+		deleteButton.setForeground(new Color(178, 34, 34));
+		savePanel.add(deleteButton);
 		
 		//setLayout(groupLayout);
 		//new GroupLayout(this);

@@ -7,8 +7,6 @@ import database.TipoPrestazioneTable;
 import database.TipoPrestazioneTableImpl;
 import model.Appuntamento;
 import model.Prestazione;
-import model.User;
-
 public class PrestazioneControllerImpl implements PrestazioneController {
 
 	private PrestazioneTable prestazioneTable;
@@ -32,12 +30,6 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 	}
 
 	@Override
-	public List<Appuntamento> getPrestazioneDiVeterinario(User veterinario) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public boolean addNewAppuntamento(Appuntamento appuntamento) {
 		return this.prestazioneTable.addNewAppuntamento(appuntamento);
 	}
@@ -53,14 +45,6 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 	public List<Appuntamento> getPrestazioneMese(String data) {
 		return this.prestazioneTable.getPrestazioneMese(data);
 	}
-
-
-	@Override
-	public List<Appuntamento> getPrestazione(String data) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 	@Override
 	public List<Appuntamento> getFuturePrestazioni() {
@@ -101,6 +85,12 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 	@Override
 	public boolean updateEffettua(Appuntamento app, Appuntamento datiDiAppModificati) {
 		return this.prestazioneTable.updateEffettua( app, datiDiAppModificati);
+	}
+
+
+	@Override
+	public boolean deleteAppointmnet(Appuntamento app) {
+		return this.prestazioneTable.deleteAppointmnet(app);
 	}
 
 }
