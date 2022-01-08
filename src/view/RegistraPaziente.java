@@ -110,7 +110,7 @@ public class RegistraPaziente extends JPanel {
 		listCF.forEach(x-> {
 			comboBox.addItem(x);
 		});
-		
+		comboBox.setSelectedIndex(-1);
 		JButton addProprietarioButton = new JButton("+");
 		GridBagConstraints gbc_addProprietarioButton = new GridBagConstraints();
 		gbc_addProprietarioButton.insets = new Insets(0, 0, 5, 0);

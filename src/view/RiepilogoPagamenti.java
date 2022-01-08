@@ -18,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import model.Appuntamento;
+import model.Pagamento;
 import model.User;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -31,6 +32,8 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
+import controller.PagamentiController;
+import controller.PagamentiControllerImpl;
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
 
@@ -41,9 +44,9 @@ public class RiepilogoPagamenti extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private User user;
-	private List<Appuntamento> listAppuntamenti;
+	private List<Pagamento> listPagamenti;
 	private DefaultTableModel model;
-	private PrestazioneController prestazioneController;
+ 	private PagamentiController pagamentiController;
 	private JTable table;	
 	private JScrollPane scrollPane;
 	
@@ -53,7 +56,7 @@ public class RiepilogoPagamenti extends JPanel {
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
-		this.prestazioneController = new PrestazioneControllerImpl();
+		this.pagamentiController = new PagamentiControllerImpl();
 		
 		JPanel upperPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
@@ -119,8 +122,8 @@ public class RiepilogoPagamenti extends JPanel {
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		
 		this.initTable();
-		this.listAppuntamenti = this.prestazioneController.getAllPrestazioni();
-		this.createTable(model, listAppuntamenti);
+		listPagamenti = pagamentiController.getAllPagamenti();
+		this.createTable(model, listPagamenti);
 		scrollPane.setViewportView(table);
 		
 		/*------fine-------- table */
@@ -133,19 +136,20 @@ public class RiepilogoPagamenti extends JPanel {
 			JMenuItem itemTutti = new JMenuItem("Tutti");
 			DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 			String dataformat = formatter.format(LocalDateTime.now());
+			
 			itemOggi.addActionListener((e) -> {
-				
-				//this.resetAndDraw(prestazioneController.getPrestazioniInData(dataformat));
-				//TODO
+				this.resetAndDraw(pagamentiController.getPagamentiOggi());
 			});
 			itemMese.addActionListener((e) -> {
-				//TODO
+				//this.resetAndDraw(pagamentiController.getPagamentiMensili());
 			});
 			itemAnno.addActionListener((e) -> {
-				//TODO
-				});
+				//this.resetAndDraw(pagamentiController.getPagamentiAnnuali());
+
+			});
+			
 			itemTutti.addActionListener((e) -> {
-				//TODO
+				this.resetAndDraw(pagamentiController.getAllPagamenti());
 			});
 			
 			menuMostra.add(itemTutti);
@@ -171,38 +175,37 @@ public class RiepilogoPagamenti extends JPanel {
 		//this.initCommonView(frame);
 	}
 
-private void resetAndDraw(List<Appuntamento> allAppuntamento) {
-	this.listAppuntamenti.clear();
-	this.listAppuntamenti = allAppuntamento;
+private void resetAndDraw(List<Pagamento> list) {
+	this.listPagamenti.clear();
+	this.listPagamenti = list;
 		//table.clearSelection();
 	model.setRowCount(0);
-	this.createTable(model, listAppuntamenti);
+	this.createTable(model, listPagamenti);
 	//scrollPane.setViewportView(table);
 }
 
-private void createTable(DefaultTableModel model, List<Appuntamento> list) {
-			list.forEach(x -> {
-				model.addRow(new Object[] { 
-						x.getAnimale().getNome(),
-					x.getData(), 
-					x.getOra(), 
-					x.getPrestazione(),
-					x.getVeterinario().getNome(),
-					x.getVeterinario().getCognome(),
-				});
+	private void createTable(DefaultTableModel model, List<Pagamento> listPagamenti) {
+		listPagamenti.forEach(x -> {
+			model.addRow(new Object[] { 
+					x.getAnimale().getNome(), 
+					x.getAnimale().getSpecie(),
+					x.getAnimale().getCf(),
+					x.getDataPrestazione(),
+					x.getNomePrestazione(),
+					x.getCosto() + "€"
 			});
-}
+		});
+	}
 
 private void initTable() {
 	this.table = new JTable();
 	this.model = (DefaultTableModel) table.getModel();
 	model.addColumn("Animale");
+	model.addColumn("Specie");
+	model.addColumn("Proprietario");
 	model.addColumn("Data");
-	model.addColumn("Ora");
-	model.addColumn("Prestazione");
-	model.addColumn("Nome");
-	model.addColumn("Cognome");
-
+	model.addColumn("Nome Prestazione");
+	model.addColumn("Costo"); 
 }
 
 }
