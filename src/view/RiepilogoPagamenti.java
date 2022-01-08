@@ -45,6 +45,11 @@ import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
 
 import java.awt.GridBagConstraints;
+import javax.swing.JTextField;
+import java.awt.GridLayout;
+import javax.swing.BoxLayout;
+import java.awt.FlowLayout;
+import java.awt.ComponentOrientation;
 
 public class RiepilogoPagamenti extends JPanel {
 
@@ -56,6 +61,7 @@ public class RiepilogoPagamenti extends JPanel {
  	private PagamentiController pagamentiController;
 	private JTable table;	
 	private JScrollPane scrollPane;
+	private JTextField textFieldTotale;
 	
 	private void resetAndDraw(List<Pagamento> list) {
 		this.listPagamenti.clear();
@@ -104,18 +110,26 @@ public class RiepilogoPagamenti extends JPanel {
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
-				.createSequentialGroup()
-				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
-						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
-						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGap(24)));
-		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(
+			groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE).addGap(44)
-						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE).addGap(84)
-						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE).addGap(0)));
+					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+						.addComponent(middlePanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+							.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)))
+					.addGap(24))
+		);
+		groupLayout.setVerticalGroup(
+			groupLayout.createParallelGroup(Alignment.LEADING)
+				.addGroup(groupLayout.createSequentialGroup()
+					.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
+					.addGap(44)
+					.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+					.addGap(37)
+					.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+					.addGap(0))
+		);
 		
 		middlePanel.setLayout(new BorderLayout(0, 0));
 		JPanel upperMiddlePanel = new JPanel();
@@ -167,6 +181,25 @@ public class RiepilogoPagamenti extends JPanel {
 		scrollPane.setViewportView(table);
 		
 		/*------fine-------- table */
+		
+		
+		JPanel panel = new JPanel();
+		panel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+		middlePanel.add(panel, BorderLayout.SOUTH);
+		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		
+		textFieldTotale = new JTextField();
+		textFieldTotale.setEditable(false);
+		panel.add(textFieldTotale);
+		textFieldTotale.setHorizontalAlignment(SwingConstants.RIGHT);
+		textFieldTotale.setColumns(10);
+		
+		JLabel lblTotale = new JLabel("Totale");
+		lblTotale.setHorizontalAlignment(SwingConstants.RIGHT);
+		panel.add(lblTotale);
+		lblTotale.setHorizontalTextPosition(SwingConstants.RIGHT);
+		
 		// -----inizio ----- MENUU--- listener
 		JMenu subMenuSeleziona = new JMenu("Periodo");
 		menuMostra.add(subMenuSeleziona);
@@ -178,19 +211,23 @@ public class RiepilogoPagamenti extends JPanel {
 			
 			DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 			String dataformat = formatter.format(LocalDateTime.now());
-			
+			textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			itemOggi.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getPagamentiOggi());
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
 			itemMese.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getPagamentiMensili());
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
 			itemAnno.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getPagamentiAnnuali());
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
 			
 			itemTutti.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getAllPagamenti());
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
 			itemStampa.addActionListener((e) -> {
 				String path= ""; 
@@ -233,6 +270,8 @@ public class RiepilogoPagamenti extends JPanel {
 			menuMostra.add(itemMese);
 			menuAzione.add(itemStampa);
 			menuMostra.add(subMenuSeleziona);
+			
+	
 			//----fine ---- MENUU
 			
 		JButton backButton = new JButton("BACK");
