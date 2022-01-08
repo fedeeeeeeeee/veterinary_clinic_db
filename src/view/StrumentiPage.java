@@ -11,12 +11,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -29,6 +33,11 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
@@ -100,6 +109,7 @@ public class StrumentiPage extends JPanel {
 		upperMiddlePanel.add(menuBar, "1, 1, fill, top");
 		JMenu menuMostra = new JMenu("Mostra");
 		JMenu menuAggiungi = new JMenu("Aggiungi");
+		JMenuItem menuStampa = new JMenuItem("Stampa");
 
 		searchBar = new JTextField();
 		searchBar.setText("Ricerca Strumento");
@@ -137,6 +147,7 @@ public class StrumentiPage extends JPanel {
 		buttonVai.setForeground(Color.BLACK);
 		menuBar.add(menuMostra);
 		menuBar.add(menuAggiungi);
+		menuBar.add(menuStampa);
 		menuBar.add(searchBar);
 		menuBar.add(buttonVai);
 		JButton orderAsc = new JButton(IconImage.ARROW.getImageIcon());
@@ -217,6 +228,40 @@ public class StrumentiPage extends JPanel {
 		itemAddStrumento.addActionListener((e) -> {
 			frame.getContentPane().add(new NuovoStrumentoPage(frame, user));
 		});
+		menuStampa.addActionListener((e) -> {
+			String path= ""; 
+			JFileChooser j = new JFileChooser();
+			j.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			int x=j.showSaveDialog(this);
+			if(x==JFileChooser.APPROVE_OPTION) {
+				path=j.getSelectedFile().getPath();
+			}
+			
+			Document doc = new Document();
+			try {
+				PdfWriter.getInstance(doc, new FileOutputStream(path +".pdf"));
+				doc.open();
+				PdfPTable tbl = new PdfPTable(3);
+				tbl.addCell("Strumento ID");
+				tbl.addCell("Nome");
+				tbl.addCell("quantita");
+				
+				for ( int i = 0; i < table.getRowCount(); i ++) {
+					String ID = table.getValueAt(i,0).toString();
+					String nome = table.getValueAt(i,1).toString();
+					String quantita = table.getValueAt(i,4).toString();
+					
+					tbl.addCell(ID);
+					tbl.addCell(nome);
+					tbl.addCell(quantita);
+				}
+				doc.add(tbl);
+			} catch (FileNotFoundException | DocumentException e1) {
+				System.out.println("ERRORE - creazione pdf");
+				e1.printStackTrace();
+			}
+			doc.close();
+		});
 		menuMostra.add(all);
 		menuMostra.add(itemScaduti);
 		menuMostra.add(itemInScadenza);
@@ -224,6 +269,7 @@ public class StrumentiPage extends JPanel {
 		menuMostra.add(itemInEsaurimento);
 		menuAggiungi.add(itemAddStrumento);
 		menuAggiungi.add(itemModQuantita);
+		
 //----fine ---- MENUU
 		/* LOWER PANEL */
 		JButton sendButton = new JButton("BACK");

@@ -4,12 +4,15 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -28,6 +31,10 @@ import javax.swing.JMenuItem;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
@@ -121,9 +128,9 @@ public class RiepilogoPagamenti extends JPanel {
 		JMenuBar menuBar = new JMenuBar();
 		upperMiddlePanel.add(menuBar, "1, 1, fill, top");
 		JMenu menuMostra = new JMenu("Mostra");
-		JMenu menuAggiungi = new JMenu("Azioni");
+		JMenu menuAzione = new JMenu("Azioni");
 		menuBar.add(menuMostra);
-		menuBar.add(menuAggiungi);
+		menuBar.add(menuAzione);
 		        
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
@@ -167,6 +174,8 @@ public class RiepilogoPagamenti extends JPanel {
 			JMenuItem itemMese = new JMenuItem("Mensili");
 			JMenuItem itemAnno = new JMenuItem("Annuali");
 			JMenuItem itemTutti = new JMenuItem("Tutti");
+			JMenuItem itemStampa = new JMenuItem("Stampa");
+			
 			DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 			String dataformat = formatter.format(LocalDateTime.now());
 			
@@ -183,11 +192,46 @@ public class RiepilogoPagamenti extends JPanel {
 			itemTutti.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getAllPagamenti());
 			});
-			
+			itemStampa.addActionListener((e) -> {
+				String path= ""; 
+				JFileChooser j = new JFileChooser();
+				j.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+				int x=j.showSaveDialog(this);
+				if(x==JFileChooser.APPROVE_OPTION) {
+					path=j.getSelectedFile().getPath();
+				}
+				
+				Document doc = new Document();
+				try {
+					PdfWriter.getInstance(doc, new FileOutputStream(path +".pdf"));
+					doc.open();
+					//titolo animale e proprietario 
+					PdfPTable tbl = new PdfPTable(3);
+					tbl.addCell("Data");
+					tbl.addCell("Nome Prestazione");
+					tbl.addCell("Costo");
+					// aggiunta del costo totatle 
+					for ( int i = 0; i < table.getRowCount(); i ++) {
+						String data = table.getValueAt(i,3).toString();
+						String nome = table.getValueAt(i,4).toString();
+						String costo = table.getValueAt(i,5).toString();
+						
+						tbl.addCell(data);
+						tbl.addCell(nome);
+						tbl.addCell(costo);
+					}
+					doc.add(tbl);
+				} catch (FileNotFoundException | DocumentException e1) {
+					System.out.println("ERRORE - creazione pdf");
+					e1.printStackTrace();
+				}
+				doc.close();
+			});
 			menuMostra.add(itemTutti);
 			menuMostra.add(itemOggi);
 			menuMostra.add(itemAnno);
 			menuMostra.add(itemMese);
+			menuAzione.add(itemStampa);
 			menuMostra.add(subMenuSeleziona);
 			//----fine ---- MENUU
 			
