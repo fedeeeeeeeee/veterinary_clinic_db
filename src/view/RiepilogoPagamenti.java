@@ -50,6 +50,39 @@ public class RiepilogoPagamenti extends JPanel {
 	private JTable table;	
 	private JScrollPane scrollPane;
 	
+	private void resetAndDraw(List<Pagamento> list) {
+		this.listPagamenti.clear();
+		this.listPagamenti = list;
+			//table.clearSelection();
+		model.setRowCount(0);
+		this.createTable(model, listPagamenti);
+		//scrollPane.setViewportView(table);
+	}
+
+		private void createTable(DefaultTableModel model, List<Pagamento> listPagamenti) {
+			listPagamenti.forEach(x -> {
+				model.addRow(new Object[] { 
+						x.getAnimale().getNome(), 
+						x.getAnimale().getSpecie(),
+						x.getAnimale().getCf(),
+						x.getDataPrestazione(),
+						x.getNomePrestazione(),
+						x.getCosto() + "€"
+				});
+			});
+		}
+
+	private void initTable() {
+		this.table = new JTable();
+		this.model = (DefaultTableModel) table.getModel();
+		model.addColumn("Animale");
+		model.addColumn("Specie");
+		model.addColumn("Proprietario");
+		model.addColumn("Data");
+		model.addColumn("Nome Prestazione");
+		model.addColumn("Costo"); 
+	}
+	
 	public RiepilogoPagamenti(final JFrame frame, User user) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
@@ -141,11 +174,10 @@ public class RiepilogoPagamenti extends JPanel {
 				this.resetAndDraw(pagamentiController.getPagamentiOggi());
 			});
 			itemMese.addActionListener((e) -> {
-				//this.resetAndDraw(pagamentiController.getPagamentiMensili());
+				this.resetAndDraw(pagamentiController.getPagamentiMensili());
 			});
 			itemAnno.addActionListener((e) -> {
-				//this.resetAndDraw(pagamentiController.getPagamentiAnnuali());
-
+				this.resetAndDraw(pagamentiController.getPagamentiAnnuali());
 			});
 			
 			itemTutti.addActionListener((e) -> {
@@ -174,38 +206,4 @@ public class RiepilogoPagamenti extends JPanel {
 		frame.getContentPane().setLayout(groupLayout);
 		//this.initCommonView(frame);
 	}
-
-private void resetAndDraw(List<Pagamento> list) {
-	this.listPagamenti.clear();
-	this.listPagamenti = list;
-		//table.clearSelection();
-	model.setRowCount(0);
-	this.createTable(model, listPagamenti);
-	//scrollPane.setViewportView(table);
-}
-
-	private void createTable(DefaultTableModel model, List<Pagamento> listPagamenti) {
-		listPagamenti.forEach(x -> {
-			model.addRow(new Object[] { 
-					x.getAnimale().getNome(), 
-					x.getAnimale().getSpecie(),
-					x.getAnimale().getCf(),
-					x.getDataPrestazione(),
-					x.getNomePrestazione(),
-					x.getCosto() + "€"
-			});
-		});
-	}
-
-private void initTable() {
-	this.table = new JTable();
-	this.model = (DefaultTableModel) table.getModel();
-	model.addColumn("Animale");
-	model.addColumn("Specie");
-	model.addColumn("Proprietario");
-	model.addColumn("Data");
-	model.addColumn("Nome Prestazione");
-	model.addColumn("Costo"); 
-}
-
 }

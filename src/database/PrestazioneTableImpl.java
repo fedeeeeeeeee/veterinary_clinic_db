@@ -276,39 +276,39 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			return prestazioni;
 		}
 
-		public static String getMonthStartDate() {
-			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.MONTH, 0);
-			calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
-			java.util.Date monthFirstDay = calendar.getTime();
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			return df.format(monthFirstDay);
-		}
-
-		public static String getMonthEndDate() {
-			Calendar calendar = Calendar.getInstance();
-			calendar.add(Calendar.MONTH, 0);
-			calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
-			java.util.Date monthLastDay = calendar.getTime();
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			return df.format(monthLastDay);
-		}
-	
-	public static java.util.Date getWeekStartDate() {
-	    Calendar calendar = Calendar.getInstance();
-	    while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-	        calendar.add(Calendar.DATE, -1);
-	    }
-	    return calendar.getTime();
+	private String getMonthStartDate() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, 0);
+		calendar.set(Calendar.DATE, calendar.getActualMinimum(Calendar.DAY_OF_MONTH));
+		java.util.Date monthFirstDay = calendar.getTime();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(monthFirstDay);
 	}
 
-	public static java.util.Date getWeekEndDate() {
-	    Calendar calendar = Calendar.getInstance();
-	    while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
-	        calendar.add(Calendar.DATE, 1);
-	    }
-	    calendar.add(Calendar.DATE, -1);
-	    return calendar.getTime();
+	private String getMonthEndDate() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.MONTH, 0);
+		calendar.set(Calendar.DATE, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+		java.util.Date monthLastDay = calendar.getTime();
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		return df.format(monthLastDay);
+	}
+
+	private java.util.Date getWeekStartDate() {
+		Calendar calendar = Calendar.getInstance();
+		while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+			calendar.add(Calendar.DATE, -1);
+		}
+		return calendar.getTime();
+	}
+
+	private java.util.Date getWeekEndDate() {
+		Calendar calendar = Calendar.getInstance();
+		while (calendar.get(Calendar.DAY_OF_WEEK) != Calendar.MONDAY) {
+			calendar.add(Calendar.DATE, 1);
+		}
+		calendar.add(Calendar.DATE, -1);
+		return calendar.getTime();
 	}
 	
 	
