@@ -267,11 +267,14 @@ public class RiepilogoPagamenti extends JPanel {
 						modelPDF.addColumn("Data");
 						modelPDF.addColumn("Nome Prestazione");
 						modelPDF.addColumn("Costo");
-			
-						for ( int i = 0; i < table.getRowCount(); i ++) {
-							String data = table.getValueAt(i,3).toString();
-							String nome = table.getValueAt(i,4).toString();
-							String costo = table.getValueAt(i,5).toString();
+						
+						List<Pagamento> ricoveri = pagamentiController.getRicoveroDiPrestazione(listPagamenti.get(selectedPagamento));
+						this.createTable(modelPDF, ricoveri);
+						
+						for ( int i = 0; i < tableForPDF.getRowCount(); i ++) {
+							String data = tableForPDF.getValueAt(i,3).toString();
+							String nome = tableForPDF.getValueAt(i,4).toString();
+							String costo = tableForPDF.getValueAt(i,5).toString();
 							tbl.addCell(data);
 							tbl.addCell(nome);
 							tbl.addCell(costo);
