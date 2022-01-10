@@ -18,6 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import model.Appuntamento;
@@ -28,6 +30,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 
@@ -62,6 +65,7 @@ public class RiepilogoPagamenti extends JPanel {
 	private JTable table;	
 	private JScrollPane scrollPane;
 	private JTextField textFieldTotale;
+	private int selectedPagamento = -1;
 	
 	private void resetAndDraw(List<Pagamento> list) {
 		this.listPagamenti.clear();
@@ -80,7 +84,8 @@ public class RiepilogoPagamenti extends JPanel {
 						x.getAnimale().getCf(),
 						x.getDataPrestazione(),
 						x.getNomePrestazione(),
-						x.getCosto() + "€"
+						x.getCosto() + "€",
+						x.isDuranteRicovero() ? "Si" : "No"
 				});
 			});
 		}
@@ -94,6 +99,12 @@ public class RiepilogoPagamenti extends JPanel {
 		model.addColumn("Data");
 		model.addColumn("Nome Prestazione");
 		model.addColumn("Costo"); 
+		model.addColumn("Prevede ricovero");
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent event) {
+				selectedPagamento = table.getSelectedRow();
+			}
+		});
 	}
 	
 	public RiepilogoPagamenti(final JFrame frame, User user) {
@@ -229,41 +240,53 @@ public class RiepilogoPagamenti extends JPanel {
 				this.resetAndDraw(pagamentiController.getAllPagamenti());
 				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
+			
 			itemStampa.addActionListener((e) -> {
-				String path= ""; 
-				JFileChooser j = new JFileChooser();
-				j.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-				int x=j.showSaveDialog(this);
-				if(x==JFileChooser.APPROVE_OPTION) {
-					path=j.getSelectedFile().getPath();
-				}
-				
-				Document doc = new Document();
-				try {
-					PdfWriter.getInstance(doc, new FileOutputStream(path +".pdf"));
-					doc.open();
-					//titolo animale e proprietario 
-					PdfPTable tbl = new PdfPTable(3);
-					tbl.addCell("Data");
-					tbl.addCell("Nome Prestazione");
-					tbl.addCell("Costo");
-					// aggiunta del costo totatle 
-					for ( int i = 0; i < table.getRowCount(); i ++) {
-						String data = table.getValueAt(i,3).toString();
-						String nome = table.getValueAt(i,4).toString();
-						String costo = table.getValueAt(i,5).toString();
-						
-						tbl.addCell(data);
-						tbl.addCell(nome);
-						tbl.addCell(costo);
+				if (this.selectedPagamento != -1) {
+					String path= ""; 
+					JFileChooser j = new JFileChooser();
+					j.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+					int x=j.showSaveDialog(this);
+					if(x==JFileChooser.APPROVE_OPTION) {
+						path=j.getSelectedFile().getPath();
 					}
-					doc.add(tbl);
-				} catch (FileNotFoundException | DocumentException e1) {
-					System.out.println("ERRORE - creazione pdf");
-					e1.printStackTrace();
+					
+					Document doc = new Document();
+					try {
+						PdfWriter.getInstance(doc, new FileOutputStream(path +".pdf"));
+						doc.open();
+						//titolo animale e proprietario 
+						PdfPTable tbl = new PdfPTable(3);
+						tbl.addCell("Data");
+						tbl.addCell("Nome Prestazione");
+						tbl.addCell("Costo");
+						// aggiunta del costo totatle 
+						
+						JTable tableForPDF = new JTable();
+						DefaultTableModel modelPDF = new DefaultTableModel();
+						modelPDF.addColumn("Data");
+						modelPDF.addColumn("Nome Prestazione");
+						modelPDF.addColumn("Costo");
+			
+						for ( int i = 0; i < table.getRowCount(); i ++) {
+							String data = table.getValueAt(i,3).toString();
+							String nome = table.getValueAt(i,4).toString();
+							String costo = table.getValueAt(i,5).toString();
+							tbl.addCell(data);
+							tbl.addCell(nome);
+							tbl.addCell(costo);
+						}
+						doc.add(tbl);
+					} catch (FileNotFoundException | DocumentException e1) {
+						System.out.println("ERRORE - creazione pdf");
+						e1.printStackTrace();
+					}
+					doc.close();
+				} else {
+					JOptionPane.showMessageDialog(null, "Non hai selezionato alcun pagamento");
 				}
-				doc.close();
 			});
+			
 			menuMostra.add(itemTutti);
 			menuMostra.add(itemOggi);
 			menuMostra.add(itemAnno);

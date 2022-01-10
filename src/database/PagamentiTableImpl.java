@@ -70,13 +70,13 @@ public class PagamentiTableImpl implements PagamentiTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo " 
+		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale " 
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
-		 + "and prestazione_su_animale.data not in (select dataInizio " 
+		 + "and prestazione_su_animale.data not in (select data " 
 		 + "from ricovero,  prestazione_su_animale " 
-		 + "where prestazione_su_animale.data >= ricovero.dataInizio " 
+		 + "where prestazione_su_animale.data > ricovero.dataInizio " 
 		 + "and prestazione_su_animale.data <= date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "; 
 		 
 		 List<Pagamento> pagamenti = new ArrayList<>();
@@ -91,17 +91,22 @@ public class PagamentiTableImpl implements PagamentiTable {
 				animale.setNome(result.getString("animale.nome"));
 				animale.setCf(result.getString("animale.cf"));
 				animale.setSpecie(result.getString("animale.specie"));
+				animale.setCodAnimale( result.getInt("animale.codAnimale"));
 				p.setAnimale(animale);
 				p.setDataPrestazione(result.getString("data"));
 				p.setNomePrestazione(result.getString("prestazione.nome"));
 				p.setCosto(result.getFloat("prestazione.prezzo"));
+				p.setOraPrestazione(result.getString("prestazione_su_animale.ora"));
+				
 				pagamenti.add(p);
 			}
-
 			result.close();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
+		}  
+		
+		finally {	
 			try {
 				if (statement.isPresent()) {
 					statement.get().close();
@@ -112,9 +117,154 @@ public class PagamentiTableImpl implements PagamentiTable {
 			} catch (SQLException e) {
 			}
 		}
+		
+		pagamenti.forEach(pag-> {
+			pag.setRicovero(setRicovero(pag));
+		});
+		
 		return pagamenti;
 	}
+	
 
+	private boolean setRicovero(Pagamento pagamento) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		boolean b = false;
+
+		Optional<PreparedStatement> s = Optional.empty();
+
+		// tra le prestazioni di gestione pagamenti, quali comprendono anche l'inizio
+		// del ricovero?
+		final String query2 = "SELECT * " 
+				+ "from ricovero " 
+				+ "where ricovero.dataInizio = ? "
+				+ "and ricovero.oraInizio = ? " 
+				+ "and ricovero.codAnimale = ? ";
+		try {
+			s = Optional.of(connection.prepareStatement(query2));
+			s.get().setString(1, pagamento.getDataPrestazione());
+			s.get().setString(2, pagamento.getOraPrestazione());
+			s.get().setInt(3, pagamento.getAnimale().getCodAnimale());
+
+			final ResultSet result = s.get().executeQuery();
+			float totale = 0;
+			
+			if (result.next()) {
+				b = true;
+				totale = getPrezzoRicovero(pagamento) + getTotalePrestazioniDuranteRicovero(pagamento);
+				
+				pagamento.setCosto(totale);
+				System.out.println(totale);
+			} 
+			
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (s.isPresent()) {
+					s.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return b;
+	}
+
+	
+	private float getTotalePrestazioniDuranteRicovero(Pagamento pag) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> s = Optional.empty();
+
+		 final String query = "select ora, sum(prezzo) tot, data " 
+				 + "from prestazione, prestazione_su_animale " 
+				 + "where prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
+				 + "and prestazione_su_animale.codAnimale = ? " 
+				 + "and prestazione_su_animale.data in (select data " 
+				 + "from ricovero,  prestazione_su_animale " 
+				 + "where prestazione_su_animale.data between ? and date_add(?, INTERVAL ricovero.durataInGiorni DAY)) " 
+				 + "group by ora, data "; 
+				 
+		float costoTotale = 0;
+
+		try {
+			s = Optional.of(connection.prepareStatement(query));
+			s.get().setInt(1, pag.getAnimale().getCodAnimale());
+			s.get().setString(2, pag.getDataPrestazione());
+			s.get().setString(3, pag.getDataPrestazione());
+
+			final ResultSet result = s.get().executeQuery();
+			
+			while (result.next()) {
+				if((result.getString("ora").compareTo(pag.getOraPrestazione()) > 0 || result.getString("ora").equals(pag.getOraPrestazione()))
+						&& result.getString("data").equals(pag.getDataPrestazione())
+						|| !result.getString("data").equals(pag.getDataPrestazione())) {
+					costoTotale = costoTotale+result.getFloat("tot");
+				}
+			} 
+
+			result.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (s.isPresent()) {
+					s.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return costoTotale;
+	}
+	
+
+	private float getPrezzoRicovero(Pagamento pag) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> s = Optional.empty();
+
+		final String query = "SELECT prezzoGiornaliero, durataInGiorni " 
+					+ "from ricovero " 
+				    + "where ricovero.dataInizio = ? "
+				    + "and ricovero.oraInizio = ? " 
+				    + "and ricovero.codAnimale = ? ";
+		float costoTotale = 0;
+
+		try {
+			s = Optional.of(connection.prepareStatement(query));
+			s.get().setString(1, pag.getDataPrestazione());
+			s.get().setString(2, pag.getOraPrestazione());
+			s.get().setInt(3, pag.getAnimale().getCodAnimale());
+
+			final ResultSet result = s.get().executeQuery();
+			
+			if (result.next()) {
+				costoTotale = result.getFloat("prezzoGiornaliero")*result.getFloat("durataInGiorni");
+			} 
+
+			result.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (s.isPresent()) {
+					s.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return costoTotale;
+	}
+	
 	@Override
 	public List<Pagamento> getPagamentiOggi() {
 		final Connection connection = this.dataSource.getMySQLConnection();
@@ -127,9 +277,9 @@ public class PagamentiTableImpl implements PagamentiTable {
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
-		 + "and prestazione_su_animale.data not in (select dataInizio " 
+		 + "and prestazione_su_animale.data not in (select data " 
 		 + "from ricovero,  prestazione_su_animale " 
-		 + "where prestazione_su_animale.data >= ricovero.dataInizio " 
+		 + "where prestazione_su_animale.data > ricovero.dataInizio " 
 		 + "and prestazione_su_animale.data < date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
 		 + "and prestazione_su_animale.data = ?"; 
 		 
@@ -182,9 +332,9 @@ public class PagamentiTableImpl implements PagamentiTable {
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
-		 + "and prestazione_su_animale.data not in (select dataInizio " 
+		 + "and prestazione_su_animale.data not in (select data " 
 		 + "from ricovero,  prestazione_su_animale " 
-		 + "where prestazione_su_animale.data >= ricovero.dataInizio " 
+		 + "where prestazione_su_animale.data > ricovero.dataInizio " 
 		 + "and prestazione_su_animale.data < date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
 		 + "and prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "; 
 		 
@@ -239,9 +389,9 @@ public class PagamentiTableImpl implements PagamentiTable {
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
-		 + "and prestazione_su_animale.data not in (select dataInizio " 
+		 + "and prestazione_su_animale.data not in (select data " 
 		 + "from ricovero,  prestazione_su_animale " 
-		 + "where prestazione_su_animale.data >= ricovero.dataInizio " 
+		 + "where prestazione_su_animale.data > ricovero.dataInizio " 
 		 + "and prestazione_su_animale.data < date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
 		 + "and prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "; 
 		 

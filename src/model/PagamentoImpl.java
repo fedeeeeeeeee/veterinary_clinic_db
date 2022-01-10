@@ -6,6 +6,8 @@ public class PagamentoImpl implements Pagamento {
 	private String data;
 	private String nomePrestazione;
 	private float costo;
+	private boolean duranteRicovero;
+	private String ora;
 
 	@Override
 	public Animale getAnimale() {
@@ -46,5 +48,26 @@ public class PagamentoImpl implements Pagamento {
 	public void setCosto(float costo) {
 		this.costo = costo;
 	}
+
+	@Override
+	public void setRicovero(boolean duranteRicovero) {
+		this.duranteRicovero = duranteRicovero;
+	}
+	
+	@Override
+	public boolean isDuranteRicovero() {
+		return this.duranteRicovero;
+	}
+
+	@Override
+	public String getOraPrestazione() {
+		return this.ora;
+	}
+
+	@Override
+	public void setOraPrestazione(String ora) {
+		this.ora = ora;
+	}
+
 
 }

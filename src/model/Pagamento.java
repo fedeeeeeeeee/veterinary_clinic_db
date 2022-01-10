@@ -17,4 +17,13 @@ public interface Pagamento {
 	float getCosto();
 	
 	void setCosto(float f);
+
+	void setRicovero(boolean duranteRicovero);
+	
+	boolean isDuranteRicovero();
+
+	String getOraPrestazione();
+	
+	void setOraPrestazione(String ora);
+
 }
