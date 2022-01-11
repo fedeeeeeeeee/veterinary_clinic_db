@@ -26,4 +26,8 @@ public interface Pagamento {
 	
 	void setOraPrestazione(String ora);
 
+	int getCodPrestazione();
+
+	void setCodPrestazione(int codPrestazione);
+
 }

@@ -154,7 +154,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 		final String query2 = "SELECT * " 
 				+ "from ricovero " 
 				+ "where ricovero.dataInizio = ? "
-				+ "and ricovero.oraInizio = ? " 
+				+ "and ricovero.oraInizio = ? "
 				+ "and ricovero.codAnimale = ? ";
 		try {
 			s = Optional.of(connection.prepareStatement(query2));
@@ -197,13 +197,14 @@ public class PagamentiTableImpl implements PagamentiTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale " 
+		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale, prestazione_su_animale.codTipoPrestazione " 
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
 		 + "and prestazione_su_animale.data not in (select data " 
 		 + "from ricovero,  prestazione_su_animale " 
-		 + "where prestazione_su_animale.data > ricovero.dataInizio " 
+		 + "where ricovero.codAnimale = prestazione_su_animale.codAnimale "
+		 + "and prestazione_su_animale.data > ricovero.dataInizio " 
 		 + "and prestazione_su_animale.data <= date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "; 
 		 
 		 List<Pagamento> pagamenti = new ArrayList<>();
@@ -224,6 +225,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 				p.setNomePrestazione(result.getString("prestazione.nome"));
 				p.setCosto(result.getFloat("prestazione.prezzo"));
 				p.setOraPrestazione(result.getString("prestazione_su_animale.ora"));	
+				p.setCodPrestazione(result.getInt("prestazione_su_animale.codTipoPrestazione"));
 				pagamenti.add(p);
 			}
 			result.close();
@@ -255,7 +257,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 		
 		 /* l'ultima prestazione durante il ricovero avviene durante l'ultimo giorno. 
 		    quella prestazione va aggiunta alla tabella con nome = Rilascio Ricovero */
-		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, animale.codAnimale, prestazione_su_animale.ora " 
+		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, animale.codAnimale, prestazione_su_animale.ora, prestazione_su_animale.codTipoPrestazione " 
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
@@ -288,6 +290,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 				p.setNomePrestazione(result.getString("prestazione.nome"));
 				p.setOraPrestazione(result.getString("ora"));
 				p.setCosto(result.getFloat("prestazione.prezzo"));
+				p.setCodPrestazione(result.getInt("prestazione_su_animale.codTipoPrestazione"));
 				pagamenti.add(p);
 			}
 
@@ -316,7 +319,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 	public List<Pagamento> getPagamentiAnnuali() {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale " 
+		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale, prestazione_su_animale.codTipoPrestazione " 
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
@@ -349,6 +352,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 				p.setNomePrestazione(result.getString("prestazione.nome"));
 				p.setCosto(result.getFloat("prestazione.prezzo"));
 				p.setOraPrestazione(result.getString("ora"));
+				p.setCodPrestazione(result.getInt("prestazione_su_animale.codTipoPrestazione"));
 				pagamenti.add(p);
 			}
 
@@ -379,7 +383,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 	public List<Pagamento> getPagamentiMensili() {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale " 
+		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale,  prestazione_su_animale.codTipoPrestazione " 
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
@@ -412,6 +416,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 				p.setNomePrestazione(result.getString("prestazione.nome"));
 				p.setCosto(result.getFloat("prestazione.prezzo"));
 				p.setOraPrestazione(result.getString("ora"));
+				p.setCodPrestazione(result.getInt("prestazione_su_animale.codTipoPrestazione"));
 				pagamenti.add(p);
 			}
 
@@ -442,38 +447,49 @@ public class PagamentiTableImpl implements PagamentiTable {
 	}
 
 	@Override
-	public List<Pagamento> getRicoveroDiPrestazione(Pagamento pagamento) {
+	public List<Pagamento> getPrestazioniDuranteRicovero(Pagamento pagamento) {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale " 
-		 + "from animale, prestazione, prestazione_su_animale " 
+		 final String query = "select animale.nome, animale.specie, animale.cf, animale.codAnimale, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale " 
+		 + "from prestazione_su_animale, animale, prestazione " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
-		 + "and prestazione_su_animale.data in (select data " 
-		 + "from ricovero,  prestazione_su_animale " 
-		 + "where prestazione_su_animale.data >= ricovero.dataInizio " 
-		 + "and prestazione_su_animale.data <= date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "; 
+		 + " and prestazione_su_animale.codAnimale = ? "
+		+ " and prestazione_su_animale.data in  "
+			 + " (select prestazione_su_animale.data "
+			 + " from prestazione_su_animale, ricovero "
+			 + " where prestazione_su_animale.data >= ? "
+			 + " and prestazione_su_animale.data <= date_add( ? , INTERVAL ricovero.durataInGiorni DAY))"
+		 + " order by  prestazione_su_animale.data" ;
 		 
 		 List<Pagamento> pagamenti = new ArrayList<>();
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, pagamento.getAnimale().getCodAnimale());
+			statement.get().setString(2, pagamento.getDataPrestazione());
+			statement.get().setString(3, pagamento.getDataPrestazione());
+			
 			final ResultSet result = statement.get().executeQuery();
 			
 			while (result.next()) {
-				Pagamento p = new PagamentoImpl();
-			
-				Animale animale = new AnimaleImpl();
-				animale.setNome(result.getString("animale.nome"));
-				animale.setCf(result.getString("animale.cf"));
-				animale.setSpecie(result.getString("animale.specie"));
-				animale.setCodAnimale( result.getInt("animale.codAnimale"));
-				p.setAnimale(animale);
-				p.setDataPrestazione(result.getString("data"));
-				p.setNomePrestazione(result.getString("prestazione.nome"));
-				p.setCosto(result.getFloat("prestazione.prezzo"));
-				p.setOraPrestazione(result.getString("prestazione_su_animale.ora"));	
-				pagamenti.add(p);
+				if ((result.getString("ora").compareTo(pagamento.getOraPrestazione()) > 0 ||  result.getString("ora").equals(pagamento.getOraPrestazione()))
+					&& result.getString("data").equals(pagamento.getDataPrestazione())
+					|| !result.getString("data").equals(pagamento.getDataPrestazione())) {
+					Pagamento p = new PagamentoImpl();
+					
+					Animale animale = new AnimaleImpl();
+					animale.setNome(result.getString("animale.nome"));
+					animale.setCf(result.getString("animale.cf"));
+					animale.setSpecie(result.getString("animale.specie"));
+					animale.setCodAnimale( result.getInt("animale.codAnimale"));
+					p.setAnimale(animale);
+					p.setDataPrestazione(result.getString("data"));
+					p.setNomePrestazione(result.getString("prestazione.nome"));
+					p.setCosto(result.getFloat("prestazione.prezzo"));
+					p.setOraPrestazione(result.getString("prestazione_su_animale.ora"));	
+					pagamenti.add(p);
+				}
 			}
 			result.close();
 

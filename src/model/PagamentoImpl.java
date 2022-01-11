@@ -8,6 +8,16 @@ public class PagamentoImpl implements Pagamento {
 	private float costo;
 	private boolean duranteRicovero;
 	private String ora;
+	private int codPrestazione;
+	
+	@Override
+	public int getCodPrestazione() {
+		return codPrestazione;
+	}
+	@Override
+	public void setCodPrestazione(int codPrestazione) {
+		this.codPrestazione = codPrestazione;
+	}
 
 	@Override
 	public Animale getAnimale() {

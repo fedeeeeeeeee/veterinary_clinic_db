@@ -89,6 +89,18 @@ public class RiepilogoPagamenti extends JPanel {
 				});
 			});
 		}
+		
+		private void createTablePdf(DefaultTableModel model, List<Pagamento> listPagamenti) {
+			listPagamenti.forEach(x -> {
+				model.addRow(new Object[] { 
+					//	x.getAnimale().getNome(), 
+						//x.getAnimale().getCf(),
+						x.getDataPrestazione(),
+						x.getNomePrestazione(),
+						x.getCosto() + "€",
+				});
+			});
+		}
 
 	private void initTable() {
 		this.table = new JTable();
@@ -264,17 +276,24 @@ public class RiepilogoPagamenti extends JPanel {
 						
 						JTable tableForPDF = new JTable();
 						DefaultTableModel modelPDF = new DefaultTableModel();
+						modelPDF = (DefaultTableModel) tableForPDF.getModel();
 						modelPDF.addColumn("Data");
 						modelPDF.addColumn("Nome Prestazione");
 						modelPDF.addColumn("Costo");
 						
-						List<Pagamento> ricoveri = pagamentiController.getRicoveroDiPrestazione(listPagamenti.get(selectedPagamento));
-						this.createTable(modelPDF, ricoveri);
+						List<Pagamento> ricoveri = pagamentiController.getPrestazioniDuranteRicovero(listPagamenti.get(selectedPagamento));
+						this.createTablePdf(modelPDF, ricoveri);
+						System.out.println("prestazione selezionata" + listPagamenti.get(selectedPagamento).getNomePrestazione());
+						ricoveri.forEach(a-> {
+							System.out.println("elementi " + a.getNomePrestazione());
+						});
+						//TODO sistemare controlla getRicoveroDiPrestazione ritorna altra roba di altro animale ecc 
+						System.out.println(tableForPDF.getRowCount());
 						
 						for ( int i = 0; i < tableForPDF.getRowCount(); i ++) {
-							String data = tableForPDF.getValueAt(i,3).toString();
-							String nome = tableForPDF.getValueAt(i,4).toString();
-							String costo = tableForPDF.getValueAt(i,5).toString();
+							String data = tableForPDF.getValueAt(i,0).toString();
+							String nome = tableForPDF.getValueAt(i,1).toString();
+							String costo = tableForPDF.getValueAt(i,2).toString();
 							tbl.addCell(data);
 							tbl.addCell(nome);
 							tbl.addCell(costo);

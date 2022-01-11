@@ -39,8 +39,8 @@ public class PagamentiControllerImpl implements PagamentiController {
 		return this.pagamentiTable.getPagamentiInPeriodo(dataInizio, dataFine);
 	}
 	@Override
-	public List<Pagamento> getRicoveroDiPrestazione(Pagamento pagamento) {
-		return this.pagamentiTable.getRicoveroDiPrestazione(pagamento);
+	public List<Pagamento> getPrestazioniDuranteRicovero(Pagamento pagamento) {
+		return this.pagamentiTable.getPrestazioniDuranteRicovero(pagamento);
 	}
 
 }

@@ -16,6 +16,6 @@ public interface PagamentiTable {
 
 	List<Pagamento> getPagamentiInPeriodo(String dataInizio, String dataFine);
 
-	List<Pagamento> getRicoveroDiPrestazione(Pagamento pagamento);
+	List<Pagamento> getPrestazioniDuranteRicovero(Pagamento pagamento);
 
 }
