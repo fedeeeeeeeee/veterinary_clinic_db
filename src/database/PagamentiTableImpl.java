@@ -205,7 +205,8 @@ public class PagamentiTableImpl implements PagamentiTable {
 		 + "from ricovero,  prestazione_su_animale " 
 		 + "where ricovero.codAnimale = prestazione_su_animale.codAnimale "
 		 + "and prestazione_su_animale.data > ricovero.dataInizio " 
-		 + "and prestazione_su_animale.data <= date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "; 
+		 + "and prestazione_su_animale.data <= date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
+		 + " order by  prestazione_su_animale.data" ;
 		 
 		 List<Pagamento> pagamenti = new ArrayList<>();
 		try {
@@ -323,11 +324,13 @@ public class PagamentiTableImpl implements PagamentiTable {
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
-		 + "and prestazione_su_animale.data not in (select data " 
+		 + "and (prestazione_su_animale.data, prestazione_su_animale.codAnimale) not in ( select data, prestazione_su_animale.codAnimale " 
 		 + "from ricovero,  prestazione_su_animale " 
-		 + "where prestazione_su_animale.data > ricovero.dataInizio " 
+		 + "where ricovero.codAnimale = prestazione_su_animale.codAnimale "
+		 + "and prestazione_su_animale.data > ricovero.dataInizio " 
 		 + "and prestazione_su_animale.data < date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
-		 + "and prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "; 
+		 + "and prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "
+		 + " order by  prestazione_su_animale.data" ;
 		 
 		 List<Pagamento> pagamenti = new ArrayList<>();
 		try {
@@ -387,11 +390,13 @@ public class PagamentiTableImpl implements PagamentiTable {
 		 + "from animale, prestazione, prestazione_su_animale " 
 		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
-		 + "and prestazione_su_animale.data not in (select data " 
+		 + "and (prestazione_su_animale.data, prestazione_su_animale.codAnimale) not in ( select data, prestazione_su_animale.codAnimale " 
 		 + "from ricovero,  prestazione_su_animale " 
-		 + "where prestazione_su_animale.data > ricovero.dataInizio " 
+		 + "where ricovero.codAnimale = prestazione_su_animale.codAnimale "
+		 + "and prestazione_su_animale.data > ricovero.dataInizio " 
 		 + "and prestazione_su_animale.data < date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
-		 + "and prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "; 
+		 + "and prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "
+		 + " order by  prestazione_su_animale.data" ;
 		 
 		 List<Pagamento> pagamenti = new ArrayList<>();
 		try {
