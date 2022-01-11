@@ -14,6 +14,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
+
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -72,48 +74,48 @@ public class AggiungiAnimale extends JPanel {
 		
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());           
 		// utile per il design
-        // GroupLayout groupLayout = new GroupLayout(this);		
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 437, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 471, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-		);
+        // GroupLayout groupLayout = new GroupLayout(this);
+         groupLayout.setHorizontalGroup(
+         	groupLayout.createParallelGroup(Alignment.LEADING)
+         		.addGroup(groupLayout.createSequentialGroup()
+         			.addContainerGap()
+         			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+         				.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+         				.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+         				.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
+         			.addContainerGap())
+         );
+         groupLayout.setVerticalGroup(
+         	groupLayout.createParallelGroup(Alignment.LEADING)
+         		.addGroup(groupLayout.createSequentialGroup()
+         			.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+         			.addPreferredGap(ComponentPlacement.RELATED)
+         			.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+         			.addPreferredGap(ComponentPlacement.RELATED)
+         			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+         );
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		centerPanel.setLayout(null);
 		
 		JPanel animalePanel = new JPanel();
-		animalePanel.setBounds(0, 0, 465, 261);
+		animalePanel.setBounds(0, 0, 982, 448);
 		animalePanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Animale", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		centerPanel.add(animalePanel);
 		GridBagLayout gbl_animalePanel = new GridBagLayout();
-		gbl_animalePanel.columnWidths = new int[]{143, 170, 40, 0, 0};
-		gbl_animalePanel.rowHeights = new int[]{0, 16, 22, 130, 13, 16, 23, 16, 0};
-		gbl_animalePanel.columnWeights = new double[]{0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_animalePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_animalePanel.columnWidths = new int[]{216, 158, 256, 97, 42, 187, 0};
+		gbl_animalePanel.rowHeights = new int[]{66, 0, 16, 22, -49, 13, 16, 23, 16, 0, 58, 0};
+		gbl_animalePanel.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_animalePanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		animalePanel.setLayout(gbl_animalePanel);
 		
 		JLabel labelProprietario = new JLabel("Proprietario");
 		GridBagConstraints gbc_labelProprietario = new GridBagConstraints();
 		gbc_labelProprietario.insets = new Insets(0, 0, 5, 5);
 		gbc_labelProprietario.anchor = GridBagConstraints.EAST;
-		gbc_labelProprietario.gridx = 0;
-		gbc_labelProprietario.gridy = 0;
+		gbc_labelProprietario.gridx = 1;
+		gbc_labelProprietario.gridy = 1;
 		animalePanel.add(labelProprietario, gbc_labelProprietario);
 		
 		textFieldProprietario = new JTextField(selectedCf);
@@ -122,8 +124,8 @@ public class AggiungiAnimale extends JPanel {
 		GridBagConstraints gbc_textFieldProprietario = new GridBagConstraints();
 		gbc_textFieldProprietario.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldProprietario.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldProprietario.gridx = 1;
-		gbc_textFieldProprietario.gridy = 0;
+		gbc_textFieldProprietario.gridx = 2;
+		gbc_textFieldProprietario.gridy = 1;
 		animalePanel.add(textFieldProprietario, gbc_textFieldProprietario);
 		textFieldProprietario.setColumns(10);
 		
@@ -131,8 +133,8 @@ public class AggiungiAnimale extends JPanel {
 		GridBagConstraints gbc_labelNome = new GridBagConstraints();
 		gbc_labelNome.anchor = GridBagConstraints.EAST;
 		gbc_labelNome.insets = new Insets(0, 0, 5, 5);
-		gbc_labelNome.gridx = 0;
-		gbc_labelNome.gridy = 1;
+		gbc_labelNome.gridx = 1;
+		gbc_labelNome.gridy = 2;
 		animalePanel.add(labelNome, gbc_labelNome);
 		
 		textFieldNome = new JTextField();
@@ -140,8 +142,8 @@ public class AggiungiAnimale extends JPanel {
 		GridBagConstraints gbc_textFieldNome = new GridBagConstraints();
 		gbc_textFieldNome.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldNome.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldNome.gridx = 1;
-		gbc_textFieldNome.gridy = 1;
+		gbc_textFieldNome.gridx = 2;
+		gbc_textFieldNome.gridy = 2;
 		animalePanel.add(textFieldNome, gbc_textFieldNome);
 		textFieldNome.setColumns(10);
 		
@@ -149,15 +151,16 @@ public class AggiungiAnimale extends JPanel {
 		GridBagConstraints gbc_labelGenere = new GridBagConstraints();
 		gbc_labelGenere.anchor = GridBagConstraints.EAST;
 		gbc_labelGenere.insets = new Insets(0, 0, 5, 5);
-		gbc_labelGenere.gridx = 0;
-		gbc_labelGenere.gridy = 2;
+		gbc_labelGenere.gridx = 1;
+		gbc_labelGenere.gridy = 3;
 		animalePanel.add(labelGenere, gbc_labelGenere);
 		
 		JRadioButton maleButton = new JRadioButton("M");
 		GridBagConstraints gbc_maleButton = new GridBagConstraints();
+		gbc_maleButton.anchor = GridBagConstraints.EAST;
 		gbc_maleButton.insets = new Insets(0, 0, 5, 5);
-		gbc_maleButton.gridx = 1;
-		gbc_maleButton.gridy = 2;
+		gbc_maleButton.gridx = 2;
+		gbc_maleButton.gridy = 3;
 		animalePanel.add(maleButton, gbc_maleButton);
 		
 		ButtonGroup group = new ButtonGroup();
@@ -167,35 +170,34 @@ public class AggiungiAnimale extends JPanel {
 		GridBagConstraints gbc_femaleButton = new GridBagConstraints();
 		gbc_femaleButton.anchor = GridBagConstraints.WEST;
 		gbc_femaleButton.insets = new Insets(0, 0, 5, 5);
-		gbc_femaleButton.gridx = 2;
-		gbc_femaleButton.gridy = 2;
+		gbc_femaleButton.gridx = 3;
+		gbc_femaleButton.gridy = 3;
 		animalePanel.add(femaleButton, gbc_femaleButton);
 		group.add(femaleButton);
 	    
 		JLabel labelDataDiNascita = new JLabel("Data di nascita");
 		GridBagConstraints gbc_labelDataDiNascita = new GridBagConstraints();
 		gbc_labelDataDiNascita.anchor = GridBagConstraints.EAST;
-		gbc_labelDataDiNascita.fill = GridBagConstraints.VERTICAL;
 		gbc_labelDataDiNascita.insets = new Insets(0, 0, 5, 5);
-		gbc_labelDataDiNascita.gridx = 0;
-		gbc_labelDataDiNascita.gridy = 3;
+		gbc_labelDataDiNascita.gridx = 1;
+		gbc_labelDataDiNascita.gridy = 4;
 		animalePanel.add(labelDataDiNascita, gbc_labelDataDiNascita);
 		
 		JDateChooser dateChooser = new JDateChooser();
 		labelDataDiNascita.setLabelFor(dateChooser);
 		GridBagConstraints gbc_dateChooser = new GridBagConstraints();
 		gbc_dateChooser.insets = new Insets(0, 0, 5, 5);
-		gbc_dateChooser.fill = GridBagConstraints.BOTH;
-		gbc_dateChooser.gridx = 1;
-		gbc_dateChooser.gridy = 3;
+		gbc_dateChooser.fill = GridBagConstraints.HORIZONTAL;
+		gbc_dateChooser.gridx = 2;
+		gbc_dateChooser.gridy = 4;
 		animalePanel.add(dateChooser, gbc_dateChooser);
 		
 		JLabel labelPeso = new JLabel("Peso");
 		GridBagConstraints gbc_labelPeso = new GridBagConstraints();
 		gbc_labelPeso.anchor = GridBagConstraints.EAST;
 		gbc_labelPeso.insets = new Insets(0, 0, 5, 5);
-		gbc_labelPeso.gridx = 0;
-		gbc_labelPeso.gridy = 4;
+		gbc_labelPeso.gridx = 1;
+		gbc_labelPeso.gridy = 5;
 		animalePanel.add(labelPeso, gbc_labelPeso);
 		
 		textFieldPeso = new JTextField();
@@ -203,8 +205,8 @@ public class AggiungiAnimale extends JPanel {
 		GridBagConstraints gbc_textFieldPeso = new GridBagConstraints();
 		gbc_textFieldPeso.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldPeso.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldPeso.gridx = 1;
-		gbc_textFieldPeso.gridy = 4;
+		gbc_textFieldPeso.gridx = 2;
+		gbc_textFieldPeso.gridy = 5;
 		animalePanel.add(textFieldPeso, gbc_textFieldPeso);
 		textFieldPeso.setColumns(10);
 		
@@ -214,16 +216,16 @@ public class AggiungiAnimale extends JPanel {
 		GridBagConstraints gbc_labelAltezza = new GridBagConstraints();
 		gbc_labelAltezza.anchor = GridBagConstraints.EAST;
 		gbc_labelAltezza.insets = new Insets(0, 0, 5, 5);
-		gbc_labelAltezza.gridx = 0;
-		gbc_labelAltezza.gridy = 5;
+		gbc_labelAltezza.gridx = 1;
+		gbc_labelAltezza.gridy = 6;
 		animalePanel.add(labelAltezza, gbc_labelAltezza);
 		
 		textFieldAltezza = new JTextField();
 		GridBagConstraints gbc_textFieldAltezza = new GridBagConstraints();
 		gbc_textFieldAltezza.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldAltezza.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldAltezza.gridx = 1;
-		gbc_textFieldAltezza.gridy = 5;
+		gbc_textFieldAltezza.gridx = 2;
+		gbc_textFieldAltezza.gridy = 6;
 		animalePanel.add(textFieldAltezza, gbc_textFieldAltezza);
 		textFieldAltezza.setColumns(10);
 		
@@ -232,16 +234,16 @@ public class AggiungiAnimale extends JPanel {
 		GridBagConstraints gbc_labelSpecie = new GridBagConstraints();
 		gbc_labelSpecie.anchor = GridBagConstraints.EAST;
 		gbc_labelSpecie.insets = new Insets(0, 0, 5, 5);
-		gbc_labelSpecie.gridx = 0;
-		gbc_labelSpecie.gridy = 6;
+		gbc_labelSpecie.gridx = 1;
+		gbc_labelSpecie.gridy = 7;
 		animalePanel.add(labelSpecie, gbc_labelSpecie);
 		
 		JComboBox<String> comboBoxSpecie = new JComboBox<>();
 		GridBagConstraints gbc_comboBoxSpecie = new GridBagConstraints();
 		gbc_comboBoxSpecie.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxSpecie.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxSpecie.gridx = 1;
-		gbc_comboBoxSpecie.gridy = 6;
+		gbc_comboBoxSpecie.gridx = 2;
+		gbc_comboBoxSpecie.gridy = 7;
 		animalePanel.add(comboBoxSpecie, gbc_comboBoxSpecie);
 		comboBoxSpecie.setSelectedIndex(-1);		
 		labelSpecie.setLabelFor(comboBoxSpecie);
@@ -250,8 +252,8 @@ public class AggiungiAnimale extends JPanel {
 		GridBagConstraints gbc_addSpecieButton = new GridBagConstraints();
 		gbc_addSpecieButton.anchor = GridBagConstraints.ABOVE_BASELINE;
 		gbc_addSpecieButton.insets = new Insets(0, 0, 5, 5);
-		gbc_addSpecieButton.gridx = 2;
-		gbc_addSpecieButton.gridy = 6;
+		gbc_addSpecieButton.gridx = 3;
+		gbc_addSpecieButton.gridy = 7;
 		animalePanel.add(addSpecieButton, gbc_addSpecieButton);
 		addSpecieButton.addActionListener(new ActionListener() {
 
@@ -276,25 +278,25 @@ public class AggiungiAnimale extends JPanel {
 		
 		JButton resetSpecieButton = new JButton("RESET");
 		GridBagConstraints gbc_resetSpecieButton = new GridBagConstraints();
-		gbc_resetSpecieButton.insets = new Insets(0, 0, 5, 0);
-		gbc_resetSpecieButton.gridx = 3;
-		gbc_resetSpecieButton.gridy = 6;
-		animalePanel.add(resetSpecieButton, gbc_resetSpecieButton);
+		gbc_resetSpecieButton.insets = new Insets(0, 0, 5, 5);
+		gbc_resetSpecieButton.gridx = 4;
+		gbc_resetSpecieButton.gridy = 7;
+		
 		
 		JLabel labelRazza = new JLabel("Razza");
 		GridBagConstraints gbc_labelRazza = new GridBagConstraints();
 		gbc_labelRazza.anchor = GridBagConstraints.EAST;
-		gbc_labelRazza.insets = new Insets(0, 0, 0, 5);
-		gbc_labelRazza.gridx = 0;
-		gbc_labelRazza.gridy = 7;
+		gbc_labelRazza.insets = new Insets(0, 0, 5, 5);
+		gbc_labelRazza.gridx = 1;
+		gbc_labelRazza.gridy = 8;
 		animalePanel.add(labelRazza, gbc_labelRazza);
 		
 		JComboBox<String> comboBoxRazza = new JComboBox<>();
 		GridBagConstraints gbc_comboBoxRazza = new GridBagConstraints();
-		gbc_comboBoxRazza.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBoxRazza.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxRazza.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBoxRazza.gridx = 1;
-		gbc_comboBoxRazza.gridy = 7;
+		gbc_comboBoxRazza.gridx = 2;
+		gbc_comboBoxRazza.gridy = 8;
 		animalePanel.add(comboBoxRazza, gbc_comboBoxRazza);
 		comboBoxRazza.setEnabled(false);
 		labelRazza.setLabelFor(comboBoxRazza);
@@ -302,9 +304,9 @@ public class AggiungiAnimale extends JPanel {
 		JButton addRazzaButton = new JButton("+");
 		GridBagConstraints gbc_addRazzaButton = new GridBagConstraints();
 		gbc_addRazzaButton.anchor = GridBagConstraints.ABOVE_BASELINE;
-		gbc_addRazzaButton.insets = new Insets(0, 0, 0, 5);
-		gbc_addRazzaButton.gridx = 2;
-		gbc_addRazzaButton.gridy = 7;
+		gbc_addRazzaButton.insets = new Insets(0, 0, 5, 5);
+		gbc_addRazzaButton.gridx = 3;
+		gbc_addRazzaButton.gridy = 8;
 		animalePanel.add(addRazzaButton, gbc_addRazzaButton);
 		addRazzaButton.setEnabled(false);
 	 
@@ -338,67 +340,22 @@ public class AggiungiAnimale extends JPanel {
 			}
 		});
 		
-		JButton resetRazzaButton = new JButton("RESET");
-		GridBagConstraints gbc_resetRazzaButton = new GridBagConstraints();
-		gbc_resetRazzaButton.gridx = 3;
-		gbc_resetRazzaButton.gridy = 7;
-		animalePanel.add(resetRazzaButton, gbc_resetRazzaButton);
-		resetRazzaButton.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				comboBoxRazza.setSelectedIndex(-1);
-			}
-			
-		});
-
-		
-		resetSpecieButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				comboBoxSpecie.setEnabled(true);
-				comboBoxSpecie.setSelectedIndex(-1);
-				comboBoxRazza.setEnabled(false);
-				addRazzaButton.setEnabled(false);
-				comboBoxRazza.removeAllItems();
-			}
-			
-		});
-		
 		map.keySet().forEach(k-> comboBoxSpecie.addItem(k));
 		comboBoxSpecie.setSelectedIndex(-1);
-		comboBoxSpecie.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {	
-				if(comboBoxRazza.isEnabled()) {
-					comboBoxRazza.removeAllItems();
-				}
-								
-				comboBoxRazza.setEnabled(true);
-				addRazzaButton.setEnabled(true);
-				if(comboBoxSpecie.getSelectedIndex() != -1) {
-						map.entrySet().stream()	
-							  .filter(entry-> entry.getKey().equals(comboBoxSpecie.getSelectedItem().toString()))
-							  .map(x-> x.getValue())
-							  .flatMap(x-> x.stream())
-							  .forEach(s-> {
-								  comboBoxRazza.addItem(s);
-				});
-				}
-				comboBoxRazza.setSelectedIndex(-1);
-			}
-		});
 		
-		comboBoxRazza.addItemListener(new ItemListener() {
-
-			@Override
-			public void itemStateChanged(ItemEvent e) {	
-				
-			}
-		});
+		JButton resetRazzaButton = new JButton("RESET");
+		GridBagConstraints gbc_resetRazzaButton = new GridBagConstraints();
+		gbc_resetRazzaButton.insets = new Insets(0, 0, 5, 5);
+		gbc_resetRazzaButton.gridx = 4;
+		gbc_resetRazzaButton.gridy = 8;
+		animalePanel.add(resetRazzaButton, gbc_resetRazzaButton);
 		
 		JButton btnNewButton = new JButton("SAVE");
+		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
+		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
+		gbc_btnNewButton.gridx = 2;
+		gbc_btnNewButton.gridy = 10;
+		animalePanel.add(btnNewButton, gbc_btnNewButton);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (check.checkCF(textFieldProprietario.getText()) 
@@ -435,8 +392,44 @@ public class AggiungiAnimale extends JPanel {
 				}
 			}
 		});
-		btnNewButton.setBounds(183, 267, 117, 24);
-		centerPanel.add(btnNewButton);
+		resetRazzaButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				comboBoxRazza.setSelectedIndex(-1);
+			}
+			
+		});
+		comboBoxSpecie.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {	
+				if(comboBoxRazza.isEnabled()) {
+					comboBoxRazza.removeAllItems();
+				}
+								
+				comboBoxRazza.setEnabled(true);
+				addRazzaButton.setEnabled(true);
+				if(comboBoxSpecie.getSelectedIndex() != -1) {
+						map.entrySet().stream()	
+							  .filter(entry-> entry.getKey().equals(comboBoxSpecie.getSelectedItem().toString()))
+							  .map(x-> x.getValue())
+							  .flatMap(x-> x.stream())
+							  .forEach(s-> {
+								  comboBoxRazza.addItem(s);
+				});
+				}
+				comboBoxRazza.setSelectedIndex(-1);
+			}
+		});
+		
+		comboBoxRazza.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {	
+				
+			}
+		});
 		
 		JButton backButton = new JButton("BACK");
 		backButton.addActionListener(new ActionListener() {
@@ -447,14 +440,34 @@ public class AggiungiAnimale extends JPanel {
 		lowerPanel.add(backButton);
 		upperPanel.setLayout(new BorderLayout(0, 0));
 		
-		JLabel titleLabel = new JLabel("Aggiungi animale");
+		animalePanel.add(resetSpecieButton, gbc_resetSpecieButton);
+		
+		
+		resetSpecieButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				comboBoxSpecie.setEnabled(true);
+				comboBoxSpecie.setSelectedIndex(-1);
+				comboBoxRazza.setEnabled(false);
+				addRazzaButton.setEnabled(false);
+				comboBoxRazza.removeAllItems();
+			}
+			
+		});
+		
+		
+		upperPanel.setLayout(new BorderLayout(0, 0));
+		JLabel titleLabel = new JLabel("Pagamenti");
+		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		// importante per il design
-		// setLayout(groupLayout);
+	    // setLayout(groupLayout);
 
 		// importante per la visualizzazione 
-		frame.getContentPane().setLayout(groupLayout);
+	    frame.getContentPane().setLayout(groupLayout);
 	}
 }
