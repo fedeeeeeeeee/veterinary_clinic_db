@@ -522,9 +522,10 @@ public class PagamentiTableImpl implements PagamentiTable {
 			 + " (select prestazione_su_animale.data "
 			 + " from prestazione_su_animale, ricovero "
 			 + " where prestazione_su_animale.data >= ? "
-			 + " and prestazione_su_animale.data <= date_add( ? , INTERVAL ricovero.durataInGiorni DAY))"
-		 + " order by  prestazione_su_animale.data" ;
-		 
+			 + " and prestazione_su_animale.data <= date_add( ? , INTERVAL ricovero.durataInGiorni DAY)) "
+		+ " order by  prestazione_su_animale.data" ;
+		// System.out.println(query);
+		 //TODO
 		 List<Pagamento> pagamenti = new ArrayList<>();
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
@@ -534,10 +535,12 @@ public class PagamentiTableImpl implements PagamentiTable {
 			
 			final ResultSet result = statement.get().executeQuery();
 			
-			while (result.next()) {
-				if ((result.getString("ora").compareTo(pagamento.getOraPrestazione()) > 0 ||  result.getString("ora").equals(pagamento.getOraPrestazione()))
-					&& result.getString("data").equals(pagamento.getDataPrestazione())
-					|| !result.getString("data").equals(pagamento.getDataPrestazione())) {
+			while (result.next()) { 
+				// ( ( (oraRestituita > oraPassata OPPURE oraRestituita = oraPassata) E dataRestituita=dataPassata ) 
+				// OPPURE aggiungi qualsiasi data diversa da quella passata
+				if ( ((result.getString("ora").compareTo(pagamento.getOraPrestazione()) > 0 ||  result.getString("ora").equals(pagamento.getOraPrestazione()))
+					&& result.getString("prestazione_su_animale.data").equals(pagamento.getDataPrestazione()) )
+					|| !result.getString("prestazione_su_animale.data").equals(pagamento.getDataPrestazione())) {
 					Pagamento p = new PagamentoImpl();
 					
 					Animale animale = new AnimaleImpl();

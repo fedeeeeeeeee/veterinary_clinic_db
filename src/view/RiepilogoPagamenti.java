@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -283,21 +284,27 @@ public class RiepilogoPagamenti extends JPanel {
 					try {
 						PdfWriter.getInstance(doc, new FileOutputStream(path +".pdf"));
 						doc.open();
-						//titolo animale e proprietario 
+						//titolo animale e proprietario e altri dati da fattura
 						PdfPTable tbl = new PdfPTable(3);
 						tbl.addCell("Data");
 						tbl.addCell("Nome Prestazione");
 						tbl.addCell("Costo");
-						// aggiunta del costo totatle 
-						
+					
 						JTable tableForPDF = new JTable();
 						DefaultTableModel modelPDF = new DefaultTableModel();
 						modelPDF = (DefaultTableModel) tableForPDF.getModel();
 						modelPDF.addColumn("Data");
 						modelPDF.addColumn("Nome Prestazione");
 						modelPDF.addColumn("Costo");
-						
-						List<Pagamento> ricoveri = pagamentiController.getPrestazioniDuranteRicovero(listPagamenti.get(selectedPagamento));
+						List<Pagamento> ricoveri = new ArrayList<>();
+						if(listPagamenti.get(selectedPagamento).isDuranteRicovero()) {
+							ricoveri = pagamentiController.getPrestazioniDuranteRicovero(listPagamenti.get(selectedPagamento));
+							// aggiunta costi ricovero
+							
+						} else { 
+							ricoveri.add(listPagamenti.get(selectedPagamento));
+						}
+						// aggiunta del costo totatle 
 						this.createTablePdf(modelPDF, ricoveri);
 
 						for ( int i = 0; i < tableForPDF.getRowCount(); i ++) {
