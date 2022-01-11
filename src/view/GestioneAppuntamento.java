@@ -83,9 +83,7 @@ private boolean first;
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
-		
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		
+				
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout

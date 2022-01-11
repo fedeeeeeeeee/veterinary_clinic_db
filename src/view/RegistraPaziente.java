@@ -11,6 +11,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import java.awt.BorderLayout;
+import java.awt.Font;
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.GridBagLayout;
@@ -55,8 +57,7 @@ public class RegistraPaziente extends JPanel {
 		
 		JPanel lowerPanel = new JPanel();
 		
-		
-		
+
 		// per la visualizzazione
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		// utile per il design
@@ -66,24 +67,24 @@ public class RegistraPaziente extends JPanel {
 				.addGroup(groupLayout.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
 						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 439, GroupLayout.PREFERRED_SIZE)
-						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 438, GroupLayout.PREFERRED_SIZE)
 						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 438, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 					.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
 		);
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
-		gbl_centerPanel.columnWidths = new int[]{0, 24, 65, 70, 0, 0, 0, 37, 40, 0};
+		gbl_centerPanel.columnWidths = new int[]{0, 24, 65, 70, 0, 0, 148, 0, 0, 133, 148, 40, 0, 0, 0};
 		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_centerPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		gbl_centerPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
@@ -97,11 +98,11 @@ public class RegistraPaziente extends JPanel {
 		gbc_cercaLabel.gridy = 0;
 		centerPanel.add(cercaLabel, gbc_cercaLabel);
 		
-		JComboBox comboBox = new JComboBox();
+		JComboBox<String> comboBox = new JComboBox<>();
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
 		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridwidth = 4;
+		gbc_comboBox.gridwidth = 3;
 		gbc_comboBox.gridx = 4;
 		gbc_comboBox.gridy = 0;
 		centerPanel.add(comboBox, gbc_comboBox);
@@ -113,23 +114,24 @@ public class RegistraPaziente extends JPanel {
 		comboBox.setSelectedIndex(-1);
 		JButton addProprietarioButton = new JButton("+");
 		GridBagConstraints gbc_addProprietarioButton = new GridBagConstraints();
-		gbc_addProprietarioButton.insets = new Insets(0, 0, 5, 0);
-		gbc_addProprietarioButton.gridx = 8;
+		gbc_addProprietarioButton.anchor = GridBagConstraints.WEST;
+		gbc_addProprietarioButton.insets = new Insets(0, 0, 5, 5);
+		gbc_addProprietarioButton.gridx = 7;
 		gbc_addProprietarioButton.gridy = 0;
 		centerPanel.add(addProprietarioButton, gbc_addProprietarioButton);
-				
+		
 		addProprietarioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				  frame.getContentPane().add(new AggiungiProprietario(frame, user));
+		  frame.getContentPane().add(new AggiungiProprietario(frame, user));
 			}
 		});
 		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
 		gbc_scrollPane.gridheight = 2;
-		gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
-		gbc_scrollPane.gridwidth = 6;
+		gbc_scrollPane.gridwidth = 10;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
 		gbc_scrollPane.gridx = 2;
 		gbc_scrollPane.gridy = 1;
@@ -153,19 +155,15 @@ public class RegistraPaziente extends JPanel {
 							x.getY(), 
 					});
 				});
-				
 			}
-			
 		});
-				
+		
 		JButton addAnimaleButton = new JButton("Aggiungi animale");
 		GridBagConstraints gbc_addAnimaleButton = new GridBagConstraints();
-		gbc_addAnimaleButton.gridwidth = 5;
 		gbc_addAnimaleButton.insets = new Insets(0, 0, 0, 5);
-		gbc_addAnimaleButton.gridx = 3;
+		gbc_addAnimaleButton.gridx = 7;
 		gbc_addAnimaleButton.gridy = 3;
 		centerPanel.add(addAnimaleButton, gbc_addAnimaleButton);
-		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		
 		addAnimaleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,6 +172,7 @@ public class RegistraPaziente extends JPanel {
 				}
 			}
 		});
+		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		
 		JButton backButton = new JButton("BACK");
 		lowerPanel.add(backButton);
@@ -185,11 +184,17 @@ public class RegistraPaziente extends JPanel {
 		});
 		
 		JLabel titleLabel = new JLabel("Registrazione Paziente");
+	/*	titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		upperPanel.add(titleLabel, BorderLayout.CENTER);*/
+		
+		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		//importante per il design
-		//setLayout(groupLayout);
+	    //setLayout(groupLayout);
 
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);

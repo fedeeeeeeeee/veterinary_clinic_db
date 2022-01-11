@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -300,21 +301,22 @@ public class RiepilogoPagamenti extends JPanel {
 						if(listPagamenti.get(selectedPagamento).isDuranteRicovero()) {
 							ricoveri = pagamentiController.getPrestazioniDuranteRicovero(listPagamenti.get(selectedPagamento));
 							// aggiunta costi ricovero
-							
 						} else { 
 							ricoveri.add(listPagamenti.get(selectedPagamento));
 						}
-						// aggiunta del costo totatle 
+						// aggiunta del costo totale 
 						this.createTablePdf(modelPDF, ricoveri);
 
 						for ( int i = 0; i < tableForPDF.getRowCount(); i ++) {
-							String data = tableForPDF.getValueAt(i,0).toString();
-							String nome = tableForPDF.getValueAt(i,1).toString();
-							String costo = tableForPDF.getValueAt(i,2).toString();
-							tbl.addCell(data);
-							tbl.addCell(nome);
-							tbl.addCell(costo);
+							tbl.addCell(tableForPDF.getValueAt(i,0).toString());
+							tbl.addCell(tableForPDF.getValueAt(i,1).toString());
+							tbl.addCell(tableForPDF.getValueAt(i,2).toString());
 						}
+						
+						tbl.addCell(tableForPDF.getValueAt(tableForPDF.getRowCount()-1,0).toString());
+						tbl.addCell("Ricovero");
+						tbl.addCell(String.valueOf(listPagamenti.get(selectedPagamento).getCosto()- ricoveri.stream().mapToDouble(r-> r.getCosto()).sum()) + "€");
+
 						doc.add(tbl);
 					} catch (FileNotFoundException | DocumentException e1) {
 						System.out.println("ERRORE - creazione pdf");
