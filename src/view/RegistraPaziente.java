@@ -10,6 +10,8 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.BorderLayout;
 import java.awt.Font;
 
@@ -52,11 +54,8 @@ public class RegistraPaziente extends JPanel {
 		this.proprietarioController = new ProprietarioControllerImpl();
 		
 		JPanel upperPanel = new JPanel();
-		
 		JPanel centerPanel = new JPanel();
-		
 		JPanel lowerPanel = new JPanel();
-		
 
 		// per la visualizzazione
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
@@ -68,8 +67,8 @@ public class RegistraPaziente extends JPanel {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
-						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 439, GroupLayout.PREFERRED_SIZE)
-						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 438, GroupLayout.PREFERRED_SIZE))
+						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
+						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -169,6 +168,9 @@ public class RegistraPaziente extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBox.getSelectedIndex() != -1) {
 					frame.getContentPane().add(new AggiungiAnimale(frame, user, comboBox.getSelectedItem().toString()));
+				} else {
+					JOptionPane.showMessageDialog(frame, "Seleziona un proprietario, oppure aggiungine uno nuovo per registrare un paziente.", 
+							"Attenzione!", JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});
