@@ -328,7 +328,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 		 + "from ricovero,  prestazione_su_animale " 
 		 + "where ricovero.codAnimale = prestazione_su_animale.codAnimale "
 		 + "and prestazione_su_animale.data > ricovero.dataInizio " 
-		 + "and prestazione_su_animale.data < date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
+		 + "and prestazione_su_animale.data <= date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
 		 + "and prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "
 		 + " order by  prestazione_su_animale.data" ;
 		 
@@ -394,7 +394,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 		 + "from ricovero,  prestazione_su_animale " 
 		 + "where ricovero.codAnimale = prestazione_su_animale.codAnimale "
 		 + "and prestazione_su_animale.data > ricovero.dataInizio " 
-		 + "and prestazione_su_animale.data < date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
+		 + "and prestazione_su_animale.data <= date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
 		 + "and prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "
 		 + " order by  prestazione_su_animale.data" ;
 		 
@@ -447,8 +447,65 @@ public class PagamentiTableImpl implements PagamentiTable {
 
 	@Override
 	public List<Pagamento> getPagamentiInPeriodo(String dataInizio, String dataFine) {
-		// TODO Auto-generated method stub
-		return null;
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		 final String query = "select animale.nome, animale.specie, animale.cf, prestazione_su_animale.data, prestazione.nome, prestazione.prezzo, prestazione_su_animale.ora, animale.codAnimale,  prestazione_su_animale.codTipoPrestazione " 
+		 + "from animale, prestazione, prestazione_su_animale " 
+		 + "where prestazione_su_animale.codAnimale = animale.codAnimale " 
+		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione " 
+		 + "and (prestazione_su_animale.data, prestazione_su_animale.codAnimale) not in ( select data, prestazione_su_animale.codAnimale " 
+		 + "from ricovero,  prestazione_su_animale " 
+		 + "where ricovero.codAnimale = prestazione_su_animale.codAnimale "
+		 + "and prestazione_su_animale.data > ricovero.dataInizio " 
+		 + "and prestazione_su_animale.data <= date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
+		 + "and prestazione_su_animale.data >= ? and prestazione_su_animale.data <= ? "
+		 + " order by  prestazione_su_animale.data" ;
+		 
+		 List<Pagamento> pagamenti = new ArrayList<>();
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			
+			
+			statement.get().setString(1, dataInizio);
+			statement.get().setString(2, dataFine);
+
+			final ResultSet result = statement.get().executeQuery();
+			
+			while (result.next()) {
+				Pagamento p = new PagamentoImpl();
+			
+				Animale animale = new AnimaleImpl();
+				animale.setNome(result.getString("animale.nome"));
+				animale.setCf(result.getString("animale.cf"));
+				animale.setSpecie(result.getString("animale.specie"));
+				animale.setCodAnimale(result.getInt("codAnimale"));
+				p.setAnimale(animale);
+				p.setDataPrestazione(result.getString("data"));
+				p.setNomePrestazione(result.getString("prestazione.nome"));
+				p.setCosto(result.getFloat("prestazione.prezzo"));
+				p.setOraPrestazione(result.getString("ora"));
+				p.setCodPrestazione(result.getInt("prestazione_su_animale.codTipoPrestazione"));
+				pagamenti.add(p);
+			}
+
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		pagamenti.forEach(pag-> {
+			pag.setRicovero(setFlagRicovero(pag));
+		});
+		return pagamenti;
 	}
 
 	@Override

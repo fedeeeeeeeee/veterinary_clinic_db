@@ -41,6 +41,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
+import com.toedter.calendar.JDateChooser;
 
 import controller.PagamentiController;
 import controller.PagamentiControllerImpl;
@@ -66,7 +67,9 @@ public class RiepilogoPagamenti extends JPanel {
 	private JScrollPane scrollPane;
 	private JTextField textFieldTotale;
 	private int selectedPagamento = -1;
-	
+
+
+
 	private void resetAndDraw(List<Pagamento> list) {
 		this.listPagamenti.clear();
 		this.listPagamenti = list;
@@ -224,14 +227,12 @@ public class RiepilogoPagamenti extends JPanel {
 		lblTotale.setHorizontalTextPosition(SwingConstants.RIGHT);
 		
 		// -----inizio ----- MENUU--- listener
-		JMenu subMenuSeleziona = new JMenu("Periodo");
-		menuMostra.add(subMenuSeleziona);
 			JMenuItem itemOggi = new JMenuItem("Oggi"); // , new ImageIcon("cut-java-image.gif"));
 			JMenuItem itemMese = new JMenuItem("Mensili");
 			JMenuItem itemAnno = new JMenuItem("Annuali");
 			JMenuItem itemTutti = new JMenuItem("Tutti");
 			JMenuItem itemStampa = new JMenuItem("Stampa");
-			
+			JMenuItem itemPeriodo = new JMenuItem("Periodo");
 			DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 			String dataformat = formatter.format(LocalDateTime.now());
 			textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
@@ -252,7 +253,22 @@ public class RiepilogoPagamenti extends JPanel {
 				this.resetAndDraw(pagamentiController.getAllPagamenti());
 				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
-			
+			itemPeriodo.addActionListener((e) -> {
+			OptionPeriodo panelPeriod =  new OptionPeriodo();
+			   int result =  JOptionPane.showConfirmDialog(null,
+					   panelPeriod,
+                        "Periodo Pagamenti : ",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.PLAIN_MESSAGE);
+			    if (result == JOptionPane.OK_OPTION) {
+			        System.out.println("x value: " + panelPeriod.getDataInizio());
+			        System.out.println("y value: " + panelPeriod.getDataFine());
+			      }
+				this.resetAndDraw(pagamentiController.getPagamentiInPeriodo(panelPeriod.getDataInizio(), panelPeriod.getDataFine())); 
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
+			});
+		
+				
 			itemStampa.addActionListener((e) -> {
 				if (this.selectedPagamento != -1) {
 					String path= ""; 
@@ -283,13 +299,7 @@ public class RiepilogoPagamenti extends JPanel {
 						
 						List<Pagamento> ricoveri = pagamentiController.getPrestazioniDuranteRicovero(listPagamenti.get(selectedPagamento));
 						this.createTablePdf(modelPDF, ricoveri);
-						System.out.println("prestazione selezionata" + listPagamenti.get(selectedPagamento).getNomePrestazione());
-						ricoveri.forEach(a-> {
-							System.out.println("elementi " + a.getNomePrestazione());
-						});
-						//TODO sistemare controlla getRicoveroDiPrestazione ritorna altra roba di altro animale ecc 
-						System.out.println(tableForPDF.getRowCount());
-						
+
 						for ( int i = 0; i < tableForPDF.getRowCount(); i ++) {
 							String data = tableForPDF.getValueAt(i,0).toString();
 							String nome = tableForPDF.getValueAt(i,1).toString();
@@ -308,13 +318,12 @@ public class RiepilogoPagamenti extends JPanel {
 					JOptionPane.showMessageDialog(null, "Non hai selezionato alcun pagamento");
 				}
 			});
-			
 			menuMostra.add(itemTutti);
 			menuMostra.add(itemOggi);
 			menuMostra.add(itemAnno);
 			menuMostra.add(itemMese);
 			menuAzione.add(itemStampa);
-			menuMostra.add(subMenuSeleziona);
+			menuMostra.add(itemPeriodo);
 			
 	
 			//----fine ---- MENUU
