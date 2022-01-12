@@ -51,9 +51,8 @@ public class GestioneRicoveri extends JPanel {
 	private RicoveroController ricoveroController;
 	private List<Ricovero> listRicoveri = new ArrayList<>() ;
 	private int numeroPosti;
-	private ListIterator<Ricovero> iteratorRicoveri;
 	private List<Posto> listPostiLiberi;
-	
+	private int indice = 0;
 	public GestioneRicoveri(JFrame frame, User user) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
@@ -69,7 +68,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 		// JScrollPane scrollPane = new JScrollPane(centerPanel);
 		 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-	      //GroupLayout groupLayout = new GroupLayout(this);
+	     //GroupLayout groupLayout = new GroupLayout(this);
 	        groupLayout.setHorizontalGroup(
 	        	groupLayout.createParallelGroup(Alignment.LEADING)
 	        		.addGroup(groupLayout.createSequentialGroup()
@@ -88,7 +87,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 	        			.addPreferredGap(ComponentPlacement.RELATED)
 	        			.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
 	        			.addPreferredGap(ComponentPlacement.RELATED)
-	        			.addComponent(arrowPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+	        			.addComponent(arrowPanel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 	        			.addPreferredGap(ComponentPlacement.RELATED)
 	        			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 	        			.addContainerGap())
@@ -99,17 +98,17 @@ this.ricoveroController = new RicoveroControllerImpl();
 	        
 	     
 	        GridBagLayout gbl_centerPanel = new GridBagLayout();
-	        gbl_centerPanel.columnWidths = new int[]{0, 0, 0, 0};
-	        gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0};
-	        gbl_centerPanel.columnWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+	        gbl_centerPanel.columnWidths = new int[]{400, 0};
+	        gbl_centerPanel.rowHeights = new int[]{0, 200, 0, 0};
+	        gbl_centerPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
 	        gbl_centerPanel.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
 	        centerPanel.setLayout(gbl_centerPanel);
 	        
 	        JPanel cardRicovero = new JPanel();
 	        GridBagConstraints gbc_cardRicovero = new GridBagConstraints();
-	        gbc_cardRicovero.insets = new Insets(0, 0, 5, 5);
-	        gbc_cardRicovero.fill = GridBagConstraints.BOTH;
-	        gbc_cardRicovero.gridx = 1;
+	        gbc_cardRicovero.insets = new Insets(0, 0, 5, 0);
+	        gbc_cardRicovero.fill = GridBagConstraints.VERTICAL;
+	        gbc_cardRicovero.gridx = 0;
 	        gbc_cardRicovero.gridy = 1;
 	        centerPanel.add(cardRicovero, gbc_cardRicovero);
 	        
@@ -126,18 +125,19 @@ this.ricoveroController = new RicoveroControllerImpl();
 	    	  this.listRicoveri.add(ricovero);
 	      });
 	      
-	      this.iteratorRicoveri =  listRicoveri.listIterator();
-	     cardRicovero.add(new CardRicovero(this.iteratorRicoveri.next()));
-System.out.println(this.listPostiLiberi.size());
-System.out.println(this.listRicoveri.size());
-	    
+	      this.indice = 0;
+	     cardRicovero.add(new CardRicovero(this.listRicoveri.get(indice))); 
+	     
 	     JButton btnFrecciaDx = new JButton(">");
-	        arrowPanel.add(btnFrecciaDx);
+	        arrowPanel.add(btnFrecciaDx);  
 	        
 	        btnFrecciaDx.addActionListener(new ActionListener() {
-	        	public void actionPerformed(ActionEvent e) {      		
-	        		if(iteratorRicoveri.hasNext()){ // 9 
-		        			Ricovero elem = iteratorRicoveri.next(); // 10
+	        	public void actionPerformed(ActionEvent e) {
+	        		
+	        		if(indice+1 < listRicoveri.size()){
+	        			indice++;
+		        			Ricovero elem = listRicoveri.get(indice);
+		        	
 		        			if(elem.getDataInizio()== null) {
 		        				cardRicovero.removeAll();
 				        		cardRicovero.revalidate();
@@ -149,26 +149,26 @@ System.out.println(this.listRicoveri.size());
 				        		cardRicovero.repaint();
 				        		cardRicovero.add(new CardRicovero(elem));     			
 		        			}
-	        		}
-	        		
+	        	}
 	        	}
 	        });
 	        btnFrecciaSX.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	        		if(iteratorRicoveri.hasPrevious()){
-	        			Ricovero elem = iteratorRicoveri.previous();
-	        			if(elem.getDataInizio()== null) {
-	        				cardRicovero.removeAll();
-			        		cardRicovero.revalidate();
-			        		cardRicovero.repaint();
-	        				cardRicovero.add(new CardRicoveroVuota(elem));
-	        			} else {
-		        			cardRicovero.removeAll();
-			        		cardRicovero.revalidate();
-			        		cardRicovero.repaint();
-			        		cardRicovero.add(new CardRicovero(elem));     			
-	        			}
-	        		}
+	        		if(indice-1 >= 0){
+	        			indice--;
+		        			Ricovero elem = listRicoveri.get(indice);
+			        			if(elem.getDataInizio()== null) {
+			        				cardRicovero.removeAll();
+					        		cardRicovero.revalidate();
+					        		cardRicovero.repaint();
+			        				cardRicovero.add(new CardRicoveroVuota(elem));
+			        			} else {
+				        			cardRicovero.removeAll();
+					        		cardRicovero.revalidate();
+					        		cardRicovero.repaint();
+					        		cardRicovero.add(new CardRicovero(elem));     			
+			        			}
+	        	}
 	        	}
 	        });
 			/*LOWER PANEL */
