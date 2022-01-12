@@ -1,13 +1,36 @@
 package controller;
 
+import java.util.List;
+
+import database.RicoveroTable;
+import database.RicoveroTableImpl;
 import model.Animale;
+import model.Posto;
+import model.Ricovero;
 
 public class RicoveroControllerImpl implements RicoveroController {
 
+	private RicoveroTable ricoveroTable;
+	
+	public RicoveroControllerImpl() {
+		ricoveroTable = new RicoveroTableImpl();
+	}
+	
 	@Override
 	public Animale getAnimaleInPosto(int posto) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@Override
+	public List<Ricovero> getRicoveriAttivi() {
+		return ricoveroTable.getRicoveriAttivi();
+	}
+
+	@Override
+	public List<Posto> getPostiLiberi() {
+		return ricoveroTable.getPostiLiberi();
+	}
+
+	
+	
 }

@@ -235,11 +235,13 @@ public class UserTableImpl implements UserTable {
 
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		final String query = "select * from " + personaleTableName;
+		final String query = "select * from " + personaleTableName + " where e_mail = ? "  ;
+		
 		User user = new UserImpl();
 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, username);
 			final ResultSet result = statement.get().executeQuery();
 			if (result.next()) {
 				user.setCF(result.getString("CF"));

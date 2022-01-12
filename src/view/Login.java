@@ -65,12 +65,11 @@ public class Login extends JPanel {
             	if(controller.checkUser(textFieldUsername.getText(), String.valueOf(passwordField.getPassword()))) {
             		//JOptionPane.showMessageDialog(frame, "User found", "OK!", JOptionPane.ERROR_MESSAGE);
             		 user = controller.getUser(textFieldUsername.getText());
-            		 
+            		 //System.out.println(user.getRuolo());
 					switch (user.getRuolo()) {
 					case "Veterinario":
 					case "Infermiere":
-						// TODO
-						// frame.getContentPane().add(new Home(frame, user));
+						frame.getContentPane().add(new HomeVeterinario(frame, user));
 						break;
 					case "Segretaria":
 						frame.getContentPane().add(new HomeSegretaria(frame, user));

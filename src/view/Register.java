@@ -302,8 +302,7 @@ public class Register extends JPanel {
 					switch (user.getRuolo()) {
 					case "Veterinario":
 					case "Infermiere":
-						// TODO
-						// frame.getContentPane().add(new Home(frame, user));
+						frame.getContentPane().add(new HomeVeterinario(frame, user));
 						break;
 					case "Segretaria":
 						frame.getContentPane().add(new HomeSegretaria(frame, user));

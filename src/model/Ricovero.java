@@ -22,7 +22,9 @@ public interface Ricovero {
 
 	void setPrezzoGiornaliero(float prezzoGiornaliero);
 
-	int getNumeroPosto();
+	void setMotivoRicovero(String string);
 
-	void setNumeroPosto(int numeroPosto);
+	void setPosto(Posto posto);
+
+	Posto getPosto();
 }

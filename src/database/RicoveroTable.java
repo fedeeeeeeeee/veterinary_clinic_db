@@ -1,0 +1,15 @@
+package database;
+
+import java.util.List;
+
+import model.Posto;
+import model.Ricovero;
+
+public interface RicoveroTable {
+
+	List<Ricovero> getRicoveriAttivi();
+
+	List<Posto> getPostiLiberi();
+
+	
+}

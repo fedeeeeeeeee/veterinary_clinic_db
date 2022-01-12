@@ -1,0 +1,122 @@
+package view;
+
+import javax.swing.JPanel;
+import javax.swing.event.MouseInputAdapter;
+
+import org.w3c.dom.events.MouseEvent;
+
+import model.Ricovero;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseAdapter;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import javax.swing.SwingConstants;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import java.awt.GridLayout;
+import java.awt.ComponentOrientation;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
+
+public class CardRicovero extends JPanel {
+
+private Ricovero ricovero; 
+
+	public CardRicovero(Ricovero ricovero ) {
+		this.ricovero = ricovero;
+		setLayout(new BorderLayout(0, 0));
+		
+		JPanel upperPanel = new JPanel();
+		add(upperPanel, BorderLayout.NORTH);
+		setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		
+		JLabel lblModPostoEDim = new JLabel("Posto e dimensione");
+		upperPanel.add(lblModPostoEDim);
+		
+		JPanel middlePanel = new JPanel();
+		add(middlePanel, BorderLayout.CENTER);
+		GridBagLayout gbl_middlePanel = new GridBagLayout();
+		gbl_middlePanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
+		gbl_middlePanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_middlePanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_middlePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		middlePanel.setLayout(gbl_middlePanel);
+		
+		JLabel lblModNome = new JLabel("Nome");
+		lblModNome.setText(ricovero.getAnimale().getNome());
+		GridBagConstraints gbc_lblModNome = new GridBagConstraints();
+		gbc_lblModNome.insets = new Insets(0, 0, 5, 5);
+		gbc_lblModNome.gridx = 2;
+		gbc_lblModNome.gridy = 2;
+		middlePanel.add(lblModNome, gbc_lblModNome);
+		
+		JLabel lblInzioRicovero = new JLabel("Inizio Ricovero");
+		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_2.gridx = 1;
+		gbc_lblNewLabel_2.gridy = 4;
+		middlePanel.add(lblInzioRicovero, gbc_lblNewLabel_2);
+		
+		JLabel lblFineRicovero = new JLabel("Fine Ricovero");
+		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_3.gridx = 3;
+		gbc_lblNewLabel_3.gridy = 4;
+		middlePanel.add(lblFineRicovero, gbc_lblNewLabel_3);
+		
+		JLabel lblModDataInizio = new JLabel("data");
+		GridBagConstraints gbc_lblModDataInizio = new GridBagConstraints();
+		gbc_lblModDataInizio.insets = new Insets(0, 0, 5, 5);
+		gbc_lblModDataInizio.gridx = 1;
+		gbc_lblModDataInizio.gridy = 5;
+		middlePanel.add(lblModDataInizio, gbc_lblModDataInizio);
+		
+		JLabel lblModDataFine = new JLabel("New label");
+		GridBagConstraints gbc_lblModDataFine = new GridBagConstraints();
+		gbc_lblModDataFine.anchor = GridBagConstraints.WEST;
+		gbc_lblModDataFine.insets = new Insets(0, 0, 5, 5);
+		gbc_lblModDataFine.gridx = 3;
+		gbc_lblModDataFine.gridy = 5;
+		middlePanel.add(lblModDataFine, gbc_lblModDataFine);
+		
+		JLabel lblNewLabel_6 = new JLabel("Motivo");
+		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
+		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_6.gridx = 1;
+		gbc_lblNewLabel_6.gridy = 7;
+		middlePanel.add(lblNewLabel_6, gbc_lblNewLabel_6);
+		
+		JLabel lblModMotivo = new JLabel("New label");
+		GridBagConstraints gbc_lblModMotivo = new GridBagConstraints();
+		gbc_lblModMotivo.gridwidth = 2;
+		gbc_lblModMotivo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblModMotivo.gridx = 2;
+		gbc_lblModMotivo.gridy = 7;
+		middlePanel.add(lblModMotivo, gbc_lblModMotivo);
+		
+		JPanel lowerPanel = new JPanel();
+		add(lowerPanel, BorderLayout.SOUTH);
+		
+		JButton btnInfo = new JButton("Info");
+		btnInfo.setHorizontalTextPosition(SwingConstants.RIGHT);
+		btnInfo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		lowerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+		btnInfo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lowerPanel.add(btnInfo);
+		
+         
+	}
+
+}

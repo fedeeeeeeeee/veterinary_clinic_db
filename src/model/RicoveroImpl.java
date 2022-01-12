@@ -4,9 +4,12 @@ public class RicoveroImpl implements Ricovero {
 	private Animale animale;
 	private String dataInizio;
 	private String oraInizio;
+	private String motivoRicovero;
 	private int durataInGiorni;
 	private float prezzoGiornaliero;
-	private int numeroPosto;
+	//private int numeroPosto;
+	private Posto posto;
+	
 
 	@Override
 	public Animale getAnimale() {
@@ -44,6 +47,10 @@ public class RicoveroImpl implements Ricovero {
 	}
 
 	@Override
+	public Posto getPosto() {
+		return this.posto;
+	}
+	@Override
 	public void setDurataInGiorni(int durataInGiorni) {
 		this.durataInGiorni = durataInGiorni;
 	}
@@ -58,13 +65,16 @@ public class RicoveroImpl implements Ricovero {
 		this.prezzoGiornaliero = prezzoGiornaliero;
 	}
 
+
+
 	@Override
-	public int getNumeroPosto() {
-		return numeroPosto;
+	public void setMotivoRicovero(String string) {
+		this.motivoRicovero = string;
 	}
 
 	@Override
-	public void setNumeroPosto(int numeroPosto) {
-		this.numeroPosto = numeroPosto;
+	public void setPosto(Posto posto) {
+		this.posto = posto;
+		
 	}
 }
