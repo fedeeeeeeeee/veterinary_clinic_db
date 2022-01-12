@@ -30,11 +30,10 @@ public class CardRicoveroVuota extends JPanel {
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		JLabel lblModPostoEDim = new JLabel();
-		lblModPostoEDim.setText(String.valueOf(ricovero.getPosto().getNumero()));
+		String dimensione = ricovero.getPosto().getDescrizione().substring(18);
+		lblModPostoEDim.setText("Posto Numero: " + ricovero.getPosto().getNumero() + " Taglia:  " +  dimensione);
 		
 		upperPanel.add(lblModPostoEDim);
-		JLabel lblVuoto = new JLabel("Vuoto");
-		upperPanel.add(lblVuoto);
 		
 		JPanel middlePanel = new JPanel();
 		add(middlePanel, BorderLayout.CENTER);
@@ -44,6 +43,13 @@ public class CardRicoveroVuota extends JPanel {
 		gbl_middlePanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_middlePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		middlePanel.setLayout(gbl_middlePanel);
+		JLabel lblVuoto = new JLabel("Libero");
+		lblVuoto.setForeground(new Color(34, 139, 34));
+		GridBagConstraints gbc_lblVuoto = new GridBagConstraints();
+		gbc_lblVuoto.insets = new Insets(0, 0, 5, 5);
+		gbc_lblVuoto.gridx = 2;
+		gbc_lblVuoto.gridy = 2;
+		middlePanel.add(lblVuoto, gbc_lblVuoto);
 		
 		JButton btnInfo = new JButton("add");
 		

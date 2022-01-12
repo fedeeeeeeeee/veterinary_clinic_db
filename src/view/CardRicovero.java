@@ -10,6 +10,9 @@ import model.Ricovero;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.MouseListener;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.awt.event.MouseAdapter;
 
 import javax.swing.BorderFactory;
@@ -26,6 +29,7 @@ import java.awt.ComponentOrientation;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Font;
 
 public class CardRicovero extends JPanel {
 
@@ -39,7 +43,9 @@ private Ricovero ricovero;
 		add(upperPanel, BorderLayout.NORTH);
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
-		JLabel lblModPostoEDim = new JLabel("Posto e dimensione");
+		JLabel lblModPostoEDim = new JLabel();
+		String dimensione = ricovero.getPosto().getDescrizione().substring(18);
+		lblModPostoEDim.setText("Posto Numero: " + ricovero.getPosto().getNumero() + " Taglia:  " +  dimensione);
 		upperPanel.add(lblModPostoEDim);
 		
 		JPanel middlePanel = new JPanel();
@@ -48,7 +54,7 @@ private Ricovero ricovero;
 		gbl_middlePanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_middlePanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_middlePanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_middlePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_middlePanel.rowWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		middlePanel.setLayout(gbl_middlePanel);
 		
 		JLabel lblModNome = new JLabel("Nome");
@@ -60,6 +66,8 @@ private Ricovero ricovero;
 		middlePanel.add(lblModNome, gbc_lblModNome);
 		
 		JLabel lblInzioRicovero = new JLabel("Inizio Ricovero");
+		lblInzioRicovero.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_2.gridx = 1;
@@ -67,6 +75,8 @@ private Ricovero ricovero;
 		middlePanel.add(lblInzioRicovero, gbc_lblNewLabel_2);
 		
 		JLabel lblFineRicovero = new JLabel("Fine Ricovero");
+		lblFineRicovero.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_3.gridx = 3;
@@ -74,13 +84,26 @@ private Ricovero ricovero;
 		middlePanel.add(lblFineRicovero, gbc_lblNewLabel_3);
 		
 		JLabel lblModDataInizio = new JLabel("data");
+		lblModDataInizio.setText(ricovero.getDataInizio());
 		GridBagConstraints gbc_lblModDataInizio = new GridBagConstraints();
 		gbc_lblModDataInizio.insets = new Insets(0, 0, 5, 5);
 		gbc_lblModDataInizio.gridx = 1;
 		gbc_lblModDataInizio.gridy = 5;
 		middlePanel.add(lblModDataInizio, gbc_lblModDataInizio);
 		
+	String dataInizio = ricovero.getDataInizio(); 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(sdf.parse(dataInizio));
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		c.add(Calendar.DATE, ricovero.getDurataInGiorni());
+		String dataFine = sdf.format(c.getTime()); 
+		
 		JLabel lblModDataFine = new JLabel("New label");
+		lblModDataFine.setText(dataFine);
 		GridBagConstraints gbc_lblModDataFine = new GridBagConstraints();
 		gbc_lblModDataFine.anchor = GridBagConstraints.WEST;
 		gbc_lblModDataFine.insets = new Insets(0, 0, 5, 5);
@@ -96,7 +119,9 @@ private Ricovero ricovero;
 		middlePanel.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		
 		JLabel lblModMotivo = new JLabel("New label");
+		lblModMotivo.setText(ricovero.getMotivoRicovero());
 		GridBagConstraints gbc_lblModMotivo = new GridBagConstraints();
+		gbc_lblModMotivo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblModMotivo.gridwidth = 2;
 		gbc_lblModMotivo.insets = new Insets(0, 0, 5, 5);
 		gbc_lblModMotivo.gridx = 2;

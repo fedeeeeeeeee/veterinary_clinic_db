@@ -50,6 +50,11 @@ public class RicoveroImpl implements Ricovero {
 	public Posto getPosto() {
 		return this.posto;
 	}
+	
+	@Override
+	public String getMotivoRicovero() {
+		return this.motivoRicovero;
+	}
 	@Override
 	public void setDurataInGiorni(int durataInGiorni) {
 		this.durataInGiorni = durataInGiorni;

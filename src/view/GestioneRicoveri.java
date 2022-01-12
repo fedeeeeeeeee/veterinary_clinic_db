@@ -99,17 +99,30 @@ this.ricoveroController = new RicoveroControllerImpl();
 	     
 	        GridBagLayout gbl_centerPanel = new GridBagLayout();
 	        gbl_centerPanel.columnWidths = new int[]{400, 0};
-	        gbl_centerPanel.rowHeights = new int[]{0, 200, 0, 0};
+	        gbl_centerPanel.rowHeights = new int[]{0, 0, 200, 0, 0};
 	        gbl_centerPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-	        gbl_centerPanel.rowWeights = new double[]{1.0, 1.0, 1.0, Double.MIN_VALUE};
+	        gbl_centerPanel.rowWeights = new double[]{1.0, 1.0, 1.0, 1.0, Double.MIN_VALUE};
 	        centerPanel.setLayout(gbl_centerPanel);
+	        
+	        JPanel panelDisponibilita = new JPanel();
+	        GridBagConstraints gbc_panelDisponibilita = new GridBagConstraints();
+	        gbc_panelDisponibilita.insets = new Insets(0, 0, 5, 0);
+	        gbc_panelDisponibilita.fill = GridBagConstraints.BOTH;
+	        gbc_panelDisponibilita.gridx = 0;
+	        gbc_panelDisponibilita.gridy = 0;
+	        centerPanel.add(panelDisponibilita, gbc_panelDisponibilita);
+	        
+	        JLabel lblPostiLiberi = new JLabel("Posti liberi");
+	        panelDisponibilita.add(lblPostiLiberi);
+	        
+	   
 	        
 	        JPanel cardRicovero = new JPanel();
 	        GridBagConstraints gbc_cardRicovero = new GridBagConstraints();
 	        gbc_cardRicovero.insets = new Insets(0, 0, 5, 0);
 	        gbc_cardRicovero.fill = GridBagConstraints.VERTICAL;
 	        gbc_cardRicovero.gridx = 0;
-	        gbc_cardRicovero.gridy = 1;
+	        gbc_cardRicovero.gridy = 2;
 	        centerPanel.add(cardRicovero, gbc_cardRicovero);
 	        
 	      
@@ -124,9 +137,19 @@ this.ricoveroController = new RicoveroControllerImpl();
 	    	  ricovero.setPosto(posto);
 	    	  this.listRicoveri.add(ricovero);
 	      });
-	      
+	      JLabel lblModPostiLiberi = new JLabel("New label");
+	        lblModPostiLiberi.setText(String.valueOf(this.listPostiLiberi.size()));
+	        lblModPostiLiberi.setForeground(new Color(0, 128, 0));
+	        panelDisponibilita.add(lblModPostiLiberi);
 	      this.indice = 0;
 	     cardRicovero.add(new CardRicovero(this.listRicoveri.get(indice))); 
+	     
+	     JLabel lblPage = new JLabel();
+	     lblPage.setText("1 /" + listRicoveri.size());
+	     GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+	     gbc_lblNewLabel.gridx = 0;
+	     gbc_lblNewLabel.gridy = 3;
+	     centerPanel.add(lblPage, gbc_lblNewLabel);
 	     
 	     JButton btnFrecciaDx = new JButton(">");
 	        arrowPanel.add(btnFrecciaDx);  
@@ -137,7 +160,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 	        		if(indice+1 < listRicoveri.size()){
 	        			indice++;
 		        			Ricovero elem = listRicoveri.get(indice);
-		        	
+		        			 lblPage.setText((indice+1) + "/" + listRicoveri.size());
 		        			if(elem.getDataInizio()== null) {
 		        				cardRicovero.removeAll();
 				        		cardRicovero.revalidate();
@@ -156,6 +179,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 	        	public void actionPerformed(ActionEvent e) {
 	        		if(indice-1 >= 0){
 	        			indice--;
+	        			 lblPage.setText(indice + "/" + listRicoveri.size());
 		        			Ricovero elem = listRicoveri.get(indice);
 			        			if(elem.getDataInizio()== null) {
 			        				cardRicovero.removeAll();

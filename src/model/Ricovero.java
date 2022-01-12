@@ -27,4 +27,6 @@ public interface Ricovero {
 	void setPosto(Posto posto);
 
 	Posto getPosto();
+
+	String getMotivoRicovero();
 }
