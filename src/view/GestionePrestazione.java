@@ -17,7 +17,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import model.User;
-
+/*
+ * Dottore e infermiere che aggiornano le prestazioni con i dati patologie e farmaci
+ * */
 public class GestionePrestazione extends JPanel {
 
 	private JFrame frame;
@@ -70,7 +72,7 @@ public class GestionePrestazione extends JPanel {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 		upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
-		JLabel titleLabel = new JLabel("Cartelle Pazienti");
+		JLabel titleLabel = new JLabel("Gestione Prestazione");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));

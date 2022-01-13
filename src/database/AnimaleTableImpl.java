@@ -170,5 +170,4 @@ public class AnimaleTableImpl implements AnimaleTable {
 		}
 		return list;
 	}
-
 }

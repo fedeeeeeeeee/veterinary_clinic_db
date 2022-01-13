@@ -72,6 +72,7 @@ public class Login extends JPanel {
 						frame.getContentPane().add(new HomeVeterinario(frame, user));
 						break;
 					case "Segretaria":
+					case "tecnico":
 						frame.getContentPane().add(new HomeSegretaria(frame, user));
 						break;
 					default:

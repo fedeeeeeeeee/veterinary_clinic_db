@@ -70,7 +70,7 @@ public class HomeVeterinario extends JPanel {
 	        JButton btnPazienti = new JButton("Pazienti");
 	        btnPazienti.addActionListener(new ActionListener() {
 	        	public void actionPerformed(ActionEvent e) {
-	        		frame.getContentPane().add(new VisualizzaDatiPazienti(frame, user));
+	        		frame.getContentPane().add(new VisualizzaPazienti(frame, user));
 	        	}
 	        });
 	        GridBagConstraints gbc_btnPazienti = new GridBagConstraints();
