@@ -17,9 +17,9 @@ public class AnagraficaPazientePanel extends JPanel {
 		JPanel upperPanel = new JPanel();
 		add(upperPanel, BorderLayout.NORTH);
 		
-		//JLabel lblNewLabel = new JLabel("Anagrafica");
-		//lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		//upperPanel.add(lblNewLabel);
+		JLabel lblNewLabel = new JLabel("Anagrafica");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		upperPanel.add(lblNewLabel);
 
 		
 	}

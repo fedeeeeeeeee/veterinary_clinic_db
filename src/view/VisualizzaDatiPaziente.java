@@ -71,7 +71,7 @@ public class VisualizzaDatiPaziente extends JPanel {
 		tabbedPane.addTab("Parametri", null, panelParametri,
 		                  "Visualizza altezza e peso");
 		
-		JPanel panelProprietario = new JPanel();
+		JPanel panelProprietario = new AnagraficaProprietarioPanel(this.paziente.getAnimale().getProprietario());
 		tabbedPane.addTab("Proprietario", null, panelProprietario,
 		                  "Visualizza anagrafica proprietario");
 		
