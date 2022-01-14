@@ -75,7 +75,7 @@ public class VisualizzaDatiPaziente extends JPanel {
 		tabbedPane.addTab("Proprietario", null, panelProprietario,
 		                  "Visualizza anagrafica proprietario");
 		
-		JPanel panelFarmaci = new JPanel();
+		JPanel panelFarmaci = new FarmaciDiPazientePanel(this.paziente.getAnimale());
 		tabbedPane.addTab("Farmaci", null, panelFarmaci,
 		                  "Visualizza farmaci prescritti");
 		

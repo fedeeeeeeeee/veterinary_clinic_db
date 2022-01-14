@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import model.Farmaco;
+import model.FarmacoInPrestazione;
 
 public interface FarmaciController {
 
@@ -28,4 +29,6 @@ public interface FarmaciController {
 	List<String> getAllTypeFarmaco();
 
 	void addNewFarmaci(Farmaco farmaco);
+
+	List<FarmacoInPrestazione> getFarmaciDiAnimale(int codAnimale);
 }
