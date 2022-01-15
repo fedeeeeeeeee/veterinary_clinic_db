@@ -131,7 +131,6 @@ this.ricoveroController = new RicoveroControllerImpl();
 	    this.listRicoveri =   this.ricoveroController.getRicoveriAttivi();
 	    this.listPostiLiberi=   this.ricoveroController.getPostiLiberi();
 	     
-	      int numeroCardVuote = this.listPostiLiberi.size() -  this.listRicoveri.size();
 	      this.listPostiLiberi.forEach(posto ->{
 	    	  Ricovero ricovero = new RicoveroImpl();
 	    	  ricovero.setPosto(posto);

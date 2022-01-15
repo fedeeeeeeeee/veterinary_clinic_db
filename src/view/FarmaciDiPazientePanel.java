@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import controller.FarmaciController;
 import controller.FarmaciControllerImpl;
 import model.Animale;
-import model.Farmaco;
 import model.FarmacoInPrestazione;
 import java.awt.Insets;
 import java.awt.BorderLayout;

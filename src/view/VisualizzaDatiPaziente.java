@@ -83,7 +83,7 @@ public class VisualizzaDatiPaziente extends JPanel {
 		tabbedPane.addTab("Patologie", null, panelPatologie,
 		                  "Visualizza patologie diagnosticate");
 		
-		JPanel panelPrestazioni = new JPanel();
+		JPanel panelPrestazioni = new PrestazioniDiAnimalePanel(this.paziente.getAnimale());
 		tabbedPane.addTab("Prestazioni", null, panelPrestazioni,
 		                  "Visualizza prestazioni del paziente");
 		

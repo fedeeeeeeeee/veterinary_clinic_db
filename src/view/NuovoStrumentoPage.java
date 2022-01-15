@@ -53,8 +53,8 @@ public class NuovoStrumentoPage extends JPanel {
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
 		
-		//GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-	 GroupLayout groupLayout = new GroupLayout(this);
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+	// GroupLayout groupLayout = new GroupLayout(this);
 	       groupLayout.setHorizontalGroup(
 	       	groupLayout.createParallelGroup(Alignment.LEADING)
 	       		.addGroup(groupLayout.createSequentialGroup()
@@ -238,7 +238,7 @@ public class NuovoStrumentoPage extends JPanel {
 			lowerPanel.setLayout(new BorderLayout(0, 0));
 			lowerPanel.add(sendButton, BorderLayout.WEST);
 			
-		setLayout(groupLayout);
+		    //setLayout(groupLayout);
 			new GroupLayout(this);
 			frame.getContentPane().setLayout(groupLayout);
 			// this.initCommonView(frame);

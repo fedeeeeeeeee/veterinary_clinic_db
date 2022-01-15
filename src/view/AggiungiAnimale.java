@@ -479,7 +479,7 @@ public class AggiungiAnimale extends JPanel {
 		
 		
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Pagamenti");
+		JLabel titleLabel = new JLabel("Nuovo Animale");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
