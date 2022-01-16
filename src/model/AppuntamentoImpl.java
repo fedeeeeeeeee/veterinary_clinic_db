@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AppuntamentoImpl implements Appuntamento {
-	
 
 	private Animale animale;
-	private User veterinario; 
+	private User veterinario;
 
 	private int codPrestazione;
 	private String tipoPrestazione;
-
 
 	private String prestazione;
 	private String data;
@@ -19,7 +17,40 @@ public class AppuntamentoImpl implements Appuntamento {
 	private String durata;
 
 	private List<User> list = new ArrayList<>();
-	
+	private String descrizioneReferto;
+	private List<String> listFarmaci;
+	private List<String> listPatologie;
+
+	@Override
+	public String getDescrizioneReferto() {
+		return descrizioneReferto;
+	}
+
+	@Override
+	public void setDescrizioneReferto(String descrizioneReferto) {
+		this.descrizioneReferto = descrizioneReferto;
+	}
+
+	@Override
+	public List<String> getListFarmaci() {
+		return listFarmaci;
+	}
+
+	@Override
+	public void setListFarmaci(List<String> listFarmaci) {
+		this.listFarmaci = listFarmaci;
+	}
+
+	@Override
+	public List<String> getListPatologie() {
+		return listPatologie;
+	}
+
+	@Override
+	public void setListPatologie(List<String> listPatologie) {
+		this.listPatologie = listPatologie;
+	}
+
 	@Override
 	public String getTipoPrestazione() {
 		return tipoPrestazione;
@@ -30,33 +61,16 @@ public class AppuntamentoImpl implements Appuntamento {
 		this.tipoPrestazione = tipoPrestazione;
 	}
 
-	
+	@Override
 	public int getCodPrestazione() {
 		return codPrestazione;
 	}
 
-	
 	@Override
 	public void setCodPrestazione(int codPrestazione) {
 		this.codPrestazione = codPrestazione;
 	}
 
-	/*
-	@Override
-	public int getCodAnimale() {
-		return codAnimale;
-	}
-
-	@Override
-	public String getNomeAnimale() {
-		return nomeAnimale;
-	}
-
-	@Override
-	public void setNomeAnimale(String nomeAnimale) {
-		this.nomeAnimale = nomeAnimale;
-	}
-*/
 	@Override
 	public String getPrestazione() {
 		return prestazione;
@@ -86,89 +100,46 @@ public class AppuntamentoImpl implements Appuntamento {
 	public void setOra(String ora) {
 		this.ora = ora;
 	}
-/*
-	@Override
-	public String getNomeVeterinario() {
-		return nomeVeterinario;
-	}
 
-	@Override
-	public void setNomeVeterinario(String nomeVeterinario) {
-		this.nomeVeterinario = nomeVeterinario;
-	}
-
-	@Override
-	public String getCognomeVeterinario() {
-		return cognomeVeterinario;
-	}
-
-	@Override
-	public void setCognomeVeterinario(String cognomeVeterinario) {
-		this.cognomeVeterinario = cognomeVeterinario;
-	}
-*/
-	@Override
-	public void addInfermiere(User infermiere) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/*
-	@Override
-	public void setCodAnimale(int codAnimale) { // questi non vengono visualizzati in Gestione Appuntamento ma ci servono per fare le select nelle altre pagine
-		this.codAnimale= codAnimale;
-	}
-
-	@Override
-	public void setCodTipoPrestazione(int codPrestazione) {
-		this.codPrestazione= codPrestazione;		
-	}
-*/
 	@Override
 	public String getDurata() {
 		return durata;
 	}
-	
+
 	@Override
 	public void setDurata(String durata) {
 		this.durata = durata;
 	}
-
 
 	@Override
 	public List<User> getAllMediciEInfermieri() {
 		return this.list;
 	}
 
-
 	@Override
 	public void setAllMediciEInfermieri(List<User> list) {
 		this.list = list;
 	}
 
-
 	@Override
 	public void setVeterinario(User veterinario) {
 		this.veterinario = veterinario;
-		
-	}
-	@Override
-	public User getVeterinario( ) {
-	 return veterinario;
-		
+
 	}
 
+	@Override
+	public User getVeterinario() {
+		return veterinario;
+	}
 
 	@Override
 	public Animale getAnimale() {
 		return this.animale;
 	}
 
-
 	@Override
 	public void setAnimale(Animale animale) {
 		this.animale = animale;
-		
 	}
-	
+
 }

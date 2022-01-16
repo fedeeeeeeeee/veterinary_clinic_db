@@ -93,4 +93,10 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		return this.prestazioneTable.deleteAppointmnet(app);
 	}
 
+
+	@Override
+	public List<Appuntamento> getPrestazioniByAnimale(int codAnimale) {
+		return this.prestazioneTable.getPrestazioniByAnimale(codAnimale);
+	}
+
 }

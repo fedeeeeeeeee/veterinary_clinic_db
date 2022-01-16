@@ -16,6 +16,7 @@ import model.Animale;
 import model.AnimaleImpl;
 import model.Appuntamento;
 import model.AppuntamentoImpl;
+import model.FarmacoInPrestazione;
 import model.User;
 import model.UserImpl;
 
@@ -718,7 +719,6 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			return false;
 		} 
 		
-
 		try {
 			statementPrestazione = Optional.of(connection.prepareStatement(queryPrestazione));
 			statementPrestazione.get().setString(3, app.getData());
@@ -746,6 +746,146 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public List<Appuntamento> getPrestazioniByAnimale(int codAnimale) {
+		
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		 final String query = "SELECT * " 
+				 + "FROM referto " 
+				 + "INNER JOIN prestazione_su_animale ON prestazione_su_animale.data = referto.data and referto.codAnimale = ? and prestazione_su_animale.codTipoPrestazione = referto.codTipoPrestazione "
+				 + "INNER JOIN prestazione ON prestazione.codPrestazione = prestazione_su_animale.codTipoPrestazione "; 
+		 
+		 List<Appuntamento> prestazioni = new ArrayList<>();
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+            statement.get().setInt(1, codAnimale);
+			final ResultSet result = statement.get().executeQuery();
+			
+			while (result.next()) {
+				Appuntamento app = new AppuntamentoImpl();
+				Animale animale = new AnimaleImpl();
+				animale.setCodAnimale(result.getInt("referto.codAnimale"));
+				app.setAnimale(animale);
+				app.setData(result.getString("referto.data"));
+				app.setDescrizioneReferto(result.getString("referto.descrizione"));
+				app.setPrestazione(result.getString("prestazione.nome"));
+				app.setCodPrestazione(result.getInt("prestazione.codPrestazione"));
+				app.setTipoPrestazione(result.getString("prestazione.tipo"));
+				prestazioni.add(app);
+			}
+
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		
+		prestazioni.forEach(p-> {
+			this.setFarmaciInPrestazione(p);
+		});
+		
+		
+		prestazioni.forEach(p-> {
+			this.setPatologieInPrestazione(p);
+		});
+		
+		return prestazioni;
+	}
+
+	private void setPatologieInPrestazione(Appuntamento appuntamento) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		
+		final String query = "SELECT * "  
+				+ "FROM patologia_in_prestazione, patologia "  
+				+ "where codAnimale = ? " 
+				+ "and codTipoPrestazione = ? "  
+				+ "and data = ? " 
+				+ "and patologia_in_prestazione.codPatologia = patologia.codPatologia";
+	
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, appuntamento.getAnimale().getCodAnimale());
+			statement.get().setInt(2, appuntamento.getCodPrestazione());
+			statement.get().setString(3, appuntamento.getData());
+
+			final ResultSet result = statement.get().executeQuery();
+
+			List<String> patologie = new ArrayList<>();
+			while (result.next()) {
+				patologie.add(result.getString("patologia.nome"));
+			}
+			
+			appuntamento.setListPatologie(patologie);
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+	}
+
+	private void setFarmaciInPrestazione(Appuntamento appuntamento) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		final String query = "SELECT * "  
+				+ "FROM farmaco_in_prestazione, farmaco "  
+				+ "where codAnimale = ? " 
+				+ "and codTipoPrestazione = ? "  
+				+ "and data = ? " 
+				+ "and farmaco_in_prestazione.codFarmaco = farmaco.codFarmaco";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, appuntamento.getAnimale().getCodAnimale());
+			statement.get().setInt(2, appuntamento.getCodPrestazione());
+			statement.get().setString(3, appuntamento.getData());
+
+			final ResultSet result = statement.get().executeQuery();
+
+			List<String> farmaci = new ArrayList<>();
+			while (result.next()) {
+				farmaci.add(result.getString("farmaco.nome"));
+			}
+			
+			appuntamento.setListFarmaci(farmaci);
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
 	}
 
 }

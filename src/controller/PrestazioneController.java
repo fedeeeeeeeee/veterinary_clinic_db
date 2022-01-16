@@ -34,4 +34,6 @@ public interface PrestazioneController {
 
 	boolean deleteAppointmnet(Appuntamento app);
 
+	List<Appuntamento> getPrestazioniByAnimale(int codAnimale);
+
 }

@@ -4,26 +4,22 @@ import java.util.List;
 
 public interface Appuntamento {
 	Animale getAnimale();
+
 	void setAnimale(Animale animale);
-	
+
 	int getCodPrestazione();
-
-	//int getCodAnimale();
-
-	//String getNomeAnimale();
 
 	String getPrestazione();
 
 	String getData();
 
 	String getOra();
-	User getVeterinario( );
+
+	User getVeterinario();
 
 	String getDurata();
-	
-	List<User> getAllMediciEInfermieri();
 
-	//void setNomeAnimale(String nomeAnimale);
+	List<User> getAllMediciEInfermieri();
 
 	void setPrestazione(String prestazione);
 
@@ -31,20 +27,31 @@ public interface Appuntamento {
 
 	void setOra(String ora);
 
-	void addInfermiere(User infermiere); // add table effettua
-
-//	void setCodAnimale(int codAnimale);
-
-//	void setCodTipoPrestazione(int codPrestazione);
+//	void addInfermiere(User infermiere); // add table effettua
 
 	void setDurata(String durata);
 
 	void setCodPrestazione(int codPrestazione);
-	
+
 	void setAllMediciEInfermieri(List<User> list);
 
 	void setVeterinario(User veterinario);
+
 	String getTipoPrestazione();
-	void setTipoPrestazione(String tipoPrestazione); 
+
+	void setTipoPrestazione(String tipoPrestazione);
+
+	void setListFarmaci(List<String> listFarmaci);
+
+	void setDescrizioneReferto(String descrizioneReferto);
+
+	void setListPatologie(List<String> listPatologie);
+
+	
+	String getDescrizioneReferto();
+
+	List<String> getListPatologie();
+
+	List<String> getListFarmaci();
 
 }

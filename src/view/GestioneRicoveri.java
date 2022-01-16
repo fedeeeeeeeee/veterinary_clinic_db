@@ -178,7 +178,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 	        	public void actionPerformed(ActionEvent e) {
 	        		if(indice-1 >= 0){
 	        			indice--;
-	        			 lblPage.setText(indice + "/" + listRicoveri.size());
+	        			 lblPage.setText((indice + 1) + "/" + listRicoveri.size());
 		        			Ricovero elem = listRicoveri.get(indice);
 			        			if(elem.getDataInizio()== null) {
 			        				cardRicovero.removeAll();
