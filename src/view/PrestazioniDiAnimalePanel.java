@@ -10,12 +10,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
 import model.Animale;
 import model.Appuntamento;
-import javax.swing.JTextField;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
@@ -27,6 +27,8 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 	private JTable table;
 	private DefaultTableModel model;
 	private PrestazioneController controller;
+	private int selectedAppuntamento = -1;
+	private JTextArea textAreaReferto;
 	
 	private void initTable () {
 		this.table = new JTable(); 
@@ -36,6 +38,14 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 		model.addColumn("Tipo Prestazione");
 		model.addColumn("Farmaci prescritti");
 		model.addColumn("Patologie Diagnosticate");
+		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent event) {
+				selectedAppuntamento = table.getSelectedRow();
+				if (selectedAppuntamento != -1) {
+				    textAreaReferto.setText(listToDraw.get(selectedAppuntamento).getDescrizioneReferto());
+				}
+			}
+		});
 	}
 	
 	private void createTable(DefaultTableModel model, List<Appuntamento> list) {		
@@ -48,6 +58,7 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 				String.join(", ", x.getListPatologie()),
 			});
 		});
+		
 	}
 	
 	public PrestazioniDiAnimalePanel(Animale animale) {
@@ -75,8 +86,10 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 
 		this.initTable();	
 		this.listToDraw = this.controller.getPrestazioniByAnimale(animale.getCodAnimale());		
-	    this.createTable(model, listToDraw);
-	    
+		if (listToDraw.size() > 0) {
+			this.createTable(model, listToDraw);
+		}
+
 	    setLayout(new BorderLayout(0, 0));
 	    GridBagConstraints gbc_table = new GridBagConstraints();
 	    gbc_table.insets = new Insets(0, 0, 5, 5);
@@ -95,7 +108,7 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 	    gbc_titleRefertoLabel.gridy = 4;
 	    centerPanel.add(titleRefertoLabel, gbc_titleRefertoLabel);
 	    
-	    JTextArea textAreaReferto = new JTextArea();
+	    textAreaReferto = new JTextArea();
 	    GridBagConstraints gbc_textAreaReferto = new GridBagConstraints();
 	    gbc_textAreaReferto.insets = new Insets(0, 0, 5, 5);
 	    gbc_textAreaReferto.fill = GridBagConstraints.BOTH;
@@ -103,7 +116,6 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 	    gbc_textAreaReferto.gridy = 5;
 	    centerPanel.add(textAreaReferto, gbc_textAreaReferto);
 	    textAreaReferto.setEditable(false);
-	    textAreaReferto.setText(listToDraw.get(0).getDescrizioneReferto());
 	}
 
 }

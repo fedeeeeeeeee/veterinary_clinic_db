@@ -78,7 +78,9 @@ public class FarmaciDiPazientePanel extends JPanel {
 
 		this.initTable();	
 		this.listToDraw = this.controller.getFarmaciDiAnimale(animale.getCodAnimale());		
-	    this.createTable(model, listToDraw);
+	    if(listToDraw.size() > 0) {
+			this.createTable(model, listToDraw);
+	    }
 	    
 	    setLayout(new BorderLayout(0, 0));
 	    GridBagConstraints gbc_table = new GridBagConstraints();

@@ -61,8 +61,7 @@ public class VisualizzaDatiPaziente extends JPanel {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		centerPanel.add(tabbedPane, BorderLayout.CENTER);
-		
-		// QUELLI DA CREARE E DIVIDERE 
+		 
 		JPanel panelAnagrafica = new AnagraficaPazientePanel();
 		tabbedPane.addTab("Anagrafica", null, panelAnagrafica,
 		                  "Visualizza anagrafica paziente");
@@ -86,13 +85,7 @@ public class VisualizzaDatiPaziente extends JPanel {
 		JPanel panelPrestazioni = new PrestazioniDiAnimalePanel(this.paziente.getAnimale());
 		tabbedPane.addTab("Prestazioni", null, panelPrestazioni,
 		                  "Visualizza prestazioni del paziente");
-		
-		
-		
-		
-		
-		
-		
+			
 		/* LOWER PANEL */
 		JButton sendButton = new JButton("BACK");
 		sendButton.setHorizontalAlignment(SwingConstants.LEFT);

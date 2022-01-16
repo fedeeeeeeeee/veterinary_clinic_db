@@ -20,7 +20,6 @@ public class HomeSegretaria extends CommonView {
 
 	private static final long serialVersionUID = -8240597628451997179L;
 	private JFrame frame;
-	private User user;
 	
 	public HomeSegretaria(final JFrame frame, User user) {
 
@@ -28,7 +27,6 @@ public class HomeSegretaria extends CommonView {
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 		this.frame = frame;
-		this.user = user;
 		
 		JPanel upperPanel = new JPanel();
 		
