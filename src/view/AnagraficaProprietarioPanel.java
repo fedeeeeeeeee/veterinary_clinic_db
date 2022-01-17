@@ -28,7 +28,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		anagraficaPanel.setLayout(gbl_anagraficaPanel);
 
 		JLabel labelNome = new JLabel("Nome: ");
-		labelNome.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelNome.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_labelNome = new GridBagConstraints();
 		gbc_labelNome.fill = GridBagConstraints.BOTH;
 		gbc_labelNome.insets = new Insets(0, 0, 5, 5);
@@ -46,7 +46,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		labelNome.setLabelFor(labelNomeProprietario);
 
 		JLabel labelCognome = new JLabel("Cognome: ");
-		labelCognome.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelCognome.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_labelCognome = new GridBagConstraints();
 		gbc_labelCognome.fill = GridBagConstraints.BOTH;
 		gbc_labelCognome.insets = new Insets(0, 0, 5, 5);
@@ -64,7 +64,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		labelCognome.setLabelFor(labelCognomeProprietario);
 
 		JLabel labelCf = new JLabel("CF: ");
-		labelCf.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelCf.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_labelCf = new GridBagConstraints();
 		gbc_labelCf.fill = GridBagConstraints.BOTH;
 		gbc_labelCf.insets = new Insets(0, 0, 5, 5);
@@ -88,7 +88,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		gbc_labelDataNascita.gridx = 3;
 		gbc_labelDataNascita.gridy = 1;
 		anagraficaPanel.add(labelDataNascita, gbc_labelDataNascita);
-		labelDataNascita.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelDataNascita.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JLabel lblNewLabelDataNascita = new JLabel(this.proprietario.getDataNascita());
 		GridBagConstraints gbc_lblNewLabelDataNascita = new GridBagConstraints();
@@ -105,7 +105,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		gbc_labelVia.gridx = 0;
 		gbc_labelVia.gridy = 2;
 		anagraficaPanel.add(labelVia, gbc_labelVia);
-		labelVia.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelVia.setHorizontalAlignment(SwingConstants.LEFT);
 
 		JLabel labelViaProprietario = new JLabel(this.proprietario.getIndirizzoVia());
 		GridBagConstraints gbc_labelViaProprietario = new GridBagConstraints();
@@ -123,7 +123,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		gbc_labelNumeroCivico.gridx = 3;
 		gbc_labelNumeroCivico.gridy = 2;
 		anagraficaPanel.add(labelNumeroCivico, gbc_labelNumeroCivico);
-		labelNumeroCivico.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelNumeroCivico.setHorizontalAlignment(SwingConstants.LEFT);
 
 		JLabel labelNumeroCivicoProprietario = new JLabel(String.valueOf(this.proprietario.getIndirizzoNumero()));
 		GridBagConstraints gbc_labelNumeroCivicoProprietario = new GridBagConstraints();
@@ -141,7 +141,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		gbc_labelCitta.gridx = 0;
 		gbc_labelCitta.gridy = 3;
 		anagraficaPanel.add(labelCitta, gbc_labelCitta);
-		labelCitta.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelCitta.setHorizontalAlignment(SwingConstants.LEFT);
 
 		JLabel labelCittaProprietario = new JLabel(this.proprietario.getIndirizzoCitta());
 		GridBagConstraints gbc_labelCittaProprietario = new GridBagConstraints();
@@ -159,7 +159,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		gbc_labelCap.gridx = 3;
 		gbc_labelCap.gridy = 3;
 		anagraficaPanel.add(labelCap, gbc_labelCap);
-		labelCap.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelCap.setHorizontalAlignment(SwingConstants.LEFT);
 
 		JLabel labelCapProprietario = new JLabel(String.valueOf(this.proprietario.getIndirizzoCap()));
 		GridBagConstraints gbc_labelCapProprietario = new GridBagConstraints();
@@ -177,7 +177,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		gbc_labelTelefono.gridx = 0;
 		gbc_labelTelefono.gridy = 4;
 		anagraficaPanel.add(labelTelefono, gbc_labelTelefono);
-		labelTelefono.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelTelefono.setHorizontalAlignment(SwingConstants.LEFT);
 
 		JLabel labelTelefonoProprietario = new JLabel(String.valueOf(this.proprietario.getTelefono()));
 		GridBagConstraints gbc_labelTelefonoProprietario = new GridBagConstraints();
@@ -195,7 +195,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 		gbc_labelEmail.gridx = 3;
 		gbc_labelEmail.gridy = 4;
 		anagraficaPanel.add(labelEmail, gbc_labelEmail);
-		labelEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelEmail.setHorizontalAlignment(SwingConstants.LEFT);
 
 		JLabel labelEmailProprietario = new JLabel(this.proprietario.getEmail());
 		GridBagConstraints gbc_labelEmailProprietario = new GridBagConstraints();
