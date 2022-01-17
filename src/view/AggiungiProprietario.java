@@ -62,17 +62,10 @@ public class AggiungiProprietario extends CommonView {
 		this.check = new ValidityFieldsChecker();
 		this.proprietario = new Proprietario();
 		this.controller = new ProprietarioControllerImpl();
-		
-		
+			
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
-
 		JPanel centerPanel = new JPanel();
-
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
-		int w = frame.getSize().width;
-		int h = frame.getSize().height;
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());           
 		// utile per il design
@@ -80,16 +73,17 @@ public class AggiungiProprietario extends CommonView {
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, (int)(w*0.99), GroupLayout.PREFERRED_SIZE)
-								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, (int)(w*0.99),  GroupLayout.PREFERRED_SIZE)
-								.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, (int)(w*0.99),  GroupLayout.PREFERRED_SIZE))
+								.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 985, Short.MAX_VALUE)
+								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 985, Short.MAX_VALUE)
+								.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE))
 						.addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.2), GroupLayout.PREFERRED_SIZE)
-						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.65), GroupLayout.PREFERRED_SIZE)
+						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, (int)(h*0.1), GroupLayout.PREFERRED_SIZE)
+						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+						.addPreferredGap(ComponentPlacement.RELATED).addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap()));
 		
 		centerPanel.setLayout(new FormLayout(new ColumnSpec[] {
@@ -115,7 +109,7 @@ public class AggiungiProprietario extends CommonView {
 		anagraficaPanel.setLayout(new GridLayout(5, 4, 0, 0));
 		
 		JLabel labelNome = new JLabel("Nome");
-		labelNome.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelNome.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(labelNome);
 
 		textFieldNome = new JTextField();
@@ -124,7 +118,7 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldNome.setColumns(10);
 		JLabel labelCognome = new JLabel("Cognome");
-		labelCognome.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelCognome.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(labelCognome);
 
 		textFieldCognome = new JTextField();
@@ -133,7 +127,7 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldCognome.setColumns(10);
 		JLabel labelCf = new JLabel("CF");
-		labelCf.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelCf.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(labelCf);
 
 		textFieldCodiceFiscale = new JTextField();
@@ -146,7 +140,7 @@ public class AggiungiProprietario extends CommonView {
 
 		JDateChooser dateChooser = new JDateChooser();
 		labelDataNascita.setLabelFor(dateChooser);
-		labelDataNascita.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelDataNascita.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(dateChooser);
 
 		JLabel labelVia = new JLabel("Via");
@@ -154,7 +148,7 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldVia = new JTextField();
 		labelVia.setLabelFor(textFieldVia);
-		labelVia.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelVia.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldVia);
 		textFieldVia.setColumns(10);
 
@@ -163,7 +157,7 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldNumeroCivico = new JTextField();
 		labelNumeroCivico.setLabelFor(textFieldNumeroCivico);
-		labelNumeroCivico.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelNumeroCivico.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldNumeroCivico);
 		textFieldNumeroCivico.setColumns(10);
 
@@ -172,7 +166,7 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldCitta = new JTextField();
 		labelCitta.setLabelFor(textFieldCitta);
-		labelCitta.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelCitta.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldCitta);
 		textFieldCitta.setColumns(10);
 
@@ -181,7 +175,7 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldCap = new JTextField();
 		labelCap.setLabelFor(textFieldCap);
-		labelCap.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelCap.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldCap);
 		textFieldCap.setColumns(10);
 
@@ -190,7 +184,7 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldTelefono = new JTextField();
 		labelTelefono.setLabelFor(textFieldTelefono);
-		labelTelefono.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelTelefono.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldTelefono);
 		textFieldTelefono.setColumns(10);
 		
@@ -199,19 +193,22 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldEmail = new JTextField();
 		labelEmail.setLabelFor(textFieldEmail);
-		labelEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelEmail.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldEmail);
 		textFieldEmail.setColumns(10);
 
-		
 		JButton backButton = new JButton("BACK");
+		backButton.setHorizontalAlignment(SwingConstants.LEFT);
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new RegistraPaziente(frame, user));
 			}
 		});
+		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(backButton, BorderLayout.WEST);
-
+		
+		
 		JLabel titleLabel = new JLabel("Aggiungi proprietario");
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
 		upperPanel.add(titleLabel);
@@ -261,8 +258,6 @@ public class AggiungiProprietario extends CommonView {
 					controller.addNewProprietario(proprietario);
 					// paziente inserito correttamente
 					frame.getContentPane().add(new RegistraPaziente(frame, user));
-
-
 				} else {
 					// errore di compilazione della form
 					System.out.println("errore");
