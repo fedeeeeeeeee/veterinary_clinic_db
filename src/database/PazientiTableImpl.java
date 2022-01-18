@@ -50,7 +50,7 @@ public class PazientiTableImpl implements PazientiTable {
 				animale.setPeso(result.getFloat("peso"));
 				animale.setRazza(result.getString("razza"));
 				animale.setSpecie(result.getString("specie"));
-				
+				animale.setDataDiNascita(result.getString("dataDiNascita"));
 
 				Person proprietario = new Proprietario();
 				proprietario.setCF(result.getString("cf"));
