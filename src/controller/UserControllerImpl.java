@@ -4,8 +4,8 @@ import java.util.List;
 
 import database.UserTable;
 import database.UserTableImpl;
+import model.Specializzazione;
 import model.User;
-import view.Specializzazione;
 
 public class UserControllerImpl implements UserController {
 

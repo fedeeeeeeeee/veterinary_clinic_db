@@ -1,8 +1,9 @@
 package controller;
 
 import java.util.List;
+
+import model.Specializzazione;
 import model.User;
-import view.Specializzazione;
 
 
 public interface UserController {

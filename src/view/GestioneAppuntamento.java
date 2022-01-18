@@ -286,7 +286,8 @@ private boolean first;
 	//setLayout(groupLayout);
 	new GroupLayout(this);
 	frame.getContentPane().setLayout(groupLayout);
-	//this.initCommonView(frame);
+	this.initCommonView(frame, user);
+
 	}
 
 private void resetAndDraw(List<Appuntamento> allAppuntamento) {

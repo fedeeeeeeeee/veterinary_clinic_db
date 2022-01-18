@@ -21,7 +21,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class HomeVeterinario extends JPanel {
+public class HomeVeterinario extends CommonView {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -112,7 +112,9 @@ public class HomeVeterinario extends JPanel {
 			
 			lowerPanel.setLayout(new BorderLayout(0, 0));
 			//setLayout(groupLayout);
-		new GroupLayout(this);
+			//new GroupLayout(this);
 			frame.getContentPane().setLayout(groupLayout);
+			this.initCommonView(frame, user);
+
 	}
 }

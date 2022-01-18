@@ -43,7 +43,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.awt.FlowLayout;
 
-public class GestioneRicoveri extends JPanel {
+public class GestioneRicoveri extends CommonView {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -216,5 +216,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 				//setLayout(groupLayout);
 				new GroupLayout(this);
 				frame.getContentPane().setLayout(groupLayout);
+				this.initCommonView(frame, user);
+
 	}
 }

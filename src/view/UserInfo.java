@@ -36,13 +36,13 @@ import controller.AnimaleController;
 import controller.UserController;
 import controller.UserControllerImpl;
 import model.Paziente;
+import model.Specializzazione;
 import model.User;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class UserInfo extends JPanel {
-
+public class UserInfo  extends CommonView {
 	private static final long serialVersionUID = 8425214808736844760L;
 	private JFrame frame;
 	private JTextField textFieldEmail;
@@ -239,12 +239,17 @@ public class UserInfo extends JPanel {
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setEditable(false);
 
-		JButton backButton = new JButton("BACK");
+		JButton backButton = new JButton("Home");
 		backButton.setHorizontalAlignment(SwingConstants.LEFT);
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new RegistraPaziente(frame, user));
+				if(user.getRuolo().equals("Veterinario") || user.getRuolo().equals("Inferemiere")  ) {
+					frame.getContentPane().add(new HomeVeterinario(frame, user));
+				}else { 
+					frame.getContentPane().add(new HomeSegretaria(frame, user));
+				}
+				
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
@@ -312,9 +317,8 @@ public class UserInfo extends JPanel {
 		}
 	   // setLayout(groupLayout);
 		//new GroupLayout(this);
-		// this.initCommonView(frame);
-		// importante per la visualizzazione 
 		frame.getContentPane().setLayout(groupLayout);
+		this.initCommonView(frame, user);
 	}
 	
 	private void resetAndDraw(List<Specializzazione> allAnimali) {

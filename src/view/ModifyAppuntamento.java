@@ -53,7 +53,7 @@ import com.github.lgooddatepicker.components.TimePicker;
 import com.toedter.calendar.JDateChooser;
 import java.awt.Color;
 
-public class ModifyAppuntamento extends JPanel {
+public class ModifyAppuntamento extends CommonView {
 
 	private static final long serialVersionUID = 693737436773825328L;
 	private JFrame frame;
@@ -572,6 +572,7 @@ public class ModifyAppuntamento extends JPanel {
 		//setLayout(groupLayout);
 		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
-		// this.initCommonView(frame);
+		this.initCommonView(frame, user);
+
 	}
 }

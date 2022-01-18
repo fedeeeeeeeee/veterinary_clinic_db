@@ -271,6 +271,8 @@ public class AggiungiProprietario extends CommonView {
 		//setLayout(groupLayout);
 
 		// importante per la visualizzazione 
+		this.initCommonView(frame, user);
+
 		frame.getContentPane().setLayout(groupLayout);
 	}
 

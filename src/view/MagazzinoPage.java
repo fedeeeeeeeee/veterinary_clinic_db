@@ -19,7 +19,7 @@ import model.User;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 
-public class MagazzinoPage extends JPanel {
+public class MagazzinoPage extends CommonView {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -118,8 +118,10 @@ public class MagazzinoPage extends JPanel {
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 		
 		//setLayout(groupLayout);
-	new GroupLayout(this);
+	//new GroupLayout(this);
 	frame.getContentPane().setLayout(groupLayout);
+	this.initCommonView(frame, user);
+
 	}
 
 }

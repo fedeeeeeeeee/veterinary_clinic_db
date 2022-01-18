@@ -2,8 +2,8 @@ package database;
 
 import java.util.List;
 
+import model.Specializzazione;
 import model.User;
-import view.Specializzazione;
 
 public interface UserTable {
 	

@@ -42,7 +42,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class FarmaciPage extends JPanel {
+public class FarmaciPage extends CommonView {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -392,6 +392,8 @@ public class FarmaciPage extends JPanel {
 		//setLayout(groupLayout);
 		new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
+		this.initCommonView(frame, user);
+
 }
 	
 	

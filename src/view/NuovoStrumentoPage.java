@@ -33,7 +33,7 @@ import javax.swing.JTextArea;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JSpinner;
 
-public class NuovoStrumentoPage extends JPanel {
+public class NuovoStrumentoPage extends CommonView {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -241,6 +241,7 @@ public class NuovoStrumentoPage extends JPanel {
 		    //setLayout(groupLayout);
 			new GroupLayout(this);
 			frame.getContentPane().setLayout(groupLayout);
-			// this.initCommonView(frame);
+			this.initCommonView(frame, user);
+
 	}
 }

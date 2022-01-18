@@ -13,10 +13,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import model.Specializzazione;
+import model.SpecializzazioneImpl;
 import model.User;
 import model.UserImpl;
-import view.Specializzazione;
-import view.SpecializzazioneImpl;
 
 public class UserTableImpl implements UserTable {
 

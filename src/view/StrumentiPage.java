@@ -52,7 +52,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class StrumentiPage extends JPanel {
+public class StrumentiPage extends CommonView {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private User user;
@@ -283,8 +283,10 @@ public class StrumentiPage extends JPanel {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 //setLayout(groupLayout);
-		new GroupLayout(this);
+		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
+		this.initCommonView(frame, user);
+
 	}
 
 	private void resetAndDraw(List<Strumento> allStrumenti) {
@@ -310,7 +312,7 @@ public class StrumentiPage extends JPanel {
 		model.addColumn("Nome");
 		model.addColumn("Descrizione");
 		model.addColumn("Scadenza");
-		model.addColumn("QuantitÃ ");
+		model.addColumn("Quantit�");
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
 				selectedStrumento = table.getSelectedRow();

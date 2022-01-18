@@ -34,7 +34,7 @@ import controller.AnimaleControllerImpl;
 import controller.ProprietarioController;
 import controller.ProprietarioControllerImpl;
 
-public class RegistraPaziente extends JPanel {
+public class RegistraPaziente extends CommonView {
 
 	private static final long serialVersionUID = -5823886107710364208L;
 	private JFrame frame;
@@ -200,6 +200,7 @@ public class RegistraPaziente extends JPanel {
 
 		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
-		//extend common view poi --> this.initCommonView(frame);
+		this.initCommonView(frame, user);
+
 	}
 }

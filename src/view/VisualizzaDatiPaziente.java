@@ -23,7 +23,7 @@ import model.Paziente;
 import model.User;
 import javax.swing.JTabbedPane;
 
-public class VisualizzaDatiPaziente extends JPanel {
+public class VisualizzaDatiPaziente extends CommonView {
 
 	private JFrame frame;
 	private User user;
@@ -109,6 +109,7 @@ public class VisualizzaDatiPaziente extends JPanel {
 		//setLayout(groupLayout);
 		new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
+		this.initCommonView(frame, user);
 
 	}
 }

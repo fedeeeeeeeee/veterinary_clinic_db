@@ -51,7 +51,7 @@ import com.jgoodies.forms.layout.Sizes;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class NewLotto extends JPanel {
+public class NewLotto extends CommonView {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -258,5 +258,7 @@ public class NewLotto extends JPanel {
 		//setLayout(groupLayout);
 		new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
+		this.initCommonView(frame, user);
+
 	}
 }

@@ -47,7 +47,7 @@ import javax.swing.JSeparator;
 import com.github.lgooddatepicker.components.TimePicker;
 import com.toedter.calendar.JDateChooser;
 
-public class NuovoAppuntamento extends JPanel {
+public class NuovoAppuntamento extends CommonView {
 
 	private static final long serialVersionUID = 693737436773825328L;
 	private JFrame frame;
@@ -613,7 +613,8 @@ public class NuovoAppuntamento extends JPanel {
 		// setLayout(groupLayout);
 		// new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
-		// this.initCommonView(frame);
+		this.initCommonView(frame, user);
+
 	}
 	
 }

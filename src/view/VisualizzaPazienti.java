@@ -59,7 +59,7 @@ import model.Proprietario;
 import model.Strumento;
 import model.User;
 
-public class VisualizzaPazienti extends JPanel {
+public class VisualizzaPazienti extends CommonView {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -220,8 +220,10 @@ public class VisualizzaPazienti extends JPanel {
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 		
 		//setLayout(groupLayout);
-		new GroupLayout(this);
+		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
+		this.initCommonView(frame, user);
+
 	}
 
 	

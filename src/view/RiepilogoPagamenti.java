@@ -57,7 +57,7 @@ import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import java.awt.ComponentOrientation;
 
-public class RiepilogoPagamenti extends JPanel {
+public class RiepilogoPagamenti extends CommonView {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -350,6 +350,7 @@ public class RiepilogoPagamenti extends JPanel {
 				
 		//setLayout(groupLayout);
 		frame.getContentPane().setLayout(groupLayout);
-		//this.initCommonView(frame);
+		this.initCommonView(frame, user);
+
 	}
 }

@@ -22,6 +22,7 @@ public class MainPage extends JPanel {
     private static final long serialVersionUID = 1L;
     private JFrame frame;
 
+ 
     public MainPage(final JFrame frame) {
         this.frame = frame;
         frame.getContentPane().removeAll();
@@ -94,5 +95,6 @@ public class MainPage extends JPanel {
 
         });
         frame.getContentPane().setLayout(groupLayout);
+
     }
 }

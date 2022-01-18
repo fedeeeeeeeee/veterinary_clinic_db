@@ -42,7 +42,7 @@ import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 import javax.swing.JOptionPane;
 
-public class AggiungiAnimale extends JPanel {
+public class AggiungiAnimale extends CommonView {
 
 	private static final long serialVersionUID = -2292831111277932599L;
 	private static Map<String, List<String>> map;
@@ -490,6 +490,7 @@ public class AggiungiAnimale extends JPanel {
 	    // setLayout(groupLayout);
 
 		// importante per la visualizzazione 
+		this.initCommonView(frame, user);
 	   frame.getContentPane().setLayout(groupLayout);
 	}
 }

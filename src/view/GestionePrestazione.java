@@ -20,7 +20,7 @@ import model.User;
 /*
  * Dottore e infermiere che aggiornano le prestazioni con i dati patologie e farmaci
  * */
-public class GestionePrestazione extends JPanel {
+public class GestionePrestazione extends CommonView {
 
 	private JFrame frame;
 	private User user;
@@ -82,6 +82,7 @@ public class GestionePrestazione extends JPanel {
 		// setLayout(groupLayout);
 		new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
+		this.initCommonView(frame, user);
 
 	}
 }

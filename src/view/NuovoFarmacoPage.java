@@ -35,8 +35,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class NuovoFarmacoPage extends JPanel {
-
+public class NuovoFarmacoPage extends CommonView {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private User user;
@@ -277,6 +276,7 @@ public class NuovoFarmacoPage extends JPanel {
 			//setLayout(groupLayout);
 			//new GroupLayout(this);
 			frame.getContentPane().setLayout(groupLayout);
-			// this.initCommonView(frame);
+			this.initCommonView(frame, user);
+
 	}
 }
