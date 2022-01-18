@@ -112,7 +112,7 @@ public class UserInfo  extends CommonView {
 		   	JButton btnSave = new JButton("Salva");
 		   	btnSave.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					//TODO aggiunta 
+					//TODO aggiunta a database, sistema grandezza form
 				}
 			});
 		   	JButton btnCancel = new JButton("Annulla");
