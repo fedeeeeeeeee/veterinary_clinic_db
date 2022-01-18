@@ -143,6 +143,6 @@ public class DettagliAppuntamento extends CommonView {
 			// importante per la visualizzazione ---> commentare GroupLayout groupLayout =
 		new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
-		this.initCommonView(frame);
+		this.initCommonView(frame, user);
 		}
 	}
