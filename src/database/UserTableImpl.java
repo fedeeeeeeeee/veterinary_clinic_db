@@ -331,7 +331,7 @@ public class UserTableImpl implements UserTable {
 			if (result.next()) {
 				Specializzazione spe = new SpecializzazioneImpl();
 				spe.setAnnoConseguimento(result.getString("annoConseguimento"));
-				spe.setTitolo(query);
+				spe.setTitolo(result.getString("titolo"));
 				listSpecializzazioni.add(spe);
 			}
 			result.close();

@@ -14,10 +14,12 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
@@ -37,6 +39,7 @@ import controller.UserController;
 import controller.UserControllerImpl;
 import model.Paziente;
 import model.Specializzazione;
+import model.Strumento;
 import model.User;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -65,7 +68,7 @@ public class UserInfo  extends CommonView {
 	private List<Specializzazione> listSpecializzazioni;
 	private DefaultTableModel model;
 	private UserController userController;
-	
+	private boolean selectedButtonModify;
 	
 	public UserInfo(JFrame frame, User user) {
 		frame.getContentPane().removeAll();
@@ -73,12 +76,14 @@ public class UserInfo  extends CommonView {
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
+		this.selectedButtonModify=false;
 		this.userController = new UserControllerImpl();
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel centerPanel = new JPanel();
+		JPanel modifyPanel = new JPanel();
 		
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+	GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 	  //GroupLayout groupLayout = new GroupLayout(this);
 	       groupLayout.setHorizontalGroup(
 	       	groupLayout.createParallelGroup(Alignment.LEADING)
@@ -87,7 +92,8 @@ public class UserInfo  extends CommonView {
 	       			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 	       				.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE)
 	       				.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE)
-	       				.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE))
+	       				.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE)
+	       				.addComponent(modifyPanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE))
 	       			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	       );
 	       groupLayout.setVerticalGroup(
@@ -97,9 +103,47 @@ public class UserInfo  extends CommonView {
 	       			.addPreferredGap(ComponentPlacement.RELATED)
 	       			.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
 	       			.addPreferredGap(ComponentPlacement.RELATED)
+	       			.addComponent(modifyPanel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+	       			.addPreferredGap(ComponentPlacement.RELATED)
 	       			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 	       			.addContainerGap()));
 	       
+			JButton btnAddSpecializzazione = new JButton("+");
+		   	JButton btnSave = new JButton("Salva");
+		   	btnSave.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					//TODO aggiunta 
+				}
+			});
+		   	JButton btnCancel = new JButton("Annulla");
+		   	btnCancel.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					frame.getContentPane().add(new UserInfo(frame, user));
+				}
+			});
+			
+			JButton btnModifica = new JButton("Modifica");
+			btnModifica.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					selectedButtonModify = true;
+					modifyPanel.add(btnSave);
+					modifyPanel.add(btnCancel);
+					textFieldVia.setEditable(true);
+					textFieldNumeroCivico.setEditable(true);
+					textFieldCitta.setEditable(true);
+					textFieldCap.setEditable(true);
+					textFieldTelefono.setEditable(true);
+					textFieldAnniDiServizio.setEditable(true);
+					btnAddSpecializzazione.setVisible(true);
+					btnAddSpecializzazione.setEnabled(true);
+					btnModifica.setEnabled(false);
+					btnModifica.setVisible(false);
+					
+				}
+			});
+	       modifyPanel.add(btnModifica);
+	       
+
 	  	centerPanel.setLayout(new FormLayout(new ColumnSpec[] {
 	  			FormSpecs.RELATED_GAP_COLSPEC,
 	  			ColumnSpec.decode("max(50dlu;default):grow"),
@@ -276,59 +320,94 @@ public class UserInfo  extends CommonView {
 		
 		JLabel lblAnniServizio = new JLabel("Anni di Servizio");
 		GridBagConstraints gbc_lblAnniServizio = new GridBagConstraints();
-		gbc_lblAnniServizio.gridwidth = 6;
+		gbc_lblAnniServizio.gridwidth = 3;
 		gbc_lblAnniServizio.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAnniServizio.gridx = 2;
+		gbc_lblAnniServizio.gridx = 1;
 		gbc_lblAnniServizio.gridy = 1;
 		datiPanel.add(lblAnniServizio, gbc_lblAnniServizio);
+	
 		
-		
-		if (user.getRuolo().equals("Veterinario")) { 
+		textFieldAnniDiServizio = new JTextField();
+		textFieldAnniDiServizio.setText(String.valueOf(user.getAnniDiServizio()));
+		textFieldAnniDiServizio.setEditable(false);
+		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+		gbc_textField_1.gridwidth = 4;
+		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_1.gridx = 1;
+		gbc_textField_1.gridy = 2;
+		datiPanel.add(textFieldAnniDiServizio, gbc_textField_1);
+		textFieldAnniDiServizio.setColumns(10);
 
+		
+		
+		if (user.getRuolo().equals("Veterinario")) {
 
 			this.initTable();
 			this.listSpecializzazioni = userController.getAllSpecializzazioni(user.getCF());
 			this.createTable(model, listSpecializzazioni);
 			this.model = (DefaultTableModel) table.getModel();
-		
-		
-			textFieldAnniDiServizio = new JTextField();
-			textFieldAnniDiServizio.setText(String.valueOf(user.getAnniDiServizio()));
-			GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-			gbc_textField_1.gridwidth = 4;
-			gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-			gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-			gbc_textField_1.gridx = 2;
-			gbc_textField_1.gridy = 2;
-			datiPanel.add(textFieldAnniDiServizio, gbc_textField_1);
-			textFieldAnniDiServizio.setColumns(10);
-			
+
 			JScrollPane scrollPane_1 = new JScrollPane();
+			//scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 			GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
 			gbc_scrollPane_1.gridheight = 2;
 			gbc_scrollPane_1.gridwidth = 12;
-			gbc_scrollPane_1.insets = new Insets(0, 0, 5, 5);
+			gbc_scrollPane_1.insets = new Insets(0, 0, 0, 5);
 			gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
 			gbc_scrollPane_1.gridx = 8;
-			gbc_scrollPane_1.gridy = 1;
+			gbc_scrollPane_1.gridy = 2;
 			datiPanel.add(scrollPane_1, gbc_scrollPane_1);
 			scrollPane_1.setViewportView(table);
-	
+			
+			
+			JLabel lblSpecializzazioni = new JLabel("Specializzazioni");
+			GridBagConstraints gbc_lblSpecializzazioni = new GridBagConstraints();
+			gbc_lblSpecializzazioni.fill = GridBagConstraints.HORIZONTAL;
+			gbc_lblSpecializzazioni.gridwidth = 3;
+			gbc_lblSpecializzazioni.insets = new Insets(0, 0, 5, 5);
+			gbc_lblSpecializzazioni.gridx = 10;
+			gbc_lblSpecializzazioni.gridy = 1;
+			datiPanel.add(lblSpecializzazioni, gbc_lblSpecializzazioni);
+			
+
+			GridBagConstraints gbc_btnAddSpecializzazione = new GridBagConstraints();
+			gbc_btnAddSpecializzazione.insets = new Insets(0, 0, 5, 5);
+			gbc_btnAddSpecializzazione.gridx = 16;
+			gbc_btnAddSpecializzazione.gridy = 1;
+			datiPanel.add(btnAddSpecializzazione, gbc_btnAddSpecializzazione);
+			
+			btnAddSpecializzazione.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					OptionSpecializzazione panelPeriod =  new OptionSpecializzazione();
+					   int result =  JOptionPane.showConfirmDialog(null,
+							   panelPeriod,
+		                        "Specializzazione : ",
+		                        JOptionPane.OK_CANCEL_OPTION,
+		                        JOptionPane.PLAIN_MESSAGE);
+					    if (result == JOptionPane.OK_OPTION) {
+					    	//userController.addNewSpecializzazione(user.getCF());
+					    	resetAndDraw(userController.getAllSpecializzazioni(user.getCF())); 
+					      }	
+				}
+			});
 		}
-	   // setLayout(groupLayout);
+		btnAddSpecializzazione.setVisible(false);
+		btnAddSpecializzazione.setEnabled(false);
+	    //setLayout(groupLayout);
 		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
 	}
-	
-	private void resetAndDraw(List<Specializzazione> allAnimali) {
+
+	private void resetAndDraw(List<Specializzazione> allSpecializzazioni) {
 		this.listSpecializzazioni.clear();
-		this.listSpecializzazioni = allAnimali;
-		//table.clearSelection();
+		this.listSpecializzazioni = allSpecializzazioni;
 		model.setRowCount(0);
-		this.createTable(model, listSpecializzazioni);
+		this.createTable(model, this.listSpecializzazioni);
 	}
 
+	
 	private void createTable(DefaultTableModel model, List<Specializzazione> list) {
 		list.forEach(x -> {
 			model.addRow(new Object[] { x.getTitolo(), x.getAnnoConseguimento(), });
