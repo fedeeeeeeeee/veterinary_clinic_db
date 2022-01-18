@@ -157,13 +157,13 @@ public class UserInfo  extends CommonView {
 	  			ColumnSpec.decode("max(50dlu;default):grow"),},
 	  		new RowSpec[] {
 	  			FormSpecs.RELATED_GAP_ROWSPEC,
-	  			RowSpec.decode("default:grow"),
-	  			FormSpecs.RELATED_GAP_ROWSPEC,
-	  			RowSpec.decode("default:grow"),
-	  			FormSpecs.RELATED_GAP_ROWSPEC,
 	  			FormSpecs.DEFAULT_ROWSPEC,
 	  			FormSpecs.RELATED_GAP_ROWSPEC,
-	  			FormSpecs.DEFAULT_ROWSPEC,}));
+	  			FormSpecs.PREF_ROWSPEC,
+	  			FormSpecs.RELATED_GAP_ROWSPEC,
+	  			RowSpec.decode("default:grow"),
+	  			FormSpecs.RELATED_GAP_ROWSPEC,
+	  			RowSpec.decode("default:grow"),}));
 	  	
 		JPanel anagraficaPanel = new JPanel();
 		anagraficaPanel.setBorder(new TitledBorder(
@@ -305,12 +305,12 @@ public class UserInfo  extends CommonView {
 		upperPanel.add(titleLabel);
 		setLayout(null);
 			
-		centerPanel.add(anagraficaPanel, "4, 2, 5, 1, fill, fill");
+		centerPanel.add(anagraficaPanel, "4, 4, 5, 1, fill, fill");
 		JPanel datiPanel = new JPanel();
 		datiPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Lavoro", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		centerPanel.add(datiPanel, "3, 4, 7, 4, fill, fill");
+		centerPanel.add(datiPanel, "3, 6, 7, 1, fill, fill");
 		GridBagLayout gbl_datiPanel = new GridBagLayout();
 		gbl_datiPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_datiPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
@@ -386,7 +386,8 @@ public class UserInfo  extends CommonView {
 		                        JOptionPane.OK_CANCEL_OPTION,
 		                        JOptionPane.PLAIN_MESSAGE);
 					    if (result == JOptionPane.OK_OPTION) {
-					    	//userController.addNewSpecializzazione(user.getCF());
+					    	
+					    	userController.addNewSpecializzazione(user.getCF(), panelPeriod.getSpecializzazione());
 					    	resetAndDraw(userController.getAllSpecializzazioni(user.getCF())); 
 					      }	
 				}
@@ -394,7 +395,7 @@ public class UserInfo  extends CommonView {
 		}
 		btnAddSpecializzazione.setVisible(false);
 		btnAddSpecializzazione.setEnabled(false);
-	    //setLayout(groupLayout);
+	   // setLayout(groupLayout);
 		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);

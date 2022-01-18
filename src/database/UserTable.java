@@ -18,4 +18,7 @@ public interface UserTable {
 	List<User> getAllPersonaleByRuolo(String ruolo);
 
 	List<Specializzazione> getAllSpecializzazioni(String cf);
+
+	void addNewSpecializzazione(String cf, Specializzazione specializzazione);
+
 }

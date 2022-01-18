@@ -328,7 +328,7 @@ public class UserTableImpl implements UserTable {
 			statement = Optional.of(connection.prepareStatement(query));
 			statement.get().setString(1, cf);
 			final ResultSet result = statement.get().executeQuery();
-			if (result.next()) {
+			while (result.next()) {
 				Specializzazione spe = new SpecializzazioneImpl();
 				spe.setAnnoConseguimento(result.getString("annoConseguimento"));
 				spe.setTitolo(result.getString("titolo"));
@@ -349,5 +349,35 @@ public class UserTableImpl implements UserTable {
 			}
 		}
 		return listSpecializzazioni;
+	}
+
+	@Override
+	public void addNewSpecializzazione(String cf, Specializzazione specializzazione) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+
+		Optional<PreparedStatement> statement = Optional.empty();
+		String query = "insert into 	specializzazione (CF, titolo, annoConseguimento) values (?,?,?)";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, cf);
+			statement.get().setString(2, specializzazione.getTitolo());
+			statement.get().setString(3, specializzazione.getAnnoConseguimento());
+
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("eccezione INSERIMENTO specializzazione " + e); 
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO specializzazione" + e);
+			}
+		}
 	}
 }

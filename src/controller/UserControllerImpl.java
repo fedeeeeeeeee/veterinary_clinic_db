@@ -47,4 +47,11 @@ public class UserControllerImpl implements UserController {
 	public List<Specializzazione> getAllSpecializzazioni(String cf) {
 		return userTable.getAllSpecializzazioni(cf);
 	}
+
+
+	@Override
+	public void addNewSpecializzazione(String cf, Specializzazione specializzazione) {
+		userTable.addNewSpecializzazione(cf,  specializzazione);
+		
+	}
 }

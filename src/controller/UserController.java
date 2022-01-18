@@ -19,4 +19,6 @@ public interface UserController {
 	List<User> getAllPersonaleByRuolo(String string);
 
 	List<Specializzazione> getAllSpecializzazioni(String cf);
+
+	void addNewSpecializzazione(String cf, Specializzazione specializzazione);
 }

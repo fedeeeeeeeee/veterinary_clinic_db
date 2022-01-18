@@ -13,6 +13,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import com.toedter.calendar.JDateChooser;
+
+import model.Specializzazione;
+import model.SpecializzazioneImpl;
+
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JScrollPane;
@@ -22,7 +26,9 @@ public class OptionSpecializzazione extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JDateChooser dateChooserDa;
 	private SimpleDateFormat df;
-
+	private JTextArea textArea;
+	
+	
 	public OptionSpecializzazione() {
 		setLayout(new BorderLayout(0, 0));
 		df = new SimpleDateFormat("yyyy-MM-dd");
@@ -75,16 +81,18 @@ public class OptionSpecializzazione extends JPanel {
 		gbc_scrollPane.gridy = 3;
 		panel.add(scrollPane, gbc_scrollPane);
 		
-		JTextArea textArea = new JTextArea();
+			this.textArea = new JTextArea();
 	       textArea.setLineWrap(true);
 	       textArea.setWrapStyleWord(true);
 		scrollPane.setViewportView(textArea);
 		
 
 	}
-
-	public String getDataInizio() {
-		return df.format(dateChooserDa.getDate());
+	public Specializzazione getSpecializzazione() {
+		Specializzazione spe = new SpecializzazioneImpl();
+		spe.setAnnoConseguimento( df.format(dateChooserDa.getDate()));
+		spe.setTitolo(textArea.getText());
+		return spe;
 	}
 	
 	
