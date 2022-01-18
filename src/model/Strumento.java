@@ -18,7 +18,7 @@ public interface Strumento {
 
 	public void setDataScadenza(String dataScadenza);
 
-	public int getQuantità();
+	public int getQuantita();
 
-	public void setQuantità(int quantità);
+	public void setQuantita(int quantita);
 }

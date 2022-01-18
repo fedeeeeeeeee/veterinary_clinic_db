@@ -37,7 +37,7 @@ public class StrumentiTableImpl implements StrumentiTable{
 					stru.setNome(result.getString(2));
 					stru.setDescrizione(result.getString(3));
 					stru.setDataScadenza(result.getString(4));
-					stru.setQuantità(result.getInt(5));
+					stru.setQuantita(result.getInt(5));
 
 					 
 					strumenti.add(stru);
@@ -85,7 +85,7 @@ public class StrumentiTableImpl implements StrumentiTable{
 					stru.setNome(result.getString(2));
 					stru.setDescrizione(result.getString(3));
 					stru.setDataScadenza(result.getString(4));
-					stru.setQuantità(result.getInt(5));
+					stru.setQuantita(result.getInt(5));
 					
 					strumenti.add(stru);
 				}
@@ -131,7 +131,7 @@ public class StrumentiTableImpl implements StrumentiTable{
 					stru.setNome(result.getString(2));
 					stru.setDescrizione(result.getString(3));
 					stru.setDataScadenza(result.getString(4));
-					stru.setQuantità(result.getInt(5));
+					stru.setQuantita(result.getInt(5));
 					
 					strumenti.add(stru);
 				}
@@ -170,7 +170,7 @@ public class StrumentiTableImpl implements StrumentiTable{
 					stru.setNome(result.getString(2));
 					stru.setDescrizione(result.getString(3));
 					stru.setDataScadenza(result.getString(4));
-					stru.setQuantità(result.getInt(5));
+					stru.setQuantita(result.getInt(5));
 
 					strumenti.add(stru);
 				}
@@ -192,7 +192,7 @@ public class StrumentiTableImpl implements StrumentiTable{
 	}
 
 	@Override
-	public void updateQuantità(Strumento strumento, int q) {
+	public void updateQuantita(Strumento strumento, int q) {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 		 final String query = "update strumento set quantitaInMagazzino = ? "
@@ -200,7 +200,7 @@ public class StrumentiTableImpl implements StrumentiTable{
 		 
 			try {
 				statement = Optional.of(connection.prepareStatement(query));
-				statement.get().setInt(1, (strumento.getQuantità() + q));
+				statement.get().setInt(1, (strumento.getQuantita() + q));
 		           statement.get().setInt(2, strumento.getCodStrumento());
 		           statement.get().executeUpdate();   
 			} catch (SQLException e) {

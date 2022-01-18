@@ -340,7 +340,7 @@ public class FarmaciTableImpl implements FarmaciTable {
 			return farmaci;
 		}
 	@Override
-	public void updateQuantità(Farmaco farmaco, int q) {
+	public void updateQuantita(Farmaco farmaco, int q) {
 		// TODO Auto-generated method stub
 
 	}

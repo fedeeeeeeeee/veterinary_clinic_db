@@ -214,8 +214,8 @@ public class StrumentiPage extends JPanel {
 				Object q = JOptionPane.showInputDialog(null, "Quanti " + nome + " vuoi aggiungere ?",
 						"Update magazzino", JOptionPane.QUESTION_MESSAGE, null, options, 0);
 				if (q != null) { // x o annulla
-					int quantità = (int) q;
-					strumentiController.updateQuantità(listStrumenti.get(selectedStrumento), quantità);
+					int quantita = (int) q;
+					strumentiController.updateQuantita(listStrumenti.get(selectedStrumento), quantita);
 					this.selectedStrumento = -1;
 					resetAndDraw(strumentiController.getAllStrumenti());
 				}
@@ -299,7 +299,7 @@ public class StrumentiPage extends JPanel {
 	private void createTable(DefaultTableModel model, List<Strumento> list) {
 		list.forEach(x -> {
 			model.addRow(new Object[] { x.getCodStrumento(), x.getNome(), x.getDescrizione(), x.getDataScadenza(),
-					x.getQuantità(), });
+					x.getQuantita(), });
 		});
 	}
 

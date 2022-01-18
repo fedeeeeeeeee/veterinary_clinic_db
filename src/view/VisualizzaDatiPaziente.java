@@ -62,11 +62,11 @@ public class VisualizzaDatiPaziente extends JPanel {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		centerPanel.add(tabbedPane, BorderLayout.CENTER);
 		 
-		JPanel panelAnagrafica = new AnagraficaPazientePanel();
+		JPanel panelAnagrafica = new AnagraficaPazientePanel(paziente);
 		tabbedPane.addTab("Anagrafica", null, panelAnagrafica,
 		                  "Visualizza anagrafica paziente");
 
-		JPanel panelParametri = new JPanel();
+		JPanel panelParametri = new JPanel();// ParametriPazientiPanel()
 		tabbedPane.addTab("Parametri", null, panelParametri,
 		                  "Visualizza altezza e peso");
 		
@@ -78,7 +78,7 @@ public class VisualizzaDatiPaziente extends JPanel {
 		tabbedPane.addTab("Farmaci", null, panelFarmaci,
 		                  "Visualizza farmaci prescritti");
 		
-		JPanel panelPatologie = new JPanel();
+		JPanel panelPatologie = new JPanel();// ParametriPazientiPanel(paziente);
 		tabbedPane.addTab("Patologie", null, panelPatologie,
 		                  "Visualizza patologie diagnosticate");
 		
