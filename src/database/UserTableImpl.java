@@ -15,6 +15,8 @@ import java.util.Random;
 
 import model.User;
 import model.UserImpl;
+import view.Specializzazione;
+import view.SpecializzazioneImpl;
 
 public class UserTableImpl implements UserTable {
 
@@ -311,5 +313,41 @@ public class UserTableImpl implements UserTable {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<Specializzazione> getAllSpecializzazioni(String cf) {
+
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		final String query = "select * from specializzazione where cf = ? "  ;
+		 List<Specializzazione> listSpecializzazioni = new ArrayList<>();
+		User user = new UserImpl();
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, cf);
+			final ResultSet result = statement.get().executeQuery();
+			if (result.next()) {
+				Specializzazione spe = new SpecializzazioneImpl();
+				spe.setAnnoConseguimento(result.getString("annoConseguimento"));
+				spe.setTitolo(query);
+				listSpecializzazioni.add(spe);
+			}
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return listSpecializzazioni;
 	}
 }

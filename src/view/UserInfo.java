@@ -8,23 +8,34 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+
+import controller.AnimaleController;
+import controller.UserController;
+import controller.UserControllerImpl;
+import model.Paziente;
 import model.User;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -49,6 +60,12 @@ public class UserInfo extends JPanel {
 	private JTextField textField;
 	private JTextField textFieldAnniDiServizio;
 	private JTextField textFieldSpecializzazioni;
+	private JTable table;
+	private JScrollPane scrollPane;
+	private List<Specializzazione> listSpecializzazioni;
+	private DefaultTableModel model;
+	private UserController userController;
+	
 	
 	public UserInfo(JFrame frame, User user) {
 		frame.getContentPane().removeAll();
@@ -56,15 +73,13 @@ public class UserInfo extends JPanel {
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
-			
+		this.userController = new UserControllerImpl();
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel centerPanel = new JPanel();
 		
-	
-
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-	  // GroupLayout groupLayout = new GroupLayout(this);
+	  //GroupLayout groupLayout = new GroupLayout(this);
 	       groupLayout.setHorizontalGroup(
 	       	groupLayout.createParallelGroup(Alignment.LEADING)
 	       		.addGroup(groupLayout.createSequentialGroup()
@@ -86,25 +101,25 @@ public class UserInfo extends JPanel {
 	       			.addContainerGap()));
 	       
 	  	centerPanel.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(50dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(184dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(50dlu;default)"),},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
+	  			FormSpecs.RELATED_GAP_COLSPEC,
+	  			ColumnSpec.decode("max(50dlu;default):grow"),
+	  			FormSpecs.RELATED_GAP_COLSPEC,
+	  			ColumnSpec.decode("default:grow"),
+	  			FormSpecs.RELATED_GAP_COLSPEC,
+	  			ColumnSpec.decode("max(184dlu;default)"),
+	  			FormSpecs.RELATED_GAP_COLSPEC,
+	  			ColumnSpec.decode("default:grow"),
+	  			FormSpecs.RELATED_GAP_COLSPEC,
+	  			ColumnSpec.decode("max(50dlu;default):grow"),},
+	  		new RowSpec[] {
+	  			FormSpecs.RELATED_GAP_ROWSPEC,
+	  			RowSpec.decode("default:grow"),
+	  			FormSpecs.RELATED_GAP_ROWSPEC,
+	  			RowSpec.decode("default:grow"),
+	  			FormSpecs.RELATED_GAP_ROWSPEC,
+	  			FormSpecs.DEFAULT_ROWSPEC,
+	  			FormSpecs.RELATED_GAP_ROWSPEC,
+	  			FormSpecs.DEFAULT_ROWSPEC,}));
 	  	
 		JPanel anagraficaPanel = new JPanel();
 		anagraficaPanel.setBorder(new TitledBorder(
@@ -246,56 +261,81 @@ public class UserInfo extends JPanel {
 		datiPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Lavoro", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		centerPanel.add(datiPanel, "5, 4, 2, 4, fill, fill");
+		centerPanel.add(datiPanel, "3, 4, 7, 4, fill, fill");
 		GridBagLayout gbl_datiPanel = new GridBagLayout();
 		gbl_datiPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_datiPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_datiPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_datiPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_datiPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_datiPanel.rowWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
 		datiPanel.setLayout(gbl_datiPanel);
 		
 		JLabel lblAnniServizio = new JLabel("Anni di Servizio");
 		GridBagConstraints gbc_lblAnniServizio = new GridBagConstraints();
 		gbc_lblAnniServizio.gridwidth = 6;
 		gbc_lblAnniServizio.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAnniServizio.gridx = 3;
+		gbc_lblAnniServizio.gridx = 2;
 		gbc_lblAnniServizio.gridy = 1;
 		datiPanel.add(lblAnniServizio, gbc_lblAnniServizio);
 		
-		JLabel lblSpecializzazione = new JLabel("Specializzazioni");
-		GridBagConstraints gbc_lblSpecializzazione = new GridBagConstraints();
-		gbc_lblSpecializzazione.gridwidth = 7;
-		gbc_lblSpecializzazione.anchor = GridBagConstraints.WEST;
-		gbc_lblSpecializzazione.insets = new Insets(0, 0, 5, 5);
-		gbc_lblSpecializzazione.gridx = 11;
-		gbc_lblSpecializzazione.gridy = 1;
-		datiPanel.add(lblSpecializzazione, gbc_lblSpecializzazione);
 		
-		textFieldAnniDiServizio = new JTextField();
-		textFieldAnniDiServizio.setText(String.valueOf(user.getAnniDiServizio()));
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.gridwidth = 4;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 4;
-		gbc_textField_1.gridy = 2;
-		datiPanel.add(textFieldAnniDiServizio, gbc_textField_1);
-		textFieldAnniDiServizio.setColumns(10);
-		
-		textFieldSpecializzazioni = new JTextField();
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.gridwidth = 7;
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridx = 11;
-		gbc_textField_2.gridy = 2;
-		datiPanel.add(textFieldSpecializzazioni, gbc_textField_2);
-		textFieldSpecializzazioni.setColumns(10);
+		if (user.getRuolo().equals("Veterinario")) { 
 
+
+			this.initTable();
+			this.listSpecializzazioni = userController.getAllSpecializzazioni(user.getCF());
+			this.createTable(model, listSpecializzazioni);
+			this.model = (DefaultTableModel) table.getModel();
+		
+		
+			textFieldAnniDiServizio = new JTextField();
+			textFieldAnniDiServizio.setText(String.valueOf(user.getAnniDiServizio()));
+			GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+			gbc_textField_1.gridwidth = 4;
+			gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+			gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField_1.gridx = 2;
+			gbc_textField_1.gridy = 2;
+			datiPanel.add(textFieldAnniDiServizio, gbc_textField_1);
+			textFieldAnniDiServizio.setColumns(10);
+			
+			JScrollPane scrollPane_1 = new JScrollPane();
+			GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+			gbc_scrollPane_1.gridheight = 2;
+			gbc_scrollPane_1.gridwidth = 12;
+			gbc_scrollPane_1.insets = new Insets(0, 0, 5, 5);
+			gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane_1.gridx = 8;
+			gbc_scrollPane_1.gridy = 1;
+			datiPanel.add(scrollPane_1, gbc_scrollPane_1);
+			scrollPane_1.setViewportView(table);
+	
+		}
 	   // setLayout(groupLayout);
 		//new GroupLayout(this);
 		// this.initCommonView(frame);
 		// importante per la visualizzazione 
 		frame.getContentPane().setLayout(groupLayout);
+	}
+	
+	private void resetAndDraw(List<Specializzazione> allAnimali) {
+		this.listSpecializzazioni.clear();
+		this.listSpecializzazioni = allAnimali;
+		//table.clearSelection();
+		model.setRowCount(0);
+		this.createTable(model, listSpecializzazioni);
+	}
+
+	private void createTable(DefaultTableModel model, List<Specializzazione> list) {
+		list.forEach(x -> {
+			model.addRow(new Object[] { x.getTitolo(), x.getAnnoConseguimento(), });
+		});
+	}
+
+	private void initTable() {
+		this.table = new JTable(); 
+		this.model =  (DefaultTableModel) table.getModel();
+		model.addColumn("Titolo");
+		model.addColumn("Anno");
+		
 	}
 }

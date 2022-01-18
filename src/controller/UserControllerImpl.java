@@ -5,6 +5,7 @@ import java.util.List;
 import database.UserTable;
 import database.UserTableImpl;
 import model.User;
+import view.Specializzazione;
 
 public class UserControllerImpl implements UserController {
 
@@ -42,5 +43,8 @@ public class UserControllerImpl implements UserController {
 	public List<User> getAllPersonaleByRuolo(String ruolo) {
 		return userTable.getAllPersonaleByRuolo(ruolo);
 	}
-
+	@Override
+	public List<Specializzazione> getAllSpecializzazioni(String cf) {
+		return userTable.getAllSpecializzazioni(cf);
+	}
 }

@@ -3,6 +3,7 @@ package database;
 import java.util.List;
 
 import model.User;
+import view.Specializzazione;
 
 public interface UserTable {
 	
@@ -15,4 +16,6 @@ public interface UserTable {
 	User getUser(String username);
 
 	List<User> getAllPersonaleByRuolo(String ruolo);
+
+	List<Specializzazione> getAllSpecializzazioni(String cf);
 }

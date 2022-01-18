@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 import model.User;
+import view.Specializzazione;
 
 
 public interface UserController {
@@ -15,4 +16,6 @@ public interface UserController {
 	User getUser(String username);
 
 	List<User> getAllPersonaleByRuolo(String string);
+
+	List<Specializzazione> getAllSpecializzazioni(String cf);
 }
