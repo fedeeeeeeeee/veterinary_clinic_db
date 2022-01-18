@@ -47,8 +47,8 @@ public class UserInfo extends JPanel {
 	private JTextField textFieldDataNascita;
 	private JTextField textFieldAnniServizio;
 	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField textFieldAnniDiServizio;
+	private JTextField textFieldSpecializzazioni;
 	
 	public UserInfo(JFrame frame, User user) {
 		frame.getContentPane().removeAll();
@@ -58,35 +58,13 @@ public class UserInfo extends JPanel {
 		this.user = user;
 			
 		JPanel upperPanel = new JPanel();
-		upperPanel.setBounds(6, 0, 985, 121);
 		JPanel lowerPanel = new JPanel();
-		lowerPanel.setBounds(6, 552, 985, 50);
 		JPanel centerPanel = new JPanel();
-		centerPanel.setBounds(6, 127, 985, 422);
 		
-		centerPanel.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(50dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(184dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(50dlu;default)"),},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
+	
 
-	//	GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-	   GroupLayout groupLayout = new GroupLayout(this);
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+	  // GroupLayout groupLayout = new GroupLayout(this);
 	       groupLayout.setHorizontalGroup(
 	       	groupLayout.createParallelGroup(Alignment.LEADING)
 	       		.addGroup(groupLayout.createSequentialGroup()
@@ -106,9 +84,28 @@ public class UserInfo extends JPanel {
 	       			.addPreferredGap(ComponentPlacement.RELATED)
 	       			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 	       			.addContainerGap()));
-	      centerPanel.setLayout(new BorderLayout(0, 0));
 	       
-		
+	  	centerPanel.setLayout(new FormLayout(new ColumnSpec[] {
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(50dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(184dlu;default)"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_COLSPEC,
+				ColumnSpec.decode("max(50dlu;default)"),},
+			new RowSpec[] {
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				RowSpec.decode("default:grow"),
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,
+				FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.DEFAULT_ROWSPEC,}));
+	  	
 		JPanel anagraficaPanel = new JPanel();
 		anagraficaPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
@@ -120,6 +117,7 @@ public class UserInfo extends JPanel {
 		anagraficaPanel.add(labelNome);
 
 		textFieldNome = new JTextField();
+		textFieldNome.setText(user.getNome());
 		labelNome.setLabelFor(textFieldNome);
 		anagraficaPanel.add(textFieldNome);
 
@@ -130,6 +128,8 @@ public class UserInfo extends JPanel {
 		textFieldNome.setEditable(false);
 		
 		textFieldCognome = new JTextField();
+		textFieldCognome.setText(user.getCognome());
+		
 		labelCognome.setLabelFor(textFieldCognome);
 		anagraficaPanel.add(textFieldCognome);
 
@@ -140,6 +140,7 @@ public class UserInfo extends JPanel {
 		textFieldCognome.setEditable(false);
 
 		textFieldCodiceFiscale = new JTextField();
+		textFieldCodiceFiscale.setText(user.getCF());
 		labelCf.setLabelFor(textFieldCodiceFiscale);
 		anagraficaPanel.add(textFieldCodiceFiscale);
 		textFieldCodiceFiscale.setColumns(10);
@@ -149,7 +150,7 @@ public class UserInfo extends JPanel {
 		anagraficaPanel.add(labelDataNascita);
 
 		JTextField textFieldData = new JTextField();
-
+		textFieldData.setText(user.getDataNascita());
 		labelDataNascita.setLabelFor(textFieldData);
 		labelDataNascita.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldData);
@@ -161,6 +162,7 @@ public class UserInfo extends JPanel {
 		anagraficaPanel.add(labelVia);
 
 		textFieldVia = new JTextField();
+		textFieldVia.setText(user.getIndirizzoVia());
 		labelVia.setLabelFor(textFieldVia);
 		labelVia.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldVia);
@@ -171,6 +173,7 @@ public class UserInfo extends JPanel {
 		anagraficaPanel.add(labelNumeroCivico);
 
 		textFieldNumeroCivico = new JTextField();
+		textFieldNumeroCivico.setText(String.valueOf(user.getIndirizzoNumero()));
 		labelNumeroCivico.setLabelFor(textFieldNumeroCivico);
 		labelNumeroCivico.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldNumeroCivico);
@@ -181,6 +184,7 @@ public class UserInfo extends JPanel {
 		anagraficaPanel.add(labelCitta);
 
 		textFieldCitta = new JTextField();
+		textFieldCitta.setText(user.getIndirizzoCitta());
 		labelCitta.setLabelFor(textFieldCitta);
 		labelCitta.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldCitta);
@@ -191,6 +195,7 @@ public class UserInfo extends JPanel {
 		anagraficaPanel.add(labelCap);
 
 		textFieldCap = new JTextField();
+		textFieldCap.setText(String.valueOf(user.getIndirizzoCap()));
 		labelCap.setLabelFor(textFieldCap);
 		labelCap.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldCap);
@@ -201,6 +206,7 @@ public class UserInfo extends JPanel {
 		anagraficaPanel.add(labelTelefono);
 
 		textFieldTelefono = new JTextField();
+		textFieldTelefono.setText(String.valueOf(user.getTelefono()));
 		labelTelefono.setLabelFor(textFieldTelefono);
 		labelTelefono.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldTelefono);
@@ -211,6 +217,7 @@ public class UserInfo extends JPanel {
 		anagraficaPanel.add(labelEmail);
 
 		textFieldEmail = new JTextField();
+		textFieldEmail.setText(user.getEmail());
 		labelEmail.setLabelFor(textFieldEmail);
 		labelEmail.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(textFieldEmail);
@@ -233,13 +240,8 @@ public class UserInfo extends JPanel {
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
 		upperPanel.add(titleLabel);
 		setLayout(null);
-		
-		
+			
 		centerPanel.add(anagraficaPanel, "4, 2, 5, 1, fill, fill");
-		
-		
-		add(centerPanel);
-		
 		JPanel datiPanel = new JPanel();
 		datiPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
@@ -269,33 +271,31 @@ public class UserInfo extends JPanel {
 		gbc_lblSpecializzazione.gridy = 1;
 		datiPanel.add(lblSpecializzazione, gbc_lblSpecializzazione);
 		
-		textField_1 = new JTextField();
+		textFieldAnniDiServizio = new JTextField();
+		textFieldAnniDiServizio.setText(String.valueOf(user.getAnniDiServizio()));
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
 		gbc_textField_1.gridwidth = 4;
 		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1.gridx = 4;
 		gbc_textField_1.gridy = 2;
-		datiPanel.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
+		datiPanel.add(textFieldAnniDiServizio, gbc_textField_1);
+		textFieldAnniDiServizio.setColumns(10);
 		
-		textField_2 = new JTextField();
+		textFieldSpecializzazioni = new JTextField();
 		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
 		gbc_textField_2.gridwidth = 7;
 		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
 		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_2.gridx = 11;
 		gbc_textField_2.gridy = 2;
-		datiPanel.add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
-		add(upperPanel);
-		add(lowerPanel);
-		
-	    setLayout(groupLayout);
+		datiPanel.add(textFieldSpecializzazioni, gbc_textField_2);
+		textFieldSpecializzazioni.setColumns(10);
 
+	   // setLayout(groupLayout);
 		//new GroupLayout(this);
 		// this.initCommonView(frame);
 		// importante per la visualizzazione 
-		//frame.getContentPane().setLayout(groupLayout);
+		frame.getContentPane().setLayout(groupLayout);
 	}
 }
