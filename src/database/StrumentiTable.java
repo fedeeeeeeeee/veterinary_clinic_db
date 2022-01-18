@@ -15,5 +15,5 @@ public interface StrumentiTable {
 	
 	List<Strumento> getStrumentiInEsaurimento();
 
-	void updateQuantità(Strumento strumento, int q);
+	void updateQuantita(Strumento strumento, int q);
 }

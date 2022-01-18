@@ -6,7 +6,7 @@ public class StrumentoImpl implements Strumento {
 	private String nome;
 	private String descrizione;
 	private String dataScadenza;
-	private int quantità;
+	private int quantita;
 
 	@Override
 	public int getCodStrumento() {
@@ -49,13 +49,13 @@ public class StrumentoImpl implements Strumento {
 	}
 
 	@Override
-	public int getQuantità() {
-		return quantità;
+	public int getQuantita() {
+		return quantita;
 	}
 
 	@Override
-	public void setQuantità(int quantità) {
-		this.quantità = quantità;
+	public void setQuantita(int quantita) {
+		this.quantita = quantita;
 	}
 
 }

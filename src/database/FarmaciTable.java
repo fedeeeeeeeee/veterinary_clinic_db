@@ -14,7 +14,7 @@ public interface FarmaciTable {
 
 	List<Farmaco> getFarmaciInEsaurimento();
 
-	void updateQuantità(Farmaco farmaco, int q);
+	void updateQuantita(Farmaco farmaco, int q);
 
 	List<Farmaco> getAllVaccini();
 

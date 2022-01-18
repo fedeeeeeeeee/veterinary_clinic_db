@@ -40,8 +40,8 @@ public class FarmaciControllerImpl implements FarmaciController {
 	}
 
 	@Override
-	public void updateQuantità(Farmaco farmaco, int q) {
-		this.farmaciTable.updateQuantità(farmaco, q);
+	public void updateQuantita(Farmaco farmaco, int q) {
+		this.farmaciTable.updateQuantita(farmaco, q);
 	}
 
 	@Override
