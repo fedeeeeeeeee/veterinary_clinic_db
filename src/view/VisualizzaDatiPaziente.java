@@ -78,7 +78,7 @@ public class VisualizzaDatiPaziente extends CommonView {
 		tabbedPane.addTab("Farmaci", null, panelFarmaci,
 		                  "Visualizza farmaci prescritti");
 		
-		JPanel panelPatologie = new JPanel();// ParametriPazientiPanel(paziente);
+		JPanel panelPatologie = new PatologiePazientiPanel(paziente);
 		tabbedPane.addTab("Patologie", null, panelPatologie,
 		                  "Visualizza patologie diagnosticate");
 		
