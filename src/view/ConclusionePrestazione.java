@@ -512,6 +512,42 @@ public class ConclusionePrestazione extends CommonView {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 		
+		
+		
+		btnAddFarmaco.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OptionFarmaco panelFarmaco = new OptionFarmaco();
+				int result = JOptionPane.showConfirmDialog(null,
+						panelFarmaco,
+						"Farmaco",
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.PLAIN_MESSAGE);
+						if (result == JOptionPane.OK_OPTION) {
+							//resetAndDraw(userController.getAllSpecializzazioni(user.getCF()));
+						}
+			}
+		});
+		
+
+		btnAddPatologia.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				OptionPatologia panelPatologia = new OptionPatologia();
+				int result = JOptionPane.showConfirmDialog(null,
+						panelPatologia,
+						"Patologia",
+						JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.PLAIN_MESSAGE);
+						if (result == JOptionPane.OK_OPTION) {
+							//resetAndDraw(userController.getAllSpecializzazioni(user.getCF()));
+						}
+			}
+	    });
+		
+		
 		JPanel savePanel = new JPanel();
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
 		
