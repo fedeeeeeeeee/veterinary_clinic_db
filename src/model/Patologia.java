@@ -17,4 +17,20 @@ public interface Patologia {
 	public String getTipoPatologia();
 
 	public void setTipoPatologia(String tipoPatologia);
+
+	public String getDataInizio();
+
+	public void setDataInizio(String dataInizio);
+
+	public String getDataFine();
+
+	public void setDataFine(String dataFine);
+
+	public String getCodTipoPrestazione();
+
+	public void setCodTipoPrestazione(String codTipoPrestazione);
+
+	public String getDataPrestazione();
+
+	public void setDataPrestazione(String dataPrestazione);
 }

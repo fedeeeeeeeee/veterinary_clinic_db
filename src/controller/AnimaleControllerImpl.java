@@ -9,6 +9,7 @@ import database.PazientiTableImpl;
 import database.ProprietarioTable;
 import database.ProprietarioTableImpl;
 import model.Animale;
+import model.Patologia;
 import model.Paziente;
 import model.User;
 import utility.Pair;
@@ -51,5 +52,10 @@ public class AnimaleControllerImpl implements AnimaleController {
 	@Override
 	public List<Paziente> getAllPazienti() {
 		return this.pazienteTable.getAllPazienti();
+	}
+
+	@Override
+	public List<Patologia> getAllPatologiePaziente(Paziente paziente) {
+		return this.pazienteTable.getAllPatologiePaziente(paziente);
 	}
 }

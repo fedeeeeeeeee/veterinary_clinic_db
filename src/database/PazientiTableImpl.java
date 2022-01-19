@@ -10,6 +10,8 @@ import java.util.Optional;
 
 import model.Animale;
 import model.AnimaleImpl;
+import model.Patologia;
+import model.PatologiaImpl;
 import model.Paziente;
 import model.PazienteImpl;
 import model.Person;
@@ -66,6 +68,55 @@ public class PazientiTableImpl implements PazientiTable {
 				animale.setProprietario(proprietario);	
 				paziente.setAnimale(animale);
 				list.add(paziente);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				 e.printStackTrace();
+			}
+		}
+		return list;
+	}
+
+
+
+	@Override
+	public List<Patologia> getAllPatologiePaziente(Paziente paziente) {
+		List<Patologia> list = new ArrayList<>();
+
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		final String query = "SELECT * FROM patologia "
+				+ "INNER JOIN patologia_in_prestazione "
+				+ "on patologia.codPatologia = patologia_in_prestazione.codPatologia "
+				+ "where codAnimale = ? ";
+
+		try {			
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, paziente.getAnimale().getCodAnimale());
+			final ResultSet result = statement.get().executeQuery();
+
+			while (result.next()) {
+			Patologia pat = new PatologiaImpl();
+			pat.setCodPatologia(0);
+			pat.setCodTipoPrestazione(result.getString("patologia.codPatologia"));
+			pat.setDataPrestazione(result.getString("patologia_in_prestazione.data"));
+			pat.setDataInizio(result.getString("patologia_in_prestazione.dataInizio"));
+			pat.setDataFine(result.getString("patologia_in_prestazione.dataFine"));
+			pat.setDescrizione(result.getString("patologia.descrizione"));
+			pat.setNomePatologia(result.getString("patologia.nome"));
+			pat.setTipoPatologia(result.getString("patologia.tipoPatologia"));
+			
+		
+				list.add(pat);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

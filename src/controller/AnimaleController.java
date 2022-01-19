@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import model.Animale;
+import model.Patologia;
 import model.Paziente;
 import utility.Pair;
 
@@ -18,5 +19,7 @@ public interface AnimaleController {
 	List<Animale> getAllAnimali();
 
 	List<Paziente> getAllPazienti();
+
+	List<Patologia> getAllPatologiePaziente(Paziente paziente);
 
 }

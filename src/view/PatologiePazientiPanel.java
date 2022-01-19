@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -13,6 +14,8 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
 import controller.AnimaleController;
+import controller.AnimaleControllerImpl;
+import model.Patologia;
 import model.Paziente;
 
 public class PatologiePazientiPanel extends JPanel {
@@ -21,7 +24,7 @@ public class PatologiePazientiPanel extends JPanel {
 	private JTable table;
 	private JScrollPane scrollPane;
 	private AnimaleController pazienteController;
-	private List<Paziente> listPazienti;
+	private List<Patologia> listPatologie;
 	
 
 	public PatologiePazientiPanel(Paziente paziente) {
@@ -30,6 +33,9 @@ public class PatologiePazientiPanel extends JPanel {
 		add(upperPanel, BorderLayout.NORTH);
 		JPanel mainPanel = new JPanel();
 		add(mainPanel, BorderLayout.CENTER);
+		
+		this.listPatologie = new ArrayList<>();
+		pazienteController = new AnimaleControllerImpl();
 		
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
 		gbl_centerPanel.columnWidths = new int[] { 0, 0, 0, 0, 0 };
@@ -46,27 +52,28 @@ public class PatologiePazientiPanel extends JPanel {
 		gbc_scrollPane.gridx = 1;
 		gbc_scrollPane.gridy = 0;
 		mainPanel.add(scrollPane, gbc_scrollPane);
+		
 		this.initTable();
-		this.listPazienti = pazienteController.getAllPatologiePaziente(paziente);
-		this.createTable(model, listPazienti);
-		scrollPane.setViewportView(table);
+		this.listPatologie = pazienteController.getAllPatologiePaziente(paziente);
+		this.createTable(model, listPatologie);
+scrollPane.setViewportView(table);
 		
 	}
-	private void resetAndDraw(List<Paziente> allAnimali) {
-		this.listPazienti.clear();
-		this.listPazienti = allAnimali;
-		//table.clearSelection();
+	private void resetAndDraw(List<Patologia> allPatologie) {
+		this.listPatologie.clear();
+		this.listPatologie = allPatologie;
 		model.setRowCount(0);
-		this.createTable(model, listPazienti);
+		this.createTable(model, listPatologie);
 	}
 
-	private void createTable(DefaultTableModel model, List<Paziente> list) {
+	private void createTable(DefaultTableModel model, List<Patologia> list) {
 		list.forEach(x -> {
 			model.addRow(new Object[] { 
-					/*
-					x.getAnimale().getRazza(), 
-					x.getAnimale().getProprietario().getNome() + " "+ x.getAnimale().getProprietario().getCognome(),*/
-				 // voglaimo aggiungere Ricoverato si e no ? 
+					x.getNomePatologia(),
+					x.getDescrizione(),
+					x.getDataInizio(),
+					x.getDataFine(),
+					x.getTipoPatologia()
 					});
 		});
 	}
@@ -75,10 +82,10 @@ public class PatologiePazientiPanel extends JPanel {
 		this.table = new JTable();
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Patologia");
-		model.addColumn("Tipo");
 		model.addColumn("descrizione");
 		model.addColumn("dataInizio");
 		model.addColumn("dataFine");
+		model.addColumn("Tipo");
 		
 	}
 	
