@@ -2,35 +2,39 @@ package model;
 
 public interface Farmaco {
 
-	public String getNomeFarmaco();
+	String getNomeFarmaco();
 
-	public void setNomeFarmaco(String nomeFarmaco);
+	void setNomeFarmaco(String nomeFarmaco);
 
-	public int getCodLotto();
+	int getCodLotto();
 
-	public void setCodLotto(int codLotto);
+	void setCodLotto(int codLotto);
 
-	public String getDataScadenza();
+	String getDataScadenza();
 
-	public void setDataScadenza(String dataScadenza);
+	void setDataScadenza(String dataScadenza);
 
-	public int getDisponibilita();
+	int getDisponibilita();
 
-	public void setDisponibilita(int disponibilita);
+	void setDisponibilita(int disponibilita);
 
-	public String getTipoFarmaco();
+	String getTipoFarmaco();
 
-	public void setTipoFarmaco(String tipoFarmaco);
+	void setTipoFarmaco(String tipoFarmaco);
 
-	public String getDescrizione();
+	String getDescrizione();
 
-	public void setDescrizione(String descrizione);
+	void setDescrizione(String descrizione);
 
-	public int getCodFarmaco();
+	int getCodFarmaco();
 
-	public void setCodFarmaco(int codFarmaco);
+	void setCodFarmaco(int codFarmaco);
 
 	String getCopertura();
 
 	void setCopertura(String copertura);
+
+	void setIndicazioni(String string);
+
+	String getIndicazioni();
 }

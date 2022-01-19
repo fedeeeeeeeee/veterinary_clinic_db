@@ -6,6 +6,8 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -54,8 +56,8 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 				x.getData(),
 				x.getPrestazione(),
 				x.getTipoPrestazione(),
-				String.join(", ", x.getListFarmaci()),
-				String.join(", ", x.getListPatologie()),
+				String.join(", ", x.getListFarmaci().stream().map(f-> f.getNomeFarmaco()).collect(Collectors.toList())),
+				String.join(", ", x.getListPatologie().stream().map(p-> p.getNomePatologia()).collect(Collectors.toList())),
 			});
 		});
 		

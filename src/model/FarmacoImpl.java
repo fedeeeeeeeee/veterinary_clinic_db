@@ -11,6 +11,7 @@ public class FarmacoImpl implements Farmaco {
 	private int disponibilita;
 	private String tipoFarmaco;
 	private String copertura;
+	private String indicazioni;
 	
 	@Override
 	public String getNomeFarmaco() {
@@ -77,5 +78,13 @@ public class FarmacoImpl implements Farmaco {
 	@Override
 	public void setCopertura(String copertura) {
 		this.copertura = copertura;
+	}
+	@Override
+	public void setIndicazioni(String indicazioni) {
+		this.indicazioni = indicazioni;
+	}
+	@Override
+	public String getIndicazioni() {
+		return this.indicazioni;
 	}
 }

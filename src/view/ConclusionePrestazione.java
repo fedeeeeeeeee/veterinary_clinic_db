@@ -33,6 +33,8 @@ import controller.UserControllerImpl;
 import model.Animale;
 import model.Appuntamento;
 import model.AppuntamentoImpl;
+import model.Farmaco;
+import model.Patologia;
 import model.Prestazione;
 import model.User;
 import utility.Pair;
@@ -74,7 +76,7 @@ public class ConclusionePrestazione extends CommonView {
 	private JTextField textFieldAltezza;
 	private JTextField textFieldPeso;
 	private Appuntamento appuntamento;
-	private JTextField textField;
+	private JTextField textFieldProprietario;
 
 	private void createTable(DefaultTableModel model, List<Appuntamento> list) {
 		list.forEach(x -> {
@@ -123,8 +125,8 @@ public class ConclusionePrestazione extends CommonView {
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
 
-		//GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		GroupLayout groupLayout = new GroupLayout(this);
+		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+	//	GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
@@ -208,17 +210,45 @@ public class ConclusionePrestazione extends CommonView {
 		gbc_scrollPanePatologia.gridy = 0;
 		panelPatologia.add(scrollPanePatologia, gbc_scrollPanePatologia);
 		
-		//TODO medicine e patologie 
-		/*
-		JTable tableFarmaci	 = new JTable();
-	DefaultTableModel modelFarmaci = (DefaultTableModel) tableFarmaci.getModel();
-			JTable tablePatologie	 = new JTable();
-	DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
-	
-		this.initTable(); // passare il model 
+
+		JTable tableFarmaci = new JTable();
+		DefaultTableModel modelFarmaci = (DefaultTableModel) tableFarmaci.getModel();
+		List<Farmaco> farmaci = prestazioneController.getFarmaciInPrestazione(appuntamento);
+				
+		modelFarmaci.addColumn("Nome");
+		modelFarmaci.addColumn("Descrizione");
+		modelFarmaci.addColumn("Indicazioni");
+		
+		farmaci.forEach(x -> {
+			modelFarmaci.addRow(new Object[] { 
+					x.getNomeFarmaco(),
+					x.getDescrizione(), 
+					x.getIndicazioni()
+			});
+		});
+		scrollPaneFarmaco.setViewportView(tableFarmaci);
+
+		JTable tablePatologie = new JTable();
+		DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
+		List<Patologia> patologie = prestazioneController.getPatologieInPrestazione(appuntamento);
+
+		modelPatologie.addColumn("Nome");
+		modelPatologie.addColumn("Descrizione");
+
+		patologie.forEach(x -> {
+			modelPatologie.addRow(new Object[] { 
+					x.getNomePatologia(),
+					x.getDescrizione()
+			});
+		});
+		scrollPanePatologia.setViewportView(tablePatologie);
+
+		
+		/*this.initTable(); // passare il model
 		this.listAppuntamenti = this.prestazioneController.getFuturePrestazioni();
 		this.createTable(model, listAppuntamenti);
-*/
+		*/
+		
 		/* FINE search bar */
 
 		GridBagLayout gbl_scrollPanelLeft = new GridBagLayout();
@@ -249,7 +279,7 @@ public class ConclusionePrestazione extends CommonView {
 		gbc_textFieldNomA.gridy = 1;
 		scrollPanelLeft.add(textFieldNomA, gbc_textFieldNomA);
 		textFieldNomA.setColumns(10);
-
+		
 		
 		JLabel lblProprietario = new JLabel("Proprietario");
 		GridBagConstraints gbc_lblProprietario = new GridBagConstraints();
@@ -263,16 +293,16 @@ public class ConclusionePrestazione extends CommonView {
 		textFieldNomeProprietario = new JTextField();
 		textFieldNomeProprietario.setEditable(false);
 		
-		textField = new JTextField();
-		textField.setEditable(false);
+		textFieldProprietario = new JTextField();
+		textFieldProprietario.setEditable(false);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 5;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 5;
 		gbc_textField.gridy = 2;
-		scrollPanelLeft.add(textField, gbc_textField);
-		textField.setColumns(10);
+		scrollPanelLeft.add(textFieldProprietario, gbc_textField);
+		textFieldProprietario.setColumns(10);
 		
 	
 		JLabel lblTelefono = new JLabel("Telefono");
@@ -463,7 +493,7 @@ public class ConclusionePrestazione extends CommonView {
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Nuovo Appuntamento");
+		JLabel titleLabel = new JLabel("Conclusione Prestazione");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -476,7 +506,7 @@ public class ConclusionePrestazione extends CommonView {
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new GestioneAppuntamento(frame, user));
+				frame.getContentPane().add(new GestionePrestazione(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
@@ -489,9 +519,17 @@ public class ConclusionePrestazione extends CommonView {
 		
 		savePanel.add(saveButton);
 		
-		setLayout(groupLayout);
-	new GroupLayout(this);
-		//frame.getContentPane().setLayout(groupLayout);
+		textFieldTelefono.setText(String.valueOf(appuntamento.getAnimale().getProprietario().getTelefono()));
+		textFieldNomA.setText(appuntamento.getAnimale().getNome());
+		textFieldData.setText(appuntamento.getData());
+		textFieldOra.setText(appuntamento.getOra());
+		textFieldTipo.setText(appuntamento.getTipoPrestazione());
+		textFieldNomePrestazione.setText(appuntamento.getPrestazione());
+		textFieldProprietario.setText(appuntamento.getAnimale().getProprietario().getNome()+ " " + appuntamento.getAnimale().getProprietario().getCognome());
+		
+		//setLayout(groupLayout);
+	    //new GroupLayout(this);
+		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
 
 	}

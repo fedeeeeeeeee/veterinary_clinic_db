@@ -3,6 +3,8 @@ package database;
 import java.util.List;
 
 import model.Appuntamento;
+import model.Farmaco;
+import model.Patologia;
 import model.User;
 
 public interface PrestazioneTable {
@@ -34,5 +36,9 @@ public interface PrestazioneTable {
 		boolean deleteAppointmnet(Appuntamento app);
 
 		List<Appuntamento> getPrestazioniByAnimale(int codAnimale);
+
+		List<Farmaco> getFarmaciInPrestazione(Appuntamento appuntamento);
+
+		List<Patologia> getPatologieInPrestazione(Appuntamento appuntamento);
 
 }

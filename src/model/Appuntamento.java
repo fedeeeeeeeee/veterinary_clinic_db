@@ -41,17 +41,17 @@ public interface Appuntamento {
 
 	void setTipoPrestazione(String tipoPrestazione);
 
-	void setListFarmaci(List<String> listFarmaci);
+	void setListFarmaci(List<Farmaco> farmaci);
 
 	void setDescrizioneReferto(String descrizioneReferto);
 
-	void setListPatologie(List<String> listPatologie);
+	void setListPatologie(List<Patologia> listPatologie);
 
 	
 	String getDescrizioneReferto();
 
-	List<String> getListPatologie();
+	List<Patologia> getListPatologie();
 
-	List<String> getListFarmaci();
+	List<Farmaco> getListFarmaci();
 
 }

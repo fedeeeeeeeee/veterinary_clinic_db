@@ -67,10 +67,10 @@ public class GestionePrestazione extends CommonView {
 	private ProprietarioController proprietarioController;
 	private List<Appuntamento> listAppuntamenti;
 	private DefaultTableModel model;
-private boolean first; 
+	private boolean first;
 	private String saved;
 	private int selectedAppuntamento;
-	
+
 	public GestionePrestazione(final JFrame frame, User user) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
@@ -185,10 +185,13 @@ private boolean first;
 		this.listAppuntamenti = this.prestazioneController.getAllPrestazioni();
 		this.createTable(model, listAppuntamenti);
 		this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
 			public void valueChanged(ListSelectionEvent event) {
 				   int rowIndex = table.getSelectedRow();
 				   System.out.println("eccomi");
-	               frame.getContentPane().add(new ConclusionePrestazione(frame, user, listAppuntamenti.get(rowIndex)));
+				   Person proprietario = proprietarioController.getProprietario(listAppuntamenti.get(rowIndex).getAnimale().getCf());
+				   listAppuntamenti.get(rowIndex).getAnimale().setProprietario(proprietario);
+				   frame.getContentPane().add(new ConclusionePrestazione(frame, user, listAppuntamenti.get(rowIndex)));
 			}
 		});
 		scrollPane.setViewportView(table);

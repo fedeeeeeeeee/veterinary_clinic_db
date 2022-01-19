@@ -18,8 +18,8 @@ public class AppuntamentoImpl implements Appuntamento {
 
 	private List<User> list = new ArrayList<>();
 	private String descrizioneReferto;
-	private List<String> listFarmaci;
-	private List<String> listPatologie;
+	private List<Farmaco> listFarmaci;
+	private List<Patologia> listPatologie;
 
 	@Override
 	public String getDescrizioneReferto() {
@@ -32,22 +32,22 @@ public class AppuntamentoImpl implements Appuntamento {
 	}
 
 	@Override
-	public List<String> getListFarmaci() {
+	public List<Farmaco> getListFarmaci() {
 		return listFarmaci;
 	}
 
 	@Override
-	public void setListFarmaci(List<String> listFarmaci) {
+	public void setListFarmaci(List<Farmaco> listFarmaci) {
 		this.listFarmaci = listFarmaci;
 	}
 
 	@Override
-	public List<String> getListPatologie() {
+	public List<Patologia> getListPatologie() {
 		return listPatologie;
 	}
 
 	@Override
-	public void setListPatologie(List<String> listPatologie) {
+	public void setListPatologie(List<Patologia> listPatologie) {
 		this.listPatologie = listPatologie;
 	}
 

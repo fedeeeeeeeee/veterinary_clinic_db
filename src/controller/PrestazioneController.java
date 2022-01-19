@@ -2,6 +2,8 @@ package controller;
 
 import java.util.List;
 import model.Appuntamento;
+import model.Farmaco;
+import model.Patologia;
 import model.Prestazione;
 import model.User;
 
@@ -35,5 +37,9 @@ public interface PrestazioneController {
 	boolean deleteAppointmnet(Appuntamento app);
 
 	List<Appuntamento> getPrestazioniByAnimale(int codAnimale);
+
+	List<Farmaco> getFarmaciInPrestazione(Appuntamento appuntamento);
+
+	List<Patologia> getPatologieInPrestazione(Appuntamento appuntamento);
 
 }
