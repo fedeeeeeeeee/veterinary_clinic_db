@@ -97,8 +97,9 @@ public class PazientiTableImpl implements PazientiTable {
 		final String query = "SELECT * FROM patologia "
 				+ "INNER JOIN patologia_in_prestazione "
 				+ "on patologia.codPatologia = patologia_in_prestazione.codPatologia "
-				+ "where codAnimale = ? ";
-
+				+ "where codAnimale = ? "
+				+ "order by data ";
+//CONTROLLA 
 		try {			
 			statement = Optional.of(connection.prepareStatement(query));
 			statement.get().setInt(1, paziente.getAnimale().getCodAnimale());
