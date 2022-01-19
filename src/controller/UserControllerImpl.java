@@ -54,4 +54,9 @@ public class UserControllerImpl implements UserController {
 		userTable.addNewSpecializzazione(cf,  specializzazione);
 		
 	}
+
+	@Override
+	public boolean updateUser(User user) {
+		return userTable.updateUser(user);
+	}
 }

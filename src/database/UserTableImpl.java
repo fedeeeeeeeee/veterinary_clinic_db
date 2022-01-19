@@ -380,4 +380,29 @@ public class UserTableImpl implements UserTable {
 			}
 		}
 	}
+
+	@Override
+	public boolean updateUser(User user) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		final String queryUpdateGenerica = " update personale set ind_citta=? , ind_via=? , ind_cap =? , telefono=? , anniDiServizio=? , ind_numero=? where CF=? ";
+		try {
+			statement = Optional.of(connection.prepareStatement(queryUpdateGenerica));			
+			statement.get().setString(1, user.getIndirizzoCitta());
+			statement.get().setString(2, user.getIndirizzoVia());
+			statement.get().setInt(3, user.getIndirizzoCap());
+			statement.get().setLong(4, user.getTelefono());
+			statement.get().setInt(5, user.getAnniDiServizio());
+			statement.get().setInt(6, user.getIndirizzoNumero());
+			statement.get().setString(7, user.getCF());
+			
+			
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 }

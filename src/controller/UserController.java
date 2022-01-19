@@ -21,4 +21,6 @@ public interface UserController {
 	List<Specializzazione> getAllSpecializzazioni(String cf);
 
 	void addNewSpecializzazione(String cf, Specializzazione specializzazione);
+
+	boolean updateUser(User user);
 }

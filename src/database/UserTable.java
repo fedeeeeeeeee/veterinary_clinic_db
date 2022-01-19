@@ -21,4 +21,6 @@ public interface UserTable {
 
 	void addNewSpecializzazione(String cf, Specializzazione specializzazione);
 
+	boolean updateUser(User user);
+
 }

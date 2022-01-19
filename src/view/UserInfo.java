@@ -84,7 +84,7 @@ public class UserInfo  extends CommonView {
 		JPanel modifyPanel = new JPanel();
 		
 	GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-	  //GroupLayout groupLayout = new GroupLayout(this);
+	//  GroupLayout groupLayout = new GroupLayout(this);
 	       groupLayout.setHorizontalGroup(
 	       	groupLayout.createParallelGroup(Alignment.LEADING)
 	       		.addGroup(groupLayout.createSequentialGroup()
@@ -107,12 +107,25 @@ public class UserInfo  extends CommonView {
 	       			.addPreferredGap(ComponentPlacement.RELATED)
 	       			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 	       			.addContainerGap()));
-	       
-			JButton btnAddSpecializzazione = new JButton("+");
 		   	JButton btnSave = new JButton("Salva");
 		   	btnSave.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					//TODO aggiunta a database, sistema grandezza form
+					user.setIndirizzoVia(textFieldVia.getText());
+					user.setIndirizzoNumero(Integer.valueOf(textFieldNumeroCivico.getText()));
+					user.setIndirizzoCitta(	textFieldCitta.getText());
+					user.setIndirizzoCap(Integer.valueOf(textFieldCap.getText()));
+					user.setTelefono(Long.valueOf(textFieldTelefono.getText()));
+					user.setAnniDiServizio(Integer.valueOf(	textFieldAnniDiServizio.getText()));
+					if( !userController.updateUser(user)) {
+						System.out.println("errore aggiornamento dati");
+					} else {
+						if(user.getRuolo().equals("Veterinario") || user.getRuolo().equals("Inferemiere")  ) {
+							frame.getContentPane().add(new HomeVeterinario(frame, user));
+						}else { 
+							frame.getContentPane().add(new HomeSegretaria(frame, user));
+						}
+					}
+					//user.setEmail(TOOL_TIP_TEXT_KEY);
 				}
 			});
 		   	JButton btnCancel = new JButton("Annulla");
@@ -121,7 +134,7 @@ public class UserInfo  extends CommonView {
 					frame.getContentPane().add(new UserInfo(frame, user));
 				}
 			});
-			
+			JButton btnAddSpecializzazione = new JButton("+");
 			JButton btnModifica = new JButton("Modifica");
 			btnModifica.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -313,9 +326,9 @@ public class UserInfo  extends CommonView {
 		centerPanel.add(datiPanel, "3, 6, 7, 1, fill, fill");
 		GridBagLayout gbl_datiPanel = new GridBagLayout();
 		gbl_datiPanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_datiPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
+		gbl_datiPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gbl_datiPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_datiPanel.rowWeights = new double[]{0.0, 1.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_datiPanel.rowWeights = new double[]{0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		datiPanel.setLayout(gbl_datiPanel);
 		
 		JLabel lblAnniServizio = new JLabel("Anni di Servizio");
@@ -325,21 +338,8 @@ public class UserInfo  extends CommonView {
 		gbc_lblAnniServizio.gridx = 1;
 		gbc_lblAnniServizio.gridy = 1;
 		datiPanel.add(lblAnniServizio, gbc_lblAnniServizio);
-	
-		
-		textFieldAnniDiServizio = new JTextField();
-		textFieldAnniDiServizio.setText(String.valueOf(user.getAnniDiServizio()));
-		textFieldAnniDiServizio.setEditable(false);
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.gridwidth = 4;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 1;
-		gbc_textField_1.gridy = 2;
-		datiPanel.add(textFieldAnniDiServizio, gbc_textField_1);
-		textFieldAnniDiServizio.setColumns(10);
 
-		
+	
 		
 		if (user.getRuolo().equals("Veterinario")) {
 
@@ -347,18 +347,19 @@ public class UserInfo  extends CommonView {
 			this.listSpecializzazioni = userController.getAllSpecializzazioni(user.getCF());
 			this.createTable(model, listSpecializzazioni);
 			this.model = (DefaultTableModel) table.getModel();
-
-			JScrollPane scrollPane_1 = new JScrollPane();
-			//scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-			GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
-			gbc_scrollPane_1.gridheight = 2;
-			gbc_scrollPane_1.gridwidth = 12;
-			gbc_scrollPane_1.insets = new Insets(0, 0, 0, 5);
-			gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
-			gbc_scrollPane_1.gridx = 8;
-			gbc_scrollPane_1.gridy = 2;
-			datiPanel.add(scrollPane_1, gbc_scrollPane_1);
-			scrollPane_1.setViewportView(table);
+			
+				
+				textFieldAnniDiServizio = new JTextField();
+				textFieldAnniDiServizio.setText(String.valueOf(user.getAnniDiServizio()));
+				textFieldAnniDiServizio.setEditable(false);
+				GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+				gbc_textField_1.gridwidth = 4;
+				gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+				gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+				gbc_textField_1.gridx = 7;
+				gbc_textField_1.gridy = 1;
+				datiPanel.add(textFieldAnniDiServizio, gbc_textField_1);
+				textFieldAnniDiServizio.setColumns(10);
 			
 			
 			JLabel lblSpecializzazioni = new JLabel("Specializzazioni");
@@ -366,15 +367,17 @@ public class UserInfo  extends CommonView {
 			gbc_lblSpecializzazioni.fill = GridBagConstraints.HORIZONTAL;
 			gbc_lblSpecializzazioni.gridwidth = 3;
 			gbc_lblSpecializzazioni.insets = new Insets(0, 0, 5, 5);
-			gbc_lblSpecializzazioni.gridx = 10;
-			gbc_lblSpecializzazioni.gridy = 1;
+			gbc_lblSpecializzazioni.gridx = 1;
+			gbc_lblSpecializzazioni.gridy = 2;
 			datiPanel.add(lblSpecializzazioni, gbc_lblSpecializzazioni);
+			
+		
 			
 
 			GridBagConstraints gbc_btnAddSpecializzazione = new GridBagConstraints();
 			gbc_btnAddSpecializzazione.insets = new Insets(0, 0, 5, 5);
-			gbc_btnAddSpecializzazione.gridx = 16;
-			gbc_btnAddSpecializzazione.gridy = 1;
+			gbc_btnAddSpecializzazione.gridx = 4;
+			gbc_btnAddSpecializzazione.gridy = 2;
 			datiPanel.add(btnAddSpecializzazione, gbc_btnAddSpecializzazione);
 			
 			btnAddSpecializzazione.addActionListener(new ActionListener() {
@@ -392,10 +395,22 @@ public class UserInfo  extends CommonView {
 					      }	
 				}
 			});
-		}
+			}
 		btnAddSpecializzazione.setVisible(false);
 		btnAddSpecializzazione.setEnabled(false);
-	   // setLayout(groupLayout);
+
+			JScrollPane scrollPane_1 = new JScrollPane();
+			//scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+			GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+			gbc_scrollPane_1.gridheight = 3;
+			gbc_scrollPane_1.gridwidth = 12;
+			gbc_scrollPane_1.insets = new Insets(0, 0, 0, 5);
+			gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane_1.gridx = 8;
+			gbc_scrollPane_1.gridy = 2;
+			datiPanel.add(scrollPane_1, gbc_scrollPane_1);
+			scrollPane_1.setViewportView(table);
+	 //  setLayout(groupLayout);
 		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
