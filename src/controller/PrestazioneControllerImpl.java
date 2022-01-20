@@ -114,8 +114,8 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 	}
 
 	@Override
-	public void addPatologiaInPrestazione(Patologia np) {
-		this.prestazioneTable.addPatologiaInPrestazione(np);
+	public void addPatologiaInPrestazione(Patologia np, Appuntamento app) {
+		this.prestazioneTable.addPatologiaInPrestazione(np, app);
 	}
 
 }

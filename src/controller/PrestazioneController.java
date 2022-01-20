@@ -44,6 +44,6 @@ public interface PrestazioneController {
 
 	List<Patologia> getAllPatologie();
 
-	void addPatologiaInPrestazione(Patologia np);
+	void addPatologiaInPrestazione(Patologia np, Appuntamento app);
 
 }

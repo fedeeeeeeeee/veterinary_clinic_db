@@ -45,5 +45,5 @@ public interface PrestazioneTable {
 
 		List<Patologia> getAllPatologie();
 
-		void addPatologiaInPrestazione(Patologia np);
+		void addPatologiaInPrestazione(Patologia np, Appuntamento app);
 }

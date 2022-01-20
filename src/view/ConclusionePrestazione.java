@@ -588,12 +588,11 @@ public class ConclusionePrestazione extends CommonView {
 			public void actionPerformed(ActionEvent e) {
 				   // aggiungi nel db la data di guarigione --> prestazioniDaGuarire
 				patologieDaGuarire.forEach(p-> {
-	
 					prestazioneController.addDataFinePatologia(p);
 				});
 				
 				nuovePatologie.forEach(np-> {
-					prestazioneController.addPatologiaInPrestazione(np);
+					prestazioneController.addPatologiaInPrestazione(np, appuntamento);
 				});
 				
 			}

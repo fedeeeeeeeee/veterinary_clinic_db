@@ -1046,8 +1046,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			
 			while (result.next()) {
 				Patologia p = new PatologiaImpl();
-		
-				p.setCodAnimale(result.getInt("codPatologia"));
+				p.setCodPatologia(result.getInt("codPatologia"));
 				p.setNomePatologia(result.getString("nome"));
 				p.setTipoPatologia(result.getString("tipoPatologia"));
 				p.setDescrizione(result.getString("descrizione"));
@@ -1072,9 +1071,36 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	}
 
 	@Override
-	public void addPatologiaInPrestazione(Patologia np) {
-		// TODO Auto-generated method stub
-		
+	public void addPatologiaInPrestazione(Patologia np,  Appuntamento app) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+
+		// controllo data+ora+vet
+				Optional<PreparedStatement> statement = Optional.empty();
+		String query = "insert into patologia_in_prestazione"
+				+ " (codAnimale, codTipoPrestazione, data, codPatologia, dataInizio) values (?,?,?,?,?)";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, app.getAnimale().getCodAnimale()); 
+			statement.get().setInt(2, app.getCodPrestazione()); 
+			statement.get().setString(3, app.getData()); 
+			statement.get().setInt(4, np.getCodPatologia()); 
+			statement.get().setString(5, np.getDataInizio()); 
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("eccezione INSERIMENTO patologia_in_prestazione " + e);
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO patologia_in_prestazione statement" + e);
+			}
+		}
 	}
 
 }
