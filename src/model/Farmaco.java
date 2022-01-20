@@ -37,4 +37,12 @@ public interface Farmaco {
 	void setIndicazioni(String string);
 
 	String getIndicazioni();
+
+	String getDataInizioSomministrazione();
+	
+	void setDataInizioSomministrazione(String string);
+
+	String getDataFineSomministrazione();
+	
+	void setDataFineSomministrazione(String string);
 }

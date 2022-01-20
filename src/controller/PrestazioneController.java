@@ -48,4 +48,6 @@ public interface PrestazioneController {
 
 	void addPatologiaInPrestazione(Patologia np, Appuntamento app);
 
+	void addFarmacoInPrestazione(Farmaco nf, Appuntamento appuntamento);
+
 }

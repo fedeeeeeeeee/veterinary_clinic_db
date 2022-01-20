@@ -123,4 +123,9 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		return this.prestazioneTable.getAllPrestazioniByPersonale(cf);
 	}
 
+	@Override
+	public void addFarmacoInPrestazione(Farmaco nf, Appuntamento appuntamento) {
+		this.prestazioneTable.addFarmacoInPrestazione(nf, appuntamento);
+	}
+
 }

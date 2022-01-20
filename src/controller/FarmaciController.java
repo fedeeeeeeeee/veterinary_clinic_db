@@ -31,4 +31,6 @@ public interface FarmaciController {
 	void addNewFarmaci(Farmaco farmaco);
 
 	List<FarmacoInPrestazione> getFarmaciDiAnimale(int codAnimale);
+
+	List<String> getFarmaciAssuntiByAnimale(int codAnimale);
 }

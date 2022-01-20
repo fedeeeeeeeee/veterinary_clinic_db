@@ -48,4 +48,6 @@ public interface PrestazioneTable {
 		void addPatologiaInPrestazione(Patologia np, Appuntamento app);
 
 		List<Appuntamento> getAllPrestazioniByPersonale(String cf);
+
+		void addFarmacoInPrestazione(Farmaco nf, Appuntamento appuntamento);
 }

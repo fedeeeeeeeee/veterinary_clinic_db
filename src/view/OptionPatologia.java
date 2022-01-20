@@ -72,7 +72,6 @@ public class OptionPatologia extends JPanel {
 		});
 		
 		comboBoxPatologia.setSelectedIndex(-1);
-		
 		comboBoxPatologia.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	selectedPatologia = list.get(comboBoxPatologia.getSelectedIndex());

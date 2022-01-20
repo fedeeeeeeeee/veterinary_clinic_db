@@ -71,7 +71,7 @@ public class FarmaciTableImpl implements FarmaciTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 	
-		 final String query = "select lotto_acquistato.codLotto, farmaco.nome, descrizione, lotto_acquistato.dataDiScadenza, disponibilita,  tipoFarmaco "
+		 final String query = "select lotto_acquistato.codLotto, farmaco.nome, descrizione, lotto_acquistato.dataDiScadenza, disponibilita,  tipoFarmaco, farmaco.codFarmaco "
 		 		+ "from farmaco "
 		 		+ "left join lotto_acquistato "
 		 		+ "on  farmaco.codFarmaco=lotto_acquistato.codFarmaco";
@@ -89,7 +89,7 @@ public class FarmaciTableImpl implements FarmaciTable {
 					far.setDataScadenza(result.getString(4));
 					far.setDisponibilita(result.getInt(5));
 					far.setTipoFarmaco(result.getString(6));
-
+					far.setCodFarmaco(result.getInt("codFarmaco"));
 					farmaci.add(far);
 				}
 				result.close();	

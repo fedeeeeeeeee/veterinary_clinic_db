@@ -94,25 +94,6 @@ public class ConclusionePrestazione extends CommonView {
 			});
 		});
 	}
-
-	private void initTable() {
-		model.addColumn("Animale");
-		model.addColumn("Data");
-		model.addColumn("Ora");
-		model.addColumn("Durata");
-		model.addColumn("Nome ");
-		model.addColumn("Cognome");
-	}
-	
-	private void resetAndDraw(List<Appuntamento> allAppuntamento) {
-		this.listAppuntamenti.clear();
-		this.listAppuntamenti = allAppuntamento;
-		model.setRowCount(0);
-		this.createTable(model, listAppuntamenti);
-		// scrollPane.setViewportView(table);
-	}
-	
-
 	
 	public ConclusionePrestazione(JFrame frame, User user, Appuntamento appuntamento ) {
 		frame.getContentPane().removeAll();
@@ -220,13 +201,11 @@ public class ConclusionePrestazione extends CommonView {
 		List<Farmaco> farmaci = prestazioneController.getFarmaciInPrestazione(appuntamento);
 				
 		modelFarmaci.addColumn("Nome");
-		modelFarmaci.addColumn("Descrizione");
 		modelFarmaci.addColumn("Indicazioni");
 		
 		farmaci.forEach(x -> {
 			modelFarmaci.addRow(new Object[] { 
 					x.getNomeFarmaco(),
-					x.getDescrizione(), 
 					x.getIndicazioni()
 			});
 		});
@@ -528,19 +507,31 @@ public class ConclusionePrestazione extends CommonView {
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 		
 		
-		
+		List<Farmaco> nuoviFarmaci = new ArrayList<>();
+		OptionFarmaco optionPanelFarmaco = new OptionFarmaco(appuntamento.getAnimale());
 		btnAddFarmaco.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				OptionFarmaco panelFarmaco = new OptionFarmaco();
+				
 				int result = JOptionPane.showConfirmDialog(null,
-						panelFarmaco,
+						optionPanelFarmaco,
 						"Farmaco",
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 						if (result == JOptionPane.OK_OPTION) {
-							//resetAndDraw(userController.getAllSpecializzazioni(user.getCF()));
+							farmaci.add(optionPanelFarmaco.getSelectedFarmaco());
+							nuoviFarmaci.add(optionPanelFarmaco.getSelectedFarmaco());
+							
+							List<Farmaco> list = new ArrayList<>();
+							list.addAll(farmaci);							
+							modelFarmaci.setRowCount(0);
+							list.forEach(x -> {
+								modelFarmaci.addRow(new Object[] { 
+										x.getNomeFarmaco(),
+										x.getIndicazioni()
+								});
+							});
 						}
 			}
 		});
@@ -588,10 +579,17 @@ public class ConclusionePrestazione extends CommonView {
 			public void actionPerformed(ActionEvent e) {
 				patologieDaGuarire.forEach(p-> {
 					prestazioneController.addDataFinePatologia(p);
-				});
-				
+				});			
 				nuovePatologie.forEach(np-> {
 					prestazioneController.addPatologiaInPrestazione(np, appuntamento);
+				});
+				
+				if(optionPanelFarmaco.isSomministrato()) {
+					System.out.println("decrementa");
+				}
+				
+				nuoviFarmaci.forEach(nf-> {
+					prestazioneController.addFarmacoInPrestazione(nf, appuntamento);
 				});
 				
 			}

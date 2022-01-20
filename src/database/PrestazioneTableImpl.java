@@ -922,6 +922,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				Farmaco f = new FarmacoImpl();
 				f.setNomeFarmaco(result.getString("farmaco.nome"));
 				f.setDescrizione(result.getString("farmaco.descrizione"));
+				f.setDescrizione(result.getString("farmaco_in_prestazione.dataInizioSomministrazione"));
 				f.setIndicazioni(result.getString("farmaco_in_prestazione.indicazioni"));
 				farmaci.add(f);
 			}
@@ -1074,9 +1075,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	@Override
 	public void addPatologiaInPrestazione(Patologia np,  Appuntamento app) {
 		final Connection connection = this.dataSource.getMySQLConnection();
-
-		// controllo data+ora+vet
-				Optional<PreparedStatement> statement = Optional.empty();
+		Optional<PreparedStatement> statement = Optional.empty();
 		String query = "insert into patologia_in_prestazione"
 				+ " (codAnimale, codTipoPrestazione, data, codPatologia, dataInizio) values (?,?,?,?,?)";
 
@@ -1166,5 +1165,38 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			}
 		}
 		return prestazioni;
+	}
+
+	@Override
+	public void addFarmacoInPrestazione(Farmaco nf, Appuntamento appuntamento) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		String query = "insert into farmaco_in_prestazione (codAnimale, codTipoPrestazione, data, codFarmaco, dataInizioSomministrazione, dataFineSomministrazione, indicazioni) values (?,?,?,?,?,?,?)";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, appuntamento.getAnimale().getCodAnimale()); 
+			statement.get().setInt(2, appuntamento.getCodPrestazione()); 
+			statement.get().setString(3, appuntamento.getData()); 
+			statement.get().setInt(4, nf.getCodFarmaco()); 
+			statement.get().setString(5, nf.getDataInizioSomministrazione());
+			statement.get().setString(6, nf.getDataFineSomministrazione());
+			statement.get().setString(7, nf.getIndicazioni());
+
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("eccezione INSERIMENTO farmaco_in_prestazione " + e);
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO farmaco_in_prestazione statement" + e);
+			}
+		}
 	}
 }

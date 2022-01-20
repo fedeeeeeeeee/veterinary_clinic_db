@@ -12,6 +12,8 @@ public class FarmacoImpl implements Farmaco {
 	private String tipoFarmaco;
 	private String copertura;
 	private String indicazioni;
+	private String dataInizioSomministrazione;
+	private String dataFineSomministrazione;
 	
 	@Override
 	public String getNomeFarmaco() {
@@ -86,5 +88,21 @@ public class FarmacoImpl implements Farmaco {
 	@Override
 	public String getIndicazioni() {
 		return this.indicazioni;
+	}
+	@Override
+	public void setDataInizioSomministrazione(String data) {
+		this.dataInizioSomministrazione = data;
+	}
+	@Override
+	public void setDataFineSomministrazione(String data) {
+		this.dataFineSomministrazione = data;
+	}
+	@Override
+	public String getDataInizioSomministrazione() {
+		return this.dataInizioSomministrazione;
+	}
+	@Override
+	public String getDataFineSomministrazione() {
+		return this.dataFineSomministrazione;
 	}
 }
