@@ -14,6 +14,8 @@ import javax.swing.JScrollPane;
 import model.ParametriPaziente;
 import model.Patologia;
 import model.Paziente;
+import utility.Pair;
+
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -88,13 +90,20 @@ public class ParametriPazientiPanel extends JPanel {
 	}
 	 
 	private XYDataset createDataset() {
-		//List<ParametriPaziente> listParametri = pazienteController.getAllParametriPaziente(paziente);
-	//	List<Float> listPeso = listParametri.stream().filter(p-> p.getAltezza()).map(Map.Entry::getValue).collect(Collectors.toList());
-	//	List<Float> listAltezza = listParametri.stream().map(p-> p.getAltezza()).collect(Collectors.toList());
+		List<ParametriPaziente> listParametri = pazienteController.getAllParametriPaziente(paziente);
+		//List<Float> listPeso = listParametri.stream().filter(p-> p.getAltezza()).map(Map.Entry::getValue).collect(Collectors.toList());
+		//List<Float> listAltezza = listParametri.stream().map(p-> p.getAltezza()).collect(Collectors.toList());
 		//List<Float> listPeso = listParametri.stream().map(p-> p.getPeso()).collect(Collectors.toList());
 		//float[] arrayAltezza = listAltezza.toArray(Float[]::new);
-	        DefaultXYDataset ds = new DefaultXYDataset();
-	      double[][] data = { {0.1, 0.2, 0.3}, {1, 2, 3} };
+		List<Pair<Float, Float>> pesiAltezze = new ArrayList<>();
+		listParametri.forEach(parametro-> {
+			pesiAltezze.add(new Pair<>(parametro.getPeso(), parametro.getAltezza()));
+		});
+				
+	      DefaultXYDataset ds = new DefaultXYDataset();
+	      double[][] data = { pesiAltezze.stream().mapToDouble(pa-> pa.getX()).toArray(),
+	    		  pesiAltezze.stream().mapToDouble(pa-> pa.getX()).toArray()
+	    		  };
 	       // float[][] data = { arrayAltezza, listPeso };
 	        
 	        ds.addSeries("series1", data); // lines
