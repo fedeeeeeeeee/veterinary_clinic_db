@@ -117,7 +117,7 @@ public class VisualizzaPazienti extends CommonView {
 		
 		upperMiddlePanel.add(menuBar, "1, 1, fill, top");
 		JMenuItem menuMostra = new JMenuItem("All");
-		JMenuItem menuAzioni = new JMenuItem("Info");
+		//JMenuItem menuAzioni = new JMenuItem("Info");
 
 		searchBar = new JTextField();
 		searchBar.setText("Ricerca Animale");
@@ -154,7 +154,7 @@ public class VisualizzaPazienti extends CommonView {
 		buttonVai.setBackground(Color.LIGHT_GRAY);
 		buttonVai.setForeground(Color.BLACK);
 		menuBar.add(menuMostra);
-		menuBar.add(menuAzioni);
+		//menuBar.add(menuAzioni);
 		menuBar.add(searchBar);
 		menuBar.add(buttonVai);
 		
@@ -191,7 +191,7 @@ public class VisualizzaPazienti extends CommonView {
 		
 /*------fine-------- table */
 
-		menuAzioni.addActionListener((e) -> {
+		/*menuAzioni.addActionListener((e) -> {
 				if (this.selectedPaziente != -1) {
 					Paziente paziente = listPazienti.get(selectedPaziente);
 					//Person proprietario = paziente.getAnimale().getProprietario();					
@@ -199,7 +199,7 @@ public class VisualizzaPazienti extends CommonView {
 				} else {
 					JOptionPane.showMessageDialog(null, "Non hai selezionato alcun appuntamento ");
 				}
-			});
+			});*/
 		menuMostra.addActionListener((e) -> {
 			searchBar.setText("Ricerca Animale");
 			resetAndDraw(pazienteController.getAllPazienti());
@@ -260,6 +260,13 @@ public class VisualizzaPazienti extends CommonView {
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
 				selectedPaziente = table.getSelectedRow();
+				if (selectedPaziente != -1) {
+					Paziente paziente = listPazienti.get(selectedPaziente);
+					//Person proprietario = paziente.getAnimale().getProprietario();					
+					frame.getContentPane().add(new VisualizzaDatiPaziente(frame, user,paziente ));
+				} else {
+					JOptionPane.showMessageDialog(null, "Non hai selezionato alcun appuntamento ");
+				}
 			}
 		});
 	}

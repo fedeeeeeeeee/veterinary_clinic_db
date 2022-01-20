@@ -92,7 +92,7 @@ public class VisualizzaDatiPaziente extends CommonView {
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new HomeVeterinario(frame, user));
+				frame.getContentPane().add(new VisualizzaPazienti(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));

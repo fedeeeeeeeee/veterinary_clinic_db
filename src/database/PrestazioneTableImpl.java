@@ -878,7 +878,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				Farmaco f = new FarmacoImpl();
 				f.setNomeFarmaco(result.getString("farmaco.nome"));
 				f.setDescrizione(result.getString("farmaco.descrizione"));
-				f.setIndicazioni(result.getString("farmaco.indicazioni"));
+				f.setIndicazioni(result.getString("farmaco_in_prestazione.indicazioni"));
 				farmaci.add(f);
 			}
 			
