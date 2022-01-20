@@ -5,6 +5,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -16,6 +18,13 @@ import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.DefaultXYDataset;
+import org.jfree.data.xy.XYDataset;
+
 import controller.AnimaleController;
 import controller.AnimaleControllerImpl;
 
@@ -25,10 +34,13 @@ public class ParametriPazientiPanel extends JPanel {
 	private JTable table;
 	private AnimaleController pazienteController = new AnimaleControllerImpl();
 	private List<ParametriPaziente> listParametri = new ArrayList<>();
-	
+	private Paziente paziente;
 	public ParametriPazientiPanel(Paziente paziente) {
-		JPanel middlePanel = new JPanel();
-		middlePanel.setLayout(new BorderLayout());
+		this.paziente =paziente;
+		setLayout(new BorderLayout(0, 0));
+		JPanel mainPanel = new JPanel();
+		add(mainPanel, BorderLayout.CENTER);
+		mainPanel.setLayout(new BorderLayout());
 		
 		JPanel panelLeft = new JPanel();
 		JPanel panelRight = new JPanel();
@@ -42,17 +54,20 @@ public class ParametriPazientiPanel extends JPanel {
 		scrollPaneLeft.setViewportView(table);
 		
 		panelLeft.add(scrollPaneLeft, BorderLayout.CENTER);
+
+		XYDataset ds = createDataset();
+		JFreeChart chart = 
+				ChartFactory.createXYLineChart("Evoluzione",
+				                "peso", "altezza", ds, PlotOrientation.VERTICAL, true, true,
+				                false);
+		ChartPanel cp = new ChartPanel(chart);
+		panelRight.add(cp);
+		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelLeft, panelRight);
 		splitPane.setResizeWeight(0.5);
-		middlePanel.add(splitPane, BorderLayout.CENTER);
+		mainPanel.add(splitPane, BorderLayout.CENTER);
 	}
 
-	private void resetAndDraw(List<ParametriPaziente> allPatologie) {
-		this.listParametri.clear();
-		this.listParametri = allPatologie;
-		model.setRowCount(0);
-		this.createTable(model, listParametri);
-	}
 
 	private void createTable(DefaultTableModel model, List<ParametriPaziente> list) {
 		list.forEach(x -> {
@@ -71,5 +86,18 @@ public class ParametriPazientiPanel extends JPanel {
 		model.addColumn("Peso");
 		model.addColumn("Altezza");
 	}
-
+	 
+	private XYDataset createDataset() {
+		//List<ParametriPaziente> listParametri = pazienteController.getAllParametriPaziente(paziente);
+	//	List<Float> listPeso = listParametri.stream().filter(p-> p.getAltezza()).map(Map.Entry::getValue).collect(Collectors.toList());
+	//	List<Float> listAltezza = listParametri.stream().map(p-> p.getAltezza()).collect(Collectors.toList());
+		//List<Float> listPeso = listParametri.stream().map(p-> p.getPeso()).collect(Collectors.toList());
+		//float[] arrayAltezza = listAltezza.toArray(Float[]::new);
+	        DefaultXYDataset ds = new DefaultXYDataset();
+	      double[][] data = { {0.1, 0.2, 0.3}, {1, 2, 3} };
+	       // float[][] data = { arrayAltezza, listPeso };
+	        
+	        ds.addSeries("series1", data); // lines
+	        return ds;
+	}
 }
