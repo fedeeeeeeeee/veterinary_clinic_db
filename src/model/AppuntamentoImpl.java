@@ -20,6 +20,8 @@ public class AppuntamentoImpl implements Appuntamento {
 	private String descrizioneReferto;
 	private List<Farmaco> listFarmaci;
 	private List<Patologia> listPatologie;
+	private float altezza;
+	private float peso;
 
 	@Override
 	public String getDescrizioneReferto() {
@@ -140,6 +142,26 @@ public class AppuntamentoImpl implements Appuntamento {
 	@Override
 	public void setAnimale(Animale animale) {
 		this.animale = animale;
+	}
+
+	@Override
+	public void setPeso(float peso) {
+		this.peso = peso;
+	}
+
+	@Override
+	public void setAltezza(float altezza) {
+		this.altezza = altezza;
+	}
+
+	@Override
+	public float getPeso() {
+		 return this.peso;
+	}
+
+	@Override
+	public float getAltezza() {
+		return this.altezza;
 	}
 
 }

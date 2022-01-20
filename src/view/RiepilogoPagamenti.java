@@ -98,8 +98,6 @@ public class RiepilogoPagamenti extends CommonView {
 		private void createTablePdf(DefaultTableModel model, List<Pagamento> listPagamenti) {
 			listPagamenti.forEach(x -> {
 				model.addRow(new Object[] { 
-					//	x.getAnimale().getNome(), 
-						//x.getAnimale().getCf(),
 						x.getDataPrestazione(),
 						x.getNomePrestazione(),
 						x.getCosto() + "€",

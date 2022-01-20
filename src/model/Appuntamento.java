@@ -53,5 +53,13 @@ public interface Appuntamento {
 	List<Patologia> getListPatologie();
 
 	List<Farmaco> getListFarmaci();
+	
+	void setPeso(float peso);
+	
+	void setAltezza(float peso);
+	
+	float getPeso();
+	
+	float getAltezza();
 
 }

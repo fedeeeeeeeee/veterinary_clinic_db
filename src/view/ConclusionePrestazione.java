@@ -6,6 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -39,11 +43,14 @@ import model.Animale;
 import model.Appuntamento;
 import model.AppuntamentoImpl;
 import model.Farmaco;
+import model.Pagamento;
 import model.Patologia;
 import model.Person;
 import model.Prestazione;
 import model.User;
 import utility.Pair;
+import utility.ValidityFieldsChecker;
+
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
@@ -51,10 +58,17 @@ import javax.swing.JTextArea;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
+
 import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 import com.github.lgooddatepicker.components.TimePicker;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import com.toedter.calendar.JDateChooser;
 import java.awt.GridLayout;
 import com.jgoodies.forms.layout.FormLayout;
@@ -85,19 +99,7 @@ public class ConclusionePrestazione extends CommonView {
 	private JTextField textFieldPeso;
 	private Appuntamento appuntamento;
 	private JTextField textFieldProprietario;
-
-	private void createTable(DefaultTableModel model, List<Appuntamento> list) {
-		list.forEach(x -> {
-			model.addRow(new Object[] { 
-					x.getAnimale().getNome(),
-					x.getData(), 
-					x.getOra(), 
-					x.getDurata(),
-					x.getVeterinario().getNome(),
-					x.getVeterinario().getCognome(),
-			});
-		});
-	}
+	private ValidityFieldsChecker checker = new ValidityFieldsChecker();
 	
 	public ConclusionePrestazione(JFrame frame, User user, Appuntamento appuntamento ) {
 		frame.getContentPane().removeAll();
@@ -358,7 +360,6 @@ public class ConclusionePrestazione extends CommonView {
 		gbc_lblOra.gridx = 7;
 		gbc_lblOra.gridy = 5;
 		scrollPanelLeft.add(lblOra, gbc_lblOra);
-		//timePicker.setText("Meeting time");
 		LocalTime local = LocalTime.now();
 		
 		textFieldOra = new JTextField();
@@ -574,14 +575,11 @@ public class ConclusionePrestazione extends CommonView {
 		
 		JPanel savePanel = new JPanel();
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
-		
 		JButton saveButton = new JButton("SAVE");
-		
 		savePanel.add(saveButton);
 		
-		saveButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
+		saveButton.addActionListener(al-> {
+			
 				patologieDaGuarire.forEach(p-> {
 					prestazioneController.addDataFinePatologia(p);
 				});			
@@ -596,8 +594,21 @@ public class ConclusionePrestazione extends CommonView {
 					}
 				});
 				
-			}
+				if(checker.checkFloatFieldsValue(textFieldAltezza.getText()) 
+					&& checker.checkFloatFieldsValue(textFieldPeso.getText())) {
+					Appuntamento appNuoviDati = appuntamento;
+					appNuoviDati.setAltezza(Float.valueOf(textFieldAltezza.getText()));
+					appNuoviDati.setPeso(Float.valueOf(textFieldPeso.getText()));
+					prestazioneController.updatePrestazioneSuAnimale(appuntamento, appNuoviDati);
+				}
+				
+				if (JOptionPane.showConfirmDialog(null, "Vuoi scaricare il referto? ", "QUESTION_MESSAGE",
+				        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				
+				} 		
+		
 	    });
+		
 		
 		textFieldTelefono.setText(String.valueOf(appuntamento.getAnimale().getProprietario().getTelefono()));
 		textFieldNomA.setText(appuntamento.getAnimale().getNome());

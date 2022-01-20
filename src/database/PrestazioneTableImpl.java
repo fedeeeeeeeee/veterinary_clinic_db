@@ -622,16 +622,18 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 		
-		final String query = "  update prestazione_su_animale set data=? , ora=? where data=? and codTipoPrestazione= ? and codAnimale=? ";
+		final String query = "update prestazione_su_animale set data=? , ora=?, rilevazionePeso = ?, rilevazioneAltezza = ? where data=? and codTipoPrestazione= ? and codAnimale=? ";
 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
 			statement.get().setString(1,datiDiAppModificati.getData());
 			statement.get().setString(2, datiDiAppModificati.getOra());
-			statement.get().setString(3, app.getData());
-			statement.get().setInt(4, app.getCodPrestazione());
-			statement.get().setInt(5, app.getAnimale().getCodAnimale());
-			
+			statement.get().setString(5, app.getData());
+			statement.get().setInt(6, app.getCodPrestazione());
+			statement.get().setInt(7, app.getAnimale().getCodAnimale());
+			statement.get().setFloat(3, datiDiAppModificati.getAltezza() != 0.0 ?  datiDiAppModificati.getAltezza() : null);
+			statement.get().setFloat(4, datiDiAppModificati.getAltezza() != 0.0 ?  datiDiAppModificati.getPeso() : null);
+
 			
 			statement.get().executeUpdate();
 		} catch (SQLException e) {
