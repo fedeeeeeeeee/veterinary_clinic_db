@@ -5,11 +5,9 @@ import model.Appuntamento;
 import model.Farmaco;
 import model.Patologia;
 import model.Prestazione;
-import model.User;
 
 public interface PrestazioneController {
 
-	// visualizzare appuntamenti/prestazioni
 	List<Appuntamento> getAllPrestazioni();
 
 	List<Appuntamento> getPrestazioniInData(String dataformat);
@@ -43,5 +41,9 @@ public interface PrestazioneController {
 	List<Patologia> getPatologieAttiveDiAnimale(Appuntamento appuntamento);
 
 	void addDataFinePatologia(Patologia p);
+
+	List<Patologia> getAllPatologie();
+
+	void addPatologiaInPrestazione(Patologia np);
 
 }

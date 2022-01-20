@@ -1032,4 +1032,49 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		}
 	}
 
+	@Override
+	public List<Patologia> getAllPatologie() {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		 final String query = "select * from patologia "; 
+		 
+		 List<Patologia> patologie = new ArrayList<>();
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			final ResultSet result = statement.get().executeQuery();
+			
+			while (result.next()) {
+				Patologia p = new PatologiaImpl();
+		
+				p.setCodAnimale(result.getInt("codPatologia"));
+				p.setNomePatologia(result.getString("nome"));
+				p.setTipoPatologia(result.getString("tipoPatologia"));
+				p.setDescrizione(result.getString("descrizione"));
+				patologie.add(p);
+			}
+
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return patologie;
+	}
+
+	@Override
+	public void addPatologiaInPrestazione(Patologia np) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

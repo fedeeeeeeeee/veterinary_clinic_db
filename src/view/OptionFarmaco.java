@@ -20,6 +20,10 @@ import javax.swing.JCheckBox;
 
 public class OptionFarmaco extends JPanel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7548382548132424662L;
 	private JDateChooser dateChooserDa;
 	private SimpleDateFormat df;
 	private JTextArea textAreaIndicazioni;
@@ -51,7 +55,7 @@ public class OptionFarmaco extends JPanel {
 		gbc_lblNewLabel_1.gridy = 1;
 		panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		JComboBox comboBoxFarmaco = new JComboBox();
+		JComboBox<String> comboBoxFarmaco = new JComboBox<>();
 		GridBagConstraints gbc_comboBoxFarmaco = new GridBagConstraints();
 		gbc_comboBoxFarmaco.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxFarmaco.fill = GridBagConstraints.HORIZONTAL;

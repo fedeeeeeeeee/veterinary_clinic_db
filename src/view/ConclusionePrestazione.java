@@ -252,7 +252,6 @@ public class ConclusionePrestazione extends CommonView {
 		scrollPanePatologia.setViewportView(tablePatologie);
 
 		List<Patologia> patologieDaGuarire = new ArrayList<>();
-		
 		tablePatologie.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent event) {
@@ -266,14 +265,7 @@ public class ConclusionePrestazione extends CommonView {
 			}
 		});
 		
-		
-		/*this.initTable(); // passare il model
-		this.listAppuntamenti = this.prestazioneController.getFuturePrestazioni();
-		this.createTable(model, listAppuntamenti);
-		*/
-		
 		/* FINE search bar */
-
 		GridBagLayout gbl_scrollPanelLeft = new GridBagLayout();
 		gbl_scrollPanelLeft.columnWidths = new int[] { 0, 0, 0, -23, -23, 0, 0, 0, 0, 0, 0, 0 };
 		gbl_scrollPanelLeft.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -553,7 +545,8 @@ public class ConclusionePrestazione extends CommonView {
 			}
 		});
 		
-
+		List<Patologia> nuovePatologie = new ArrayList<>();
+		
 		btnAddPatologia.addActionListener(new ActionListener() {
 
 			@Override
@@ -565,7 +558,19 @@ public class ConclusionePrestazione extends CommonView {
 						JOptionPane.OK_CANCEL_OPTION,
 						JOptionPane.PLAIN_MESSAGE);
 						if (result == JOptionPane.OK_OPTION) {
-							//resetAndDraw(userController.getAllSpecializzazioni(user.getCF()));
+							patologie.add(panelPatologia.getSelectedPatologia());
+							nuovePatologie.add(panelPatologia.getSelectedPatologia());
+							
+							List<Patologia> list = new ArrayList<>();
+							list.addAll(patologie);							
+							modelPatologie.setRowCount(0);
+							list.forEach(x -> {
+								modelPatologie.addRow(new Object[] { 
+										x.getNomePatologia(),
+										x.getDescrizione(),
+										x.getDataInizio()
+								});
+							});
 						}
 			}
 	    });
@@ -586,6 +591,11 @@ public class ConclusionePrestazione extends CommonView {
 	
 					prestazioneController.addDataFinePatologia(p);
 				});
+				
+				nuovePatologie.forEach(np-> {
+					prestazioneController.addPatologiaInPrestazione(np);
+				});
+				
 			}
 	    });
 		

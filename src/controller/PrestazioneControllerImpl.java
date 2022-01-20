@@ -108,4 +108,14 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		this.prestazioneTable.addDataFinePatologia(p);
 	}
 
+	@Override
+	public List<Patologia> getAllPatologie() {
+		return this.prestazioneTable.getAllPatologie();
+	}
+
+	@Override
+	public void addPatologiaInPrestazione(Patologia np) {
+		this.prestazioneTable.addPatologiaInPrestazione(np);
+	}
+
 }

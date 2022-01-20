@@ -43,4 +43,7 @@ public interface PrestazioneTable {
 
 		void addDataFinePatologia(Patologia p);
 
+		List<Patologia> getAllPatologie();
+
+		void addPatologiaInPrestazione(Patologia np);
 }
