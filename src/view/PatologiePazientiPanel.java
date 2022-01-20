@@ -30,7 +30,10 @@ public class PatologiePazientiPanel extends JPanel {
 	private JScrollPane scrollPane;
 	private AnimaleController pazienteController;
 	private List<Patologia> listPatologie;
-
+	JCheckBoxMenuItem itemPatologie;
+	JCheckBoxMenuItem itemGuarito;
+	JCheckBoxMenuItem itemAllergie;
+	
 	public PatologiePazientiPanel(Paziente paziente) {
 		setLayout(new BorderLayout(0, 0));
 		JPanel upperPanel = new JPanel();
@@ -61,57 +64,36 @@ public class PatologiePazientiPanel extends JPanel {
 		JMenu menuMostra = new JMenu("Mostra");
 		upperPanel.add(menuBar, "1, 1, fill, top");
 		menuBar.add(menuMostra);
-		JCheckBoxMenuItem itemPatologie = new JCheckBoxMenuItem("Patologie");
-		itemPatologie.setSelected(true);
-		JCheckBoxMenuItem itemAllergie = new JCheckBoxMenuItem("Allergie");
-		itemAllergie.setSelected(true);
-		/*
+		this.itemPatologie = new JCheckBoxMenuItem("Patologie");
+		this.itemPatologie.setSelected(true);
+		this.itemGuarito = new JCheckBoxMenuItem("Guarito");
+		this.itemAllergie = new JCheckBoxMenuItem("Allergie");
+		this.itemAllergie.setSelected(true);
+
 		itemPatologie.addActionListener((e) -> { // prova a togliere
-		    	  if((itemPatologie.isSelected() && itemAllergie.isSelected()) || ( !itemPatologie.isSelected() && !itemAllergie.isSelected())) {
-		    		  List<Patologia> list = this.itemPatologie.stream().collect(Collectors.toList());
-		    		   this.resetAndDraw(list);
-		    	   } else {
-		    		   if(itemPatologie.isSelected()) {
-		    			  
-		    			   List<Patologia> list = this.itemPatologie;
-		    		    	  List<Patologia> filtrato =  list.stream().filter(farmaco -> "patologia".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
-		    		    	  model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
-		    		      	   this.createTable(model, filtrato);	
-		    		      	 scrollPane.setViewportView(table);
-		    		   }else {
-		    			 List<Patologia> list = this.itemPatologie.stream().collect(Collectors.toList());
-		    			   //List<Farmaco> list = this.listFarmaci;
-		    		    	  List<Patologia> filtrato =  list.stream().filter(farmaco -> "allergia".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
-		    		    	  model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
-		    		      	   this.createTable(model, filtrato);	
-		    		      	 scrollPane.setViewportView(table);
-		    		   }
-		    	   } 
+			 List<Patologia> list = this.listPatologie.stream().collect(Collectors.toList());
+			this.checkSelectedItem(list);
 		       });
 		itemAllergie.addActionListener((e) -> {
-		    	  if((itemPatologie.isSelected() && itemAllergie.isSelected()) || ( !itemPatologie.isSelected() && !itemAllergie.isSelected())) {
-		    		  List<Patologia> list = this.itemPatologie.stream().collect(Collectors.toList());
-		    		   this.resetAndDraw(list);
-		    	   } else {
-		    		   if(itemPatologie.isSelected()) {
-		    			   List<Patologia> list = this.itemPatologie.stream().collect(Collectors.toList());
-		    		    	  List<Patologia> filtrato =  list.stream().filter(farmaco -> "patologia".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
-		    		    	  model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
-		    		      	   this.createTable(model, filtrato);	
-		    		      	 scrollPane.setViewportView(table);
-		    		   }else {
-		    			   List<Patologia> list = this.itemPatologie.stream().collect(Collectors.toList());
-		    		    	  List<Patologia> filtrato =  list.stream().filter(farmaco -> "allergia".equals(farmaco.getTipoFarmaco())).collect(Collectors.toList());
-		    		    	   model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
-		    		      	   this.createTable(model, filtrato);	
-		    		      	 scrollPane.setViewportView(table);
-		    		   }
-		    	   } 
+			 List<Patologia> list = this.listPatologie.stream().collect(Collectors.toList());
+			this.checkSelectedItem(list);
 		       });
-		       */
+		itemGuarito.addActionListener((e) -> {
+	    		   if(itemGuarito.isSelected()) {
+	    			   listPatologie = pazienteController.getAllPatologiePaziente(paziente);
+	    			   List<Patologia> list = this.listPatologie.stream().collect(Collectors.toList());
+	    		    	  List<Patologia> filtrato =  list.stream().filter(patologia -> !patologia.getDataFine().isBlank()).collect(Collectors.toList());
+	    		    	  this.checkSelectedItem(filtrato);
+	    		   }else {
+	    			   listPatologie = pazienteController.getAllPatologiePaziente(paziente);
+	    			   List<Patologia> list = this.listPatologie.stream().collect(Collectors.toList());
+	    		    	  List<Patologia> filtrato =  list.stream().filter(patologia ->patologia.getDataFine().isBlank()).collect(Collectors.toList());
+	    		    	  this.checkSelectedItem(filtrato);
+	    		   }
+	       });
 		menuMostra.add(itemPatologie);
 		menuMostra.add(itemAllergie);
-
+		menuMostra.add(itemGuarito);
 		
 		
 		
@@ -147,4 +129,21 @@ public class PatologiePazientiPanel extends JPanel {
 
 	}
 
+	private void checkSelectedItem( List<Patologia> list ) {
+		  if((itemPatologie.isSelected() && itemAllergie.isSelected()) || ( !itemPatologie.isSelected() && !itemAllergie.isSelected())) {
+    		   this.resetAndDraw(list);
+    	   } else {
+    		   if(itemPatologie.isSelected()) {
+    		    	  List<Patologia> filtrato =  list.stream().filter(patologia -> "patologia".equals(patologia.getTipoPatologia())).collect(Collectors.toList());
+    		    	  model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
+    		      	   this.createTable(model, filtrato);	
+    		      	 scrollPane.setViewportView(table);
+    		   }else {
+    		    	  List<Patologia> filtrato =  list.stream().filter(patologia -> "allergia".equals(patologia.getTipoPatologia())).collect(Collectors.toList());
+    		    	   model.setRowCount(0); // non ho usato la funziona per mantere traccia della richiesta del menu show 
+    		      	   this.createTable(model, filtrato);	
+    		      	 scrollPane.setViewportView(table);
+    		   }
+    	   } 
+	}
 }

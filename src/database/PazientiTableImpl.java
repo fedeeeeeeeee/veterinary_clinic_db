@@ -111,7 +111,12 @@ public class PazientiTableImpl implements PazientiTable {
 			pat.setCodTipoPrestazione(result.getString("patologia.codPatologia"));
 			pat.setDataPrestazione(result.getString("patologia_in_prestazione.data"));
 			pat.setDataInizio(result.getString("patologia_in_prestazione.dataInizio"));
+		if(result.getString("patologia_in_prestazione.dataFine")==null) {
+			pat.setDataFine(" ");
+		}else { 
 			pat.setDataFine(result.getString("patologia_in_prestazione.dataFine"));
+		}
+			//pat.setDataFine(result.getString("patologia_in_prestazione.dataFine"));
 			pat.setDescrizione(result.getString("patologia.descrizione"));
 			pat.setNomePatologia(result.getString("patologia.nome"));
 			pat.setTipoPatologia(result.getString("patologia.tipoPatologia"));
