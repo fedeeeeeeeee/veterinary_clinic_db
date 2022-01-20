@@ -83,4 +83,9 @@ public class FarmaciControllerImpl implements FarmaciController {
 	public List<String> getFarmaciAssuntiByAnimale(int codAnimale) {
 		return this.farmaciInPrestazioneTable.getFarmaciAssuntiByAnimale(codAnimale);
 	}
+
+	@Override
+	public List<Farmaco> getAllDistinctFarmaci() {
+		return this.farmaciTable.getAllDistinctFarmaci();
+	}
 }

@@ -27,6 +27,8 @@ public interface FarmaciTable {
 	List<String> getAllTypeFarmaco();
 
 	void addNewFarmaco(Farmaco farmaco);
+
+	List<Farmaco> getAllDistinctFarmaci();
 	
 	//void addNewLotto(Lotto lotto);
 }

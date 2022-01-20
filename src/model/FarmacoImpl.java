@@ -14,6 +14,7 @@ public class FarmacoImpl implements Farmaco {
 	private String indicazioni;
 	private String dataInizioSomministrazione;
 	private String dataFineSomministrazione;
+	private boolean somministrato;
 	
 	@Override
 	public String getNomeFarmaco() {
@@ -104,5 +105,13 @@ public class FarmacoImpl implements Farmaco {
 	@Override
 	public String getDataFineSomministrazione() {
 		return this.dataFineSomministrazione;
+	}
+	@Override
+	public boolean getSomministrato() {
+		return this.somministrato;
+	}
+	@Override
+	public void setSomministrato(boolean isSomministrato) {
+		this.somministrato = isSomministrato;
 	}
 }

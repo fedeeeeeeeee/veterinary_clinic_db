@@ -45,4 +45,8 @@ public interface Farmaco {
 	String getDataFineSomministrazione();
 	
 	void setDataFineSomministrazione(String string);
+	
+	boolean getSomministrato();
+	
+	void setSomministrato(boolean isSomministrato);
 }

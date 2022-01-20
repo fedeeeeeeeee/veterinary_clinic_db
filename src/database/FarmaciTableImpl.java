@@ -4,9 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,8 +75,8 @@ public class FarmaciTableImpl implements FarmaciTable {
 	
 		 final String query = "select lotto_acquistato.codLotto, farmaco.nome, descrizione, lotto_acquistato.dataDiScadenza, disponibilita,  tipoFarmaco, farmaco.codFarmaco "
 		 		+ "from farmaco "
-		 		+ "left join lotto_acquistato "
-		 		+ "on  farmaco.codFarmaco=lotto_acquistato.codFarmaco";
+		 		+ "left join lotto_acquistato on farmaco.codFarmaco=lotto_acquistato.codFarmaco "
+		 		+ "left join lotto_acquistato on lotto_acquistato.dataDiScadenza > ? ";
 		 List<Farmaco> farmaci = new ArrayList<>();
 		 
 			try {
@@ -341,10 +343,32 @@ public class FarmaciTableImpl implements FarmaciTable {
 		}
 	@Override
 	public void updateQuantita(Farmaco farmaco, int q) {
-		// TODO Auto-generated method stub
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		
+		final String query = " update " +  tableNameFarmaco +" set disponibilita=disponibilita-1 where codFarmaco=? ";
 
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, farmaco.getCodFarmaco());
+			
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+			}
+		}
 	}
-
+	
 	@Override
 	public List<Farmaco> getFarmaciMaiAcquistati() {
 		final Connection connection = this.dataSource.getMySQLConnection();
@@ -460,5 +484,52 @@ public class FarmaciTableImpl implements FarmaciTable {
 				System.out.println("errore sql");
 			}
 		}
+	}
+
+	@Override
+	public List<Farmaco> getAllDistinctFarmaci() {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+	
+		 final String query = "select * " 
+				 	+"from farmaco " 
+				 	+"left join lotto_acquistato on farmaco.codFarmaco=lotto_acquistato.codFarmaco and lotto_acquistato.dataDiScadenza > ? ";
+		 List<Farmaco> farmaci = new ArrayList<>();
+		 
+			try {
+				statement = Optional.of(connection.prepareStatement(query));
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				String date = df.format(new Date());
+  			    statement.get().setString(1, date);
+
+				final ResultSet result = statement.get().executeQuery();
+				
+				while (result.next()) {
+					Farmaco far = new FarmacoImpl();
+					far.setCodLotto(result.getInt("lotto_acquistato.codLotto"));
+					far.setNomeFarmaco(result.getString("farmaco.nome"));
+					far.setDescrizione(result.getString("farmaco.descrizione"));
+					far.setDataScadenza(result.getString("lotto_acquistato.dataDiScadenza"));
+					far.setDisponibilita(result.getInt("farmaco.disponibilita"));
+					far.setTipoFarmaco(result.getString("tipoFarmaco"));
+					far.setCodFarmaco(result.getInt("codFarmaco"));
+					farmaci.add(far);
+				}
+				result.close();	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					System.out.println("errore sql");
+				}
+			}
+			return farmaci;
 	}
 }

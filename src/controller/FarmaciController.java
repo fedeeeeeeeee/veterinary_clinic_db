@@ -33,4 +33,6 @@ public interface FarmaciController {
 	List<FarmacoInPrestazione> getFarmaciDiAnimale(int codAnimale);
 
 	List<String> getFarmaciAssuntiByAnimale(int codAnimale);
+
+	List<Farmaco> getAllDistinctFarmaci();
 }

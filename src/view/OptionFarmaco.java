@@ -149,7 +149,7 @@ public class OptionFarmaco extends JPanel {
 		gbc_chckbxNewCheckBox.gridy = 7;
 		panel.add(checkBoxSomministrato, gbc_chckbxNewCheckBox);
 		
-		List<Farmaco> list = controller.getAllFarmaci();
+		List<Farmaco> list = controller.getAllDistinctFarmaci();
 		list.forEach(u-> {
 			comboBoxFarmaco.addItem(u.getNomeFarmaco());
 		});
@@ -158,6 +158,12 @@ public class OptionFarmaco extends JPanel {
 		comboBoxFarmaco.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	selectedFarmaco = list.get(comboBoxFarmaco.getSelectedIndex());
+		    	if(list.get(comboBoxFarmaco.getSelectedIndex()).getDisponibilita() == 0) {
+		    		checkBoxSomministrato.setEnabled(false);
+		    		checkBoxSomministrato.setSelected(false);
+		    	} else {
+		    		checkBoxSomministrato.setEnabled(true);
+		    	}
 		    }
 		});
 
@@ -169,12 +175,7 @@ public class OptionFarmaco extends JPanel {
 		String date = df.format(dateChooserDa.getDate());
 		selectedFarmaco.setDataInizioSomministrazione(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		selectedFarmaco.setDataFineSomministrazione(date);
+		selectedFarmaco.setSomministrato(checkBoxSomministrato.isSelected());
 		return this.selectedFarmaco;
 	}
-	
-	public boolean isSomministrato() {
-		return this.checkBoxSomministrato.isSelected();
-	}
-
-	
 }

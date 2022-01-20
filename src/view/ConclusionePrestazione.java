@@ -29,6 +29,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import controller.AnimaleController;
 import controller.AnimaleControllerImpl;
+import controller.FarmaciController;
+import controller.FarmaciControllerImpl;
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
 import controller.UserController;
@@ -71,6 +73,8 @@ public class ConclusionePrestazione extends CommonView {
 	private List<Appuntamento> listAppuntamenti;
 	private AnimaleController animaleController;
 	private UserController userController;
+	private FarmaciController farmaciController;
+
 	private JTextField textFieldTelefono;
 	private JTextField textFieldNomA;
 	private JTextField textFieldData;
@@ -105,7 +109,8 @@ public class ConclusionePrestazione extends CommonView {
 		this.animaleController = new AnimaleControllerImpl();
 		this.prestazioneController = new PrestazioneControllerImpl();
 		this.userController = new UserControllerImpl();
-		
+		this.farmaciController = new FarmaciControllerImpl();
+
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
@@ -583,13 +588,12 @@ public class ConclusionePrestazione extends CommonView {
 				nuovePatologie.forEach(np-> {
 					prestazioneController.addPatologiaInPrestazione(np, appuntamento);
 				});
-				
-				if(optionPanelFarmaco.isSomministrato()) {
-					System.out.println("decrementa");
-				}
-				
+							
 				nuoviFarmaci.forEach(nf-> {
 					prestazioneController.addFarmacoInPrestazione(nf, appuntamento);
+					if(nf.getSomministrato()) {
+						farmaciController.updateQuantita(optionPanelFarmaco.getSelectedFarmaco(), -1);
+					}
 				});
 				
 			}
