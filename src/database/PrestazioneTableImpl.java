@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -1103,4 +1104,67 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		}
 	}
 
+	@Override
+	public List<Appuntamento> getAllPrestazioniByPersonale(String cf) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione_su_animale.codAnimale, prestazione_su_animale.codTipoPrestazione, personale.cf , animale.cf , prestazione.tipo "
+	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
+	        		+ "where prestazione_su_animale.data=effettua.data "
+	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
+	        		+ "and prestazione_su_animale.codTipoPrestazione = effettua.codTipoPrestazione "
+	        		+ "and animale.codAnimale=effettua.codAnimale  "
+	        		+ "and prestazione.codPrestazione = effettua.codTipoPrestazione "
+	        		+ "and personale.CF=effettua.CF "
+	        		+ "and personale.CF=? "
+	        		+ "and prestazione_su_animale.data = ? "; 
+		 
+		 List<Appuntamento> prestazioni = new ArrayList<>();
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+            statement.get().setString(1, cf);
+            statement.get().setString(2,  new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            
+			final ResultSet result = statement.get().executeQuery();
+			
+			while (result.next()) {
+				Appuntamento app = new AppuntamentoImpl();
+				Animale animale = new AnimaleImpl();
+				animale.setNome(result.getString(1));
+				animale.setCodAnimale(result.getInt(7));
+				animale.setCf(result.getString(10));
+				
+				User veterinario = new UserImpl();
+				veterinario.setCF(cf);
+				veterinario.setNome(result.getString(5));
+				veterinario.setCognome(result.getString(6));
+				
+				app.setAnimale(animale);
+				app.setData(result.getString(3));
+				app.setOra(result.getString(4));
+				app.setPrestazione(result.getString(2));
+				app.setVeterinario(veterinario);
+				app.setCodPrestazione(result.getInt(8)); //TODO controlla
+				app.setTipoPrestazione(result.getString(11));
+				
+				prestazioni.add(app);
+			}
+
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return prestazioni;
+	}
 }

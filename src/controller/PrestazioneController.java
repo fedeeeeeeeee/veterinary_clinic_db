@@ -10,6 +10,8 @@ public interface PrestazioneController {
 
 	List<Appuntamento> getAllPrestazioni();
 
+	List<Appuntamento> getAllPrestazioniByPersonale(String cf);
+
 	List<Appuntamento> getPrestazioniInData(String dataformat);
 
 	List<Appuntamento> getPrestazioneSettimana(String data);

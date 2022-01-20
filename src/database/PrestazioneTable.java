@@ -46,4 +46,6 @@ public interface PrestazioneTable {
 		List<Patologia> getAllPatologie();
 
 		void addPatologiaInPrestazione(Patologia np, Appuntamento app);
+
+		List<Appuntamento> getAllPrestazioniByPersonale(String cf);
 }

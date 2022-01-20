@@ -5,11 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,30 +25,23 @@ import controller.ProprietarioController;
 import controller.ProprietarioControllerImpl;
 import model.Appuntamento;
 import model.Person;
-import model.Proprietario;
 import model.User;
 
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.SwingConstants;
 
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextField;
-import java.awt.Toolkit;
-import java.awt.Dimension;
 
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-import com.toedter.calendar.JCalendar;
 
 public class GestionePrestazione extends CommonView {
 
@@ -156,7 +144,7 @@ public class GestionePrestazione extends CommonView {
 				middlePanel.add(centerPanel, BorderLayout.CENTER);
 				
 				upperPanel.setLayout(new BorderLayout(0, 0));
-				JLabel titleLabel = new JLabel("Appointment");
+				JLabel titleLabel = new JLabel("Prestazioni giornaliere");
 				titleLabel.setBounds(409, 58, 194, 52);
 				titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 				titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -182,7 +170,7 @@ public class GestionePrestazione extends CommonView {
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		
 		this.initTable();
-		this.listAppuntamenti = this.prestazioneController.getAllPrestazioni();
+		this.listAppuntamenti = this.prestazioneController.getAllPrestazioniByPersonale(user.getCF());
 		this.createTable(model, listAppuntamenti);
 		this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 

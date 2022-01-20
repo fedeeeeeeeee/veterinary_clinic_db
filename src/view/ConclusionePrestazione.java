@@ -586,7 +586,6 @@ public class ConclusionePrestazione extends CommonView {
 		saveButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				   // aggiungi nel db la data di guarigione --> prestazioniDaGuarire
 				patologieDaGuarire.forEach(p-> {
 					prestazioneController.addDataFinePatologia(p);
 				});

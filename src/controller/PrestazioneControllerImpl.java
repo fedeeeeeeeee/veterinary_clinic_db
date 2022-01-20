@@ -118,4 +118,9 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		this.prestazioneTable.addPatologiaInPrestazione(np, app);
 	}
 
+	@Override
+	public List<Appuntamento> getAllPrestazioniByPersonale(String cf) {
+		return this.prestazioneTable.getAllPrestazioniByPersonale(cf);
+	}
+
 }
