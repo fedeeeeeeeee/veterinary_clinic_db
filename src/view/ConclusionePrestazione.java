@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import controller.AnimaleController;
 import controller.AnimaleControllerImpl;
@@ -35,6 +38,7 @@ import model.Appuntamento;
 import model.AppuntamentoImpl;
 import model.Farmaco;
 import model.Patologia;
+import model.Person;
 import model.Prestazione;
 import model.User;
 import utility.Pair;
@@ -228,21 +232,40 @@ public class ConclusionePrestazione extends CommonView {
 		});
 		scrollPaneFarmaco.setViewportView(tableFarmaci);
 
+		
+		
 		JTable tablePatologie = new JTable();
 		DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
-		List<Patologia> patologie = prestazioneController.getPatologieInPrestazione(appuntamento);
+		List<Patologia> patologie = prestazioneController.getPatologieAttiveDiAnimale(appuntamento);
 
 		modelPatologie.addColumn("Nome");
 		modelPatologie.addColumn("Descrizione");
+		modelPatologie.addColumn("Data inizio");
 
 		patologie.forEach(x -> {
 			modelPatologie.addRow(new Object[] { 
 					x.getNomePatologia(),
-					x.getDescrizione()
+					x.getDescrizione(),
+					x.getDataInizio()
 			});
 		});
 		scrollPanePatologia.setViewportView(tablePatologie);
 
+		List<Patologia> patologieDaGuarire = new ArrayList<>();
+		
+		tablePatologie.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			public void valueChanged(ListSelectionEvent event) {
+				   int rowIndex = tablePatologie.getSelectedRow();
+				   int reply = JOptionPane.showConfirmDialog(null, "Il paziente è guarito dalla seguente patologia: " + patologie.get(rowIndex).getNomePatologia() + " ?", "Guarigione", JOptionPane.YES_NO_OPTION);
+				   if (reply == JOptionPane.YES_OPTION) {
+					   String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+					   patologie.get(rowIndex).setDataFine(date);
+					   patologieDaGuarire.add(patologie.get(rowIndex));
+				   } 
+			}
+		});
+		
 		
 		/*this.initTable(); // passare il model
 		this.listAppuntamenti = this.prestazioneController.getFuturePrestazioni();
@@ -554,6 +577,17 @@ public class ConclusionePrestazione extends CommonView {
 		JButton saveButton = new JButton("SAVE");
 		
 		savePanel.add(saveButton);
+		
+		saveButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				   // aggiungi nel db la data di guarigione --> prestazioniDaGuarire
+				patologieDaGuarire.forEach(p-> {
+	
+					prestazioneController.addDataFinePatologia(p);
+				});
+			}
+	    });
 		
 		textFieldTelefono.setText(String.valueOf(appuntamento.getAnimale().getProprietario().getTelefono()));
 		textFieldNomA.setText(appuntamento.getAnimale().getNome());

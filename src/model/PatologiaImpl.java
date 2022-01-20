@@ -6,43 +6,50 @@ public class PatologiaImpl implements Patologia {
 	private String nomePatologia;
 	private String descrizione;
 	private String tipoPatologia;
-private String dataInizio; 
-private String dataFine;
-private String codTipoPrestazione;
-private String dataPrestazione;
+	private String dataInizio;
+	private String dataFine;
+	private int codTipoPrestazione;
+	private int codAnimale;
+	private String dataPrestazione;
 
-@Override
-	public String getDataInizio() {
-	return dataInizio;
-}
 	@Override
-public void setDataInizio(String dataInizio) {
-	this.dataInizio = dataInizio;
-}
+	public String getDataInizio() {
+		return dataInizio;
+	}
 
-public String getDataFine() {
-	return dataFine;
-}
-@Override
-public void setDataFine(String dataFine) {
-	this.dataFine = dataFine;
-}
-@Override
-public String getCodTipoPrestazione() {
-	return codTipoPrestazione;
-}
-@Override
-public void setCodTipoPrestazione(String codTipoPrestazione) {
-	this.codTipoPrestazione = codTipoPrestazione;
-}
-@Override
-public String getDataPrestazione() {
-	return dataPrestazione;
-}
-@Override
-public void setDataPrestazione(String dataPrestazione) {
-	this.dataPrestazione = dataPrestazione;
-}
+	@Override
+	public void setDataInizio(String dataInizio) {
+		this.dataInizio = dataInizio;
+	}
+
+	public String getDataFine() {
+		return dataFine;
+	}
+
+	@Override
+	public void setDataFine(String dataFine) {
+		this.dataFine = dataFine;
+	}
+
+	@Override
+	public int getCodTipoPrestazione() {
+		return codTipoPrestazione;
+	}
+
+	@Override
+	public void setCodTipoPrestazione(int codTipoPrestazione) {
+		this.codTipoPrestazione = codTipoPrestazione;
+	}
+
+	@Override
+	public String getDataPrestazione() {
+		return dataPrestazione;
+	}
+
+	@Override
+	public void setDataPrestazione(String dataPrestazione) {
+		this.dataPrestazione = dataPrestazione;
+	}
 
 	@Override
 	public int getCodPatologia() {
@@ -82,6 +89,16 @@ public void setDataPrestazione(String dataPrestazione) {
 	@Override
 	public void setTipoPatologia(String tipoPatologia) {
 		this.tipoPatologia = tipoPatologia;
+	}
+
+	@Override
+	public int getCodAnimale() {
+		return this.codAnimale;
+	}
+
+	@Override
+	public void setCodAnimale(int codAnimale) {
+		this.codAnimale = codAnimale;
 	}
 
 }

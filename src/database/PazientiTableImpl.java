@@ -110,7 +110,7 @@ public class PazientiTableImpl implements PazientiTable {
 			while (result.next()) {
 			Patologia pat = new PatologiaImpl();
 			pat.setCodPatologia(0);
-			pat.setCodTipoPrestazione(result.getString("patologia.codPatologia"));
+			pat.setCodTipoPrestazione(result.getInt("patologia.codPatologia"));
 			pat.setDataPrestazione(result.getString("patologia_in_prestazione.data"));
 			pat.setDataInizio(result.getString("patologia_in_prestazione.dataInizio"));
 		if(result.getString("patologia_in_prestazione.dataFine")==null) {

@@ -40,6 +40,8 @@ public interface PrestazioneController {
 
 	List<Farmaco> getFarmaciInPrestazione(Appuntamento appuntamento);
 
-	List<Patologia> getPatologieInPrestazione(Appuntamento appuntamento);
+	List<Patologia> getPatologieAttiveDiAnimale(Appuntamento appuntamento);
+
+	void addDataFinePatologia(Patologia p);
 
 }

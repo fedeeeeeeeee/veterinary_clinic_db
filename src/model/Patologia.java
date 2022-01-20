@@ -2,35 +2,40 @@ package model;
 
 public interface Patologia {
 
-	public int getCodPatologia();
+	int getCodPatologia();
 
-	public void setCodPatologia(int codPatologia);
+	void setCodPatologia(int codPatologia);
 
-	public String getNomePatologia();
+	String getNomePatologia();
 
-	public void setNomePatologia(String nomePatologia);
+	void setNomePatologia(String nomePatologia);
 
-	public String getDescrizione();
+	String getDescrizione();
 
-	public void setDescrizione(String descrizione);
+	void setDescrizione(String descrizione);
 
-	public String getTipoPatologia();
+	String getTipoPatologia();
 
-	public void setTipoPatologia(String tipoPatologia);
+	void setTipoPatologia(String tipoPatologia);
 
-	public String getDataInizio();
+	String getDataInizio();
 
-	public void setDataInizio(String dataInizio);
+	void setDataInizio(String dataInizio);
 
-	public String getDataFine();
+	String getDataFine();
 
-	public void setDataFine(String dataFine);
+	void setDataFine(String dataFine);
 
-	public String getCodTipoPrestazione();
+	int getCodTipoPrestazione();
 
-	public void setCodTipoPrestazione(String codTipoPrestazione);
+	void setCodTipoPrestazione(int codTipoPrestazione);
 
-	public String getDataPrestazione();
+	String getDataPrestazione();
 
-	public void setDataPrestazione(String dataPrestazione);
+	void setDataPrestazione(String dataPrestazione);
+
+	int getCodAnimale();
+	
+	void setCodAnimale(int codAnimale);
+
 }

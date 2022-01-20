@@ -8,14 +8,9 @@ import java.awt.Insets;
 import java.text.SimpleDateFormat;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import com.toedter.calendar.JDateChooser;
 import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
 
 public class OptionPatologia extends JPanel {
 	private SimpleDateFormat df;

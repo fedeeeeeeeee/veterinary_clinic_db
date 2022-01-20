@@ -188,7 +188,6 @@ public class GestionePrestazione extends CommonView {
 
 			public void valueChanged(ListSelectionEvent event) {
 				   int rowIndex = table.getSelectedRow();
-				   System.out.println("eccomi");
 				   Person proprietario = proprietarioController.getProprietario(listAppuntamenti.get(rowIndex).getAnimale().getCf());
 				   listAppuntamenti.get(rowIndex).getAnimale().setProprietario(proprietario);
 				   frame.getContentPane().add(new ConclusionePrestazione(frame, user, listAppuntamenti.get(rowIndex)));

@@ -99,8 +99,13 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 	}
 
 	@Override
-	public List<Patologia> getPatologieInPrestazione(Appuntamento appuntamento) {
+	public List<Patologia> getPatologieAttiveDiAnimale(Appuntamento appuntamento) {
 		return this.prestazioneTable.getPatologieInPrestazione(appuntamento);
+	}
+
+	@Override
+	public void addDataFinePatologia(Patologia p) {
+		this.prestazioneTable.addDataFinePatologia(p);
 	}
 
 }

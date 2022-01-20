@@ -952,16 +952,13 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		final String query = "SELECT * "  
 				+ "FROM patologia_in_prestazione, patologia "  
 				+ "where codAnimale = ? " 
-				+ "and codTipoPrestazione = ? "  
-				+ "and data = ? " 
-				+ "and patologia_in_prestazione.codPatologia = patologia.codPatologia";
+				+ "and patologia_in_prestazione.codPatologia = patologia.codPatologia "
+				+ "and dataFine is null ";
 		List<Patologia> patologie = new ArrayList<>();
 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
 			statement.get().setInt(1, appuntamento.getAnimale().getCodAnimale());
-			statement.get().setInt(2, appuntamento.getCodPrestazione());
-			statement.get().setString(3, appuntamento.getData());
 
 			final ResultSet result = statement.get().executeQuery();
 
@@ -974,6 +971,8 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				pat.setDescrizione(result.getString("patologia.descrizione"));
 				pat.setNomePatologia(result.getString("patologia.nome"));
 				pat.setTipoPatologia(result.getString("patologia.tipoPatologia"));
+				pat.setCodAnimale(result.getInt("patologia_in_prestazione.codAnimale"));
+				pat.setCodTipoPrestazione(result.getInt("patologia_in_prestazione.codTipoPrestazione"));
 				patologie.add(pat);
 			}
 			
@@ -994,4 +993,43 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		}
 		return patologie;
 	}
+
+	@Override
+	public void addDataFinePatologia(Patologia p) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		final String query = "update patologia_in_prestazione "
+					+ "set dataFine = ? "
+					+ "where codAnimale = ? "
+					+ "and codTipoPrestazione = ? "
+					+ "and data = ? " 
+					+ "and codPatologia = ? ";
+		
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, p.getDataFine());
+			statement.get().setInt(2, p.getCodAnimale());
+			statement.get().setInt(3, p.getCodTipoPrestazione());
+			statement.get().setString(4, p.getDataInizio());
+			statement.get().setInt(5, p.getCodPatologia());
+			statement.get().executeUpdate();
+
+			//final ResultSet result = statement.get().executeQuery();	
+			//result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+	}
+
 }
