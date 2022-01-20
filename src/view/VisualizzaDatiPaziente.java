@@ -66,7 +66,7 @@ public class VisualizzaDatiPaziente extends CommonView {
 		tabbedPane.addTab("Anagrafica", null, panelAnagrafica,
 		                  "Visualizza anagrafica paziente");
 
-		JPanel panelParametri = new JPanel();// ParametriPazientiPanel()
+		JPanel panelParametri = new ParametriPazientiPanel(paziente);
 		tabbedPane.addTab("Parametri", null, panelParametri,
 		                  "Visualizza altezza e peso");
 		

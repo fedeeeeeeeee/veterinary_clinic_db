@@ -3,6 +3,7 @@ package controller;
 import java.util.List;
 
 import model.Animale;
+import model.ParametriPaziente;
 import model.Patologia;
 import model.Paziente;
 import utility.Pair;
@@ -21,5 +22,7 @@ public interface AnimaleController {
 	List<Paziente> getAllPazienti();
 
 	List<Patologia> getAllPatologiePaziente(Paziente paziente);
+
+	List<ParametriPaziente> getAllParametriPaziente(Paziente paziente);
 
 }

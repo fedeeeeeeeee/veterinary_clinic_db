@@ -10,6 +10,8 @@ import java.util.Optional;
 
 import model.Animale;
 import model.AnimaleImpl;
+import model.ParametriPaziente;
+import model.ParametriPazienteImpl;
 import model.Patologia;
 import model.PatologiaImpl;
 import model.Paziente;
@@ -121,6 +123,49 @@ public class PazientiTableImpl implements PazientiTable {
 			pat.setNomePatologia(result.getString("patologia.nome"));
 			pat.setTipoPatologia(result.getString("patologia.tipoPatologia"));
 			
+		
+				list.add(pat);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				 e.printStackTrace();
+			}
+		}
+		return list;
+	}
+
+
+//SELECT * FROM clinicaveterinaria.prestazione_su_animale where codAnimale = 1 and rilevazioneAltezza IS NOT NULL and rilevazionePeso IS NOT NULL;
+	@Override
+	public List<ParametriPaziente> getAllParametriPaziente(Paziente paziente) {
+		List<ParametriPaziente> list = new ArrayList<>();
+
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		final String query = "SELECT * FROM prestazione_su_animale "
+				+ "where codAnimale = ? "
+				+ "and rilevazioneAltezza IS NOT NULL "
+				+ "and rilevazionePeso IS NOT NULL ";
+
+		try {			
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, paziente.getAnimale().getCodAnimale());
+			final ResultSet result = statement.get().executeQuery();
+
+			while (result.next()) {
+				ParametriPaziente pat = new ParametriPazienteImpl();
+				pat.setData(result.getString("data"));
+				pat.setAltezza(result.getFloat("rilevazioneAltezza"));
+				pat.setPeso(result.getFloat("rilevazionePeso"));
 		
 				list.add(pat);
 			}
