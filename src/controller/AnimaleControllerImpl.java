@@ -64,4 +64,10 @@ public class AnimaleControllerImpl implements AnimaleController {
 	public List<ParametriPaziente> getAllParametriPaziente(Paziente paziente) {
 		return this.pazienteTable.getAllParametriPaziente(paziente);
 	}
+
+	@Override
+	public void updateParametriAnimale(Float altezza, Float peso, int codAnimale) {
+		 this.pazienteTable.updateParametriAnimale(altezza, peso, codAnimale);
+		
+	}
 }

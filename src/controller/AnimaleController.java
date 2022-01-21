@@ -25,4 +25,6 @@ public interface AnimaleController {
 
 	List<ParametriPaziente> getAllParametriPaziente(Paziente paziente);
 
+	void updateParametriAnimale(Float altezza, Float peso, int codAnimale);
+
 }
