@@ -149,6 +149,8 @@ private boolean first;
 				
 				JCalendar dateChooser = new JCalendar();
 				this.saved = dateChooser.getDate().toString();
+				dateChooser.getMonthChooser().getComboBox().setEnabled(false);
+				
 				dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
 			          
 					@Override

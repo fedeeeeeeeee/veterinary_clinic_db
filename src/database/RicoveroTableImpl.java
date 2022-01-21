@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import model.Animale;
 import model.AnimaleImpl;
+import model.Appuntamento;
 import model.Pagamento;
 import model.PagamentoImpl;
 import model.Posto;
@@ -118,6 +119,38 @@ public class RicoveroTableImpl implements RicoveroTable {
 			}
 		}
 				return posti;
+	}
+	@Override
+	public void addRicovero(Ricovero ricovero, Appuntamento appuntamento) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		String query = "insert into ricovero (codAnimale, dataInizio, durataInGiorni, prezzoGiornaliero, numeroPosto, oraInizio) values (?,?,?,?,?,?)";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, appuntamento.getAnimale().getCodAnimale()); 
+			statement.get().setString(2, appuntamento.getData());
+			statement.get().setInt(3, ricovero.getDurataInGiorni());
+			statement.get().setFloat(4, ricovero.getPrezzoGiornaliero());
+			statement.get().setInt(5, ricovero.getPosto().getNumero());
+			statement.get().setString(6, appuntamento.getOra());
+			
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("eccezione INSERIMENTO ricovero " + e);
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO ricovero statement" + e);
+			}
+		}
+		
 	}
 
 }

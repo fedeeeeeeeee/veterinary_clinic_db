@@ -1110,7 +1110,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione_su_animale.codAnimale, prestazione_su_animale.codTipoPrestazione, personale.cf , animale.cf , prestazione.tipo "
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione_su_animale.codAnimale, prestazione_su_animale.codTipoPrestazione, personale.cf , animale.cf , prestazione.tipo, animale.specie, animale.altezza "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data=effettua.data "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -1135,7 +1135,8 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				animale.setNome(result.getString(1));
 				animale.setCodAnimale(result.getInt(7));
 				animale.setCf(result.getString(10));
-				
+				animale.setSpecie(result.getString(12));
+				animale.setAltezza(result.getFloat(13));
 				User veterinario = new UserImpl();
 				veterinario.setCF(cf);
 				veterinario.setNome(result.getString(5));

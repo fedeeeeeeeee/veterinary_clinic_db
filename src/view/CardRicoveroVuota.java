@@ -56,6 +56,7 @@ public class CardRicoveroVuota extends JPanel {
 		JButton btnAdd = new JButton("add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ricovero.getPosto().setDescrizione(dimensione);
 				 frame.getContentPane().add(new AggiungiRicovero(frame, user, ricovero));
 			}
 		});
