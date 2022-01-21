@@ -579,7 +579,10 @@ public class ConclusionePrestazione extends CommonView {
 		savePanel.add(saveButton);
 		
 		saveButton.addActionListener(al-> {
-			
+			if(checker.checkFloatFieldsValue(textFieldAltezza.getText()) 
+					&& checker.checkFloatFieldsValue(textFieldPeso.getText())) {
+				
+				
 				patologieDaGuarire.forEach(p-> {
 					prestazioneController.addDataFinePatologia(p);
 				});			
@@ -594,18 +597,27 @@ public class ConclusionePrestazione extends CommonView {
 					}
 				});
 				
-				if(checker.checkFloatFieldsValue(textFieldAltezza.getText()) 
-					&& checker.checkFloatFieldsValue(textFieldPeso.getText())) {
+			
 					Appuntamento appNuoviDati = appuntamento;
 					appNuoviDati.setAltezza(Float.valueOf(textFieldAltezza.getText()));
 					appNuoviDati.setPeso(Float.valueOf(textFieldPeso.getText()));
 					prestazioneController.updatePrestazioneSuAnimale(appuntamento, appNuoviDati);
+					animaleController.updateParametriAnimale(Float.valueOf(textFieldAltezza.getText()),Float.valueOf(textFieldPeso.getText()), appuntamento.getAnimale().getCodAnimale());
+					appuntamento.setDescrizioneReferto(textArea.getText());
+					prestazioneController.addReferto(appuntamento);
+					
+					if (JOptionPane.showConfirmDialog(null, "Vuoi scaricare il referto? ", "QUESTION_MESSAGE",
+					        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					//TODO fuori pulsante
+					} 
+					
+			}else { 
+					JOptionPane.showMessageDialog(null, "Controlla la validita' dei campi!",
+						      "Errore!", JOptionPane.ERROR_MESSAGE);
+
 				}
 				
-				if (JOptionPane.showConfirmDialog(null, "Vuoi scaricare il referto? ", "QUESTION_MESSAGE",
-				        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				
-				} 		
+			
 		
 	    });
 		

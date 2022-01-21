@@ -164,7 +164,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 		        				cardRicovero.removeAll();
 				        		cardRicovero.revalidate();
 				        		cardRicovero.repaint();
-		        				cardRicovero.add(new CardRicoveroVuota(elem));
+		        				cardRicovero.add(new CardRicoveroVuota(frame, user,elem));
 		        			} else {
 			        			cardRicovero.removeAll();
 				        		cardRicovero.revalidate();
@@ -184,7 +184,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 			        				cardRicovero.removeAll();
 					        		cardRicovero.revalidate();
 					        		cardRicovero.repaint();
-			        				cardRicovero.add(new CardRicoveroVuota(elem));
+			        				cardRicovero.add(new CardRicoveroVuota(frame, user,elem));
 			        			} else {
 				        			cardRicovero.removeAll();
 					        		cardRicovero.revalidate();

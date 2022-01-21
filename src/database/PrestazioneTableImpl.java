@@ -628,12 +628,12 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			statement = Optional.of(connection.prepareStatement(query));
 			statement.get().setString(1,datiDiAppModificati.getData());
 			statement.get().setString(2, datiDiAppModificati.getOra());
+			statement.get().setFloat(3, datiDiAppModificati.getPeso() != 0.0 ?  datiDiAppModificati.getPeso() : null);
+			statement.get().setFloat(4, datiDiAppModificati.getAltezza() != 0.0 ?  datiDiAppModificati.getAltezza() : null);
 			statement.get().setString(5, app.getData());
 			statement.get().setInt(6, app.getCodPrestazione());
 			statement.get().setInt(7, app.getAnimale().getCodAnimale());
-			statement.get().setFloat(3, datiDiAppModificati.getAltezza() != 0.0 ?  datiDiAppModificati.getAltezza() : null);
-			statement.get().setFloat(4, datiDiAppModificati.getAltezza() != 0.0 ?  datiDiAppModificati.getPeso() : null);
-
+			
 			
 			statement.get().executeUpdate();
 		} catch (SQLException e) {
@@ -1200,5 +1200,36 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				System.out.println("eccezione INSERIMENTO farmaco_in_prestazione statement" + e);
 			}
 		}
+	}
+
+	@Override
+	public void addReferto(Appuntamento appuntamento) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		String query = "insert into referto (codAnimale, codTipoPrestazione, data, descrizione) values (?,?,?,?)";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, appuntamento.getAnimale().getCodAnimale()); 
+			statement.get().setInt(2, appuntamento.getCodPrestazione());
+			statement.get().setString(3, appuntamento.getData());
+			statement.get().setString(4, appuntamento.getDescrizioneReferto());
+
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("eccezione INSERIMENTO referto " + e);
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO referto statement" + e);
+			}
+		}
+		
 	}
 }

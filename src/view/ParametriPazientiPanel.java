@@ -37,7 +37,9 @@ public class ParametriPazientiPanel extends JPanel {
 	private AnimaleController pazienteController = new AnimaleControllerImpl();
 	private List<ParametriPaziente> listParametri = new ArrayList<>();
 	private Paziente paziente;
+	
 	public ParametriPazientiPanel(Paziente paziente) {
+		
 		this.paziente =paziente;
 		setLayout(new BorderLayout(0, 0));
 		JPanel mainPanel = new JPanel();

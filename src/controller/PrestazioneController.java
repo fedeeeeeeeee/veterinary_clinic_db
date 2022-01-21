@@ -50,4 +50,6 @@ public interface PrestazioneController {
 
 	void addFarmacoInPrestazione(Farmaco nf, Appuntamento appuntamento);
 
+	void addReferto(Appuntamento appuntamento);
+
 }

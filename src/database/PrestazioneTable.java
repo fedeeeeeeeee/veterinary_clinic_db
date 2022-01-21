@@ -50,4 +50,6 @@ public interface PrestazioneTable {
 		List<Appuntamento> getAllPrestazioniByPersonale(String cf);
 
 		void addFarmacoInPrestazione(Farmaco nf, Appuntamento appuntamento);
+
+		void addReferto(Appuntamento appuntamento);
 }

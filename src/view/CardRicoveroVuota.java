@@ -11,18 +11,20 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import model.Posto;
 import model.Ricovero;
+import model.User;
 
 public class CardRicoveroVuota extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
-	public CardRicoveroVuota(Ricovero ricovero ) {
+	public CardRicoveroVuota(JFrame frame, User user, Ricovero ricovero ) {
 		setLayout(new BorderLayout(0, 0));
 		// crea interfaccia e classe posto per numero e descrizione(dimensione gabbia)
 		JPanel upperPanel = new JPanel();
@@ -51,15 +53,19 @@ public class CardRicoveroVuota extends JPanel {
 		gbc_lblVuoto.gridy = 2;
 		middlePanel.add(lblVuoto, gbc_lblVuoto);
 		
-		JButton btnInfo = new JButton("add");
-		
+		JButton btnAdd = new JButton("add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				 frame.getContentPane().add(new AggiungiRicovero(frame, user, ricovero));
+			}
+		});
 		JPanel lowerPanel = new JPanel();
 		add(lowerPanel, BorderLayout.SOUTH);
 		
 	
 		lowerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		btnInfo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lowerPanel.add(btnInfo);
+		btnAdd.setHorizontalAlignment(SwingConstants.RIGHT);
+		lowerPanel.add(btnAdd);
 		
          
 	}

@@ -187,5 +187,38 @@ public class PazientiTableImpl implements PazientiTable {
 	}
 
 
+
+	@Override
+	public void updateParametriAnimale(Float altezza, Float peso, int codAnimale) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		
+		final String query = "update animale set altezza=? , peso=? where codAnimale=? ";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setFloat(1,altezza);
+			statement.get().setFloat(2, peso);
+			statement.get().setInt(3, codAnimale);
+
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+			}
+		}
+	}
+
+
+
 	
 }

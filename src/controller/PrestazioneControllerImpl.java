@@ -128,4 +128,10 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		this.prestazioneTable.addFarmacoInPrestazione(nf, appuntamento);
 	}
 
+	@Override
+	public void addReferto(Appuntamento appuntamento) {
+		this.prestazioneTable.addReferto(appuntamento);
+		
+	}
+
 }

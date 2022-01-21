@@ -79,12 +79,15 @@ public class OptionFarmaco extends JPanel {
 		panel.add(textAreaFarmaciAssunti, gbc_textAreaFarmaciAssunti);
 		
 		List<String> farmaciAssunti = controller.getFarmaciAssuntiByAnimale(animale.getCodAnimale());
-		StringBuilder sb = new StringBuilder();
-		farmaciAssunti.forEach(f-> {
-			sb.append(f + ",");
-		});
-		sb.deleteCharAt(sb.length()-1);
-		textAreaFarmaciAssunti.setText(sb.toString());
+		if(farmaciAssunti.size()!=0) {
+			StringBuilder sb = new StringBuilder();
+			farmaciAssunti.forEach(f-> {
+				sb.append(f + ",");
+			});
+			sb.deleteCharAt(sb.length()-1);
+			textAreaFarmaciAssunti.setText(sb.toString());
+		}
+	
 				
 		JLabel lblNewLabel_1 = new JLabel("Nome farmaco");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
