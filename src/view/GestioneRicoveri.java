@@ -141,7 +141,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 	        lblModPostiLiberi.setForeground(new Color(0, 128, 0));
 	        panelDisponibilita.add(lblModPostiLiberi);
 	      this.indice = 0;
-	     cardRicovero.add(new CardRicovero(this.listRicoveri.get(indice))); 
+	     cardRicovero.add(new CardRicovero(frame, user, this.listRicoveri.get(indice))); 
 	     
 	     JLabel lblPage = new JLabel();
 	     lblPage.setText("1 /" + listRicoveri.size());
@@ -169,7 +169,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 			        			cardRicovero.removeAll();
 				        		cardRicovero.revalidate();
 				        		cardRicovero.repaint();
-				        		cardRicovero.add(new CardRicovero(elem));     			
+				        		cardRicovero.add(new CardRicovero(frame, user,elem));     			
 		        			}
 	        	}
 	        	}
@@ -189,7 +189,7 @@ this.ricoveroController = new RicoveroControllerImpl();
 				        			cardRicovero.removeAll();
 					        		cardRicovero.revalidate();
 					        		cardRicovero.repaint();
-					        		cardRicovero.add(new CardRicovero(elem));     			
+					        		cardRicovero.add(new CardRicovero(frame, user,elem));     			
 			        			}
 	        	}
 	        	}

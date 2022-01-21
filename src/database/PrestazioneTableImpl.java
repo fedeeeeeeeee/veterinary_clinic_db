@@ -980,7 +980,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				patologie.add(pat);
 			}
 			
-			appuntamento.setListPatologie(patologie);
+			//appuntamento.setListPatologie(patologie);
 			result.close();
 		} catch (SQLException e) {
 			e.printStackTrace();

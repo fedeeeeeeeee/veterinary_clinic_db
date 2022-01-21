@@ -6,6 +6,7 @@ import javax.swing.event.MouseInputAdapter;
 import org.w3c.dom.events.MouseEvent;
 
 import model.Ricovero;
+import model.User;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -18,6 +19,8 @@ import java.awt.event.MouseAdapter;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
@@ -35,7 +38,7 @@ public class CardRicovero extends JPanel {
 
 private Ricovero ricovero; 
 
-	public CardRicovero(Ricovero ricovero ) {
+	public CardRicovero(JFrame frame, User user, Ricovero ricovero) {
 		this.ricovero = ricovero;
 		setLayout(new BorderLayout(0, 0));
 		
@@ -135,6 +138,8 @@ private Ricovero ricovero;
 		btnInfo.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ricovero.getPosto().setDescrizione(dimensione);
+				 frame.getContentPane().add(new InfoRicovero(frame, user, ricovero));
 			}
 		});
 		lowerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
