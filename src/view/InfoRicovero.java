@@ -66,6 +66,7 @@ public class InfoRicovero extends CommonView {
 	private AnimaleController animaleController;
 	private UserController userController;
 	private FarmaciController farmaciController;
+	private JTextField textField;
 	
 	public InfoRicovero(JFrame frame, User user, Ricovero ricovero) {
 		frame.getContentPane().removeAll();
@@ -81,8 +82,8 @@ public class InfoRicovero extends CommonView {
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
 
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-	//	GroupLayout groupLayout = new GroupLayout(this);
+	GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
@@ -123,8 +124,8 @@ public class InfoRicovero extends CommonView {
 		JLabel lblFarmaci = new JLabel("Farmaci Prescritti");
 		scrollPanelRight.add(lblFarmaci, "2, 2");
 		
-		JButton btnAddFarmaco = new JButton("+");
-		scrollPanelRight.add(btnAddFarmaco, "4, 2");
+	//	JButton btnAddFarmaco = new JButton("+");
+		//scrollPanelRight.add(btnAddFarmaco, "4, 2");
 		
 		JPanel panelFarmaco = new JPanel();
 		scrollPanelRight.add(panelFarmaco, "2, 4, 3, 1, fill, fill");
@@ -145,9 +146,6 @@ public class InfoRicovero extends CommonView {
 		
 		JLabel lblPatologie = new JLabel("Patologie Diagnosticate");
 		scrollPanelRight.add(lblPatologie, "2, 6");
-		
-		JButton btnAddPatologia = new JButton("+");
-		scrollPanelRight.add(btnAddPatologia, "4, 6");
 		
 		JPanel panelPatologia = new JPanel();
 		scrollPanelRight.add(panelPatologia, "2, 8, 3, 1, fill, fill");
@@ -170,6 +168,17 @@ public class InfoRicovero extends CommonView {
 		JTable tableFarmaci = new JTable();
 		DefaultTableModel modelFarmaci = (DefaultTableModel) tableFarmaci.getModel();
 		List<FarmacoInPrestazione> farmaci =  this.farmaciController.getFarmaciDiAnimale(ricovero.getAnimale().getCodAnimale());		
+		tableFarmaci.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+			public void valueChanged(ListSelectionEvent event) {
+				   int rowIndex = tableFarmaci.getSelectedRow();
+				   int reply = JOptionPane.showConfirmDialog(null, "Vuole somministare il seguent farmaco: " + farmaci.get(rowIndex).getFarmaco().getNomeFarmaco() + " ?", "Guarigione", JOptionPane.YES_NO_OPTION);
+				   if (reply == JOptionPane.YES_OPTION) {
+					   String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+					   farmaciController.updateQuantita( farmaci.get(rowIndex).getFarmaco(), -1);
+					   } 
+			}
+		});
 		modelFarmaci.addColumn("Nome");
 		modelFarmaci.addColumn("Indicazioni");
 		
@@ -202,28 +211,14 @@ public class InfoRicovero extends CommonView {
 		});
 		scrollPanePatologia.setViewportView(tablePatologie);
 
-		List<Patologia> patologieDaGuarire = new ArrayList<>();
-		tablePatologie.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-
-			public void valueChanged(ListSelectionEvent event) {
-				   int rowIndex = tablePatologie.getSelectedRow();
-				   int reply = JOptionPane.showConfirmDialog(null, "Il paziente è guarito dalla seguente patologia: " + patologie.get(rowIndex).getNomePatologia() + " ?", "Guarigione", JOptionPane.YES_NO_OPTION);
-				   if (reply == JOptionPane.YES_OPTION) {
-					   String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-					   patologie.get(rowIndex).setDataFine(date);
-					   patologieDaGuarire.add(patologie.get(rowIndex));
-				   } 
-			}
-		});
 		
 		/* FINE search bar */
 		GridBagLayout gbl_scrollPanelLeft = new GridBagLayout();
 		gbl_scrollPanelLeft.columnWidths = new int[] { 0, 0, 0, -23, -23, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_scrollPanelLeft.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_scrollPanelLeft.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0,
+		gbl_scrollPanelLeft.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_scrollPanelLeft.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 				Double.MIN_VALUE };
-		gbl_scrollPanelLeft.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,
-				1.0, 0.0, Double.MIN_VALUE };
+		gbl_scrollPanelLeft.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		scrollPanelLeft.setLayout(gbl_scrollPanelLeft);
 
 		JLabel lblAnimale = new JLabel("Nome Animale");
@@ -245,58 +240,75 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldNomA.gridy = 1;
 		scrollPanelLeft.add(textFieldNomA, gbc_textFieldNomA);
 		textFieldNomA.setColumns(10);
-		
-		
-		JLabel lblProprietario = new JLabel("Proprietario");
-		GridBagConstraints gbc_lblProprietario = new GridBagConstraints();
-		gbc_lblProprietario.anchor = GridBagConstraints.WEST;
-		gbc_lblProprietario.gridwidth = 4;
-		gbc_lblProprietario.insets = new Insets(0, 0, 5, 5);
-		gbc_lblProprietario.gridx = 1;
-		gbc_lblProprietario.gridy = 2;
-		scrollPanelLeft.add(lblProprietario, gbc_lblProprietario);
 
 		JTextField textFieldNomeProprietario = new JTextField();
 		textFieldNomeProprietario.setEditable(false);
 		
-		JTextField textFieldProprietario = new JTextField();
-		textFieldProprietario.setEditable(false);
+		JLabel lblAltezza = new JLabel("Altezza");
+		GridBagConstraints gbc_lblAltezza = new GridBagConstraints();
+		gbc_lblAltezza.gridwidth = 3;
+		gbc_lblAltezza.anchor = GridBagConstraints.WEST;
+		gbc_lblAltezza.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAltezza.gridx = 1;
+		gbc_lblAltezza.gridy = 2;
+		scrollPanelLeft.add(lblAltezza, gbc_lblAltezza);
+		
+		JTextField textFieldAltezza = new JTextField();
+		textFieldAltezza.setText(String.valueOf(ricovero.getAnimale().getAltezza())+" cm");
+		textFieldAltezza.setEditable(false);
+		GridBagConstraints gbc_textFieldAltezza = new GridBagConstraints();
+		gbc_textFieldAltezza.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldAltezza.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldAltezza.gridx = 4;
+		gbc_textFieldAltezza.gridy = 2;
+		scrollPanelLeft.add(textFieldAltezza, gbc_textFieldAltezza);
+		textFieldAltezza.setColumns(10);
+		
+		JLabel lblPeso = new JLabel("Peso");
+		GridBagConstraints gbc_lblPeso = new GridBagConstraints();
+		gbc_lblPeso.gridwidth = 2;
+		gbc_lblPeso.insets = new Insets(0, 0, 5, 5);
+		gbc_lblPeso.gridx = 6;
+		gbc_lblPeso.gridy = 2;
+		scrollPanelLeft.add(lblPeso, gbc_lblPeso);
+		
+		JTextField textFieldPeso = new JTextField();
+		textFieldPeso.setText(String.valueOf(ricovero.getAnimale().getPeso())+ " kg");
+		textFieldPeso.setEditable(false);
+		GridBagConstraints gbc_textFieldPeso = new GridBagConstraints();
+		gbc_textFieldPeso.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldPeso.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldPeso.gridx = 8;
+		gbc_textFieldPeso.gridy = 2;
+		scrollPanelLeft.add(textFieldPeso, gbc_textFieldPeso);
+		textFieldPeso.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Specie");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.gridwidth = 2;
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_1.gridx = 1;
+		gbc_lblNewLabel_1.gridy = 3;
+		scrollPanelLeft.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		
+		textField = new JTextField();
+		textField.setText(ricovero.getAnimale().getSpecie());
+		textField.setEditable(false);
 		GridBagConstraints gbc_textField = new GridBagConstraints();
 		gbc_textField.gridwidth = 5;
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 5;
-		gbc_textField.gridy = 2;
-		scrollPanelLeft.add(textFieldProprietario, gbc_textField);
-		textFieldProprietario.setColumns(10);
-		
-	
-		JLabel lblTelefono = new JLabel("Telefono");
-		GridBagConstraints gbc_lblTelefono = new GridBagConstraints();
-		gbc_lblTelefono.anchor = GridBagConstraints.WEST;
-		gbc_lblTelefono.gridwidth = 4;
-		gbc_lblTelefono.insets = new Insets(0, 0, 5, 5);
-		gbc_lblTelefono.gridx = 1;
-		gbc_lblTelefono.gridy = 3;
-		scrollPanelLeft.add(lblTelefono, gbc_lblTelefono);
-
-		JTextField textFieldTelefono = new JTextField();
-		textFieldTelefono.setEditable(false);
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.gridwidth = 5;
-		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 5;
-		gbc_textField_1.gridy = 3;
-		scrollPanelLeft.add(textFieldTelefono, gbc_textField_1);
-		textFieldTelefono.setColumns(10);
+		gbc_textField.gridy = 3;
+		scrollPanelLeft.add(textField, gbc_textField);
+		textField.setColumns(10);
 
 		JSeparator separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
 		gbc_separator.gridwidth = 4;
 		gbc_separator.insets = new Insets(0, 0, 5, 5);
 		gbc_separator.gridx = 1;
-		gbc_separator.gridy = 4;
+		gbc_separator.gridy = 5;
 		scrollPanelLeft.add(separator, gbc_separator);
 		
 				JLabel lblData = new JLabel("Data Inizio");
@@ -305,7 +317,7 @@ public class InfoRicovero extends CommonView {
 				gbc_lblData.anchor = GridBagConstraints.NORTHWEST;
 				gbc_lblData.insets = new Insets(0, 0, 5, 5);
 				gbc_lblData.gridx = 1;
-				gbc_lblData.gridy = 5;
+				gbc_lblData.gridy = 6;
 				scrollPanelLeft.add(lblData, gbc_lblData);
 		
 				JTextField textFieldData = new JTextField();
@@ -314,7 +326,7 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldData.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldData.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldData.gridx = 4;
-		gbc_textFieldData.gridy = 5;
+		gbc_textFieldData.gridy = 6;
 		scrollPanelLeft.add(textFieldData, gbc_textFieldData);
 		textFieldData.setColumns(10);
 
@@ -323,7 +335,7 @@ public class InfoRicovero extends CommonView {
 		gbc_lblOra.anchor = GridBagConstraints.EAST;
 		gbc_lblOra.insets = new Insets(0, 0, 5, 5);
 		gbc_lblOra.gridx = 7;
-		gbc_lblOra.gridy = 5;
+		gbc_lblOra.gridy = 6;
 		scrollPanelLeft.add(lblOra, gbc_lblOra);
 		LocalTime local = LocalTime.now();
 		
@@ -333,17 +345,17 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldOra.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldOra.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldOra.gridx = 8;
-		gbc_textFieldOra.gridy = 5;
+		gbc_textFieldOra.gridy = 6;
 		scrollPanelLeft.add(textFieldOra, gbc_textFieldOra);
 		textFieldOra.setColumns(10);
         
-		JLabel lblTipoPrestazione = new JLabel("Tipo Prestazione");
+		JLabel lblTipoPrestazione = new JLabel("Motivo Ricovero");
 		GridBagConstraints gbc_lblTipoPrestazione = new GridBagConstraints();
 		gbc_lblTipoPrestazione.anchor = GridBagConstraints.WEST;
 		gbc_lblTipoPrestazione.gridwidth = 4;
 		gbc_lblTipoPrestazione.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTipoPrestazione.gridx = 1;
-		gbc_lblTipoPrestazione.gridy = 6;
+		gbc_lblTipoPrestazione.gridy = 7;
 		scrollPanelLeft.add(lblTipoPrestazione, gbc_lblTipoPrestazione);
 		
 		JTextField textFieldTipo = new JTextField();
@@ -353,103 +365,16 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldTipo.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldTipo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldTipo.gridx = 5;
-		gbc_textFieldTipo.gridy = 6;
+		gbc_textFieldTipo.gridy = 7;
 		scrollPanelLeft.add(textFieldTipo, gbc_textFieldTipo);
 		textFieldTipo.setColumns(10);
 		
-		JLabel lblNomPrestazione = new JLabel("Nome Prestazione");
-		GridBagConstraints gbc_lblNomPrestazione = new GridBagConstraints();
-		gbc_lblNomPrestazione.anchor = GridBagConstraints.WEST;
-		gbc_lblNomPrestazione.gridwidth = 4;
-		gbc_lblNomPrestazione.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNomPrestazione.gridx = 1;
-		gbc_lblNomPrestazione.gridy = 7;
-		scrollPanelLeft.add(lblNomPrestazione, gbc_lblNomPrestazione);
-		
-		
-		JTextField textFieldNomePrestazione = new JTextField();
-		textFieldNomePrestazione.setEditable(false);
-		GridBagConstraints gbc_textFieldNomePrestazione = new GridBagConstraints();
-		gbc_textFieldNomePrestazione.gridwidth = 5;
-		gbc_textFieldNomePrestazione.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldNomePrestazione.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldNomePrestazione.gridx = 5;
-		gbc_textFieldNomePrestazione.gridy = 7;
-		scrollPanelLeft.add(textFieldNomePrestazione, gbc_textFieldNomePrestazione);
-		textFieldNomePrestazione.setColumns(10);
-		
 		JSeparator separator_1 = new JSeparator();
 		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
-		gbc_separator_1.insets = new Insets(0, 0, 5, 0);
 		gbc_separator_1.gridwidth = 10;
 		gbc_separator_1.gridx = 1;
 		gbc_separator_1.gridy = 9;
 		scrollPanelLeft.add(separator_1, gbc_separator_1);
-
-		JLabel lblNewLabel = new JLabel("Dati rilevati");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
-		gbc_lblNewLabel.gridwidth = 3;
-		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 5;
-		gbc_lblNewLabel.gridy = 10;
-		scrollPanelLeft.add(lblNewLabel, gbc_lblNewLabel);
-		
-		JLabel lblAltezza = new JLabel("Altezza");
-		GridBagConstraints gbc_lblAltezza = new GridBagConstraints();
-		gbc_lblAltezza.anchor = GridBagConstraints.WEST;
-		gbc_lblAltezza.insets = new Insets(0, 0, 5, 5);
-		gbc_lblAltezza.gridx = 3;
-		gbc_lblAltezza.gridy = 12;
-		scrollPanelLeft.add(lblAltezza, gbc_lblAltezza);
-		
-		JTextField textFieldAltezza = new JTextField();
-		GridBagConstraints gbc_textFieldAltezza = new GridBagConstraints();
-		gbc_textFieldAltezza.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldAltezza.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldAltezza.gridx = 4;
-		gbc_textFieldAltezza.gridy = 12;
-		scrollPanelLeft.add(textFieldAltezza, gbc_textFieldAltezza);
-		textFieldAltezza.setColumns(10);
-		
-		JLabel lblPeso = new JLabel("Peso");
-		GridBagConstraints gbc_lblPeso = new GridBagConstraints();
-		gbc_lblPeso.gridwidth = 2;
-		gbc_lblPeso.insets = new Insets(0, 0, 5, 5);
-		gbc_lblPeso.gridx = 6;
-		gbc_lblPeso.gridy = 12;
-		scrollPanelLeft.add(lblPeso, gbc_lblPeso);
-		
-		JTextField 	textFieldPeso = new JTextField();
-		GridBagConstraints gbc_textFieldPeso = new GridBagConstraints();
-		gbc_textFieldPeso.insets = new Insets(0, 0, 5, 5);
-		gbc_textFieldPeso.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textFieldPeso.gridx = 8;
-		gbc_textFieldPeso.gridy = 12;
-		scrollPanelLeft.add(textFieldPeso, gbc_textFieldPeso);
-		textFieldPeso.setColumns(10);
-		
-		JLabel lblDescrizione = new JLabel("Commento");
-		GridBagConstraints gbc_lblDescrizione = new GridBagConstraints();
-		gbc_lblDescrizione.anchor = GridBagConstraints.WEST;
-		gbc_lblDescrizione.insets = new Insets(0, 0, 5, 5);
-		gbc_lblDescrizione.gridx = 3;
-		gbc_lblDescrizione.gridy = 14;
-		scrollPanelLeft.add(lblDescrizione, gbc_lblDescrizione);
-		
-		JScrollPane scrollPaneCommento = new JScrollPane();
-		GridBagConstraints gbc_scrollPaneCommento = new GridBagConstraints();
-		gbc_scrollPaneCommento.gridheight = 2;
-		gbc_scrollPaneCommento.gridwidth = 6;
-		gbc_scrollPaneCommento.insets = new Insets(0, 0, 5, 5);
-		gbc_scrollPaneCommento.fill = GridBagConstraints.BOTH;
-		gbc_scrollPaneCommento.gridx = 4;
-		gbc_scrollPaneCommento.gridy = 14;
-		JTextArea textArea = new JTextArea();
-		textArea.setLineWrap(true);
-		textArea.setWrapStyleWord(true);
-		scrollPaneCommento.setViewportView(textArea);
-		scrollPanelLeft.add(scrollPaneCommento, gbc_scrollPaneCommento);
 
 		splitPane.setOneTouchExpandable(true);
 		splitPane.setResizeWeight(0.5);
@@ -458,7 +383,7 @@ public class InfoRicovero extends CommonView {
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Conclusione Prestazione");
+		JLabel titleLabel = new JLabel("Info Ricovero");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -471,7 +396,7 @@ public class InfoRicovero extends CommonView {
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new GestionePrestazione(frame, user));
+				frame.getContentPane().add(new GestioneRicoveri(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
@@ -484,49 +409,15 @@ public class InfoRicovero extends CommonView {
 		
 		List<Patologia> nuovePatologie = new ArrayList<>();
 		
-		btnAddPatologia.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				OptionPatologia panelPatologia = new OptionPatologia();
-				int result = JOptionPane.showConfirmDialog(null,
-						panelPatologia,
-						"Patologia",
-						JOptionPane.OK_CANCEL_OPTION,
-						JOptionPane.PLAIN_MESSAGE);
-						if (result == JOptionPane.OK_OPTION) {
-							patologie.add(panelPatologia.getSelectedPatologia());
-							nuovePatologie.add(panelPatologia.getSelectedPatologia());
-							
-							List<Patologia> list = new ArrayList<>();
-							list.addAll(patologie);							
-							modelPatologie.setRowCount(0);
-							list.forEach(x -> {
-								modelPatologie.addRow(new Object[] { 
-										x.getNomePatologia(),
-										x.getDescrizione(),
-										x.getDataInizio()
-								});
-							});
-						}
-			}
-	    });
-		
 		
 		JPanel savePanel = new JPanel();
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
-		JButton saveButton = new JButton("Effettua Rilascio");
-		savePanel.add(saveButton);
-		//TODO inserire prestazione di rilascio e "controllare e magari modificare durataInGiorni su ricovero" 
 	
-	//	textFieldTelefono.setText(String.valueOf(appuntamento.getAnimale().getProprietario().getTelefono()));
 		textFieldNomA.setText(ricovero.getAnimale().getNome());
 		textFieldData.setText(ricovero.getDataInizio());
 		textFieldOra.setText(ricovero.getOraInizio());
 		textFieldTipo.setText(ricovero.getMotivoRicovero());
-	//	textFieldNomePrestazione.setText(appuntamento.getPrestazione());
-	//	textFieldProprietario.setText(appuntamento.getAnimale().getProprietario().getNome()+ " " + appuntamento.getAnimale().getProprietario().getCognome());
-		
+
 		//setLayout(groupLayout);
 	    //new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);

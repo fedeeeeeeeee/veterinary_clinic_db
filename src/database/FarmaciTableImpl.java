@@ -76,11 +76,14 @@ public class FarmaciTableImpl implements FarmaciTable {
 		 final String query = "select lotto_acquistato.codLotto, farmaco.nome, descrizione, lotto_acquistato.dataDiScadenza, disponibilita,  tipoFarmaco, farmaco.codFarmaco "
 		 		+ "from farmaco "
 		 		+ "left join lotto_acquistato on farmaco.codFarmaco=lotto_acquistato.codFarmaco "
-		 		+ "left join lotto_acquistato on lotto_acquistato.dataDiScadenza > ? ";
+		 		+ "and lotto_acquistato.dataDiScadenza > ? ";
 		 List<Farmaco> farmaci = new ArrayList<>();
 		 
 			try {
+				DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
+				String dataformat = formatter.format(LocalDateTime.now());
 				statement = Optional.of(connection.prepareStatement(query));
+			    statement.get().setString(1,dataformat);
 				final ResultSet result = statement.get().executeQuery();
 				
 				while (result.next()) {
@@ -127,7 +130,7 @@ public class FarmaciTableImpl implements FarmaciTable {
 			
 				DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 				String dataformat = formatter.format(LocalDateTime.now());
-				System.out.println(dataformat);
+			//	System.out.println(dataformat);
 				statement = Optional.of(connection.prepareStatement(query));
 			    statement.get().setString(1,dataformat);
 				final ResultSet result = statement.get().executeQuery();
@@ -491,7 +494,7 @@ public class FarmaciTableImpl implements FarmaciTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 	
-		 final String query = "select * " 
+		 final String query = "select  * " 
 				 	+"from farmaco " 
 				 	+"left join lotto_acquistato on farmaco.codFarmaco=lotto_acquistato.codFarmaco and lotto_acquistato.dataDiScadenza > ? ";
 		 List<Farmaco> farmaci = new ArrayList<>();

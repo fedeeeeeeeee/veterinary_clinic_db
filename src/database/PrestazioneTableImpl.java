@@ -453,9 +453,9 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			statement.get().setString(3, appuntamento.getData());
 			statement.get().setString(4, appuntamento.getOra());
 			
-			// va bene string se tipo=float???
-			statement.get().setString(5, null);
-			statement.get().setString(6, null);
+			statement.get().setFloat(5, appuntamento.getPeso() != 0.0 ?  appuntamento.getPeso() : null);
+			statement.get().setFloat(6, appuntamento.getAltezza() != 0.0 ?  appuntamento.getAltezza() : null);
+
 	
 			statement.get().executeUpdate();
 		} catch (SQLException e) {

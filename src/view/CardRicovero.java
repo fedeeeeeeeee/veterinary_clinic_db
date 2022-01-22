@@ -1,34 +1,21 @@
 package view;
 
 import javax.swing.JPanel;
-import javax.swing.event.MouseInputAdapter;
-
-import org.w3c.dom.events.MouseEvent;
-
 import model.Ricovero;
 import model.User;
-
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.MouseListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.awt.event.MouseAdapter;
-
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.BorderLayout;
 import javax.swing.SwingConstants;
 import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.GridLayout;
-import java.awt.ComponentOrientation;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -133,8 +120,9 @@ private Ricovero ricovero;
 		
 		JPanel lowerPanel = new JPanel();
 		add(lowerPanel, BorderLayout.SOUTH);
+		lowerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		
-		JButton btnInfo = new JButton("Info");
+		JButton btnInfo = new JButton("Visualizza Informazioni");
 		btnInfo.setHorizontalTextPosition(SwingConstants.RIGHT);
 		btnInfo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -142,11 +130,18 @@ private Ricovero ricovero;
 				 frame.getContentPane().add(new InfoRicovero(frame, user, ricovero));
 			}
 		});
-		lowerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 		btnInfo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lowerPanel.add(btnInfo);
 		
+		JButton btnNewButton = new JButton("Effettua Rilascio");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ricovero.getPosto().setDescrizione(dimensione);
+				 frame.getContentPane().add(new RilascioRicovero(frame, user, ricovero));
+			}
+		});
+		btnNewButton.setForeground(new Color(139, 0, 0));
+		lowerPanel.add(btnNewButton);
          
 	}
-
 }

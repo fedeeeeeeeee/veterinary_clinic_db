@@ -51,6 +51,8 @@ public class RicoveroTableImpl implements RicoveroTable {
 				animale.setCf(result.getString("animale.cf"));
 				animale.setSpecie(result.getString("animale.specie"));
 				animale.setCodAnimale( result.getInt("animale.codAnimale"));
+				animale.setAltezza(result.getFloat("animale.altezza"));
+				animale.setPeso(result.getFloat("animale.peso"));
 				
 				ricovero.setAnimale(animale);
 				ricovero.setDataInizio(result.getString("ricovero.dataInizio"));

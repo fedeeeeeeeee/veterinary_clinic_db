@@ -8,6 +8,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ import model.FarmacoImpl;
 import model.Patologia;
 
 import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JCheckBox;
 
 
@@ -153,15 +155,23 @@ public class OptionFarmaco extends JPanel {
 		panel.add(checkBoxSomministrato, gbc_chckbxNewCheckBox);
 		
 		List<Farmaco> list = controller.getAllDistinctFarmaci();
+		List<Farmaco> filteredList = new ArrayList<>();
+		
 		list.forEach(u-> {
-			comboBoxFarmaco.addItem(u.getNomeFarmaco());
+			if(((DefaultComboBoxModel<String>)comboBoxFarmaco.getModel()).getIndexOf(u.getNomeFarmaco()) == -1) {
+				filteredList.add(u);
+				comboBoxFarmaco.addItem(u.getNomeFarmaco());
+			}
 		});
 		
 		comboBoxFarmaco.setSelectedIndex(-1);
 		comboBoxFarmaco.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	selectedFarmaco = list.get(comboBoxFarmaco.getSelectedIndex());
-		    	if(list.get(comboBoxFarmaco.getSelectedIndex()).getDisponibilita() == 0) {
+		   // 	System.out.println(    	list.get(comboBoxFarmaco.getSelectedIndex()).getDataScadenza());
+		
+		    	if(list.get(comboBoxFarmaco.getSelectedIndex()).getDisponibilita() == 0 || filteredList.get(comboBoxFarmaco.getSelectedIndex()).getDataScadenza()==null ) {
+		    		//TODO controlla cambi riempimento
 		    		checkBoxSomministrato.setEnabled(false);
 		    		checkBoxSomministrato.setSelected(false);
 		    	} else {
