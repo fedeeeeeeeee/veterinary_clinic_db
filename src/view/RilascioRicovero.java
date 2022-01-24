@@ -7,12 +7,14 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
@@ -495,8 +497,26 @@ public class RilascioRicovero extends CommonView {
 							farmaciController.updateQuantita(optionPanelFarmaco.getSelectedFarmaco(), -1);
 						}
 					});
+				
+						
+						 SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
+						 
+						    Date firstDate = new Date();
+						    Date secondDate= new Date();
+							try {
+								firstDate = sdf.parse(ricovero.getDataInizio());
+								secondDate = sdf.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+							} catch (ParseException e2) {
+								e2.printStackTrace();
+							}
+
+						    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+						    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+							if(diff < ricovero.getDurataInGiorni()) {
+								ricoveroController.updateDurataRicovero(ricovero);
+								frame.getContentPane().add(new GestioneRicoveri(frame, user));
+					}
 					
-					frame.getContentPane().add(new GestioneRicoveri(frame, user));
 				} else {
 					JOptionPane.showMessageDialog(frame, "Si è verificato un errore nell'inserimento dell'appuntamaneto.", 
 							"Attenzione!", JOptionPane.ERROR_MESSAGE);
@@ -509,7 +529,7 @@ public class RilascioRicovero extends CommonView {
 	    });
 		
 		savePanel.add(saveButton);
-		//TODO inserire prestazione di rilascio e "controllare e magari modificare durataInGiorni su ricovero" 
+		//TODO  "controllare e magari modificare durataInGiorni su ricovero" 
 	
 		textFieldNomA.setText(ricovero.getAnimale().getNome());
 		textFieldData.setText(ricovero.getDataInizio());

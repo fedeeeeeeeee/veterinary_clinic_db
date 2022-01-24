@@ -160,5 +160,33 @@ public class RicoveroTableImpl implements RicoveroTable {
 		}
 		
 	}
+	@Override
+	public void updateDurataRicovero(Ricovero ricovero) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		 final String query = "update ricovero set durataInGiorni =DATEDIFF( ricovero.dataInizio, ? ) "
+		 		+ "where codAnimale = ? "
+		 		+ "and dataInizio = ? ";
+		 
+			try {
+				statement = Optional.of(connection.prepareStatement(query));
+				statement.get().setString(1,new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+				statement.get().setInt(2, ricovero.getAnimale().getCodAnimale());
+		           statement.get().setString(3, ricovero.getDataInizio());
+		           statement.get().executeUpdate();   
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+				}
+			}
+	}
 
 }

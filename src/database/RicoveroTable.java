@@ -14,5 +14,7 @@ public interface RicoveroTable {
 
 	void addRicovero(Ricovero ricovero, Appuntamento appuntamento);
 
+	void updateDurataRicovero(Ricovero ricovero);
+
 	
 }

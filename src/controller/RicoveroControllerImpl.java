@@ -38,6 +38,12 @@ public class RicoveroControllerImpl implements RicoveroController {
 		
 	}
 
+	@Override
+	public void updateDurataRicovero(Ricovero ricovero) {
+		 ricoveroTable.updateDurataRicovero(ricovero);
+		
+	}
+
 	
 	
 }

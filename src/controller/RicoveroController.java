@@ -13,4 +13,5 @@ public interface RicoveroController {
 	public List<Ricovero> getRicoveriAttivi();
 	List<Posto> getPostiLiberi();
 	void addRicovero(Ricovero ricovero, Appuntamento appuntamento);
+	void updateDurataRicovero(Ricovero ricovero);
 }
