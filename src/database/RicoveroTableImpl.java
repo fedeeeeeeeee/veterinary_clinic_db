@@ -40,6 +40,9 @@ public class RicoveroTableImpl implements RicoveroTable {
 		 + "and prestazione_su_animale.ora = ricovero.oraInizio " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione "
 		 + "and date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) >= ? ";
+		 // TODO controllo ora di prestazione_su_animale(12) e l'ora attuale 
+		 // ricorda che se non è ancora terminata non c'è la prestazione in prestazione_su_animale
+		 // controllo che ci sia una prestazione 12 di quell'animale in quella data
 		 
 		 List<Ricovero> ricoveri = new ArrayList<>();
 		try {
