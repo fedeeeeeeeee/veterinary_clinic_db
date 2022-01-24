@@ -154,6 +154,12 @@ public class ProprietarioTableImpl implements ProprietarioTable {
 			proprietario.setNome(result.getString("nome"));
 			proprietario.setCognome(result.getString("cognome"));
 			proprietario.setTelefono(result.getLong("telefono"));
+			proprietario.setDataNascita(result.getString("dataDiNascita"));
+			proprietario.setEmail(result.getString("e_mail"));
+			proprietario.setIndirizzoVia(result.getString("ind_via"));
+			proprietario.setIndirizzoNumero(result.getInt("ind_numero"));
+			proprietario.setIndirizzoCap(result.getInt("ind_cap"));
+			proprietario.setIndirizzoCitta(result.getString("ind_citta"));
 			}
 			result.close();
 		} catch (SQLException e) {

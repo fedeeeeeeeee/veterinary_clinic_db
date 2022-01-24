@@ -7,9 +7,11 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.GroupLayout;
@@ -26,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 import model.Appuntamento;
 import model.Pagamento;
+import model.Person;
 import model.User;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -36,10 +39,20 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.ListItem;
+
+
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
@@ -49,6 +62,8 @@ import controller.PagamentiController;
 import controller.PagamentiControllerImpl;
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
+import controller.ProprietarioController;
+import controller.ProprietarioControllerImpl;
 
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
@@ -65,6 +80,7 @@ public class RiepilogoPagamenti extends CommonView {
 	private List<Pagamento> listPagamenti;
 	private DefaultTableModel model;
  	private PagamentiController pagamentiController;
+ 	private ProprietarioController proprietarioController;
 	private JTable table;	
 	private JScrollPane scrollPane;
 	private JTextField textFieldTotale;
@@ -89,7 +105,7 @@ public class RiepilogoPagamenti extends CommonView {
 						x.getAnimale().getCf(),
 						x.getDataPrestazione(),
 						x.getNomePrestazione(),
-						x.getCosto() + "â‚¬",
+						x.getCosto() + "€",
 						x.isDuranteRicovero() ? "Si" : "No"
 				});
 			});
@@ -100,7 +116,7 @@ public class RiepilogoPagamenti extends CommonView {
 				model.addRow(new Object[] { 
 						x.getDataPrestazione(),
 						x.getNomePrestazione(),
-						x.getCosto() + "â‚¬",
+						x.getCosto() + "€",
 				});
 			});
 		}
@@ -129,7 +145,7 @@ public class RiepilogoPagamenti extends CommonView {
 		this.frame = frame;
 		this.user = user;
 		this.pagamentiController = new PagamentiControllerImpl();
-		
+		this.proprietarioController =  new ProprietarioControllerImpl();
 		JPanel upperPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
@@ -235,23 +251,23 @@ public class RiepilogoPagamenti extends CommonView {
 			JMenuItem itemPeriodo = new JMenuItem("Periodo");
 			DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 			String dataformat = formatter.format(LocalDateTime.now());
-			textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " â‚¬");
+			textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			itemOggi.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getPagamentiOggi());
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " â‚¬");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
 			itemMese.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getPagamentiMensili());
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " â‚¬");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
 			itemAnno.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getPagamentiAnnuali());
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " â‚¬");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
 			
 			itemTutti.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getAllPagamenti());
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " â‚¬");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
 			itemPeriodo.addActionListener((e) -> {
 			OptionPeriodo panelPeriod =  new OptionPeriodo();
@@ -265,12 +281,13 @@ public class RiepilogoPagamenti extends CommonView {
 			        System.out.println("y value: " + panelPeriod.getDataFine());
 			      }
 				this.resetAndDraw(pagamentiController.getPagamentiInPeriodo(panelPeriod.getDataInizio(), panelPeriod.getDataFine())); 
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " â‚¬");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
 			});
 		
 				
 			itemStampa.addActionListener((e) -> {
 				if (this.selectedPagamento != -1) {
+				
 					String path= ""; 
 					JFileChooser j = new JFileChooser();
 					j.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -281,14 +298,84 @@ public class RiepilogoPagamenti extends CommonView {
 					
 					Document doc = new Document();
 					try {
-						PdfWriter.getInstance(doc, new FileOutputStream(path +".pdf"));
+						PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(path +".pdf"));
 						doc.open();
-						//titolo animale e proprietario e altri dati da fattura
+						
+						// TITOLO 1 PROVA
+						/*
+						com.itextpdf.text.Font f = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 25.0f, com.itextpdf.text.Font.BOLD, BaseColor.WHITE);
+						Chunk c = new Chunk("Total Cost:" ,f);
+						c.setBackground(BaseColor.RED);
+						Paragraph parTitoloColored = new Paragraph(c);
+						doc.add(parTitoloColored);
+						*/
+						// TITOLO 2 PROVA
+						com.itextpdf.text.Font courier9RedFont = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 25.0f, com.itextpdf.text.Font.BOLD, BaseColor.BLACK);
+						//Paragraph parTitolo = new Paragraph("Fattura Clinica Veterinaria",courier9RedFont);
+						Chunk c2 = new Chunk("Fattura Clinica Veterinaria:" ,courier9RedFont);
+						c2.setBackground(BaseColor.CYAN);
+						Paragraph parTitolo = new Paragraph(c2);
+						parTitolo.setLeading(0);
+						
+						parTitolo.setMultipliedLeading(0.9F);
+						parTitolo.setSpacingAfter(72f);
+						PdfPTable taba = new PdfPTable(1);
+			            PdfPCell cellImportantNote = new PdfPCell(parTitolo);
+			            cellImportantNote.setBorderWidth( PdfPCell.NO_BORDER);
+			            taba.setWidthPercentage(100);
+			            taba.setHorizontalAlignment(Element.ALIGN_LEFT);
+			            taba.addCell(cellImportantNote);
+			            doc.add(taba);
+			            
+			        	// TITOLO INFO FATTIRA
+						Paragraph parInfo = new Paragraph("");
+						parInfo.getIndentationRight();
+						//parInfo.setAlignment(Element.ALIGN_RIGHT);
+						String data = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+						 Paragraph parOggi = new Paragraph(data + " Cesena" );
+						doc.add(parInfo);
+						parOggi.setSpacingAfter(50f);
+						doc.add(parOggi);
+						/*
+						 Paragraph p = new Paragraph("");
+						// p.setSpacingAfter(72f);
+					        DottedLineSeparator dottedline = new DottedLineSeparator();
+					        dottedline.setOffset(-2);
+					        dottedline.setGap(2f);
+					        p.add(dottedline);
+					        doc.add(p);
+					        */
+						com.itextpdf.text.Font fontDati = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 15.0f, com.itextpdf.text.Font.BOLD, BaseColor.BLACK);
+						Chunk cDati = new Chunk("Dati paziente e proprietario:" ,fontDati);
+						Paragraph parPaziente = new Paragraph(cDati);
+						Person proprietario = proprietarioController.getProprietario( listPagamenti.get(selectedPagamento).getAnimale().getCf());
+						com.itextpdf.text.List listPaziente =new com.itextpdf.text.List(com.itextpdf.text.List.UNORDERED);
+						listPaziente.setListSymbol("");
+						listPaziente.add(new ListItem("Prestazioni per il paziente " +  proprietario.getNome() + " il cui proprietario è : "));
+						listPaziente.add(new ListItem(proprietario.getNome()
+								+" "+  proprietario.getCognome()));
+						listPaziente.add(new ListItem("Telefono: " + proprietario.getTelefono()));
+						listPaziente.add(new ListItem("Email: " + proprietario.getEmail()));
+						listPaziente.add(new ListItem("Indirizzo di residenza: " + proprietario.getIndirizzoVia() + 
+								 " " + proprietario.getIndirizzoNumero() + " " + proprietario.getIndirizzoCap()+ " ," 
+								+ proprietario.getIndirizzoCitta() ));
+						parPaziente.add(listPaziente);
+						parPaziente.setSpacingAfter(72f);
+						doc.add(parPaziente);
+
+						
+						com.itextpdf.text.Font fontRiepilogo = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 15.0f, com.itextpdf.text.Font.BOLD, BaseColor.BLACK);
+						Chunk cRiepilogo = new Chunk("Riepilogo pagamenti:" ,fontRiepilogo);
+						Paragraph parRiepilogo = new Paragraph(cRiepilogo);
+						doc.add(parRiepilogo);
+						// TABLE RIEPILOGO DATI
 						PdfPTable tbl = new PdfPTable(3);
+						tbl.setWidthPercentage(105);
+						tbl.setSpacingBefore(11f);
+						tbl.setSpacingAfter(11f);
 						tbl.addCell("Data");
 						tbl.addCell("Nome Prestazione");
 						tbl.addCell("Costo");
-					
 						JTable tableForPDF = new JTable();
 						DefaultTableModel modelPDF = new DefaultTableModel();
 						modelPDF = (DefaultTableModel) tableForPDF.getModel();
@@ -298,29 +385,34 @@ public class RiepilogoPagamenti extends CommonView {
 						List<Pagamento> ricoveri = new ArrayList<>();
 						if(listPagamenti.get(selectedPagamento).isDuranteRicovero()) {
 							ricoveri = pagamentiController.getPrestazioniDuranteRicovero(listPagamenti.get(selectedPagamento));
-							// aggiunta costi ricovero
 						} else { 
 							ricoveri.add(listPagamenti.get(selectedPagamento));
 						}
-						// aggiunta del costo totale 
 						this.createTablePdf(modelPDF, ricoveri);
-
 						for ( int i = 0; i < tableForPDF.getRowCount(); i ++) {
 							tbl.addCell(tableForPDF.getValueAt(i,0).toString());
 							tbl.addCell(tableForPDF.getValueAt(i,1).toString());
 							tbl.addCell(tableForPDF.getValueAt(i,2).toString());
 						}
-						
 						tbl.addCell(tableForPDF.getValueAt(tableForPDF.getRowCount()-1,0).toString());
 						tbl.addCell("Ricovero");
-						tbl.addCell(String.valueOf(listPagamenti.get(selectedPagamento).getCosto()- ricoveri.stream().mapToDouble(r-> r.getCosto()).sum()) + "â‚¬");
-
+						tbl.addCell(String.valueOf(listPagamenti.get(selectedPagamento).getCosto()- ricoveri.stream().mapToDouble(r-> r.getCosto()).sum()) + "€");
 						doc.add(tbl);
+						
+						// PARAGRAFO TOTALE
+						com.itextpdf.text.Font fontTotale = new com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 15.0f, com.itextpdf.text.Font.BOLD, BaseColor.WHITE);
+						Chunk cTotale = new Chunk("Dati paziente e proprietario:" + table.getValueAt(selectedPagamento, 5) ,fontTotale);
+						Paragraph parTotale = new Paragraph(cTotale);
+						doc.add(parTotale);
+						
+						
+						doc.close();
+						writer.close();
 					} catch (FileNotFoundException | DocumentException e1) {
 						System.out.println("ERRORE - creazione pdf");
 						e1.printStackTrace();
 					}
-					doc.close();
+				
 				} else {
 					JOptionPane.showMessageDialog(null, "Non hai selezionato alcun pagamento");
 				}
