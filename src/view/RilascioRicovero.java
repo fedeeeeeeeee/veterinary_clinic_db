@@ -81,7 +81,7 @@ public class RilascioRicovero extends CommonView {
 		this.prestazioneController = new PrestazioneControllerImpl(); // per aggiungere appuntamneto rilascio ricovero 
 		this.ricoveroController = new RicoveroControllerImpl();
 		this.farmaciController = new FarmaciControllerImpl();
-		
+		this.userController = new UserControllerImpl();
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
@@ -415,7 +415,7 @@ public class RilascioRicovero extends CommonView {
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new GestionePrestazione(frame, user));
+				frame.getContentPane().add(new GestioneRicoveri(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
@@ -467,15 +467,22 @@ public class RilascioRicovero extends CommonView {
 			appun.setVeterinario(user);
 			List<User> infermiereRandomEVeterinario = new ArrayList<>();
 			Random rand = new Random();
-			infermiereRandomEVeterinario.add(this.userController.getAllPersonaleByRuolo("Infermiere").get(rand.nextInt(infermiereRandomEVeterinario.size())));
+			List<User> allInfermieri = this.userController.getAllPersonaleByRuolo("Infermiere");
+			infermiereRandomEVeterinario.add(allInfermieri.get(rand.nextInt(allInfermieri.size())));
 			infermiereRandomEVeterinario.add(user);
 			appun.setAllMediciEInfermieri(infermiereRandomEVeterinario);
-			
-			if(checker.checkFloatFieldsValue(textFieldAltezza.getText()) 
-					&& checker.checkFloatFieldsValue(textFieldPeso.getText())) {
-				appun.setAltezza(Float.valueOf(textFieldAltezza.getText()));
-				appun.setPeso(Float.valueOf(textFieldPeso.getText()));
+
+			if((textFieldAltezza.getText().isEmpty() && textFieldPeso.getText().isEmpty()) || 
+					(checker.checkFloatFieldsValue(textFieldAltezza.getText()) && checker.checkFloatFieldsValue(textFieldPeso.getText()))) {
 				
+				if(!textFieldAltezza.getText().isEmpty() && !textFieldPeso.getText().isEmpty()){
+					appun.setAltezza(Float.valueOf(textFieldAltezza.getText()));
+					appun.setPeso(Float.valueOf(textFieldPeso.getText()));
+				} else { 
+					appun.setAltezza(0.0f);
+					appun.setPeso(0.0f);
+				}
+			
 				if(prestazioneController.addNewAppuntamento(appun) && prestazioneController.addEffettua(appun)) {
 					
 					patologieDaGuarire.forEach(p-> {

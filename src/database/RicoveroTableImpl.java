@@ -4,7 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,11 +38,13 @@ public class RicoveroTableImpl implements RicoveroTable {
 		 + "and prestazione_su_animale.codAnimale = ricovero.codAnimale " 
 		 + "and prestazione_su_animale.data = ricovero.dataInizio " 
 		 + "and prestazione_su_animale.ora = ricovero.oraInizio " 
-		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione ";
+		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione "
+		 + "and date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) >= ? ";
 		 
 		 List<Ricovero> ricoveri = new ArrayList<>();
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, new SimpleDateFormat("yyyy-MM-dd").format(new Date()) );
 			final ResultSet result = statement.get().executeQuery();
 			
 			while (result.next()) {
@@ -91,12 +95,14 @@ public class RicoveroTableImpl implements RicoveroTable {
 
 		 final String query = "select numero, descrizione from posto  "
 		 		+ "left join ricovero "
-		 		+ "on ricovero.numeroPosto = posto.numero"
-		 		+ " where ricovero.numeroPosto is null";
+		 		+ "on ricovero.numeroPosto = posto.numero "
+		 		+ "where ricovero.numeroPosto is null "
+		 		+ "or date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) < ? ";
 		 List<Posto> posti = new ArrayList<>();
 		 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, new SimpleDateFormat("yyyy-MM-dd").format(new Date()) );
 			final ResultSet result = statement.get().executeQuery();
 			
 			while (result.next()) {

@@ -3,6 +3,7 @@ package database;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Types;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -439,12 +440,15 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	@Override
 	public boolean addNewAppuntamento(Appuntamento appuntamento) {
 		final Connection connection = this.dataSource.getMySQLConnection();
-
-		// controllo data+ora+vet
-		
 		Optional<PreparedStatement> statement = Optional.empty();
-		String query = "insert into prestazione_su_animale"
-				+ " (codAnimale, codTipoPrestazione, data, ora, rilevazioneAltezza, rilevazionePeso) values (?,?,?,?,?,?)";
+		String query = "";
+		if(appuntamento.getCodPrestazione()==12) {
+			query = "insert into prestazione_su_animale"
+					+ " (codAnimale, codTipoPrestazione, data, ora, rilevazioneAltezza, rilevazionePeso) values (?,?,?,?,?,?)";
+		} else {
+			 query = "insert into prestazione_su_animale"
+					+ " (codAnimale, codTipoPrestazione, data, ora) values (?,?,?,?)";
+		}
 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
@@ -453,9 +457,16 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			statement.get().setString(3, appuntamento.getData());
 			statement.get().setString(4, appuntamento.getOra());
 			
-			statement.get().setFloat(5, appuntamento.getPeso() != 0.0 ?  appuntamento.getPeso() : null);
-			statement.get().setFloat(6, appuntamento.getAltezza() != 0.0 ?  appuntamento.getAltezza() : null);
-
+			if(appuntamento.getCodPrestazione()==12) {
+				if( appuntamento.getPeso() != 0.0f && appuntamento.getAltezza() != 0.0f  ) {
+					statement.get().setFloat(6,  appuntamento.getPeso());
+					statement.get().setFloat(5, appuntamento.getAltezza());
+				}else {
+					statement.get().setNull(6, Types.NULL);
+					statement.get().setFloat(5, Types.NULL);
+				}
+				
+			}
 	
 			statement.get().executeUpdate();
 		} catch (SQLException e) {

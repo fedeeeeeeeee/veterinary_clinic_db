@@ -167,10 +167,10 @@ public class OptionFarmaco extends JPanel {
 		comboBoxFarmaco.setSelectedIndex(-1);
 		comboBoxFarmaco.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    	selectedFarmaco = list.get(comboBoxFarmaco.getSelectedIndex());
+		    	selectedFarmaco = filteredList.get(comboBoxFarmaco.getSelectedIndex());
 		   // 	System.out.println(    	list.get(comboBoxFarmaco.getSelectedIndex()).getDataScadenza());
 		
-		    	if(list.get(comboBoxFarmaco.getSelectedIndex()).getDisponibilita() == 0 || filteredList.get(comboBoxFarmaco.getSelectedIndex()).getDataScadenza()==null ) {
+		    	if(filteredList.get(comboBoxFarmaco.getSelectedIndex()).getDisponibilita() == 0 || filteredList.get(comboBoxFarmaco.getSelectedIndex()).getDataScadenza()==null ) {
 		    		//TODO controlla cambi riempimento
 		    		checkBoxSomministrato.setEnabled(false);
 		    		checkBoxSomministrato.setSelected(false);

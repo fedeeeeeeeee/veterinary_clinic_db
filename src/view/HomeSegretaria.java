@@ -132,14 +132,6 @@ public class HomeSegretaria extends CommonView {
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		
 		
-		JButton backButton = new JButton("BACK");
-		backButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				  frame.getContentPane().add(new MainPage(frame));
-			}
-		});
-		lowerPanel.add(backButton);
-		
 				
 		// importante per il design
 		//setLayout(groupLayout);

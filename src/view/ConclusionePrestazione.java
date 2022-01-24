@@ -609,7 +609,9 @@ public class ConclusionePrestazione extends CommonView {
 					if (JOptionPane.showConfirmDialog(null, "Vuoi scaricare il referto? ", "QUESTION_MESSAGE",
 					        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					//TODO fuori pulsante
-					} 
+					} else {
+						frame.getContentPane().add(new GestionePrestazione(frame, user));
+					}
 					
 			}else { 
 					JOptionPane.showMessageDialog(null, "Controlla la validita' dei campi!",
