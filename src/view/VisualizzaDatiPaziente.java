@@ -25,6 +25,7 @@ import javax.swing.JTabbedPane;
 
 public class VisualizzaDatiPaziente extends CommonView {
 
+	private static final long serialVersionUID = -6966708581951158547L;
 	private JFrame frame;
 	private User user;
 	private Paziente paziente;

@@ -4,7 +4,6 @@ public class SpecializzazioneImpl implements Specializzazione {
 
 	private String annoConseguimento;
 	private String titolo;
-	private String cf;
 	
 	public String getAnnoConseguimento() {
 		return annoConseguimento;

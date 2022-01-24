@@ -3,16 +3,12 @@ package view;
 import java.awt.Component;
 
 import javax.swing.DefaultCellEditor;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 
 class ButtonRenderer extends JButton implements TableCellRenderer {
-	/**
-	 * 
-	 */
 	
 	private static final long serialVersionUID = 1L;
 	private String nameButton;

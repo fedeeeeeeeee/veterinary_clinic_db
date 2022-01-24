@@ -23,7 +23,8 @@ import java.awt.Font;
 
 public class CardRicovero extends JPanel {
 
-private Ricovero ricovero; 
+	private static final long serialVersionUID = 5475464738245025616L;
+	private Ricovero ricovero; 
 
 	public CardRicovero(JFrame frame, User user, Ricovero ricovero) {
 		this.ricovero = ricovero;
@@ -81,7 +82,7 @@ private Ricovero ricovero;
 		gbc_lblModDataInizio.gridy = 5;
 		middlePanel.add(lblModDataInizio, gbc_lblModDataInizio);
 		
-	String dataInizio = ricovero.getDataInizio(); 
+		String dataInizio = ricovero.getDataInizio(); 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar c = Calendar.getInstance();
 		try {

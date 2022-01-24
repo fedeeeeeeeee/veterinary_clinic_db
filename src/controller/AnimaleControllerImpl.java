@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.List;
-
 import database.AnimaleTable;
 import database.AnimaleTableImpl;
 import database.PazientiTable;
@@ -12,7 +11,6 @@ import model.Animale;
 import model.ParametriPaziente;
 import model.Patologia;
 import model.Paziente;
-import model.User;
 import utility.Pair;
 
 

@@ -13,8 +13,6 @@ import java.util.Optional;
 import model.Animale;
 import model.AnimaleImpl;
 import model.Appuntamento;
-import model.Pagamento;
-import model.PagamentoImpl;
 import model.Posto;
 import model.PostoImpl;
 import model.Ricovero;
@@ -41,7 +39,7 @@ public class RicoveroTableImpl implements RicoveroTable {
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione "
 		 + "and date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) >= ? ";
 		 // TODO controllo ora di prestazione_su_animale(12) e l'ora attuale 
-		 // ricorda che se non è ancora terminata non c'è la prestazione in prestazione_su_animale
+		 // ricorda che se non ï¿½ ancora terminata non c'ï¿½ la prestazione in prestazione_su_animale
 		 // controllo che ci sia una prestazione 12 di quell'animale in quella data
 		 
 		 List<Ricovero> ricoveri = new ArrayList<>();
@@ -89,7 +87,8 @@ public class RicoveroTableImpl implements RicoveroTable {
 			} catch (SQLException e) {
 			}
 		}
-				return ricoveri;
+		System.out.println(ricoveri.size());
+		return ricoveri;
 	}
 	@Override
 	public List<Posto> getPostiLiberi() {

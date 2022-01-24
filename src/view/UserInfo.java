@@ -22,8 +22,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -31,12 +29,9 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-import controller.AnimaleController;
 import controller.UserController;
 import controller.UserControllerImpl;
-import model.Paziente;
 import model.Specializzazione;
-import model.Strumento;
 import model.User;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;

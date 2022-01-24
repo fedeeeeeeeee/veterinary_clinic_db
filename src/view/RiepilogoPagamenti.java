@@ -6,7 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,8 +24,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
-import model.Appuntamento;
 import model.Pagamento;
 import model.Person;
 import model.User;
@@ -38,7 +35,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
-
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -46,29 +42,19 @@ import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.ListItem;
 
-
 import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfDocument;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.DottedLineSeparator;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
-import com.toedter.calendar.JDateChooser;
-
 import controller.PagamentiController;
 import controller.PagamentiControllerImpl;
-import controller.PrestazioneController;
-import controller.PrestazioneControllerImpl;
 import controller.ProprietarioController;
 import controller.ProprietarioControllerImpl;
-
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
-import java.awt.GridLayout;
-import javax.swing.BoxLayout;
 import java.awt.FlowLayout;
 import java.awt.ComponentOrientation;
 
@@ -105,7 +91,7 @@ public class RiepilogoPagamenti extends CommonView {
 						x.getAnimale().getCf(),
 						x.getDataPrestazione(),
 						x.getNomePrestazione(),
-						x.getCosto() + "€",
+						x.getCosto() + "ï¿½",
 						x.isDuranteRicovero() ? "Si" : "No"
 				});
 			});
@@ -116,7 +102,7 @@ public class RiepilogoPagamenti extends CommonView {
 				model.addRow(new Object[] { 
 						x.getDataPrestazione(),
 						x.getNomePrestazione(),
-						x.getCosto() + "€",
+						x.getCosto() + "ï¿½",
 				});
 			});
 		}
@@ -251,23 +237,23 @@ public class RiepilogoPagamenti extends CommonView {
 			JMenuItem itemPeriodo = new JMenuItem("Periodo");
 			DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 			String dataformat = formatter.format(LocalDateTime.now());
-			textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
+			textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " ï¿½");
 			itemOggi.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getPagamentiOggi());
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " ï¿½");
 			});
 			itemMese.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getPagamentiMensili());
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " ï¿½");
 			});
 			itemAnno.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getPagamentiAnnuali());
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " ï¿½");
 			});
 			
 			itemTutti.addActionListener((e) -> {
 				this.resetAndDraw(pagamentiController.getAllPagamenti());
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " ï¿½");
 			});
 			itemPeriodo.addActionListener((e) -> {
 			OptionPeriodo panelPeriod =  new OptionPeriodo();
@@ -281,7 +267,7 @@ public class RiepilogoPagamenti extends CommonView {
 			        System.out.println("y value: " + panelPeriod.getDataFine());
 			      }
 				this.resetAndDraw(pagamentiController.getPagamentiInPeriodo(panelPeriod.getDataInizio(), panelPeriod.getDataFine())); 
-				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " €");
+				textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x-> x.getCosto()).sum())+ " ï¿½");
 			});
 		
 				
@@ -351,7 +337,7 @@ public class RiepilogoPagamenti extends CommonView {
 						Person proprietario = proprietarioController.getProprietario( listPagamenti.get(selectedPagamento).getAnimale().getCf());
 						com.itextpdf.text.List listPaziente =new com.itextpdf.text.List(com.itextpdf.text.List.UNORDERED);
 						listPaziente.setListSymbol("");
-						listPaziente.add(new ListItem("Prestazioni per il paziente " +  proprietario.getNome() + " il cui proprietario è : "));
+						listPaziente.add(new ListItem("Prestazioni per il paziente " +  proprietario.getNome() + " il cui proprietario ï¿½ : "));
 						listPaziente.add(new ListItem(proprietario.getNome()
 								+" "+  proprietario.getCognome()));
 						listPaziente.add(new ListItem("Telefono: " + proprietario.getTelefono()));
@@ -396,7 +382,7 @@ public class RiepilogoPagamenti extends CommonView {
 						}
 						tbl.addCell(tableForPDF.getValueAt(tableForPDF.getRowCount()-1,0).toString());
 						tbl.addCell("Ricovero");
-						tbl.addCell(String.valueOf(listPagamenti.get(selectedPagamento).getCosto()- ricoveri.stream().mapToDouble(r-> r.getCosto()).sum()) + "€");
+						tbl.addCell(String.valueOf(listPagamenti.get(selectedPagamento).getCosto()- ricoveri.stream().mapToDouble(r-> r.getCosto()).sum()) + "ï¿½");
 						doc.add(tbl);
 						
 						// PARAGRAFO TOTALE

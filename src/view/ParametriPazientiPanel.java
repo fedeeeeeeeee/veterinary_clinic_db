@@ -1,18 +1,11 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-
 import model.ParametriPaziente;
-import model.Patologia;
 import model.Paziente;
 import utility.Pair;
 
@@ -31,7 +24,8 @@ import controller.AnimaleController;
 import controller.AnimaleControllerImpl;
 
 public class ParametriPazientiPanel extends JPanel {
-	
+
+	private static final long serialVersionUID = -63173461344650150L;
 	private DefaultTableModel model;
 	private JTable table;
 	private AnimaleController pazienteController = new AnimaleControllerImpl();

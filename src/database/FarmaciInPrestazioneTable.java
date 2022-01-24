@@ -1,8 +1,6 @@
 package database;
 
 import java.util.List;
-
-import model.Farmaco;
 import model.FarmacoInPrestazione;
 
 public interface FarmaciInPrestazioneTable {

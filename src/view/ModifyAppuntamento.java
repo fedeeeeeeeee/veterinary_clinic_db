@@ -27,8 +27,6 @@ import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.table.DefaultTableModel;
 
-import controller.AnimaleController;
-import controller.AnimaleControllerImpl;
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
 import controller.UserController;

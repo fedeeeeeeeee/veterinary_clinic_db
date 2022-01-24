@@ -320,9 +320,8 @@ public class UserTableImpl implements UserTable {
 
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		final String query = "select * from specializzazione where cf = ? "  ;
+		final String query = "select * from specializzazione where cf = ? ";
 		 List<Specializzazione> listSpecializzazioni = new ArrayList<>();
-		User user = new UserImpl();
 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
@@ -356,7 +355,7 @@ public class UserTableImpl implements UserTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 
 		Optional<PreparedStatement> statement = Optional.empty();
-		String query = "insert into 	specializzazione (CF, titolo, annoConseguimento) values (?,?,?)";
+		String query = "insert into specializzazione (CF, titolo, annoConseguimento) values (?,?,?)";
 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));

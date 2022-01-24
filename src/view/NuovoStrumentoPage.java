@@ -15,8 +15,6 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 
-import controller.FarmaciController;
-import controller.FarmaciControllerImpl;
 import model.User;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;

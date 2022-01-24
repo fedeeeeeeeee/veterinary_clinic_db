@@ -10,8 +10,12 @@ import model.Ricovero;
 public interface RicoveroController {
 	
 	Animale getAnimaleInPosto(int posto);
+
 	public List<Ricovero> getRicoveriAttivi();
+
 	List<Posto> getPostiLiberi();
+
 	void addRicovero(Ricovero ricovero, Appuntamento appuntamento);
+
 	void updateDurataRicovero(Ricovero ricovero);
 }

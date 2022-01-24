@@ -5,7 +5,6 @@ import java.util.List;
 import database.ProprietarioTable;
 import database.ProprietarioTableImpl;
 import model.Person;
-import model.Proprietario;
 
 public class ProprietarioControllerImpl implements ProprietarioController {
 	private ProprietarioTable proprietarioTable;

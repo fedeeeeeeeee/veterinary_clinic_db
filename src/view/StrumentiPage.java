@@ -13,7 +13,6 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.nio.file.FileSystems;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -312,7 +311,7 @@ public class StrumentiPage extends CommonView {
 		model.addColumn("Nome");
 		model.addColumn("Descrizione");
 		model.addColumn("Scadenza");
-		model.addColumn("Quantità");
+		model.addColumn("Quantitï¿½");
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
 				selectedStrumento = table.getSelectedRow();

@@ -45,7 +45,7 @@ import javax.swing.JOptionPane;
 public class AggiungiAnimale extends CommonView {
 
 	private static final long serialVersionUID = -2292831111277932599L;
-	private static Map<String, List<String>> map;
+	private Map<String, List<String>> map;
 	private JFrame frame;
 	private JTextField textFieldProprietario;
 	private JTextField textFieldNome;
@@ -66,7 +66,7 @@ public class AggiungiAnimale extends CommonView {
 		this.selectedCf = selectedCf;
 		this.check = new ValidityFieldsChecker();
 		this.controller = new AnimaleControllerImpl();
-		map = ReadTextToHashMap.hashMapFromTextFile();
+		this.map = ReadTextToHashMap.hashMapFromTextFile();
 		
 		JPanel upperPanel = new JPanel();
 		JPanel centerPanel = new JPanel();

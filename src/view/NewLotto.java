@@ -42,8 +42,6 @@ import javax.swing.JTextPane;
 import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
 
-import controller.FarmaciController;
-import controller.FarmaciControllerImpl;
 import controller.LottoController;
 import controller.LottoControllerImpl;
 import net.miginfocom.swing.MigLayout;

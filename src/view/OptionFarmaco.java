@@ -11,7 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -27,7 +26,6 @@ import controller.FarmaciControllerImpl;
 import model.Animale;
 import model.Farmaco;
 import model.FarmacoImpl;
-import model.Patologia;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;

@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import model.Person;
-import model.Proprietario;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -22,9 +21,9 @@ public class AnagraficaProprietarioPanel extends JPanel {
 
 		JPanel anagraficaPanel = new JPanel();
 		GridBagLayout gbl_anagraficaPanel = new GridBagLayout();
-		gbl_anagraficaPanel.columnWidths = new int[] { 0, 109, 109, 43, 7, 109, 0, 0, 0 };
+		gbl_anagraficaPanel.columnWidths = new int[] { 70, 109, 109, 0, 7, 109, 0, 0, 0 };
 		gbl_anagraficaPanel.rowHeights = new int[] { 55, 55, 55, 55, 55, 0 };
-		gbl_anagraficaPanel.columnWeights = new double[] { 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_anagraficaPanel.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE };
 		gbl_anagraficaPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		anagraficaPanel.setLayout(gbl_anagraficaPanel);
 

@@ -10,14 +10,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import model.Animale;
-import model.AnimaleImpl;
 import model.Farmaco;
 import model.FarmacoImpl;
 import model.FarmacoInPrestazione;
 import model.FarmacoInPrestazioneImpl;
-import model.Pagamento;
-import model.PagamentoImpl;
 
 public class FarmaciInPrestazioneTableImpl implements FarmaciInPrestazioneTable {
 	private DatabaseConnection dataSource;
