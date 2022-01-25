@@ -16,5 +16,6 @@ public interface RicoveroTable {
 
 	void updateDurataRicovero(Ricovero ricovero);
 
+	boolean isRicoveratoOggi(int codAnimale);
 	
 }

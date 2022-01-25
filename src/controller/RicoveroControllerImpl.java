@@ -44,6 +44,11 @@ public class RicoveroControllerImpl implements RicoveroController {
 		
 	}
 
+	@Override
+	public boolean isRicoveratoOggi(int codAnimale) {
+		return ricoveroTable.isRicoveratoOggi(codAnimale);
+	}
+
 	
 	
 }

@@ -11,6 +11,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -236,7 +237,7 @@ public class AggiungiRicovero extends CommonView {
 		panelLeft.add(scrollPaneLeft, BorderLayout.CENTER);
 
 		this.initTable();
-		this.listAppuntamenti = this.prestazioneController.getAllPrestazioniByPersonale(user.getCF());
+		this.listAppuntamenti = this.prestazioneController.getAllPrestazioniPerGestioneRicovero(user.getCF());
 		this.createTable(model, listAppuntamenti);
 
 		this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -257,10 +258,16 @@ public class AggiungiRicovero extends CommonView {
 						&& checker.checkFloatFieldsValue(textFieldPrezzo.getText())) {
 					ricovero.setDurataInGiorni(Integer.valueOf(textFieldDurata.getText()));
 					ricovero.setPrezzoGiornaliero(Float.valueOf(textFieldPrezzo.getText()));
-					ricoveroController.addRicovero(ricovero, listAppuntamenti.get(table.getSelectedRow()));
-					frame.getContentPane().add(new GestioneRicoveri(frame, user));
+					
+					if(!ricoveroController.isRicoveratoOggi(listAppuntamenti.get(table.getSelectedRow()).getAnimale().getCodAnimale())) {
+						ricoveroController.addRicovero(ricovero, listAppuntamenti.get(table.getSelectedRow()));
+						frame.getContentPane().add(new GestioneRicoveri(frame, user));
+					} else {
+						System.out.println("animale già ricoverato oggi");
+						JOptionPane.showMessageDialog(frame, "L'animale è già stato ricoverato e rilasciato",
+						"Attenzione!", JOptionPane.ERROR_MESSAGE);
+					}		
 				}
-
 			}
 		});
 		savePanel.add(btnSave);

@@ -18,4 +18,6 @@ public interface RicoveroController {
 	void addRicovero(Ricovero ricovero, Appuntamento appuntamento);
 
 	void updateDurataRicovero(Ricovero ricovero);
+
+	boolean isRicoveratoOggi(int codAnimale);
 }

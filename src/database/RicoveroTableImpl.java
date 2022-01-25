@@ -91,7 +91,6 @@ public class RicoveroTableImpl implements RicoveroTable {
 			} catch (SQLException e) {
 			}
 		}
-		System.out.println(ricoveri.size());
 		return ricoveri;
 	}
 	@Override
@@ -99,20 +98,21 @@ public class RicoveroTableImpl implements RicoveroTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		 final String query = "select numero, descrizione from posto  "
+		/* final String query = "select numero, descrizione from posto  "
 		 		+ "left join ricovero "
 		 		+ "on ricovero.numeroPosto = posto.numero "
 		 		+ "where ricovero.numeroPosto is null "
 		 		+ "or date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) in "
 		 		+ "(select prestazione_su_animale.data "
 		 		+ "from prestazione_su_animale "
-		 		+ "where prestazione_su_animale.codTipoPrestazione = ? )";
+		 		+ "where prestazione_su_animale.codTipoPrestazione = ? )";*/
+		final String query = "select * from posto";
 		        
 		 List<Posto> posti = new ArrayList<>();
 		 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
-			statement.get().setInt(1, 12);
+			//statement.get().setInt(1, 12);
 
 			final ResultSet result = statement.get().executeQuery();
 			
@@ -137,7 +137,7 @@ public class RicoveroTableImpl implements RicoveroTable {
 			} catch (SQLException e) {
 			}
 		}
-				return posti;
+		return posti;
 	}
 	@Override
 	public void addRicovero(Ricovero ricovero, Appuntamento appuntamento) {
@@ -199,5 +199,47 @@ public class RicoveroTableImpl implements RicoveroTable {
 				}
 			}
 	}
+	
+	@Override
+	public boolean isRicoveratoOggi(int codAnimale) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		boolean b = false;
+		final String query = "select * "
+				+ "from prestazione_su_animale "
+				+ "where prestazione_su_animale.codAnimale = ? "
+				+ "and prestazione_su_animale.codTipoPrestazione = ? "
+				+ "and prestazione_su_animale.data = ? ";
 
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, codAnimale);
+			statement.get().setInt(2, 12);
+			statement.get().setString(3, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+			
+			final ResultSet result = statement.get().executeQuery();
+
+			if (result.next()) {
+				b = true;
+			}			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+				return false;
+			}
+		}
+		return b;
+	}
+	
 }

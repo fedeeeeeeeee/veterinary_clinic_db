@@ -211,7 +211,7 @@ public class RilascioRicovero extends CommonView {
 
 			public void valueChanged(ListSelectionEvent event) {
 				   int rowIndex = tablePatologie.getSelectedRow();
-				   int reply = JOptionPane.showConfirmDialog(null, "Il paziente è guarito dalla seguente patologia: " + patologie.get(rowIndex).getNomePatologia() + " ?", "Guarigione", JOptionPane.YES_NO_OPTION);
+				   int reply = JOptionPane.showConfirmDialog(null, "Il paziente ï¿½ guarito dalla seguente patologia: " + patologie.get(rowIndex).getNomePatologia() + " ?", "Guarigione", JOptionPane.YES_NO_OPTION);
 				   if (reply == JOptionPane.YES_OPTION) {
 					   String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 					   patologie.get(rowIndex).setDataFine(date);
@@ -404,7 +404,7 @@ public class RilascioRicovero extends CommonView {
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Info Ricovero");
+		JLabel titleLabel = new JLabel("Rilascio Ricovero");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -463,7 +463,7 @@ public class RilascioRicovero extends CommonView {
 			
 			
 			appun.setAnimale(ricovero.getAnimale());
-			appun.setCodPrestazione(12);// 12 è il rilascio ricovero
+			appun.setCodPrestazione(12);// 12 ï¿½ il rilascio ricovero
 			appun.setData(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			appun.setOra(new SimpleDateFormat("HH:mm:ss").format(new Date(System.currentTimeMillis()))); 
 			appun.setVeterinario(user);
@@ -474,59 +474,60 @@ public class RilascioRicovero extends CommonView {
 			infermiereRandomEVeterinario.add(user);
 			appun.setAllMediciEInfermieri(infermiereRandomEVeterinario);
 
-			if((textFieldAltezza.getText().isEmpty() && textFieldPeso.getText().isEmpty()) || 
-					(checker.checkFloatFieldsValue(textFieldAltezza.getText()) && checker.checkFloatFieldsValue(textFieldPeso.getText()))) {
-				
-				if(!textFieldAltezza.getText().isEmpty() && !textFieldPeso.getText().isEmpty()){
+			if ((textFieldAltezza.getText().isEmpty() && textFieldPeso.getText().isEmpty())
+					|| (checker.checkFloatFieldsValue(textFieldAltezza.getText())
+							&& checker.checkFloatFieldsValue(textFieldPeso.getText()))) {
+
+				if (!textFieldAltezza.getText().isEmpty() && !textFieldPeso.getText().isEmpty()) {
 					appun.setAltezza(Float.valueOf(textFieldAltezza.getText()));
 					appun.setPeso(Float.valueOf(textFieldPeso.getText()));
-				} else { 
+				} else {
 					appun.setAltezza(0.0f);
 					appun.setPeso(0.0f);
 				}
-			
-				if(prestazioneController.addNewAppuntamento(appun) && prestazioneController.addEffettua(appun)) {
-					
-					patologieDaGuarire.forEach(p-> {
+
+				if (prestazioneController.addNewAppuntamento(appun) && prestazioneController.addEffettua(appun)) {
+
+					patologieDaGuarire.forEach(p -> {
 						prestazioneController.addDataFinePatologia(p);
 					});
-		
-					nuoviFarmaci.forEach(nf-> {
+
+					nuoviFarmaci.forEach(nf -> {
 						prestazioneController.addFarmacoInPrestazione(nf, appun);
-						if(nf.getSomministrato()) {
+						if (nf.getSomministrato()) {
 							farmaciController.updateQuantita(optionPanelFarmaco.getSelectedFarmaco(), -1);
 						}
 					});
-				
-						
-						 SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd");
-						 
-						    Date firstDate = new Date();
-						    Date secondDate= new Date();
-							try {
-								firstDate = sdf.parse(ricovero.getDataInizio());
-								secondDate = sdf.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-							} catch (ParseException e2) {
-								e2.printStackTrace();
-							}
 
-						    long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
-						    long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
-							if(diff < ricovero.getDurataInGiorni()) {
-								ricoveroController.updateDurataRicovero(ricovero);
-								frame.getContentPane().add(new GestioneRicoveri(frame, user));
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+					Date firstDate = new Date();
+					Date secondDate = new Date();
+					try {
+						firstDate = sdf.parse(ricovero.getDataInizio());
+						secondDate = sdf.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+					} catch (ParseException e2) {
+						e2.printStackTrace();
 					}
-					
-				} else {
-					JOptionPane.showMessageDialog(frame, "Si è verificato un errore nell'inserimento dell'appuntamaneto.", 
-							"Attenzione!", JOptionPane.ERROR_MESSAGE);
-				}
-			}else { 
-					JOptionPane.showMessageDialog(null, "Controlla la validita' dei campi!",
-						      "Errore!", JOptionPane.ERROR_MESSAGE);
 
+					long diffInMillies = Math.abs(secondDate.getTime() - firstDate.getTime());
+					long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+					if (diff < ricovero.getDurataInGiorni()) {
+						ricoveroController.updateDurataRicovero(ricovero);
+						frame.getContentPane().add(new GestioneRicoveri(frame, user));
+					}
+
+				} else {
+					JOptionPane.showMessageDialog(frame,
+							"Si ï¿½ verificato un errore nell'inserimento dell'appuntamaneto.", "Attenzione!",
+							JOptionPane.ERROR_MESSAGE);
 				}
-	    });
+			} else {
+				JOptionPane.showMessageDialog(null, "Controlla la validita' dei campi!", "Errore!",
+						JOptionPane.ERROR_MESSAGE);
+
+			}
+		});
 		
 		savePanel.add(saveButton);
 		//TODO  "controllare e magari modificare durataInGiorni su ricovero" 

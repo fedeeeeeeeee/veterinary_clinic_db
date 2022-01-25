@@ -1244,4 +1244,92 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		}
 		
 	}
+	
+	@Override
+	public List<Appuntamento> getAllPrestazioniPerGestioneRicovero(String cf) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		 final String query = "select * " + 
+		 		"from prestazione_su_animale, effettua , prestazione , animale , personale " + 
+		 		"where prestazione_su_animale.data=effettua.data " + 
+		 		"and prestazione_su_animale.codAnimale=effettua.codAnimale " + 
+		 		"and prestazione_su_animale.codTipoPrestazione = effettua.codTipoPrestazione " + 
+		 		"and animale.codAnimale=effettua.codAnimale " + 
+		 		"and prestazione.codPrestazione = effettua.codTipoPrestazione " + 
+		 		"and personale.CF=effettua.CF " + 
+		 		"and personale.CF= ? " + 
+		 		"and prestazione_su_animale.data = ? " + 
+		 		"and prestazione_su_animale.codTipoPrestazione <> ? " + 
+		 		"and prestazione_su_animale.ora <= ? " + 
+		 		"and prestazione_su_animale.codAnimale not in (select ricovero.codAnimale " + 
+		 		"	from ricovero, prestazione_su_animale " + 
+		 		"	where prestazione_su_animale.codAnimale = ricovero.codAnimale " + 
+		 		"	and prestazione_su_animale.data = ricovero.dataInizio " + 
+		 		"	and prestazione_su_animale.ora = ricovero.oraInizio " + 
+		 		"	and date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) >= ? " + 
+		 		"	and ricovero.codAnimale not in (select prestazione_su_animale.codAnimale " + 
+		 		"	from prestazione_su_animale " + 
+		 		"   where prestazione_su_animale.codTipoPrestazione = ? " + 
+		 		"   and prestazione_su_animale.data = ? " + 
+		 		"))"; 
+		 
+		 List<Appuntamento> prestazioni = new ArrayList<>();
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+            statement.get().setString(1, cf);
+            statement.get().setString(2,  new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            statement.get().setInt(3,  12);
+            
+            DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("HH:mm");
+            System.out.println("HH:mm-> "+dtf4.format(LocalDateTime.now())+":00");
+
+            statement.get().setString(4, dtf4.format(LocalDateTime.now())+":00");
+            
+            statement.get().setString(5,  new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            statement.get().setInt(6, 12);
+            statement.get().setString(7,  new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+
+			final ResultSet result = statement.get().executeQuery();
+			
+			while (result.next()) {
+				Appuntamento app = new AppuntamentoImpl();
+				Animale animale = new AnimaleImpl();
+				animale.setNome(result.getString("animale.nome"));
+				animale.setCodAnimale(result.getInt("animale.codAnimale"));
+				animale.setCf(result.getString("animale.cf"));
+				animale.setSpecie(result.getString("animale.specie"));
+				animale.setAltezza(result.getFloat("animale.altezza"));
+				User veterinario = new UserImpl();
+				veterinario.setCF(cf);
+				veterinario.setNome(result.getString("personale.nome"));
+				veterinario.setCognome(result.getString("personale.cognome"));
+				
+				app.setAnimale(animale);
+				app.setData(result.getString("prestazione_su_animale.data"));
+				app.setOra(result.getString("prestazione_su_animale.ora"));
+				app.setPrestazione(result.getString("prestazione.nome"));
+				app.setVeterinario(veterinario);
+				app.setCodPrestazione(result.getInt("prestazione.codPrestazione")); //TODO controlla
+				app.setTipoPrestazione(result.getString("prestazione.tipo"));
+				
+				prestazioni.add(app);
+			}
+
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return prestazioni;
+	}
 }

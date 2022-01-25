@@ -55,7 +55,7 @@ public class CardRicoveroVuota extends JPanel {
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ricovero.getPosto().setDescrizione(dimensione);
-				 frame.getContentPane().add(new AggiungiRicovero(frame, user, ricovero));
+				frame.getContentPane().add(new AggiungiRicovero(frame, user, ricovero));
 			}
 		});
 		JPanel lowerPanel = new JPanel();

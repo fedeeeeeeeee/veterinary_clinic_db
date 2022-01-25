@@ -52,4 +52,6 @@ public interface PrestazioneController {
 
 	void addReferto(Appuntamento appuntamento);
 
+	List<Appuntamento> getAllPrestazioniPerGestioneRicovero(String cf);
+
 }

@@ -26,6 +26,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GestioneRicoveri extends CommonView {
 
@@ -103,16 +104,29 @@ public class GestioneRicoveri extends CommonView {
 
 		this.listRicoveri = this.ricoveroController.getRicoveriAttivi();
 		int numRicoveriAttivi = this.listRicoveri.size();
-
 		this.listPostiLiberi = this.ricoveroController.getPostiLiberi();
-		this.listPostiLiberi.forEach(posto -> {
+			
+		List<Posto> filteredPostiLiberi = this.ricoveroController.getPostiLiberi();
+		//this.listPostiLiberi.stream().filter(p-> this.listRicoveri);
+		
+		List<Integer> posti = this.listRicoveri.stream().map(r-> r.getPosto().getNumero()).collect(Collectors.toList());
+	
+		for(int i = 0; i<listPostiLiberi.size(); i++ ) {
+			if(posti.contains(listPostiLiberi.get(i).getNumero())){
+				filteredPostiLiberi.remove(listPostiLiberi.get(i));
+			}
+		}
+			
+		
+		
+		filteredPostiLiberi.forEach(posto -> {
 			Ricovero ricovero = new RicoveroImpl();
 			ricovero.setPosto(posto);
 			this.listRicoveri.add(ricovero);
 		});
 
 		JLabel lblModPostiLiberi = new JLabel("New label");
-		lblModPostiLiberi.setText(String.valueOf(this.listPostiLiberi.size()));
+		lblModPostiLiberi.setText(String.valueOf(filteredPostiLiberi.size()));
 		lblModPostiLiberi.setForeground(new Color(0, 128, 0));
 		panelDisponibilita.add(lblModPostiLiberi);
 		this.indice = 0;

@@ -124,7 +124,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 			final ResultSet result = s.get().executeQuery();
 			
 			if (result.next()) {
-				costoTotale = result.getFloat("prezzoGiornaliero")*result.getFloat("durataInGiorni");
+				costoTotale = result.getFloat("prezzoGiornaliero")*(result.getFloat("durataInGiorni")+1);
 			} 
 			result.close();
 		} catch (SQLException e) {
@@ -206,7 +206,7 @@ public class PagamentiTableImpl implements PagamentiTable {
 		 + "where ricovero.codAnimale = prestazione_su_animale.codAnimale "
 		 + "and prestazione_su_animale.data > ricovero.dataInizio " 
 		 + "and prestazione_su_animale.data <= date_add(ricovero.dataInizio, INTERVAL ricovero.durataInGiorni DAY)) "
-		 + " order by  prestazione_su_animale.data" ;
+		 + "order by  prestazione_su_animale.data" ;
 		 
 		 List<Pagamento> pagamenti = new ArrayList<>();
 		try {

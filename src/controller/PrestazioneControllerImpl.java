@@ -134,4 +134,9 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		
 	}
 
+	@Override
+	public List<Appuntamento> getAllPrestazioniPerGestioneRicovero(String cf) {
+		return this.prestazioneTable.getAllPrestazioniPerGestioneRicovero(cf);
+	}
+
 }

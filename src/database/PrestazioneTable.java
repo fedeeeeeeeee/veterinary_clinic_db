@@ -52,4 +52,6 @@ public interface PrestazioneTable {
 		void addFarmacoInPrestazione(Farmaco nf, Appuntamento appuntamento);
 
 		void addReferto(Appuntamento appuntamento);
+		
+		List<Appuntamento> getAllPrestazioniPerGestioneRicovero(String cf);
 }
