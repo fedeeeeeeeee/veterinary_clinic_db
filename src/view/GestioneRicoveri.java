@@ -103,21 +103,16 @@ public class GestioneRicoveri extends CommonView {
 		centerPanel.add(cardRicovero, gbc_cardRicovero);
 
 		this.listRicoveri = this.ricoveroController.getRicoveriAttivi();
+		System.out.println("attivi "+ listRicoveri.size());
+		
 		int numRicoveriAttivi = this.listRicoveri.size();
 		this.listPostiLiberi = this.ricoveroController.getPostiLiberi();
-			
-		List<Posto> filteredPostiLiberi = this.ricoveroController.getPostiLiberi();
-		//this.listPostiLiberi.stream().filter(p-> this.listRicoveri);
 		
-		List<Integer> posti = this.listRicoveri.stream().map(r-> r.getPosto().getNumero()).collect(Collectors.toList());
-	
-		for(int i = 0; i<listPostiLiberi.size(); i++ ) {
-			if(posti.contains(listPostiLiberi.get(i).getNumero())){
-				filteredPostiLiberi.remove(listPostiLiberi.get(i));
-			}
-		}
-			
-		
+		List<Posto> filteredPostiLiberi = this.listPostiLiberi.stream()
+				.filter(p-> !this.listRicoveri.stream()
+											  .map(r-> r.getPosto().getNumero())
+											  .collect(Collectors.toList()).contains(p.getNumero()))
+				.collect(Collectors.toList());
 		
 		filteredPostiLiberi.forEach(posto -> {
 			Ricovero ricovero = new RicoveroImpl();
