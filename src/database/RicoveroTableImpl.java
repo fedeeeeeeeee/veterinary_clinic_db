@@ -37,15 +37,19 @@ public class RicoveroTableImpl implements RicoveroTable {
 		 + "and prestazione_su_animale.data = ricovero.dataInizio " 
 		 + "and prestazione_su_animale.ora = ricovero.oraInizio " 
 		 + "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione "
-		 + "and date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) >= ? ";
-		 // TODO controllo ora di prestazione_su_animale(12) e l'ora attuale 
-		 // ricorda che se non � ancora terminata non c'� la prestazione in prestazione_su_animale
-		 // controllo che ci sia una prestazione 12 di quell'animale in quella data
+		 + "and date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) >= ? "
+		 + "and prestazione_su_animale.codAnimale not in (select prestazione_su_animale.codAnimale "
+		 + "from prestazione_su_animale "
+		 + "where prestazione_su_animale.codTipoPrestazione = ? "
+		 + "and prestazione_su_animale.data = ? )";
 		 
 		 List<Ricovero> ricoveri = new ArrayList<>();
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
-			statement.get().setString(1, new SimpleDateFormat("yyyy-MM-dd").format(new Date()) );
+			statement.get().setString(1, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+			statement.get().setInt(2, 12);
+			statement.get().setString(3, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+
 			final ResultSet result = statement.get().executeQuery();
 			
 			while (result.next()) {
@@ -99,12 +103,17 @@ public class RicoveroTableImpl implements RicoveroTable {
 		 		+ "left join ricovero "
 		 		+ "on ricovero.numeroPosto = posto.numero "
 		 		+ "where ricovero.numeroPosto is null "
-		 		+ "or date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) < ? ";
+		 		+ "or date_add(dataInizio, INTERVAL ricovero.durataInGiorni DAY) in "
+		 		+ "(select prestazione_su_animale.data "
+		 		+ "from prestazione_su_animale "
+		 		+ "where prestazione_su_animale.codTipoPrestazione = ? )";
+		        
 		 List<Posto> posti = new ArrayList<>();
 		 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
-			statement.get().setString(1, new SimpleDateFormat("yyyy-MM-dd").format(new Date()) );
+			statement.get().setInt(1, 12);
+
 			final ResultSet result = statement.get().executeQuery();
 			
 			while (result.next()) {
