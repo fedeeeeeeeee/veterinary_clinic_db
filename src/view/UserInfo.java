@@ -95,9 +95,9 @@ public class UserInfo  extends CommonView {
 	       			.addPreferredGap(ComponentPlacement.RELATED)
 	       			.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
 	       			.addPreferredGap(ComponentPlacement.RELATED)
-	       			.addComponent(modifyPanel, GroupLayout.PREFERRED_SIZE, 60, GroupLayout.PREFERRED_SIZE)
+	       			.addComponent(modifyPanel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 	       			.addPreferredGap(ComponentPlacement.RELATED)
-	       			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+	       			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
 	       			.addContainerGap()));
 		   	JButton btnSave = new JButton("Salva");
 		   	btnSave.addActionListener(new ActionListener() {
@@ -402,6 +402,7 @@ public class UserInfo  extends CommonView {
 			gbc_scrollPane_1.gridy = 2;
 			datiPanel.add(scrollPane_1, gbc_scrollPane_1);
 			scrollPane_1.setViewportView(table);
+			
 	 //  setLayout(groupLayout);
 		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);

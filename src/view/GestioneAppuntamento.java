@@ -7,11 +7,13 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -45,6 +47,7 @@ import javax.swing.JMenuBar;
 import javax.swing.SwingConstants;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JTextField;
 import com.jgoodies.forms.layout.ColumnSpec;
@@ -64,7 +67,7 @@ public class GestioneAppuntamento extends CommonView {
 	private ProprietarioController proprietarioController;
 	private List<Appuntamento> listAppuntamenti;
 	private DefaultTableModel model;
-private boolean first; 
+	private boolean first; 
 	private String saved;
 	private int selectedAppuntamento;
 	
@@ -143,26 +146,7 @@ private boolean first;
 						search(e);
 					}
 				});
-				
-				JCalendar dateChooser = new JCalendar();
-				this.saved = dateChooser.getDate().toString();
-				dateChooser.getMonthChooser().getComboBox().setEnabled(false);
-				
-				dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
-			          
-					@Override
-			          public void propertyChange(PropertyChangeEvent evt) {
-							if( !saved.equals( dateChooser.getDate().toString()) ) {
-								saved = dateChooser.getDate().toString();
-								SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-								resetAndDraw(prestazioneController.getPrestazioniInData(df.format(dateChooser.getDate())));
-							}
-			          }
-
-			      });
-				dateChooser.setSize(20, 20);
-				//BorderLayout borderLayout = (BorderLayout) dateChooser.getLayout();
 				
 				buttonVai.setBackground(Color.LIGHT_GRAY);
 				buttonVai.setForeground(Color.BLACK);
@@ -182,7 +166,7 @@ private boolean first;
 				middlePanel.add(centerPanel, BorderLayout.CENTER);
 				
 				upperPanel.setLayout(new BorderLayout(0, 0));
-				JLabel titleLabel = new JLabel("Appointment");
+				JLabel titleLabel = new JLabel("Appuntamenti");
 				titleLabel.setBounds(409, 58, 194, 52);
 				titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 				titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -214,18 +198,17 @@ private boolean first;
 		this.createTable(model, listAppuntamenti);
 		scrollPane.setViewportView(table);
 	
-//  frame.getContentPane().add(new DettagliAppuntamento(frame, user));
 
 		/*------fine-------- table */
 		// -----inizio ----- MENUU--- listener
-			JMenu subMenuSeleziona = new JMenu("Seleziona giorno");
-			menuMostra.add(subMenuSeleziona);
 				JMenuItem itemOggi = new JMenuItem("Oggi"); // , new ImageIcon("cut-java-image.gif"));
 				JMenuItem itemSettimana = new JMenuItem("Settimana Corrente");
 				JMenuItem itemMese = new JMenuItem("Mese Corrente");
 				JMenuItem itemTutti = new JMenuItem("Tutti");
 				JMenuItem itemNuovoAppuntamento = new JMenuItem("Aggiungi Nuovo Appuntamento");
 				JMenuItem itemDettagliAppuntamento = new JMenuItem("Gestisci Appuntamento");
+				JMenuItem itemGiorno = new JMenuItem("Seleziona giorno"); // , new ImageIcon("cut-java-image.gif"));
+
 				DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; //("yyyy-MM-dd")
 				String dataformat = formatter.format(LocalDateTime.now());
 		// itemModQuantita.setIcon(null);
@@ -243,6 +226,15 @@ private boolean first;
 				itemTutti.addActionListener((e) -> {
 					this.resetAndDraw(prestazioneController.getAllPrestazioni() );
 				});
+
+				itemGiorno.addActionListener((e) -> {
+					OptionSelezionaGiorno panel = new OptionSelezionaGiorno();
+					int result = JOptionPane.showConfirmDialog(null, panel, "Seleziona Giorno",
+							JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+					if (result == JOptionPane.OK_OPTION) {
+						resetAndDraw(prestazioneController.getPrestazioniInData(panel.getGiorno()));
+					}
+				});
 				itemDettagliAppuntamento.addActionListener((e) -> {
 					if (this.selectedAppuntamento != -1) {
 						Appuntamento appuntamento = listAppuntamenti.get(selectedAppuntamento);
@@ -250,7 +242,19 @@ private boolean first;
 						proprietario = proprietarioController.getProprietario(appuntamento.getAnimale().getCf());
 						
 						appuntamento.getAnimale().setProprietario(proprietario);
-						frame.getContentPane().add(new ModifyAppuntamento(frame, user,appuntamento ));
+						
+						SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+						
+						try {
+							if(sdf.parse(appuntamento.getData()).before(sdf.parse(new SimpleDateFormat("yyyy-MM-dd").format(new Date())))) {
+								JOptionPane.showMessageDialog(frame, "L'appuntamento selezionato è già concluso",
+										"Attenzione!", JOptionPane.ERROR_MESSAGE);
+							} else {
+								frame.getContentPane().add(new ModifyAppuntamento(frame, user,appuntamento));
+							}
+						} catch (ParseException e1) {
+							e1.printStackTrace();
+						}
 					} else {
 						JOptionPane.showMessageDialog(null, "Non hai selezionato alcun appuntamento ");
 					}
@@ -262,12 +266,12 @@ private boolean first;
 				menuMostra.add(itemOggi);
 				menuMostra.add(itemSettimana);
 				menuMostra.add(itemMese);
-				menuMostra.add(subMenuSeleziona);
-				subMenuSeleziona.add(dateChooser);
-				//menuMostra.add(dateChooser);
+				menuMostra.add(itemGiorno);
 				menuAggiungi.add(itemNuovoAppuntamento);
 				menuAggiungi.add(itemDettagliAppuntamento);
 			
+				
+				
 		//----fine ---- MENUU
 
 

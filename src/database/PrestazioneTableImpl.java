@@ -160,9 +160,9 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 	public List<Appuntamento> getFuturePrestazioni() {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data,  ora, personale.nome, personale.cognome, prestazione.durataMedia, personale.cf, animale.codAnimale, animale.cf, prestazione.tipo "
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data,  ora, personale.nome, personale.cognome, prestazione.durataMedia, personale.cf, animale.codAnimale, animale.cf, prestazione.tipo, prestazione_su_animale.codTipoPrestazione "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
-	        		+ "where prestazione_su_animale.data>= ? "
+	        		+ "where prestazione_su_animale.data >= ? "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
 	        		+ "and prestazione_su_animale.codTipoPrestazione = effettua.codTipoPrestazione "
 	        		+ "and animale.codAnimale=effettua.codAnimale  "
@@ -192,6 +192,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 					veterinario.setCognome(result.getString(6));
 				
 					app.setTipoPrestazione(result.getString(11));
+					app.setCodPrestazione(result.getInt(12));
 					app.setDurata(result.getString(7));	
 					app.setPrestazione(result.getString(2));
 					app.setData(result.getString(3));
@@ -360,7 +361,7 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 					app.setPrestazione(result.getString(2));
 					app.setData(result.getString(3));
 					app.setOra(result.getString(4));
-					app.setTipoPrestazione(result.getString(11));
+					app.setTipoPrestazione(result.getString(10));
 					
 					app.setAnimale(animale);
 					app.setVeterinario(veterinario);
@@ -541,21 +542,26 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		 		+ "where (codAnimale, codTipoPrestazione, data) in "
 		 		+ "(select codAnimale, codTipoPrestazione, data from prestazione_su_animale, prestazione "
 	        	+ "where data = ? "
+	        	+ "and (prestazione_su_animale.codTipoPrestazione != ? and prestazione_su_animale.data != ? and prestazione_su_animale.codAnimale != ? ) "
 	        	+ "and prestazione_su_animale.codTipoPrestazione = prestazione.codPrestazione "
 	        	+ "and ( ? between prestazione_su_animale.ora and addtime(prestazione_su_animale.ora, prestazione.durataMedia) "
 	        	+ "or ora between ? and addtime(?, ?))) "
 	        	+ "and effettua.cf = personale.cf " 
-	        	+ "and personale.ruolo = ?";
+	        	+ "and personale.ruolo = ? ";
 		 
 		 List<String> veterianariNonDisponibili = new ArrayList<>();
 			try {
 				statement = Optional.of(connection.prepareStatement(query));
 				statement.get().setString(1, date);
-				statement.get().setString(2, time);
-				statement.get().setString(3, time);
-				statement.get().setString(4, time);
-				statement.get().setString(5, durata);
-				statement.get().setString(6, "Veterinario");
+				statement.get().setInt(2, 5);
+				statement.get().setString(3, "2022-01-29");
+				statement.get().setInt(4, 3);
+
+				statement.get().setString(5, time);
+				statement.get().setString(6, time);
+				statement.get().setString(7, time);
+				statement.get().setString(8, durata);
+				statement.get().setString(9, "Veterinario");
 
 				final ResultSet result = statement.get().executeQuery();
 				
@@ -639,8 +645,15 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			statement = Optional.of(connection.prepareStatement(query));
 			statement.get().setString(1,datiDiAppModificati.getData());
 			statement.get().setString(2, datiDiAppModificati.getOra());
-			statement.get().setFloat(3, datiDiAppModificati.getPeso() != 0.0 ?  datiDiAppModificati.getPeso() : null);
-			statement.get().setFloat(4, datiDiAppModificati.getAltezza() != 0.0 ?  datiDiAppModificati.getAltezza() : null);
+		
+			if (datiDiAppModificati.getPeso() != 0.0f && datiDiAppModificati.getAltezza() != 0.0f) {
+				statement.get().setFloat(3, datiDiAppModificati.getPeso());
+				statement.get().setFloat(4, datiDiAppModificati.getAltezza());
+			} else {
+				statement.get().setNull(3, Types.NULL);
+				statement.get().setFloat(4, Types.NULL);
+			}
+				
 			statement.get().setString(5, app.getData());
 			statement.get().setInt(6, app.getCodPrestazione());
 			statement.get().setInt(7, app.getAnimale().getCodAnimale());

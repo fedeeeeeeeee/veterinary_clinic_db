@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -142,13 +143,22 @@ public class VisualizzaPazienti extends CommonView {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
 		middlePanel.add(centerPanel, BorderLayout.CENTER);
-		upperPanel.setLayout(null);
+		/*upperPanel.setLayout(null);
 		JLabel titleLabel = new JLabel("Visualizzazione Pazienti");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		upperPanel.add(titleLabel);*/
+		
+		upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		JLabel titleLabel = new JLabel("Visualizza Pazienti");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+	
+		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
 		upperPanel.add(titleLabel);
+		
 		/*-------------- TABLE */
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
 		gbl_centerPanel.columnWidths = new int[] { 0, 0, 0, 0, 0 };

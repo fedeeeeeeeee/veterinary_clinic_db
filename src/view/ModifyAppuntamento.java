@@ -62,14 +62,11 @@ public class ModifyAppuntamento extends CommonView {
 	private JTable table;
 	private DefaultTableModel model;
 	private List<Appuntamento> listAppuntamenti;
-	//private List<Animale> listAnimali;
 	private List<User> listVeterinari;
 	private List<String> listInfermieri;
 	private UserController userController;
-	//private String selectedInfermiere;
 	private List<Prestazione> listTipiPrestazione;
 	private JTextField textFieldTelefono;
-	//private int codTipoPrestazione;
 	private JComboBox<String> comboBoxVeterinario;
 	private List<String> vetNonDisponibili;
 
@@ -85,6 +82,7 @@ public class ModifyAppuntamento extends CommonView {
 			});
 		});
 	}
+	
 	private boolean checkDisponibilitaVeterinario(String date, String time) {
 		String durata = listTipiPrestazione.stream()
 				.filter(p-> p.getCodPrestazione() == app.getCodPrestazione())
@@ -207,7 +205,19 @@ public class ModifyAppuntamento extends CommonView {
 		panelAppuntamenti.add(scrollPane, gbc_scrollPane);
 
 		this.initTable();
-		this.listAppuntamenti = this.prestazioneController.getFuturePrestazioni();
+		List<Appuntamento> oldList = this.prestazioneController.getFuturePrestazioni();
+		this.listAppuntamenti = new ArrayList<>();
+		
+		oldList.forEach(a-> {
+			if(a.getData().equals(app.getData()) 
+					&& a.getCodPrestazione() == app.getCodPrestazione()
+					&& a.getAnimale().getCodAnimale() == app.getAnimale().getCodAnimale()){
+
+			} else {
+				listAppuntamenti.add(a);
+			}
+		});
+
 		this.createTable(model, listAppuntamenti);
 		scrollPane.setViewportView(table);
 
@@ -497,7 +507,7 @@ public class ModifyAppuntamento extends CommonView {
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
 		
 		
-		JButton modButton = new JButton("Modifica");
+		JButton modButton = new JButton("Salva modifiche");
 		modButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
