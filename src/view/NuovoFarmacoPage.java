@@ -214,7 +214,7 @@ public class NuovoFarmacoPage extends CommonView {
 	       JPanel panelSave = new JPanel();
 	       middlePanel.add(panelSave, BorderLayout.SOUTH);
 	       
-	       JButton btnSave = new JButton("Save");
+	       JButton btnSave = new JButton("Salva");
 	       
 	       btnSave.addActionListener(new ActionListener(){
 	    	   public void actionPerformed(ActionEvent e) {
@@ -267,7 +267,7 @@ public class NuovoFarmacoPage extends CommonView {
 			sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			sendButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					frame.getContentPane().add(new MagazzinoPage(frame, user));
+					frame.getContentPane().add(new FarmaciPage(frame, user));
 				}
 			});
 			lowerPanel.setLayout(new BorderLayout(0, 0));

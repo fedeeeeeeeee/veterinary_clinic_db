@@ -24,6 +24,7 @@ import controller.PrestazioneControllerImpl;
 import controller.ProprietarioController;
 import controller.ProprietarioControllerImpl;
 import model.Appuntamento;
+import model.Paziente;
 import model.Person;
 import model.User;
 
@@ -33,6 +34,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import java.awt.Color;
@@ -175,10 +177,30 @@ public class GestionePrestazione extends CommonView {
 		this.table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 
 			public void valueChanged(ListSelectionEvent event) {
-				   int rowIndex = table.getSelectedRow();
-				   Person proprietario = proprietarioController.getProprietario(listAppuntamenti.get(rowIndex).getAnimale().getCf());
-				   listAppuntamenti.get(rowIndex).getAnimale().setProprietario(proprietario);
-				   frame.getContentPane().add(new ConclusionePrestazione(frame, user, listAppuntamenti.get(rowIndex)));
+				int rowIndex = table.getSelectedRow();
+				
+				if (prestazioneController.checkIfHasReferto(listAppuntamenti.get(rowIndex))) {
+					if (JOptionPane.showConfirmDialog(null, "La prestazione è già conclusa, vuoi scaricare il referto?", "Scarica Referto",
+							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						// TODO aggiungi doc
+						/*
+						 * 
+						 * 
+						 * 
+						 * 
+						 * 
+						 * 
+						 * 
+						 */
+					}
+				} else {
+					Person proprietario = proprietarioController
+							.getProprietario(listAppuntamenti.get(rowIndex).getAnimale().getCf());
+					listAppuntamenti.get(rowIndex).getAnimale().setProprietario(proprietario);
+					frame.getContentPane().add(new ConclusionePrestazione(frame, user, listAppuntamenti.get(rowIndex)));
+				}
+					
+				
 			}
 		});
 		scrollPane.setViewportView(table);

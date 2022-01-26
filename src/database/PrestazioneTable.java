@@ -54,4 +54,6 @@ public interface PrestazioneTable {
 		void addReferto(Appuntamento appuntamento);
 		
 		List<Appuntamento> getAllPrestazioniPerGestioneRicovero(String cf);
+
+		boolean checkIfHasReferto(Appuntamento appuntamento);
 }

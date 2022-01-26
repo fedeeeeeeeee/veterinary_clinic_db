@@ -139,4 +139,9 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		return this.prestazioneTable.getAllPrestazioniPerGestioneRicovero(cf);
 	}
 
+	@Override
+	public boolean checkIfHasReferto(Appuntamento appuntamento) {
+		return this.prestazioneTable.checkIfHasReferto(appuntamento);
+	}
+
 }

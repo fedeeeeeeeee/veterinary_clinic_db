@@ -49,7 +49,7 @@ import com.jgoodies.forms.layout.Sizes;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-public class NewLotto extends CommonView {
+public class AggiungiLotto extends CommonView {
 
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
@@ -58,7 +58,7 @@ public class NewLotto extends CommonView {
 	private LottoController lottoController;
 	private Lotto lotto;
 
-	public NewLotto(JFrame frame, User user)  {
+	public AggiungiLotto(JFrame frame, User user)  {
 
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
@@ -247,7 +247,7 @@ public class NewLotto extends CommonView {
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				 frame.getContentPane().add(new HomeSegretaria(frame, user));
+				 frame.getContentPane().add(new FarmaciPage(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));

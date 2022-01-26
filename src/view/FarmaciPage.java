@@ -369,7 +369,7 @@ public class FarmaciPage extends CommonView {
 	       
 	       itemAddLotto.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					frame.getContentPane().add(new NewLotto(frame, user));
+					frame.getContentPane().add(new AggiungiLotto(frame, user));
 				}
 			});
 	       

@@ -108,7 +108,6 @@ public class StrumentiPage extends CommonView {
 		upperMiddlePanel.add(menuBar, "1, 1, fill, top");
 		JMenu menuMostra = new JMenu("Mostra");
 		JMenu menuAggiungi = new JMenu("Aggiungi");
-		JMenuItem menuStampa = new JMenuItem("Stampa");
 
 		searchBar = new JTextField();
 		searchBar.setText("Ricerca Strumento");
@@ -146,7 +145,6 @@ public class StrumentiPage extends CommonView {
 		buttonVai.setForeground(Color.BLACK);
 		menuBar.add(menuMostra);
 		menuBar.add(menuAggiungi);
-		menuBar.add(menuStampa);
 		menuBar.add(searchBar);
 		menuBar.add(buttonVai);
 		JButton orderAsc = new JButton(IconImage.ARROW.getImageIcon());
@@ -156,14 +154,16 @@ public class StrumentiPage extends CommonView {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
 		middlePanel.add(centerPanel, BorderLayout.CENTER);
-		upperPanel.setLayout(null);
-		JLabel titleLabel = new JLabel("Magazzino");
+		
+		upperPanel.setLayout(new BorderLayout(0, 0));
+		JLabel titleLabel = new JLabel("Strumenti");
 		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-		upperPanel.add(titleLabel);
-		/*-------------- TABLE */
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
+
+		
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
 		gbl_centerPanel.columnWidths = new int[] { 0, 0, 0, 0, 0 };
 		gbl_centerPanel.rowHeights = new int[] { 0, 0, 0 };
@@ -182,7 +182,7 @@ public class StrumentiPage extends CommonView {
 		this.initTable();
 		this.listStrumenti = strumentiController.getAllStrumenti();
 		this.createTable(model, listStrumenti);
-//table.setModel(model);
+		//table.setModel(model);
 		scrollPane.setViewportView(table);
 		
 /*------fine-------- table */
@@ -227,40 +227,7 @@ public class StrumentiPage extends CommonView {
 		itemAddStrumento.addActionListener((e) -> {
 			frame.getContentPane().add(new NuovoStrumentoPage(frame, user));
 		});
-		menuStampa.addActionListener((e) -> {
-			String path= ""; 
-			JFileChooser j = new JFileChooser();
-			j.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-			int x=j.showSaveDialog(this);
-			if(x==JFileChooser.APPROVE_OPTION) {
-				path=j.getSelectedFile().getPath();
-			}
-			
-			Document doc = new Document();
-			try {
-				PdfWriter.getInstance(doc, new FileOutputStream(path +".pdf"));
-				doc.open();
-				PdfPTable tbl = new PdfPTable(3);
-				tbl.addCell("Strumento ID");
-				tbl.addCell("Nome");
-				tbl.addCell("quantita");
-				
-				for ( int i = 0; i < table.getRowCount(); i ++) {
-					String ID = table.getValueAt(i,0).toString();
-					String nome = table.getValueAt(i,1).toString();
-					String quantita = table.getValueAt(i,4).toString();
-					
-					tbl.addCell(ID);
-					tbl.addCell(nome);
-					tbl.addCell(quantita);
-				}
-				doc.add(tbl);
-			} catch (FileNotFoundException | DocumentException e1) {
-				System.out.println("ERRORE - creazione pdf");
-				e1.printStackTrace();
-			}
-			doc.close();
-		});
+	
 		menuMostra.add(all);
 		menuMostra.add(itemScaduti);
 		menuMostra.add(itemInScadenza);

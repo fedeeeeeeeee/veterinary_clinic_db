@@ -549,51 +549,55 @@ public class ConclusionePrestazione extends CommonView {
 		JButton saveButton = new JButton("SAVE");
 		savePanel.add(saveButton);
 		
-		saveButton.addActionListener(al-> {
-			if(checker.checkFloatFieldsValue(textFieldAltezza.getText()) 
-					&& checker.checkFloatFieldsValue(textFieldPeso.getText())) {
-				
-				
-				patologieDaGuarire.forEach(p-> {
+		saveButton.addActionListener(al -> {
+			if ((textFieldAltezza.getText().isEmpty() && textFieldPeso.getText().isEmpty())
+					|| (checker.checkFloatFieldsValue(textFieldAltezza.getText())
+							&& checker.checkFloatFieldsValue(textFieldPeso.getText()))) {
+
+				patologieDaGuarire.forEach(p -> {
 					prestazioneController.addDataFinePatologia(p);
-				});			
-				nuovePatologie.forEach(np-> {
+				});
+				nuovePatologie.forEach(np -> {
 					prestazioneController.addPatologiaInPrestazione(np, appuntamento);
 				});
-							
-				nuoviFarmaci.forEach(nf-> {
+
+				nuoviFarmaci.forEach(nf -> {
 					prestazioneController.addFarmacoInPrestazione(nf, appuntamento);
-					if(nf.getSomministrato()) {
+					if (nf.getSomministrato()) {
 						farmaciController.updateQuantita(optionPanelFarmaco.getSelectedFarmaco(), -1);
 					}
 				});
+
+				Appuntamento appNuoviDati = appuntamento;
 				
-			
-					Appuntamento appNuoviDati = appuntamento;
+				if (!textFieldAltezza.getText().isEmpty() && !textFieldPeso.getText().isEmpty()) {
 					appNuoviDati.setAltezza(Float.valueOf(textFieldAltezza.getText()));
 					appNuoviDati.setPeso(Float.valueOf(textFieldPeso.getText()));
-					prestazioneController.updatePrestazioneSuAnimale(appuntamento, appNuoviDati);
-					animaleController.updateParametriAnimale(Float.valueOf(textFieldAltezza.getText()),Float.valueOf(textFieldPeso.getText()), appuntamento.getAnimale().getCodAnimale());
-					appuntamento.setDescrizioneReferto(textArea.getText());
-					prestazioneController.addReferto(appuntamento);
-					
-					if (JOptionPane.showConfirmDialog(null, "Vuoi scaricare il referto? ", "QUESTION_MESSAGE",
-					        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					//TODO fuori pulsante
-					} else {
-						frame.getContentPane().add(new GestionePrestazione(frame, user));
-					}
-					
-			}else { 
-					JOptionPane.showMessageDialog(null, "Controlla la validita' dei campi!",
-						      "Errore!", JOptionPane.ERROR_MESSAGE);
-
+					animaleController.updateParametriAnimale(Float.valueOf(textFieldAltezza.getText()),
+							Float.valueOf(textFieldPeso.getText()), appuntamento.getAnimale().getCodAnimale());
+				} else {
+					appNuoviDati.setAltezza(0.0f);
+					appNuoviDati.setPeso(0.0f);
 				}
-				
-			
-		
-	    });
-		
+
+				prestazioneController.updatePrestazioneSuAnimale(appuntamento, appNuoviDati);
+				appuntamento.setDescrizioneReferto(textArea.getText());
+				prestazioneController.addReferto(appuntamento);
+
+				if (JOptionPane.showConfirmDialog(null, "Vuoi scaricare il referto? ", "QUESTION_MESSAGE",
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					// TODO aggiungi doc
+				} else {
+					frame.getContentPane().add(new GestionePrestazione(frame, user));
+				}
+
+			} else {
+				JOptionPane.showMessageDialog(null, "Controlla la validita' dei campi!", "Errore!",
+						JOptionPane.ERROR_MESSAGE);
+
+			}
+
+		});
 		
 		textFieldTelefono.setText(String.valueOf(appuntamento.getAnimale().getProprietario().getTelefono()));
 		textFieldNomA.setText(appuntamento.getAnimale().getNome());

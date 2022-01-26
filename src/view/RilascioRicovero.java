@@ -459,11 +459,9 @@ public class RilascioRicovero extends CommonView {
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
 		JButton saveButton = new JButton("Effettua Rilascio");
 		Appuntamento appun = new AppuntamentoImpl();
-		saveButton.addActionListener(al-> {
-			
-			
+		saveButton.addActionListener(al-> {		
 			appun.setAnimale(ricovero.getAnimale());
-			appun.setCodPrestazione(12);// 12 � il rilascio ricovero
+			appun.setCodPrestazione(12);// 12 = rilascio ricovero
 			appun.setData(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			appun.setOra(new SimpleDateFormat("HH:mm:ss").format(new Date(System.currentTimeMillis()))); 
 			appun.setVeterinario(user);

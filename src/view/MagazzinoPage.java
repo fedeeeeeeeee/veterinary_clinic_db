@@ -36,18 +36,10 @@ public class MagazzinoPage extends CommonView {
 
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
-
 		JPanel centerPanel = new JPanel();
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 
-        /*
-		   int w = frame.getSize().width;
-           int h = frame.getSize().height;
-           int x = (dim.width-w)/2;
-           int y = (dim.height-h)/2;
-           */
-           
           GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
         // GroupLayout groupLayout = new GroupLayout(this);
           groupLayout.setHorizontalGroup(
@@ -92,16 +84,14 @@ public class MagazzinoPage extends CommonView {
           });
           btnStrumenti.setFont(new Font("Tahoma", Font.PLAIN, 20));
          
-		upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		upperPanel.setLayout(new BorderLayout(0, 0));
 		JLabel titleLabel = new JLabel("Magazzino");
+		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		
-		/*btnStrumenti.addActionListener(new ActionListener() {
-	          	public void actionPerformed(ActionEvent e) {
-	          		 frame.getContentPane().add(new StrumentiPage(frame, user));
-	          	}
-	          });*/
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
+
 		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
 		upperPanel.add(titleLabel);
 		

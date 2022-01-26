@@ -1345,4 +1345,44 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		}
 		return prestazioni;
 	}
+
+	@Override
+	public boolean checkIfHasReferto(Appuntamento appuntamento) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		boolean b = false;
+		final String query = "SELECT * FROM referto " 
+		+ "where referto.codTipoPrestazione = ? " 
+		+ "and referto.codAnimale = ? " 
+		+ "and referto.data = ? ";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, appuntamento.getCodPrestazione());
+			statement.get().setInt(2, appuntamento.getAnimale().getCodAnimale());
+			statement.get().setString(3, appuntamento.getData());
+			
+			final ResultSet result = statement.get().executeQuery();
+			if (result.next()) {
+				b = true;
+			}			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+				return false;
+			}
+		}
+		return b;
+	}
 }

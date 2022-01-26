@@ -54,4 +54,6 @@ public interface PrestazioneController {
 
 	List<Appuntamento> getAllPrestazioniPerGestioneRicovero(String cf);
 
+	boolean checkIfHasReferto(Appuntamento appuntamento);
+
 }

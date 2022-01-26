@@ -316,7 +316,6 @@ public class ModifyAppuntamento extends CommonView {
 		try {
 			data = new SimpleDateFormat("yyyy-MM-dd").parse(app.getData());
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		dateChooser.setDate(data);
@@ -382,7 +381,7 @@ public class ModifyAppuntamento extends CommonView {
 		gbc_comboBox.gridx = 6;
 		gbc_comboBox.gridy = 7;
 		scrollPanelLeft.add(textNomePrestazione, gbc_comboBox);
-		textNomePrestazione.setText(app.getPrestazione()); //TODO
+		textNomePrestazione.setText(app.getPrestazione()); 
 		textNomePrestazione.setEditable(false);
 		
 		this.listTipiPrestazione = new ArrayList<>();
@@ -450,10 +449,10 @@ public class ModifyAppuntamento extends CommonView {
 		gbc_comboBoxInfermiere.gridx = 6;
 		gbc_comboBoxInfermiere.gridy = 11;
 		scrollPanelLeft.add(textInfermiere, gbc_comboBoxInfermiere);
-	System.out.println(listInfermieri.size());
+		System.out.println(listInfermieri.size());
 		textInfermiere.setText(listInfermieri.get(0));
 		textInfermiere.setEditable(false);
-		
+
 		JButton addInfermiereButton = new JButton("+");
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
@@ -462,8 +461,8 @@ public class ModifyAppuntamento extends CommonView {
 		scrollPanelLeft.add(addInfermiereButton, gbc_btnNewButton);
 		addInfermiereButton.setVisible(false);
 		addInfermiereButton.setEnabled(false);
-		
-		if ( listInfermieri.size() > 1) { 
+
+		if (listInfermieri.size() > 1) {
 			JTextField textInfermiere2 = new JTextField();
 			GridBagConstraints gbc_comboBoxInfermiere_1 = new GridBagConstraints();
 			gbc_comboBoxInfermiere_1.insets = new Insets(0, 0, 5, 5);
@@ -478,9 +477,6 @@ public class ModifyAppuntamento extends CommonView {
 		splitPane.setOneTouchExpandable(true);
 		splitPane.setResizeWeight(0.5);
 		middlePanel.add(splitPane, BorderLayout.CENTER);
-		
-				
-	
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
@@ -502,7 +498,7 @@ public class ModifyAppuntamento extends CommonView {
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(sendButton, BorderLayout.WEST);
-		
+
 		JPanel savePanel = new JPanel();
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
 		
@@ -511,54 +507,56 @@ public class ModifyAppuntamento extends CommonView {
 		modButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				if( comboBoxVeterinario.getSelectedIndex() != -1
-						&& dateChooser.getDate() != null
+				if (comboBoxVeterinario.getSelectedIndex() != -1 && dateChooser.getDate() != null
 						&& timePicker.getTime() != null) {
-					
+
 					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 					String date = df.format(dateChooser.getDate());
-					
+
 					Appuntamento datiDiAppModificati = new AppuntamentoImpl();
-					
-					if(checkDisponibilitaVeterinario(date, timePicker.getTime().toString())) {
+
+					if (checkDisponibilitaVeterinario(date, timePicker.getTime().toString())) {
 						datiDiAppModificati.setData(date);
-						datiDiAppModificati.setOra(timePicker.getTime().toString());					
+						datiDiAppModificati.setOra(timePicker.getTime().toString());
 						datiDiAppModificati.setVeterinario(listVeterinari.get(comboBoxVeterinario.getSelectedIndex()));
-						
-						if(prestazioneController.updateEffettua(app, datiDiAppModificati) && prestazioneController.updatePrestazioneSuAnimale(app, datiDiAppModificati)) {
+
+						if (prestazioneController.updateEffettua(app, datiDiAppModificati)
+								&& prestazioneController.updatePrestazioneSuAnimale(app, datiDiAppModificati)) {
 							frame.getContentPane().add(new GestioneAppuntamento(frame, user));
 						} else {
-							JOptionPane.showMessageDialog(frame, "Si è verificato un errore nell'aggiornamento dell'appuntamaneto.", 
-									"Attenzione!", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(frame,
+									"Si è verificato un errore nell'aggiornamento dell'appuntamaneto.", "Attenzione!",
+									JOptionPane.ERROR_MESSAGE);
 						}
-						
 
 					} else {
 						List<String> list = listVeterinari.stream()
 								.filter(vet -> !vetNonDisponibili.contains(vet.getNome() + " " + vet.getCognome()))
-								.map(v -> v.getNome() + " " + v.getCognome())
-								.collect(Collectors.toList());
+								.map(v -> v.getNome() + " " + v.getCognome()).collect(Collectors.toList());
 
 						String[] options = new String[list.size()];
 						list.toArray(options);
-						
-						if(list.isEmpty()) {
-							JOptionPane.showMessageDialog(frame, "Nessun veterinario disponibile per quella data e ora. Controlla nella riquadro a destra le disponibilità", 
+
+						if (list.isEmpty()) {
+							JOptionPane.showMessageDialog(frame,
+									"Nessun veterinario disponibile per quella data e ora. Controlla nella riquadro a destra le disponibilità",
 									"Attenzione!", JOptionPane.WARNING_MESSAGE);
 						} else {
 							String result = (String) JOptionPane.showInputDialog(null,
 									"Il Veterinario selezionato non è disponibile. Selezionane uno dei seguenti dalla lista",
-									"Disponibilità Veterinari", JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+									"Disponibilità Veterinari", JOptionPane.QUESTION_MESSAGE, null, options,
+									options[0]);
 							comboBoxVeterinario.setSelectedItem(result);
 						}
 					}
 				} else {
-					JOptionPane.showMessageDialog(frame, "Si è verificato un errore nella compilazione del form. Ricontrollare i campi!", 
+					JOptionPane.showMessageDialog(frame,
+							"Si è verificato un errore nella compilazione del form. Ricontrollare i campi!",
 							"Attenzione!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
-		
+
 		savePanel.add(modButton);
 		
 		JButton  deleteButton= new JButton("Elimina");
