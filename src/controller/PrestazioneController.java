@@ -5,6 +5,7 @@ import model.Appuntamento;
 import model.Farmaco;
 import model.Patologia;
 import model.Prestazione;
+import model.Utilizzo;
 
 public interface PrestazioneController {
 
@@ -55,5 +56,7 @@ public interface PrestazioneController {
 	List<Appuntamento> getAllPrestazioniPerGestioneRicovero(String cf);
 
 	boolean checkIfHasReferto(Appuntamento appuntamento);
+
+	List<Utilizzo> getAllUtilizziDiPrestazione(Prestazione prestazione);
 
 }

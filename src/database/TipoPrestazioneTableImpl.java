@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Optional;
 import model.Prestazione;
 import model.PrestazioneImpl;
+import model.Strumento;
+import model.StrumentoImpl;
+import model.Utilizzo;
+import model.UtilizzoImpl;
 
 public class TipoPrestazioneTableImpl implements TipoPrestazioneTable {
 	
@@ -54,6 +58,51 @@ public class TipoPrestazioneTableImpl implements TipoPrestazioneTable {
 			}
 		}
 		return prestazioni;
+	}
+
+	@Override
+	public List<Utilizzo> getAllUtilizziDiPrestazione(Prestazione prestazione) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		final String query = "select * " 
+				+ "from utilizzo, strumento " 
+				+ "where utilizzo.codStrumento = strumento.codStrumento "
+				+ "and utilizzo.codPrestazione = ? "; 
+
+		List<Utilizzo> utilizzi = new ArrayList<>();
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, prestazione.getCodPrestazione());
+			final ResultSet result = statement.get().executeQuery();
+			
+			while (result.next()) {
+				Utilizzo u = new UtilizzoImpl();
+				Strumento s = new StrumentoImpl();
+				s.setCodStrumento(result.getInt("codStrumento"));
+				s.setNome(result.getString("strumento.nome"));
+				s.setDescrizione(result.getString("strumento.descrizione"));	
+				s.setQuantita(result.getInt("strumento.quantitaInMagazzino"));
+				u.setQuantita(result.getInt("utilizzo.quantita"));
+				u.setStrumento(s);
+				utilizzi.add(u);
+			}
+
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		return utilizzi;
 	}
 
 }

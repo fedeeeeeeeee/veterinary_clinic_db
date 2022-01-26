@@ -28,17 +28,15 @@ public class HomeSegretaria extends CommonView {
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		
-		JPanel upperPanel = new JPanel();
-		
+		JPanel upperPanel = new JPanel();	
 		JPanel centerPanel = new JPanel();
-		
 		JPanel lowerPanel = new JPanel();
 		
 		
 		// per la visualizzazione
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		// utile per il design
-		// GroupLayout groupLayout = new GroupLayout(this);
+		//GroupLayout groupLayout = new GroupLayout(this);
 		 groupLayout.setHorizontalGroup(
 		 	groupLayout.createParallelGroup(Alignment.LEADING)
 		 		.addGroup(groupLayout.createSequentialGroup()
@@ -59,20 +57,20 @@ public class HomeSegretaria extends CommonView {
 		 			.addGap(4))
 		 );
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
-		gbl_centerPanel.columnWidths = new int[]{62, 133, 238, 105, 236, 53, 262, 0};
-		gbl_centerPanel.rowHeights = new int[]{46, 0, 0, 0, -17, -9, -9, 0, 0, 32, 0, 62, 61, 58, 0};
+		gbl_centerPanel.columnWidths = new int[]{62, 133, 238, 200, 236, 53, 262, 0};
+		gbl_centerPanel.rowHeights = new int[]{46, 0, 0, 0, -17, -9, 32, 0, 0, 32, 0, 28, 61, 58, 0};
 		gbl_centerPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_centerPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
 		JButton registraPazienteButton = new JButton("Registra paziente");
 		registraPazienteButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		GridBagConstraints gbc_registraPazienteButton = new GridBagConstraints();
 		gbc_registraPazienteButton.fill = GridBagConstraints.BOTH;
-		gbc_registraPazienteButton.gridheight = 4;
+		gbc_registraPazienteButton.gridheight = 3;
 		gbc_registraPazienteButton.insets = new Insets(0, 0, 5, 5);
 		gbc_registraPazienteButton.gridx = 2;
-		gbc_registraPazienteButton.gridy = 3;
+		gbc_registraPazienteButton.gridy = 4;
 		centerPanel.add(registraPazienteButton, gbc_registraPazienteButton);
 		
 		registraPazienteButton.addActionListener(new ActionListener() {
@@ -85,10 +83,10 @@ public class HomeSegretaria extends CommonView {
 		magazzinoButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		GridBagConstraints gbc_magazzinoButton = new GridBagConstraints();
 		gbc_magazzinoButton.fill = GridBagConstraints.BOTH;
-		gbc_magazzinoButton.gridheight = 4;
+		gbc_magazzinoButton.gridheight = 3;
 		gbc_magazzinoButton.insets = new Insets(0, 0, 5, 5);
 		gbc_magazzinoButton.gridx = 4;
-		gbc_magazzinoButton.gridy = 3;
+		gbc_magazzinoButton.gridy = 4;
 		centerPanel.add(magazzinoButton, gbc_magazzinoButton);
 		
 			magazzinoButton.addActionListener(new ActionListener() {
@@ -102,7 +100,7 @@ public class HomeSegretaria extends CommonView {
 		appuntamentiButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		GridBagConstraints gbc_appuntamentiButton = new GridBagConstraints();
 		gbc_appuntamentiButton.fill = GridBagConstraints.BOTH;
-		gbc_appuntamentiButton.gridheight = 3;
+		gbc_appuntamentiButton.gridheight = 2;
 		gbc_appuntamentiButton.insets = new Insets(0, 0, 5, 5);
 		gbc_appuntamentiButton.gridx = 2;
 		gbc_appuntamentiButton.gridy = 8;
@@ -118,7 +116,7 @@ public class HomeSegretaria extends CommonView {
 		pagamentiButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
 		GridBagConstraints gbc_pagamentiButton = new GridBagConstraints();
 		gbc_pagamentiButton.fill = GridBagConstraints.BOTH;
-		gbc_pagamentiButton.gridheight = 3;
+		gbc_pagamentiButton.gridheight = 2;
 		gbc_pagamentiButton.insets = new Insets(0, 0, 5, 5);
 		gbc_pagamentiButton.gridx = 4;
 		gbc_pagamentiButton.gridy = 8;
@@ -129,6 +127,22 @@ public class HomeSegretaria extends CommonView {
 				  frame.getContentPane().add(new RiepilogoPagamenti(frame, user));
 			}
 		});
+		
+		JButton prestazioniButton = new JButton("Gestione Prestazioni");
+		prestazioniButton.setFont(new Font("Lucida Grande", Font.PLAIN, 20));
+		GridBagConstraints gbc_prestazioniButton = new GridBagConstraints();
+		gbc_prestazioniButton.fill = GridBagConstraints.BOTH;
+		gbc_prestazioniButton.insets = new Insets(0, 0, 0, 5);
+		gbc_prestazioniButton.gridx = 3;
+		gbc_prestazioniButton.gridy = 12;
+		centerPanel.add(prestazioniButton, gbc_prestazioniButton);
+		
+		prestazioniButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				  frame.getContentPane().add(new GestioneUtilizzi(frame, user));
+			}
+		});
+		
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		
 		

@@ -10,6 +10,7 @@ import model.Appuntamento;
 import model.Farmaco;
 import model.Patologia;
 import model.Prestazione;
+import model.Utilizzo;
 
 public class PrestazioneControllerImpl implements PrestazioneController {
 
@@ -142,6 +143,11 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 	@Override
 	public boolean checkIfHasReferto(Appuntamento appuntamento) {
 		return this.prestazioneTable.checkIfHasReferto(appuntamento);
+	}
+
+	@Override
+	public List<Utilizzo> getAllUtilizziDiPrestazione(Prestazione prestazione) {
+		return tipoPrestazioneTable.getAllUtilizziDiPrestazione(prestazione);
 	}
 
 }
