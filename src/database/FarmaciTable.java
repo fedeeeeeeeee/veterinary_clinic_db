@@ -3,6 +3,7 @@ package database;
 import java.util.List;
 
 import model.Farmaco;
+import model.FarmacoInPrestazione;
 
 public interface FarmaciTable {
 
@@ -29,6 +30,7 @@ public interface FarmaciTable {
 	void addNewFarmaco(Farmaco farmaco);
 
 	List<Farmaco> getAllDistinctFarmaci();
+
 	
 	//void addNewLotto(Lotto lotto);
 }

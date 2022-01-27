@@ -62,4 +62,8 @@ public interface Appuntamento {
 	
 	float getAltezza();
 
+	String getDescrizionePrestazione();
+
+	void setDescrizionePrestazione(String descrizionePrestazione);
+
 }

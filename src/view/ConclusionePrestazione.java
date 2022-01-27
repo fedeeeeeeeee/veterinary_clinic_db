@@ -32,6 +32,7 @@ import controller.UserControllerImpl;
 import model.Appuntamento;
 import model.Farmaco;
 import model.Patologia;
+import model.ScaricaRefertoPrestazione;
 import model.User;
 import utility.ValidityFieldsChecker;
 import javax.swing.JSplitPane;
@@ -587,10 +588,9 @@ public class ConclusionePrestazione extends CommonView {
 				if (JOptionPane.showConfirmDialog(null, "Vuoi scaricare il referto? ", "QUESTION_MESSAGE",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					// TODO aggiungi doc
-				} else {
-					frame.getContentPane().add(new GestionePrestazione(frame, user));
-				}
-
+					new ScaricaRefertoPrestazione(frame,appuntamento);
+				} 
+				frame.getContentPane().add(new GestionePrestazione(frame, user));
 			} else {
 				JOptionPane.showMessageDialog(null, "Controlla la validita' dei campi!", "Errore!",
 						JOptionPane.ERROR_MESSAGE);

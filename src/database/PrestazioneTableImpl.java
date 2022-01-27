@@ -948,7 +948,8 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				Farmaco f = new FarmacoImpl();
 				f.setNomeFarmaco(result.getString("farmaco.nome"));
 				f.setDescrizione(result.getString("farmaco.descrizione"));
-				f.setDescrizione(result.getString("farmaco_in_prestazione.dataInizioSomministrazione"));
+				f.setDataInizioSomministrazione(result.getString("farmaco_in_prestazione.dataInizioSomministrazione"));
+				f.setDataFineSomministrazione(result.getString("farmaco_in_prestazione.datafineSomministrazione"));
 				f.setIndicazioni(result.getString("farmaco_in_prestazione.indicazioni"));
 				farmaci.add(f);
 			}
@@ -1134,7 +1135,9 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		final Connection connection = this.dataSource.getMySQLConnection();
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, personale.cognome, prestazione_su_animale.codAnimale, prestazione_su_animale.codTipoPrestazione, personale.cf , animale.cf , prestazione.tipo, animale.specie, animale.altezza "
+		 final String query = "select animale.nome, prestazione.nome, prestazione_su_animale.data, ora, personale.nome, "
+		 		+ "personale.cognome, prestazione_su_animale.codAnimale, prestazione_su_animale.codTipoPrestazione, "
+		 		+ "personale.cf , animale.cf , prestazione.tipo, animale.specie, animale.altezza, prestazione.durataMedia , prestazione.descrizione "
 	        		+ "from prestazione_su_animale, effettua , prestazione , animale , personale "
 	        		+ "where prestazione_su_animale.data=effettua.data "
 	        		+ "and prestazione_su_animale.codAnimale=effettua.codAnimale "
@@ -1173,6 +1176,8 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 				app.setVeterinario(veterinario);
 				app.setCodPrestazione(result.getInt(8)); //TODO controlla
 				app.setTipoPrestazione(result.getString(11));
+				app.setDurata(result.getString(14));
+				app.setDescrizionePrestazione(result.getString(15));
 				
 				prestazioni.add(app);
 			}
@@ -1384,5 +1389,44 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 			}
 		}
 		return b;
+	}
+
+	@Override
+	public String getReferto(Appuntamento appuntamento) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		String refertoCommento = "";
+		boolean b = false;
+		final String query = "SELECT * FROM referto " 
+		+ "where referto.codTipoPrestazione = ? " 
+		+ "and referto.codAnimale = ? " 
+		+ "and referto.data = ? ";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, appuntamento.getCodPrestazione());
+			statement.get().setInt(2, appuntamento.getAnimale().getCodAnimale());
+			statement.get().setString(3, appuntamento.getData());
+			
+			final ResultSet result = statement.get().executeQuery();
+			if (result.next()) {
+				refertoCommento = result.getString("descrizione");
+			}			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("errore sql");
+			}
+		}
+		return refertoCommento;
 	}
 }

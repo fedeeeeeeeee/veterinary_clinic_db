@@ -79,8 +79,8 @@ public class FarmaciInPrestazioneTableImpl implements FarmaciInPrestazioneTable 
 				 		+ "where farmaco_in_prestazione.codAnimale= ? " 
 				 		+ "and farmaco.codFarmaco = farmaco_in_prestazione.codFarmaco "
 				 		+ "and farmaco_in_prestazione.dataFineSomministrazione >= ? "
-				 		+ "and farmaco_in_prestazione.dataInizioSomministrazione <> ? ";
-		 
+				 		+ "and farmaco_in_prestazione.dataInizioSomministrazione <= ? ";
+		 // TODO ho modificato <> in <= 
 		 List<String> farmaci = new ArrayList<>();
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
@@ -114,4 +114,59 @@ public class FarmaciInPrestazioneTableImpl implements FarmaciInPrestazioneTable 
 		
 		return farmaci;
 	}
+	
+	@Override
+	public List<FarmacoInPrestazione> getFarmaciDiAnimaleTipoFarmaco(int codAnimale) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		 final String query = "SELECT * " 
+				 		+ "FROM farmaco, farmaco_in_prestazione " 
+				 		+ "where farmaco_in_prestazione.codAnimale= ? " 
+				 		+ "and farmaco.codFarmaco = farmaco_in_prestazione.codFarmaco "
+				 		+ "and farmaco_in_prestazione.dataFineSomministrazione >= ? "
+				 		+ "and farmaco_in_prestazione.dataInizioSomministrazione <= ? ";
+		 
+		 List<FarmacoInPrestazione> farmaci = new ArrayList<>();
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, codAnimale);
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			String date = df.format(new Date());
+			statement.get().setString(2, date);
+			statement.get().setString(3, date);
+			final ResultSet result = statement.get().executeQuery();
+			
+			while (result.next()) {
+				FarmacoInPrestazione f = new FarmacoInPrestazioneImpl();
+			
+				f.setDataInizioSomministrazione(result.getString("dataInizioSomministrazione"));
+				f.setDataFineSomministrazione(result.getString("dataFineSomministrazione"));
+				f.setIndicazioni(result.getString("indicazioni"));
+				Farmaco farmaco = new FarmacoImpl();
+				farmaco.setCodFarmaco(result.getInt("codFarmaco"));
+				farmaco.setNomeFarmaco(result.getString("nome"));
+				farmaco.setDescrizione(result.getString("descrizione"));
+				farmaco.setTipoFarmaco(result.getString("tipoFarmaco"));
+				f.setFarmaco(farmaco);
+				farmaci.add(f);
+			}
+
+			result.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+			}
+		}
+		
+		return farmaci;
+	}
+
 }

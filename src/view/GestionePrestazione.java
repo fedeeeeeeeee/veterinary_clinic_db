@@ -26,6 +26,7 @@ import controller.ProprietarioControllerImpl;
 import model.Appuntamento;
 import model.Paziente;
 import model.Person;
+import model.ScaricaRefertoPrestazione;
 import model.User;
 
 import java.awt.GridBagLayout;
@@ -182,16 +183,8 @@ public class GestionePrestazione extends CommonView {
 				if (prestazioneController.checkIfHasReferto(listAppuntamenti.get(rowIndex))) {
 					if (JOptionPane.showConfirmDialog(null, "La prestazione è già conclusa, vuoi scaricare il referto?", "Scarica Referto",
 							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-						// TODO aggiungi doc
-						/*
-						 * 
-						 * 
-						 * 
-						 * 
-						 * 
-						 * 
-						 * 
-						 */
+						listAppuntamenti.get(rowIndex).setDescrizioneReferto(prestazioneController.getReferto(listAppuntamenti.get(rowIndex)));
+						new ScaricaRefertoPrestazione(frame,listAppuntamenti.get(rowIndex));
 					}
 				} else {
 					Person proprietario = proprietarioController

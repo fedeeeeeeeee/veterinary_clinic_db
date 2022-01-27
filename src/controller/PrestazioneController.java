@@ -59,4 +59,6 @@ public interface PrestazioneController {
 
 	List<Utilizzo> getAllUtilizziDiPrestazione(Prestazione prestazione);
 
+	String getReferto(Appuntamento appuntamento);
+
 }

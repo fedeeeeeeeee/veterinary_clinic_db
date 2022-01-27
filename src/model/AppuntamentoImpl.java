@@ -15,7 +15,7 @@ public class AppuntamentoImpl implements Appuntamento {
 	private String data;
 	private String ora;
 	private String durata;
-
+private String descrizionePrestazione;
 	private List<User> list = new ArrayList<>();
 	private String descrizioneReferto;
 	private List<Farmaco> listFarmaci;
@@ -162,6 +162,16 @@ public class AppuntamentoImpl implements Appuntamento {
 	@Override
 	public float getAltezza() {
 		return this.altezza;
+	}
+
+	@Override
+	public String getDescrizionePrestazione() {
+		return descrizionePrestazione;
+	}
+
+	@Override
+	public void setDescrizionePrestazione(String descrizionePrestazione) {
+		this.descrizionePrestazione = descrizionePrestazione;
 	}
 
 }

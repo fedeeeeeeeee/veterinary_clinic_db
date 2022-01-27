@@ -9,4 +9,6 @@ public interface FarmaciInPrestazioneTable {
 
 	List<String> getFarmaciAssuntiByAnimale(int codAnimale);
 
+	List<FarmacoInPrestazione> getFarmaciDiAnimaleTipoFarmaco(int codAnimale);
+
 }
