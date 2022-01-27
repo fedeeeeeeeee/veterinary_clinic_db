@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import model.Prestazione;
+import model.PrestazioneImpl;
 import model.Strumento;
 import model.StrumentoImpl;
 import model.Utilizzo;
@@ -17,9 +19,11 @@ import model.Utilizzo;
 public class StrumentiTableImpl implements StrumentiTable{
 
 	private DatabaseConnection dataSource;
+	private TipoPrestazioneTable tipoPrestTable;
 	
 	public StrumentiTableImpl() {
 		this.dataSource = new DatabaseConnection();
+		this.tipoPrestTable = new TipoPrestazioneTableImpl();
 	}
 	
 	@Override
@@ -281,4 +285,89 @@ public class StrumentiTableImpl implements StrumentiTable{
 			}
 		}
 	}
+
+	@Override
+	public boolean isStrumentiAvailable(int codPrestazione) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		 final String query = "SELECT count(utilizzo.codStrumento) as numeroStrumenti " 
+				 	+ "FROM utilizzo, strumento " 
+			 		+ "where utilizzo.codPrestazione = ? " 
+				 	+ "and utilizzo.codStrumento = strumento.codStrumento " 
+			 		+ "and strumento.quantitaInMagazzino >= utilizzo.quantita ";
+		 
+		 boolean b  = false;
+			try {
+
+				statement = Optional.of(connection.prepareStatement(query));
+				statement.get().setInt(1, codPrestazione);
+				
+				final ResultSet result = statement.get().executeQuery();
+				if (result.next()) {
+					int strumentiDisponibili = result.getInt("numeroStrumenti");
+					b = strumentiDisponibili == this.getStrumentiInPrestazioneCount(codPrestazione);
+				}
+				result.close();	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+				}
+			}
+			return b;
+	}
+
+	private int getStrumentiInPrestazioneCount(int codPrestazione) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		 final String query = "SELECT count(utilizzo.codStrumento) as numeroStrumentiInPrestazione " 
+				 	+ "FROM utilizzo, strumento " 
+			 		+ "where utilizzo.codPrestazione = ? " 
+				 	+ "and utilizzo.codStrumento = strumento.codStrumento ";
+		 
+		 int count = 0; 
+			try {
+
+				statement = Optional.of(connection.prepareStatement(query));
+				statement.get().setInt(1, codPrestazione);
+				
+				final ResultSet result = statement.get().executeQuery();
+				if (result.next()) {
+					count = result.getInt("numeroStrumentiInPrestazione");
+				}
+				result.close();	
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+				}
+			}
+			return count;
+	}
+
+	@Override
+	public void updateStrumentiDiPrestazione(int codPrestazione) {
+		Prestazione p = new PrestazioneImpl();
+		p.setCodPrestazione(codPrestazione);
+		List<Utilizzo> utilizzi = this.tipoPrestTable.getAllUtilizziDiPrestazione(p);
+		
+		utilizzi.forEach(u-> {
+			this.updateQuantita(u.getStrumento(), -u.getQuantita());
+		});
+	}
+
 }

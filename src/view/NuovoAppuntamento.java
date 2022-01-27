@@ -28,6 +28,8 @@ import controller.AnimaleController;
 import controller.AnimaleControllerImpl;
 import controller.PrestazioneController;
 import controller.PrestazioneControllerImpl;
+import controller.StrumentiController;
+import controller.StrumentiControllerImpl;
 import controller.UserController;
 import controller.UserControllerImpl;
 import model.Animale;
@@ -68,7 +70,10 @@ public class NuovoAppuntamento extends CommonView {
 	private int codTipoPrestazione;
 	private JComboBox<String> comboBoxVeterinario;
 	private List<String> vetNonDisponibili;
-
+	private StrumentiController strumentiController; 
+	private boolean isFirst = true;
+	private boolean erroreStrumento = false;
+	
 	private void createTable(DefaultTableModel model, List<Appuntamento> list) {
 		list.forEach(x -> {
 			model.addRow(new Object[] { 
@@ -119,6 +124,7 @@ public class NuovoAppuntamento extends CommonView {
 		this.animaleController = new AnimaleControllerImpl();
 		this.prestazioneController = new PrestazioneControllerImpl();
 		this.userController = new UserControllerImpl();
+		this.strumentiController = new StrumentiControllerImpl();
 		
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
@@ -364,9 +370,7 @@ public class NuovoAppuntamento extends CommonView {
 		scrollPanelLeft.add(comboBoxNomePrestazione, gbc_comboBox);
 		comboBoxNomePrestazione.setEnabled(false);
 		
-		// TODO se almeno uno strumento necessario per fare la prestazine non c'è --> JOption errore
-
-		
+	
 		
 		this.listTipiPrestazione = new ArrayList<>();
 		this.listTipiPrestazione = this.prestazioneController.getAllTipiDiPrestazione();
@@ -383,8 +387,27 @@ public class NuovoAppuntamento extends CommonView {
 					comboBoxTipoPrestazione.addItem(x);
 		});
 		
-		comboBoxTipoPrestazione.setSelectedIndex(-1);
-		
+		comboBoxNomePrestazione.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				if(!isFirst && comboBoxNomePrestazione.getSelectedIndex() != -1) {
+					int codPrestazione = map.entrySet().stream()
+							.filter(en -> en.getValue().getY().equals(comboBoxNomePrestazione.getSelectedItem().toString()))
+							.map(en -> en.getKey()).findAny().get();
+					if (strumentiController.isStrumentiAvailable(codPrestazione)) {
+						erroreStrumento = false;
+					} else {
+						JOptionPane.showMessageDialog(frame, "Gli strumenti necessari per la prestazione selezionata non sono disponibili.",
+								"Attenzione!", JOptionPane.ERROR_MESSAGE);
+						erroreStrumento = true;
+					}
+				}
+				isFirst = false;
+			}
+		});
+
+		comboBoxTipoPrestazione.setSelectedIndex(-1);		
 		comboBoxTipoPrestazione.addActionListener(new ActionListener() {
 
 			@Override
@@ -397,8 +420,7 @@ public class NuovoAppuntamento extends CommonView {
 					}
 				}
 				comboBoxNomePrestazione.setSelectedIndex(-1);
-			}
-			
+			}	
 		});
 		
 		JSeparator separator_1 = new JSeparator();
@@ -575,15 +597,19 @@ public class NuovoAppuntamento extends CommonView {
 						list.add(listVeterinari.get(comboBoxVeterinario.getSelectedIndex()));
 						app.setAllMediciEInfermieri(list);
 						
-							
-						if(prestazioneController.addNewAppuntamento(app) && prestazioneController.addEffettua(app)) {
-							frame.getContentPane().add(new GestioneAppuntamento(frame, user));
-						} else {
-							JOptionPane.showMessageDialog(frame, "Si è verificato un errore nell'inserimento dell'appuntamaneto.", 
+						if(erroreStrumento) {
+							JOptionPane.showMessageDialog(frame, "Gli strumenti necessari per la prestazione selezionata non sono disponibili, non è possibile inserire l'appuntamento.",
 									"Attenzione!", JOptionPane.ERROR_MESSAGE);
+						} else {
+							if(prestazioneController.addNewAppuntamento(app) && prestazioneController.addEffettua(app)) {
+								strumentiController.updateStrumentiDiPrestazione(app.getCodPrestazione());	
+								frame.getContentPane().add(new GestioneAppuntamento(frame, user));
+							} else {
+								JOptionPane.showMessageDialog(frame, "Si è verificato un errore nell'inserimento dell'appuntamaneto.", 
+										"Attenzione!", JOptionPane.ERROR_MESSAGE);
+							}
 						}
-						
-						// TODO decremento quantità degli strumenti for each Strumento --> update qt
+								
 						
 					} else {
 						List<String> list = listVeterinari.stream()

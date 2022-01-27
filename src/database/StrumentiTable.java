@@ -21,4 +21,8 @@ public interface StrumentiTable {
 	void addNewStrumento(Strumento stru);
 
 	void addUtilizzo(Utilizzo utilizzo);
+
+	boolean isStrumentiAvailable(int codPrestazione);
+
+	void updateStrumentiDiPrestazione(int codPrestazione);
 }

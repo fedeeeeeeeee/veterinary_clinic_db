@@ -50,4 +50,14 @@ public class StrumentiControllerImpl implements StrumentiController {
 	public void addUtilizzo(Utilizzo utilizzo) {
 		this.strumentiTable.addUtilizzo(utilizzo);
 	}
+
+	@Override
+	public boolean isStrumentiAvailable(int codPrestazione) {
+		return this.strumentiTable.isStrumentiAvailable(codPrestazione);
+	}
+
+	@Override
+	public void updateStrumentiDiPrestazione(int codPrestazione) {
+		this.strumentiTable.updateStrumentiDiPrestazione(codPrestazione);
+	}
 }
