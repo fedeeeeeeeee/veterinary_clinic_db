@@ -4,17 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
 
+import model.Strumento;
+import model.StrumentoImpl;
 import model.User;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -26,9 +30,15 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
+import utility.ValidityFieldsChecker;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import com.toedter.calendar.JDateChooser;
+
+import controller.StrumentiController;
+import controller.StrumentiControllerImpl;
+
 import javax.swing.JSpinner;
 
 public class NuovoStrumentoPage extends CommonView {
@@ -36,23 +46,25 @@ public class NuovoStrumentoPage extends CommonView {
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private User user;
-	//private FarmaciController farmaciController;
+	private StrumentiController strumentiController;
 	private JTextField textNomeFarmaco;
-	private JTextField textField;
-
+	private JTextField textFieldPrezzo;
+	private ValidityFieldsChecker checker = new ValidityFieldsChecker();
+	
 	public NuovoStrumentoPage(JFrame frame, User user) {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().validate();
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
-		// this.farmaciController = new FarmaciControllerImpl();
+		this.strumentiController = new StrumentiControllerImpl();
 		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
+		
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		// GroupLayout groupLayout = new GroupLayout(this);
+		//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -88,7 +100,7 @@ public class NuovoStrumentoPage extends CommonView {
 		gbl_panel.rowWeights = new double[] { 0.0, 1.0, 0.0, 1.0, 5.0, 1.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		panel.setLayout(gbl_panel);
 
-		JLabel lblNewLabel_1 = new JLabel("Nome Farmaco");
+		JLabel lblNewLabel_1 = new JLabel("Nome Strumento");
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 1;
@@ -114,22 +126,6 @@ public class NuovoStrumentoPage extends CommonView {
 		gbc_lblNewLabel_2.gridx = 5;
 		gbc_lblNewLabel_2.gridy = 1;
 		panel.add(lblNewLabel_2, gbc_lblNewLabel_2);
-
-		/*
-		 * JLabel lblNewLabel_3 = new JLabel("Tipo Farmaco"); GridBagConstraints
-		 * gbc_lblNewLabel_3 = new GridBagConstraints(); gbc_lblNewLabel_3.insets = new
-		 * Insets(0, 0, 5, 5); gbc_lblNewLabel_3.gridx = 1; gbc_lblNewLabel_3.gridy = 3;
-		 * panel.add(lblNewLabel_3, gbc_lblNewLabel_3);
-		 * 
-		 * 
-		 * JComboBox<String> comboBoxTipoFarmaco = new JComboBox<>(); GridBagConstraints
-		 * gbc_comboBoxTipoFarmaco = new GridBagConstraints();
-		 * gbc_comboBoxTipoFarmaco.gridwidth = 3; gbc_comboBoxTipoFarmaco.insets = new
-		 * Insets(0, 0, 5, 5); gbc_comboBoxTipoFarmaco.fill = GridBagConstraints.BOTH;
-		 * gbc_comboBoxTipoFarmaco.gridx = 2; gbc_comboBoxTipoFarmaco.gridy = 3;
-		 * panel.add(comboBoxTipoFarmaco, gbc_comboBoxTipoFarmaco);
-		 * 
-		 */
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -185,14 +181,14 @@ public class NuovoStrumentoPage extends CommonView {
 		gbc_lblNewLabel_4.gridy = 7;
 		panel.add(lblNewLabel_4, gbc_lblNewLabel_4);
 
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 5;
-		gbc_textField.gridy = 7;
-		panel.add(textField, gbc_textField);
-		textField.setColumns(10);
+		textFieldPrezzo = new JTextField();
+		GridBagConstraints gbc_textFieldPrezzo = new GridBagConstraints();
+		gbc_textFieldPrezzo.insets = new Insets(0, 0, 5, 5);
+		gbc_textFieldPrezzo.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textFieldPrezzo.gridx = 5;
+		gbc_textFieldPrezzo.gridy = 7;
+		panel.add(textFieldPrezzo, gbc_textFieldPrezzo);
+		textFieldPrezzo.setColumns(10);
 
 		JPanel panelSave = new JPanel();
 		middlePanel.add(panelSave, BorderLayout.SOUTH);
@@ -201,7 +197,27 @@ public class NuovoStrumentoPage extends CommonView {
 
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO
+				if(!textFieldPrezzo.getText().isEmpty() && spinner.getValue() !=null 
+						&&  dateChooser.getDate() != null && !textArea.getText().isEmpty() && !textNomeFarmaco.getText().isEmpty()) {
+					if(checker.checkFloatFieldsValue(textFieldPrezzo.getText())) {
+						Strumento stru = new StrumentoImpl();
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+						String date = df.format(dateChooser.getDate());
+						stru.setDataScadenza(date);
+						stru.setDescrizione(textArea.getText());
+						stru.setNome(textNomeFarmaco.getText());
+						stru.setQuantita( (Integer)spinner.getValue());
+						stru.setPrezzo(Float.valueOf(textFieldPrezzo.getText()));
+						strumentiController.addNewStrumento(stru);
+						frame.getContentPane().add(new StrumentiPage(frame, user));
+					} else {
+						JOptionPane.showMessageDialog(frame, "Controllarre la validità dei campi! Ad esempio che il prezzo sia un valore decimale (es 2.30) ",
+								"Attenzione!", JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					JOptionPane.showMessageDialog(frame, "Controllare che tutti i campi compilati tutti i campi ",
+							"Attenzione!", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		panelSave.add(btnSave);
@@ -227,8 +243,8 @@ public class NuovoStrumentoPage extends CommonView {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 
-		// setLayout(groupLayout);
-		new GroupLayout(this);
+		//setLayout(groupLayout);
+		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
 

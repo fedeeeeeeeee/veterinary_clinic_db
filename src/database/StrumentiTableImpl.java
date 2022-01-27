@@ -217,4 +217,36 @@ public class StrumentiTableImpl implements StrumentiTable{
 				}
 			}
 	}
+
+	@Override
+	public void addNewStrumento(Strumento stru) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		final String query = " insert into strumento (nome, descrizione, dataScadenza, quantitaInMagazzino, prezzo) values (?,?,?,?,?) ";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setString(1, stru.getNome());
+			statement.get().setString(2, stru.getDescrizione());
+			statement.get().setString(3, stru.getDataScadenza());
+			statement.get().setInt(4, stru.getQuantita());
+			statement.get().setFloat(5, stru.getPrezzo());
+			
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Errore inserimento nuovo strumento");
+			}
+		}
+	}
 }

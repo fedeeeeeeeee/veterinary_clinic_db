@@ -38,4 +38,10 @@ public class StrumentiControllerImpl implements StrumentiController {
 	public void updateQuantita(Strumento strumento, int q) {
 		this.strumentiTable.updateQuantita( strumento, q);
 	}
+
+	@Override
+	public void addNewStrumento(Strumento stru) {
+		this.strumentiTable.addNewStrumento( stru);
+		
+	}
 }

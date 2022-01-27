@@ -7,6 +7,7 @@ public class StrumentoImpl implements Strumento {
 	private String descrizione;
 	private String dataScadenza;
 	private int quantita;
+	private float prezzo;
 
 	@Override
 	public int getCodStrumento() {
@@ -56,6 +57,14 @@ public class StrumentoImpl implements Strumento {
 	@Override
 	public void setQuantita(int quantita) {
 		this.quantita = quantita;
+	}
+	@Override
+	public float getPrezzo() {
+		return prezzo;
+	}
+	@Override
+	public void setPrezzo(float prezzo) {
+		this.prezzo = prezzo;
 	}
 
 }

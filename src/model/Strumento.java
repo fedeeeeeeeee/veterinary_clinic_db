@@ -21,4 +21,8 @@ public interface Strumento {
 	public int getQuantita();
 
 	public void setQuantita(int quantita);
+
+	float getPrezzo();
+
+	void setPrezzo(float prezzo);
 }
