@@ -154,4 +154,9 @@ public class PrestazioneControllerImpl implements PrestazioneController {
 		return tipoPrestazioneTable.getAllUtilizziDiPrestazione(prestazione);
 	}
 
+	@Override
+	public void addPrestazione(Prestazione prestazione) {
+		tipoPrestazioneTable.addPrestazione(prestazione);
+	}
+
 }

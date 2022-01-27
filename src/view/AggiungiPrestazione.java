@@ -33,13 +33,9 @@ import controller.PrestazioneControllerImpl;
 import model.Prestazione;
 import model.PrestazioneImpl;
 import model.User;
-import utility.ReadTextToHashMap;
 import utility.ValidityFieldsChecker;
-import com.github.lgooddatepicker.components.TimePicker;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import com.toedter.components.JSpinField;
 import javax.swing.JSpinner;
 
 public class AggiungiPrestazione extends CommonView {
@@ -133,7 +129,6 @@ public class AggiungiPrestazione extends CommonView {
 				if (result != null) {
 					comboBoxTipo.addItem(result);
 				}
-
 			}
 		});
 		
@@ -218,7 +213,6 @@ public class AggiungiPrestazione extends CommonView {
 		spinnerMinuti.setModel(modelMin);
 		JFormattedTextField txt3 = ((JSpinner.NumberEditor) spinnerMinuti.getEditor()).getTextField();
 		((NumberFormatter) txt3.getFormatter()).setAllowsInvalid(false);
-		//spinnerMinuti.setEditor(new JSpinner.NumberEditor(spinnerMinuti, "mm"));
 
 
 		JLabel labelPrezzo = new JLabel("Prezzo");

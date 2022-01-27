@@ -61,4 +61,6 @@ public interface PrestazioneController {
 
 	String getReferto(Appuntamento appuntamento);
 
+	void addPrestazione(Prestazione prestazione);
+
 }

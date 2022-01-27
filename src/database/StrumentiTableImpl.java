@@ -12,6 +12,7 @@ import java.util.Optional;
 
 import model.Strumento;
 import model.StrumentoImpl;
+import model.Utilizzo;
 
 public class StrumentiTableImpl implements StrumentiTable{
 
@@ -246,6 +247,37 @@ public class StrumentiTableImpl implements StrumentiTable{
 				}
 			} catch (SQLException e) {
 				System.out.println("Errore inserimento nuovo strumento");
+			}
+		}
+	}
+
+	@Override
+	public void addUtilizzo(Utilizzo utilizzo) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+
+		final String query = " insert into utilizzo (codStrumento, codPrestazione, quantita) values (?,?,?) ";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));
+			statement.get().setInt(1, utilizzo.getStrumento().getCodStrumento());
+			statement.get().setInt(2, utilizzo.getPrestazione().getCodPrestazione());
+			statement.get().setInt(3, utilizzo.getQuantita());
+
+			
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("Errore inserimento nuovo utilizzo");
 			}
 		}
 	}

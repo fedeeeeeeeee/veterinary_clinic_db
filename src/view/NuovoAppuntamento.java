@@ -346,7 +346,7 @@ public class NuovoAppuntamento extends CommonView {
 		gbc_comboBoxPrestazione.gridx = 6;
 		gbc_comboBoxPrestazione.gridy = 6;
 		scrollPanelLeft.add(comboBoxTipoPrestazione, gbc_comboBoxPrestazione);
-		
+				
 		JLabel lblNomPrestazione = new JLabel("Nome Prestazione");
 		GridBagConstraints gbc_lblNomPrestazione = new GridBagConstraints();
 		gbc_lblNomPrestazione.gridwidth = 3;
@@ -362,8 +362,11 @@ public class NuovoAppuntamento extends CommonView {
 		gbc_comboBox.gridx = 6;
 		gbc_comboBox.gridy = 7;
 		scrollPanelLeft.add(comboBoxNomePrestazione, gbc_comboBox);
-
 		comboBoxNomePrestazione.setEnabled(false);
+		
+		// TODO se almeno uno strumento necessario per fare la prestazine non c'è --> JOption errore
+
+		
 		
 		this.listTipiPrestazione = new ArrayList<>();
 		this.listTipiPrestazione = this.prestazioneController.getAllTipiDiPrestazione();
@@ -580,7 +583,8 @@ public class NuovoAppuntamento extends CommonView {
 									"Attenzione!", JOptionPane.ERROR_MESSAGE);
 						}
 						
-
+						// TODO decremento quantità degli strumenti for each Strumento --> update qt
+						
 					} else {
 						List<String> list = listVeterinari.stream()
 								.filter(vet -> !vetNonDisponibili.contains(vet.getNome() + " " + vet.getCognome()))

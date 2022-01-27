@@ -3,6 +3,7 @@ package database;
 import java.util.List;
 
 import model.Strumento;
+import model.Utilizzo;
 
 public interface StrumentiTable {
 
@@ -18,4 +19,6 @@ public interface StrumentiTable {
 	void updateQuantita(Strumento strumento, int q);
 
 	void addNewStrumento(Strumento stru);
+
+	void addUtilizzo(Utilizzo utilizzo);
 }

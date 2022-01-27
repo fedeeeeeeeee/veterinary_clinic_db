@@ -105,4 +105,36 @@ public class TipoPrestazioneTableImpl implements TipoPrestazioneTable {
 		return utilizzi;
 	}
 
+	@Override
+	public void addPrestazione(Prestazione prestazione) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		
+		String query = "insert into prestazione (tipo, nome, durataMedia, prezzo, descrizione) values (?,?,?,?,?)";
+
+		try {
+			statement = Optional.of(connection.prepareStatement(query));	
+			statement.get().setString(1, prestazione.getTipoPrestazione());
+			statement.get().setString(2, prestazione.getNomePrestazione());
+			statement.get().setString(3, prestazione.getDurataMedia());
+			statement.get().setFloat(4, prestazione.getPrezzo());
+			statement.get().setString(5, prestazione.getDescrizione());
+	
+			statement.get().executeUpdate();
+		} catch (SQLException e) {
+			System.out.println("eccezione INSERIMENTO Prestazione " + e);
+		} finally {
+			try {
+				if (statement.isPresent()) {
+					statement.get().close();
+				}
+				if (connection != null) {
+					connection.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("eccezione INSERIMENTO Prestazione statement" + e);
+			}
+		}
+	}
+
 }

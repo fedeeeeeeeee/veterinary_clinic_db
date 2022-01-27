@@ -10,5 +10,7 @@ public interface TipoPrestazioneTable {
 	List<Prestazione> getAllTipiDiPrestazione();
 	
 	List<Utilizzo> getAllUtilizziDiPrestazione(Prestazione prestazione);
+
+	void addPrestazione(Prestazione prestazione);
 	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import database.StrumentiTable;
 import database.StrumentiTableImpl;
 import model.Strumento;
+import model.Utilizzo;
 
 public class StrumentiControllerImpl implements StrumentiController {
 
@@ -43,5 +44,10 @@ public class StrumentiControllerImpl implements StrumentiController {
 	public void addNewStrumento(Strumento stru) {
 		this.strumentiTable.addNewStrumento( stru);
 		
+	}
+
+	@Override
+	public void addUtilizzo(Utilizzo utilizzo) {
+		this.strumentiTable.addUtilizzo(utilizzo);
 	}
 }
