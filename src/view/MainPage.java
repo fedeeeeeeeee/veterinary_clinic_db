@@ -22,7 +22,6 @@ public class MainPage extends JPanel {
     private static final long serialVersionUID = 1L;
     private JFrame frame;
 
- 
     public MainPage(final JFrame frame) {
         this.frame = frame;
         frame.getContentPane().removeAll();
@@ -38,11 +37,11 @@ public class MainPage extends JPanel {
         titleLabel.setForeground(Color.DARK_GRAY);
         titleLabel.setFont(new Font("Caladea", Font.PLAIN, 70));
         
-        JButton registerButton = new JButton("Register");
-        registerButton.setFont(new Font("Tahoma", Font.PLAIN, 40));
+        JButton registerButton = new JButton("Registrazione");
+        registerButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
         
-        JButton loginButton = new JButton("Login");
-        loginButton.setFont(new Font("Tahoma", Font.PLAIN, 40));
+        JButton loginButton = new JButton("Accesso");
+        loginButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
         
         JLabel label = new JLabel("");
        // label.setIcon(IconImage.RICOVERO.getImageIcon());
@@ -58,9 +57,9 @@ public class MainPage extends JPanel {
                     .addGap(200))
                 .addGroup(groupLayout.createSequentialGroup()
                     .addGap(209)
-                    .addComponent(loginButton, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addComponent(loginButton, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                     .addGap(108)
-                    .addComponent(registerButton, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
+                    .addComponent(registerButton, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
                     .addGap(223))
         );
         groupLayout.setVerticalGroup(
@@ -74,8 +73,8 @@ public class MainPage extends JPanel {
                             .addGap(22)))
                     .addGap(51)
                     .addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-                        .addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE)
-                        .addComponent(registerButton, GroupLayout.PREFERRED_SIZE, 139, GroupLayout.PREFERRED_SIZE))
+                        .addComponent(loginButton, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(registerButton, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
                     .addGap(125))
         );
         
@@ -83,7 +82,7 @@ public class MainPage extends JPanel {
         registerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.getContentPane().add(new Register2(frame));
+                frame.getContentPane().add(new Register(frame));
             }
         });
        
@@ -95,6 +94,5 @@ public class MainPage extends JPanel {
 
         });
         frame.getContentPane().setLayout(groupLayout);
-
     }
 }
