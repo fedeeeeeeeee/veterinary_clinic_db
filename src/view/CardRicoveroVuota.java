@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -15,6 +16,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.border.Border;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
+
 import model.Ricovero;
 import model.User;
 
@@ -24,10 +29,12 @@ public class CardRicoveroVuota extends JPanel {
 
 	public CardRicoveroVuota(JFrame frame, User user, Ricovero ricovero ) {
 		setLayout(new BorderLayout(0, 0));
-		// crea interfaccia e classe posto per numero e descrizione(dimensione gabbia)
+		Border border = BorderFactory.createLineBorder(Color.BLACK);
+		Border margin = new EmptyBorder(0,15,60,15);
+		setBorder(new CompoundBorder(border, margin));
+
 		JPanel upperPanel = new JPanel();
 		add(upperPanel, BorderLayout.NORTH);
-		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		JLabel lblModPostoEDim = new JLabel();
 		String dimensione = ricovero.getPosto().getDescrizione().substring(18);
@@ -50,6 +57,14 @@ public class CardRicoveroVuota extends JPanel {
 		gbc_lblVuoto.gridx = 2;
 		gbc_lblVuoto.gridy = 2;
 		middlePanel.add(lblVuoto, gbc_lblVuoto);
+		JPanel lowerPanel = new JPanel();
+		add(lowerPanel, BorderLayout.SOUTH);
+		GridBagLayout gbl_lowerPanel = new GridBagLayout();
+		gbl_lowerPanel.columnWidths = new int[]{280, 0};
+		gbl_lowerPanel.rowHeights = new int[]{23, 0};
+		gbl_lowerPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_lowerPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		lowerPanel.setLayout(gbl_lowerPanel);
 		
 		JButton btnAdd = new JButton("add");
 		btnAdd.addActionListener(new ActionListener() {
@@ -58,13 +73,11 @@ public class CardRicoveroVuota extends JPanel {
 				frame.getContentPane().add(new AggiungiRicovero(frame, user, ricovero));
 			}
 		});
-		JPanel lowerPanel = new JPanel();
-		add(lowerPanel, BorderLayout.SOUTH);
-		
-	
-		lowerPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
-		btnAdd.setHorizontalAlignment(SwingConstants.RIGHT);
-		lowerPanel.add(btnAdd);
+		GridBagConstraints gbc_btnAdd = new GridBagConstraints();
+		gbc_btnAdd.anchor = GridBagConstraints.NORTH;
+		gbc_btnAdd.gridx = 0;
+		gbc_btnAdd.gridy = 0;
+		lowerPanel.add(btnAdd, gbc_btnAdd);
 		
          
 	}
