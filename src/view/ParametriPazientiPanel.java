@@ -12,7 +12,9 @@ import utility.Pair;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AttributeSet.ColorAttribute;
 
+import java.awt.Color;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -60,7 +62,8 @@ public class ParametriPazientiPanel extends JPanel {
 				                false);
 		ChartPanel cp = new ChartPanel(chart);
 		panelRight.add(cp);
-		
+		//chartPanel.setBackground( Color.RED );
+		chart.getPlot().setBackgroundPaint( new  Color(161, 192, 200, 40)  );
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelLeft, panelRight);
 		splitPane.setResizeWeight(0.5);
 		mainPanel.add(splitPane, BorderLayout.CENTER);
