@@ -785,9 +785,13 @@ public class PrestazioneTableImpl implements PrestazioneTable {
 		Optional<PreparedStatement> statement = Optional.empty();
 
 		 final String query = "SELECT * " 
-				 + "FROM referto " 
-				 + "INNER JOIN prestazione_su_animale ON prestazione_su_animale.data = referto.data and referto.codAnimale = ? and prestazione_su_animale.codTipoPrestazione = referto.codTipoPrestazione "
-				 + "INNER JOIN prestazione ON prestazione.codPrestazione = prestazione_su_animale.codTipoPrestazione "; 
+				 + "FROM referto "
+				 + "inner JOIN prestazione_su_animale "
+				 + "ON referto.data = prestazione_su_animale.data "
+				 + "and referto.codAnimale = prestazione_su_animale.codAnimale "
+				 + "and referto.codTipoPrestazione = prestazione_su_animale.codTipoPrestazione "
+				 + "and referto.codAnimale = ? "
+				 + "INNER JOIN prestazione ON prestazione.codPrestazione = prestazione_su_animale.codTipoPrestazione";
 		 
 		 List<Appuntamento> prestazioni = new ArrayList<>();
 		try {

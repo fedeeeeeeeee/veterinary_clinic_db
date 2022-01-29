@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -20,6 +21,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 
 public class PrestazioniDiAnimalePanel extends JPanel {
 
@@ -70,19 +72,19 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 		JPanel centerPanel = new JPanel();
 
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
-		gbl_centerPanel.columnWidths = new int[]{0, 0, 0, 271, 21, 0, 0, 0};
+		gbl_centerPanel.columnWidths = new int[]{100, 291, 100, 0};
 		gbl_centerPanel.rowHeights = new int[]{40, 53, 0, 0, 0, 0, 0, 0};
-		gbl_centerPanel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
+		gbl_centerPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_centerPanel.rowWeights = new double[]{0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 2;
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
-		gbc_scrollPane.gridwidth = 5;
+		gbc_scrollPane.insets = new Insets(0, 0, 5, 0);
+		gbc_scrollPane.gridwidth = 3;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 1;
 		centerPanel.add(scrollPane, gbc_scrollPane);
 
@@ -104,19 +106,24 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 	    
 	    JLabel titleRefertoLabel = new JLabel("Referto:");
 	    GridBagConstraints gbc_titleRefertoLabel = new GridBagConstraints();
-	    gbc_titleRefertoLabel.gridwidth = 2;
 	    gbc_titleRefertoLabel.insets = new Insets(0, 0, 5, 5);
-	    gbc_titleRefertoLabel.gridx = 2;
+	    gbc_titleRefertoLabel.gridx = 1;
 	    gbc_titleRefertoLabel.gridy = 4;
 	    centerPanel.add(titleRefertoLabel, gbc_titleRefertoLabel);
 	    
+		JScrollPane scrollPaneArea = new JScrollPane();
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	    textAreaReferto = new JTextArea();
+	   textAreaReferto.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		scrollPaneArea.setViewportView(textAreaReferto);
+		textAreaReferto.setLineWrap(true);
+		textAreaReferto.setWrapStyleWord(true);
 	    GridBagConstraints gbc_textAreaReferto = new GridBagConstraints();
 	    gbc_textAreaReferto.insets = new Insets(0, 0, 5, 5);
 	    gbc_textAreaReferto.fill = GridBagConstraints.BOTH;
-	    gbc_textAreaReferto.gridx = 3;
+	    gbc_textAreaReferto.gridx = 1;
 	    gbc_textAreaReferto.gridy = 5;
-	    centerPanel.add(textAreaReferto, gbc_textAreaReferto);
+	    centerPanel.add(scrollPaneArea, gbc_textAreaReferto);
 	    textAreaReferto.setEditable(false);
 	}
 

@@ -66,6 +66,7 @@ public class PazientiTableImpl implements PazientiTable {
 				proprietario.setIndirizzoCitta(result.getString("ind_citta"));
 				proprietario.setIndirizzoCap(result.getInt("ind_cap"));
 				proprietario.setEmail(result.getString("e_mail"));
+				proprietario.setDataNascita(result.getString("proprietario.dataDiNascita"));
 				
 				animale.setProprietario(proprietario);	
 				paziente.setAnimale(animale);

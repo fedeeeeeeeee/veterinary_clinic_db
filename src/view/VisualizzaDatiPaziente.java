@@ -43,12 +43,12 @@ public class VisualizzaDatiPaziente extends CommonView {
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING,false)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 990, Short.MAX_VALUE)
-								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 990, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 990, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING,false)
+								.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 975, Short.MAX_VALUE)
+								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 975, Short.MAX_VALUE)
+								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 975, Short.MAX_VALUE))
 						.addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
