@@ -263,7 +263,6 @@ public class AggiungiRicovero extends CommonView {
 						ricoveroController.addRicovero(ricovero, listAppuntamenti.get(table.getSelectedRow()));
 						frame.getContentPane().add(new GestioneRicoveri(frame, user));
 					} else {
-						System.out.println("animale già ricoverato oggi");
 						JOptionPane.showMessageDialog(frame, "L'animale è già stato ricoverato e rilasciato",
 						"Attenzione!", JOptionPane.ERROR_MESSAGE);
 					}		

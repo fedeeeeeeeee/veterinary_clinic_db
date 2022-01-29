@@ -66,7 +66,7 @@ public class GestioneRicoveri extends CommonView {
 				.addGroup(groupLayout.createSequentialGroup()
 						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(arrowPanel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
@@ -103,7 +103,6 @@ public class GestioneRicoveri extends CommonView {
 		centerPanel.add(cardRicovero, gbc_cardRicovero);
 
 		this.listRicoveri = this.ricoveroController.getRicoveriAttivi();
-		System.out.println("attivi "+ listRicoveri.size());
 		
 		int numRicoveriAttivi = this.listRicoveri.size();
 		this.listPostiLiberi = this.ricoveroController.getPostiLiberi();
