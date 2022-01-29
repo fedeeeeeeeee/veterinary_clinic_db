@@ -72,13 +72,14 @@ public class VisualizzaPazienti extends CommonView {
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE)
-								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE))
-						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+				.addGroup(groupLayout.createSequentialGroup()
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE)
+								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE))
+						.addGap(24)));
+						//.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
@@ -92,8 +93,10 @@ public class VisualizzaPazienti extends CommonView {
 		JPanel upperMiddlePanel = new JPanel();
 		upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
 		middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
-		upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("900px"), },
-				new RowSpec[] { RowSpec.decode("25px"), }));
+		upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("900px:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("25px"),}));
 		JMenuBar menuBar = new JMenuBar();
 //frame.setJMenuBar(menuBar);
 		
@@ -133,8 +136,8 @@ public class VisualizzaPazienti extends CommonView {
 			}
 		});
 		
-		buttonVai.setBackground(Color.LIGHT_GRAY);
-		buttonVai.setForeground(Color.BLACK);
+		//buttonVai.setBackground(Color.LIGHT_GRAY);
+		//buttonVai.setForeground(Color.BLACK);
 		menuBar.add(menuMostra);
 		//menuBar.add(menuAzioni);
 		menuBar.add(searchBar);
@@ -143,13 +146,7 @@ public class VisualizzaPazienti extends CommonView {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
 		middlePanel.add(centerPanel, BorderLayout.CENTER);
-		/*upperPanel.setLayout(null);
-		JLabel titleLabel = new JLabel("Visualizzazione Pazienti");
-		titleLabel.setBounds(409, 58, 194, 52);
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-		upperPanel.add(titleLabel);*/
+
 		
 		upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
 		JLabel titleLabel = new JLabel("Visualizza Pazienti");
@@ -161,18 +158,16 @@ public class VisualizzaPazienti extends CommonView {
 		
 		/*-------------- TABLE */
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
-		gbl_centerPanel.columnWidths = new int[] { 0, 0, 0, 0, 0 };
-		gbl_centerPanel.rowHeights = new int[] { 0, 0, 0 };
-		gbl_centerPanel.columnWeights = new double[] { 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gbl_centerPanel.rowWeights = new double[] { 0.0, 1.0, Double.MIN_VALUE };
+		gbl_centerPanel.columnWidths = new int[] { 0, 0 };
+		gbl_centerPanel.rowHeights = new int[] { 0, 0 };
+		gbl_centerPanel.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl_centerPanel.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		centerPanel.setLayout(gbl_centerPanel);
 		
 		this.scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.gridheight = 2;
-		gbc_scrollPane.gridwidth = 3;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		this.initTable();
@@ -180,17 +175,7 @@ public class VisualizzaPazienti extends CommonView {
 		this.createTable(model, listPazienti);
 		scrollPane.setViewportView(table);
 		
-/*------fine-------- table */
 
-		/*menuAzioni.addActionListener((e) -> {
-				if (this.selectedPaziente != -1) {
-					Paziente paziente = listPazienti.get(selectedPaziente);
-					//Person proprietario = paziente.getAnimale().getProprietario();					
-					frame.getContentPane().add(new VisualizzaDatiPaziente(frame, user,paziente ));
-				} else {
-					JOptionPane.showMessageDialog(null, "Non hai selezionato alcun appuntamento ");
-				}
-			});*/
 		menuMostra.addActionListener((e) -> {
 			searchBar.setText("Ricerca Animale");
 			resetAndDraw(pazienteController.getAllPazienti());
@@ -210,10 +195,10 @@ public class VisualizzaPazienti extends CommonView {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 		
-		//setLayout(groupLayout);
+//	setLayout(groupLayout);
 		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
-		this.initCommonView(frame, user);
+	this.initCommonView(frame, user);
 
 	}
 

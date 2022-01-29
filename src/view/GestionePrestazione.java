@@ -77,12 +77,12 @@ public class GestionePrestazione extends CommonView {
 				
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
-				.createSequentialGroup()
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
+				.addGroup(groupLayout.createSequentialGroup()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
 						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
-						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE))
 				.addGap(24)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -97,8 +97,10 @@ public class GestionePrestazione extends CommonView {
 				upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
 				middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
 				
-				upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("900px"), },
-						new RowSpec[] { RowSpec.decode("25px"), }));
+				upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] {
+						ColumnSpec.decode("900px:grow"),},
+					new RowSpec[] {
+						RowSpec.decode("25px"),}));
 				
 				JMenuBar menuBar = new JMenuBar();
 				upperMiddlePanel.add(menuBar, "1, 1, fill, top");
@@ -136,8 +138,8 @@ public class GestionePrestazione extends CommonView {
 					}
 				});
 				
-				buttonVai.setBackground(Color.LIGHT_GRAY);
-				buttonVai.setForeground(Color.BLACK);
+			//	buttonVai.setBackground(Color.LIGHT_GRAY);
+			//	buttonVai.setForeground(Color.BLACK);
 				menuBar.add(searchBar);
 				menuBar.add(buttonVai);
 
@@ -166,9 +168,9 @@ public class GestionePrestazione extends CommonView {
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 2;
-		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.gridwidth = 4;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		
@@ -212,7 +214,7 @@ public class GestionePrestazione extends CommonView {
 		lowerPanel.add(backButton, BorderLayout.WEST);
 		
 	//setLayout(groupLayout);
-//	new GroupLayout(this);
+//new GroupLayout(this);
 	frame.getContentPane().setLayout(groupLayout);
 	this.initCommonView(frame, user);
 
