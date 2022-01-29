@@ -19,6 +19,9 @@ import javax.swing.SwingConstants;
 import controller.UserController;
 import controller.UserControllerImpl;
 import model.User;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class Login extends JPanel {
 
@@ -77,73 +80,82 @@ public class Login extends JPanel {
         });
         
         JPanel panelLogin = new JPanel();
-        GridLayout gl_panelLogin = new GridLayout();
-        gl_panelLogin.setRows(2);
-        gl_panelLogin.setColumns(2);
-        gl_panelLogin.setVgap(20);
-        gl_panelLogin.setHgap(10);
-        panelLogin.setLayout(gl_panelLogin);
+        GridBagLayout gbl_panelLogin = new GridBagLayout();
+        gbl_panelLogin.columnWidths = new int[]{37, 100, 136, 0};
+        gbl_panelLogin.rowHeights = new int[]{26, 26, 0};
+        gbl_panelLogin.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+        gbl_panelLogin.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+        panelLogin.setLayout(gbl_panelLogin);
         
         JLabel lblUsername_1 = new JLabel("Email");
-        lblUsername_1.setHorizontalAlignment(SwingConstants.TRAILING);
+        lblUsername_1.setHorizontalAlignment(SwingConstants.LEFT);
         lblUsername_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        panelLogin.add(lblUsername_1);
+        GridBagConstraints gbc_lblUsername_1 = new GridBagConstraints();
+        gbc_lblUsername_1.fill = GridBagConstraints.BOTH;
+        gbc_lblUsername_1.insets = new Insets(0, 0, 5, 5);
+        gbc_lblUsername_1.gridx = 1;
+        gbc_lblUsername_1.gridy = 0;
+        panelLogin.add(lblUsername_1, gbc_lblUsername_1);
         
         textFieldUsername = new JTextField();
         textFieldUsername.setFont(new Font("Tahoma", Font.PLAIN, 16));
         textFieldUsername.setColumns(10);
-        panelLogin.add(textFieldUsername);
-        
-        JLabel lbl1 = new JLabel("");
-        panelLogin.add(lbl1);
+        GridBagConstraints gbc_textFieldUsername = new GridBagConstraints();
+        gbc_textFieldUsername.fill = GridBagConstraints.BOTH;
+        gbc_textFieldUsername.insets = new Insets(0, 0, 5, 0);
+        gbc_textFieldUsername.gridx = 2;
+        gbc_textFieldUsername.gridy = 0;
+        panelLogin.add(textFieldUsername, gbc_textFieldUsername);
         
         JLabel lblPassword_1 = new JLabel("Password");
-        lblPassword_1.setHorizontalAlignment(SwingConstants.TRAILING);
+        lblPassword_1.setHorizontalAlignment(SwingConstants.LEFT);
         lblPassword_1.setFont(new Font("Tahoma", Font.PLAIN, 16));
-        panelLogin.add(lblPassword_1);
+        GridBagConstraints gbc_lblPassword_1 = new GridBagConstraints();
+        gbc_lblPassword_1.fill = GridBagConstraints.BOTH;
+        gbc_lblPassword_1.insets = new Insets(0, 0, 0, 5);
+        gbc_lblPassword_1.gridx = 1;
+        gbc_lblPassword_1.gridy = 1;
+        panelLogin.add(lblPassword_1, gbc_lblPassword_1);
         
         passwordField = new JPasswordField();
-        panelLogin.add(passwordField);
-        
-        JLabel lbl2 = new JLabel("");
-        panelLogin.add(lbl2);
+        GridBagConstraints gbc_passwordField = new GridBagConstraints();
+        gbc_passwordField.fill = GridBagConstraints.BOTH;
+        gbc_passwordField.gridx = 2;
+        gbc_passwordField.gridy = 1;
+        panelLogin.add(passwordField, gbc_passwordField);
 
         
         
        // GROUP LAYOUT
- //  GroupLayout groupLayout = new GroupLayout(this);
-      GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-       groupLayout.setHorizontalGroup(
-       	groupLayout.createParallelGroup(Alignment.LEADING)
-       		.addGroup(groupLayout.createSequentialGroup()
-       			.addComponent(panel, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
-       			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-       				.addGroup(groupLayout.createSequentialGroup()
-       					.addPreferredGap(ComponentPlacement.UNRELATED)
-       					.addComponent(panelLogin, GroupLayout.PREFERRED_SIZE, 779, GroupLayout.PREFERRED_SIZE))
-       				.addGroup(groupLayout.createSequentialGroup()
-       					.addGap(349)
-       					.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE))
-       				.addGroup(groupLayout.createSequentialGroup()
-       					.addGap(141)
-       					.addComponent(loginLabel))
-       				//.addGroup(groupLayout.createSequentialGroup()
-       					//.addGap(200)
-       					//.addComponent(panelProfessione, GroupLayout.PREFERRED_SIZE, 329, GroupLayout.PREFERRED_SIZE)))
-       			.addGap(55)))
-       );
-       groupLayout.setVerticalGroup(
-       	groupLayout.createParallelGroup(Alignment.LEADING)
-       		.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 572, Short.MAX_VALUE)
-       		.addGroup(groupLayout.createSequentialGroup()
-       			.addGap(103)
-       			.addComponent(loginLabel)
-       			.addGap(81)
-       			.addComponent(panelLogin, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-       			.addGap(18)
-       			.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-       			.addGap(84))
-       );
+GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+ //GroupLayout groupLayout = new GroupLayout(this);
+  groupLayout.setHorizontalGroup(
+  	groupLayout.createParallelGroup(Alignment.LEADING)
+  		.addGroup(groupLayout.createSequentialGroup()
+  			.addComponent(panel, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+  			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+  				.addGroup(groupLayout.createSequentialGroup()
+  					.addGap(270)
+  					.addComponent(panelLogin, GroupLayout.PREFERRED_SIZE, 779, GroupLayout.PREFERRED_SIZE))
+  				.addGroup(groupLayout.createSequentialGroup()
+  					.addGap(385)
+  					.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 80, GroupLayout.PREFERRED_SIZE))
+  				.addGroup(groupLayout.createSequentialGroup()
+  					.addGap(355)
+  					.addComponent(loginLabel))))
+  );
+  groupLayout.setVerticalGroup(
+  	groupLayout.createParallelGroup(Alignment.LEADING)
+  		.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+  		.addGroup(groupLayout.createSequentialGroup()
+  			.addGap(58)
+  			.addComponent(loginLabel)
+  			.addGap(95)
+  			.addComponent(panelLogin, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+  			.addGap(35)
+  			.addComponent(sendButton, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+  			.addGap(84))
+  );
        
        
        JButton btnRegister = new JButton("Registrazione");
@@ -174,6 +186,6 @@ public class Login extends JPanel {
        			.addContainerGap(271, Short.MAX_VALUE))
        );
        panel.setLayout(gl_panel);
-      frame.getContentPane().setLayout(groupLayout);
+frame.getContentPane().setLayout(groupLayout);
     }
 }

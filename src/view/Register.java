@@ -87,7 +87,7 @@ public class Register extends JPanel {
         JButton btnRegister = new JButton("Registrazione");
         btnRegister.setEnabled(false);
     	JButton sendButton = new JButton("Invia");
-        sendButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
+    	sendButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
         JPanel centerPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		lowerPanel.setLayout(new BorderLayout(0, 0));
