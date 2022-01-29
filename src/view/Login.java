@@ -7,6 +7,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -48,37 +50,39 @@ public class Login extends JPanel {
         JLabel loginLabel = new JLabel("Accesso");
         loginLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));        
 
+
        // JLabel label = new JLabel("");
        // label.setIcon(IconImage.DENTAL_CARE.getImageIcon());
         
         JButton loginButton = new JButton("Accesso");
         loginButton.setEnabled(false);
-        
+
+  
         JButton sendButton = new JButton("Invia");
         sendButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
         sendButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	if(controller.checkUser(textFieldUsername.getText(), String.valueOf(passwordField.getPassword()))) {
-            		//JOptionPane.showMessageDialog(frame, "User found", "OK!", JOptionPane.ERROR_MESSAGE);
-            		 user = controller.getUser(textFieldUsername.getText());
-            		 //System.out.println(user.getRuolo());
-					switch (user.getRuolo()) {
-					case "Veterinario":
-					case "Infermiere":
-						frame.getContentPane().add(new HomeVeterinario(frame, user));
-						break;
-					case "Segretaria":
-					case "tecnico":
-						frame.getContentPane().add(new HomeSegretaria(frame, user));
-						break;
-					default:
-					}
-            	} else {
-            		JOptionPane.showMessageDialog(frame, "User not found", "Error!", JOptionPane.ERROR_MESSAGE);
-            	}
+            	effettuaLogin();
             }
         });
-        
+        //togliere da qui a 
+        frame.getRootPane().setDefaultButton(sendButton);
+        sendButton.addKeyListener(new KeyListener() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {				
+				if (e.getKeyCode()==KeyEvent.VK_ENTER){
+			        System.out.println("Hello");
+			        effettuaLogin();
+			    }
+			}
+			@Override
+			public void keyReleased(KeyEvent e) {				
+			}
+        });
+        //qui
         JPanel panelLogin = new JPanel();
         GridBagLayout gbl_panelLogin = new GridBagLayout();
         gbl_panelLogin.columnWidths = new int[]{37, 100, 136, 0};
@@ -187,5 +191,24 @@ GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
        );
        panel.setLayout(gl_panel);
 frame.getContentPane().setLayout(groupLayout);
+    }
+    
+    public void effettuaLogin() {
+       	if(controller.checkUser(textFieldUsername.getText(), String.valueOf(passwordField.getPassword()))) {
+   		 user = controller.getUser(textFieldUsername.getText());
+			switch (user.getRuolo()) {
+			case "Veterinario":
+			case "Infermiere":
+				frame.getContentPane().add(new HomeVeterinario(frame, user));
+				break;
+			case "Segretaria":
+			case "tecnico":
+				frame.getContentPane().add(new HomeSegretaria(frame, user));
+				break;
+			default:
+			}
+   	} else {
+   		JOptionPane.showMessageDialog(frame, "Utente non trovato", "Errore!", JOptionPane.ERROR_MESSAGE);
+   	}
     }
 }
