@@ -76,7 +76,7 @@ public class VisualizzaPazienti extends CommonView {
 		//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING,false)
 								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 985, Short.MAX_VALUE)
 								.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 985, Short.MAX_VALUE)
 								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 985, Short.MAX_VALUE))

@@ -23,7 +23,7 @@ public class AnagraficaProprietarioPanel extends JPanel {
 
 		JPanel anagraficaPanel = new JPanel();
 		GridBagLayout gbl_anagraficaPanel = new GridBagLayout();
-		gbl_anagraficaPanel.columnWidths = new int[] { 0, 65, 109, 20, 7, 109, 0, 0 };
+		gbl_anagraficaPanel.columnWidths = new int[] { 0, 65, 109, 10, 7, 109, 0, 0 };
 		gbl_anagraficaPanel.rowHeights = new int[] { 0, 55, 55, 55, 55, 55, 0, 0 };
 		gbl_anagraficaPanel.columnWeights = new double[] { 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_anagraficaPanel.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE };

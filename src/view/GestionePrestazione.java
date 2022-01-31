@@ -80,17 +80,17 @@ public class GestionePrestazione extends CommonView {
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
 						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
 						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE))
-				.addGap(24)));
+				.addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE).addGap(25)
 						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE).addGap(84)
-						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE).addGap(0)));
+						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE).addGap(12)));
 		
 
 		//------MENU BAR------
@@ -109,6 +109,7 @@ public class GestionePrestazione extends CommonView {
 
 				searchBar = new JTextField();
 				searchBar.setText("Ricerca Animale");
+				searchBar.setFont(new Font("Tahoma", Font.ITALIC, 13));
 				searchBar.addFocusListener((FocusListener) new FocusListener() {
 					
 					@Override

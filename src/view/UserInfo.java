@@ -365,6 +365,7 @@ public class UserInfo  extends CommonView {
 			this.model = (DefaultTableModel) table.getModel();
 
 			JLabel lblSpecializzazioni = new JLabel("Specializzazioni");
+			table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
 			GridBagConstraints gbc_lblSpecializzazioni = new GridBagConstraints();
 			gbc_lblSpecializzazioni.fill = GridBagConstraints.HORIZONTAL;
 			gbc_lblSpecializzazioni.gridwidth = 3;
