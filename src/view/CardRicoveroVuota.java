@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import model.Ricovero;
 import model.User;
+import java.awt.Font;
 
 public class CardRicoveroVuota extends JPanel {
 
@@ -30,13 +31,14 @@ public class CardRicoveroVuota extends JPanel {
 	public CardRicoveroVuota(JFrame frame, User user, Ricovero ricovero ) {
 		setLayout(new BorderLayout(0, 0));
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
-		Border margin = new EmptyBorder(0,15,60,15);
+		Border margin = new EmptyBorder(0,13,80,13);
 		setBorder(new CompoundBorder(border, margin));
 
 		JPanel upperPanel = new JPanel();
 		add(upperPanel, BorderLayout.NORTH);
 		
 		JLabel lblModPostoEDim = new JLabel();
+		lblModPostoEDim.setFont(new Font("Tahoma", Font.BOLD, 13));
 		String dimensione = ricovero.getPosto().getDescrizione().substring(18);
 		lblModPostoEDim.setText("Posto Numero: " + ricovero.getPosto().getNumero() + " Taglia:  " +  dimensione);
 		
@@ -46,11 +48,12 @@ public class CardRicoveroVuota extends JPanel {
 		add(middlePanel, BorderLayout.CENTER);
 		GridBagLayout gbl_middlePanel = new GridBagLayout();
 		gbl_middlePanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_middlePanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_middlePanel.rowHeights = new int[]{0, 20, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_middlePanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_middlePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		middlePanel.setLayout(gbl_middlePanel);
 		JLabel lblVuoto = new JLabel("Libero");
+		lblVuoto.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblVuoto.setForeground(new Color(34, 139, 34));
 		GridBagConstraints gbc_lblVuoto = new GridBagConstraints();
 		gbc_lblVuoto.insets = new Insets(0, 0, 5, 5);

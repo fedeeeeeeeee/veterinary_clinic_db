@@ -35,6 +35,7 @@ public class CardRicovero extends JPanel {
 		setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		
 		JLabel lblModPostoEDim = new JLabel();
+		lblModPostoEDim.setFont(new Font("Tahoma", Font.BOLD, 13));
 		String dimensione = ricovero.getPosto().getDescrizione().substring(18);
 		lblModPostoEDim.setText("Posto Numero: " + ricovero.getPosto().getNumero() + " Taglia:  " +  dimensione);
 		upperPanel.add(lblModPostoEDim);
@@ -43,43 +44,45 @@ public class CardRicovero extends JPanel {
 		add(middlePanel, BorderLayout.CENTER);
 		GridBagLayout gbl_middlePanel = new GridBagLayout();
 		gbl_middlePanel.columnWidths = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_middlePanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_middlePanel.rowHeights = new int[]{20, 0, 0, 0, 0, 10, 0, 0, 0};
 		gbl_middlePanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_middlePanel.rowWeights = new double[]{1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_middlePanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		middlePanel.setLayout(gbl_middlePanel);
 		
 		JLabel lblModNome = new JLabel("Nome");
+		lblModNome.setFont(new Font("Tahoma", Font.BOLD, 12));
 		lblModNome.setText(ricovero.getAnimale().getNome());
 		GridBagConstraints gbc_lblModNome = new GridBagConstraints();
 		gbc_lblModNome.insets = new Insets(0, 0, 5, 5);
 		gbc_lblModNome.gridx = 2;
-		gbc_lblModNome.gridy = 2;
+		gbc_lblModNome.gridy = 1;
 		middlePanel.add(lblModNome, gbc_lblModNome);
 		
 		JLabel lblInzioRicovero = new JLabel("Inizio Ricovero");
-		lblInzioRicovero.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		lblInzioRicovero.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_2.gridx = 1;
-		gbc_lblNewLabel_2.gridy = 4;
+		gbc_lblNewLabel_2.gridy = 3;
 		middlePanel.add(lblInzioRicovero, gbc_lblNewLabel_2);
 		
 		JLabel lblFineRicovero = new JLabel("Fine Ricovero");
-		lblFineRicovero.setFont(new Font("Tahoma", Font.ITALIC, 11));
+		lblFineRicovero.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_3.gridx = 3;
-		gbc_lblNewLabel_3.gridy = 4;
+		gbc_lblNewLabel_3.gridy = 3;
 		middlePanel.add(lblFineRicovero, gbc_lblNewLabel_3);
 		
 		JLabel lblModDataInizio = new JLabel("data");
+		lblModDataInizio.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblModDataInizio.setText(ricovero.getDataInizio());
 		GridBagConstraints gbc_lblModDataInizio = new GridBagConstraints();
 		gbc_lblModDataInizio.insets = new Insets(0, 0, 5, 5);
 		gbc_lblModDataInizio.gridx = 1;
-		gbc_lblModDataInizio.gridy = 5;
+		gbc_lblModDataInizio.gridy = 4;
 		middlePanel.add(lblModDataInizio, gbc_lblModDataInizio);
 		
 		String dataInizio = ricovero.getDataInizio(); 
@@ -94,29 +97,32 @@ public class CardRicovero extends JPanel {
 		String dataFine = sdf.format(c.getTime()); 
 		
 		JLabel lblModDataFine = new JLabel("New label");
+		lblModDataFine.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblModDataFine.setText(dataFine);
 		GridBagConstraints gbc_lblModDataFine = new GridBagConstraints();
 		gbc_lblModDataFine.anchor = GridBagConstraints.WEST;
 		gbc_lblModDataFine.insets = new Insets(0, 0, 5, 5);
 		gbc_lblModDataFine.gridx = 3;
-		gbc_lblModDataFine.gridy = 5;
+		gbc_lblModDataFine.gridy = 4;
 		middlePanel.add(lblModDataFine, gbc_lblModDataFine);
 		
 		JLabel lblNewLabel_6 = new JLabel("Motivo");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_lblNewLabel_6 = new GridBagConstraints();
 		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_6.gridx = 1;
-		gbc_lblNewLabel_6.gridy = 7;
+		gbc_lblNewLabel_6.gridy = 6;
 		middlePanel.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		
 		JLabel lblModMotivo = new JLabel("New label");
+		lblModMotivo.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblModMotivo.setText(ricovero.getMotivoRicovero());
 		GridBagConstraints gbc_lblModMotivo = new GridBagConstraints();
 		gbc_lblModMotivo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_lblModMotivo.gridwidth = 2;
 		gbc_lblModMotivo.insets = new Insets(0, 0, 5, 5);
 		gbc_lblModMotivo.gridx = 2;
-		gbc_lblModMotivo.gridy = 7;
+		gbc_lblModMotivo.gridy = 6;
 		middlePanel.add(lblModMotivo, gbc_lblModMotivo);
 		
 		JPanel lowerPanel = new JPanel();

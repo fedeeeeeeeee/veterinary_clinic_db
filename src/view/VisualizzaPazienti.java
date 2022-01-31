@@ -72,20 +72,18 @@ public class VisualizzaPazienti extends CommonView {
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE)
-								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE))
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING,false)
+								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 985, Short.MAX_VALUE)
+								.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 985, Short.MAX_VALUE)
+								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 985, Short.MAX_VALUE))
 						.addGap(24)));
 						//.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE).addGap(25)
 						.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
 						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap()));
 //------MENU BAR------
@@ -148,15 +146,14 @@ public class VisualizzaPazienti extends CommonView {
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
 		middlePanel.add(centerPanel, BorderLayout.CENTER);
-
 		
-		upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		upperPanel.setLayout(new BorderLayout(0, 0));
 		JLabel titleLabel = new JLabel("Visualizza Pazienti");
+		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-	
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-		upperPanel.add(titleLabel);
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		/*-------------- TABLE */
 		GridBagLayout gbl_centerPanel = new GridBagLayout();

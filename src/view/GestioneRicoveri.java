@@ -194,12 +194,13 @@ public class GestioneRicoveri extends CommonView {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 
-		upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
+		upperPanel.setLayout(new BorderLayout(0, 0));
 		JLabel titleLabel = new JLabel("Ricoveri");
+		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-		upperPanel.add(titleLabel);
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		// setLayout(groupLayout);
 		new GroupLayout(this);
