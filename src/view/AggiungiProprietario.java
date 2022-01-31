@@ -10,7 +10,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,6 +36,9 @@ import model.Person;
 import model.Proprietario;
 import model.User;
 import utility.ValidityFieldsChecker;
+import java.awt.GridBagLayout;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 public class AggiungiProprietario extends CommonView {
 
@@ -68,8 +73,7 @@ public class AggiungiProprietario extends CommonView {
 		JPanel centerPanel = new JPanel();
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());           
-		// utile per il design
-        // GroupLayout groupLayout = new GroupLayout(this);
+       // GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -86,131 +90,226 @@ public class AggiungiProprietario extends CommonView {
 						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap()));
 		
-		centerPanel.setLayout(new FormLayout(new ColumnSpec[] {
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(50dlu;default)"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_COLSPEC,
-				ColumnSpec.decode("max(50dlu;default)"),},
-			new RowSpec[] {
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				RowSpec.decode("default:grow"),}));
-		
 		
 		JPanel anagraficaPanel = new JPanel();
 		anagraficaPanel.setBorder(new TitledBorder(
 				new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)),
 				"Anagrafica", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		anagraficaPanel.setLayout(new GridLayout(5, 4, 0, 0));
-		
+		GridBagLayout gbl_anagraficaPanel = new GridBagLayout();
+		gbl_anagraficaPanel.columnWidths = new int[]{0, 40, 67, 60, 67, 114, 0, 0};
+		gbl_anagraficaPanel.rowHeights = new int[]{0, 30, 5, 30, 5, 30, 5, 30, 5, 30, 0, 0, 0};
+		gbl_anagraficaPanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_anagraficaPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
+		anagraficaPanel.setLayout(gbl_anagraficaPanel);
 		JLabel labelNome = new JLabel("Nome");
-		labelNome.setFont(new Font("Tahoma", Font.BOLD, 13));
-		labelNome.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(labelNome);
-
-		textFieldNome = new JTextField();
-		labelNome.setLabelFor(textFieldNome);
-		anagraficaPanel.add(textFieldNome);
-
-		textFieldNome.setColumns(10);
-		JLabel labelCognome = new JLabel("Cognome");
-		labelCognome.setFont(new Font("Tahoma", Font.BOLD, 13));
-		labelCognome.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(labelCognome);
-
-		textFieldCognome = new JTextField();
-		labelCognome.setLabelFor(textFieldCognome);
-		anagraficaPanel.add(textFieldCognome);
-
-		textFieldCognome.setColumns(10);
+				labelNome.setLabelFor(textFieldNome);
+				labelNome.setFont(new Font("Tahoma", Font.BOLD, 13));
+				labelNome.setHorizontalAlignment(SwingConstants.LEFT);
+				GridBagConstraints gbc_labelNome = new GridBagConstraints();
+				gbc_labelNome.fill = GridBagConstraints.BOTH;
+				gbc_labelNome.insets = new Insets(0, 0, 5, 5);
+				gbc_labelNome.gridx = 1;
+				gbc_labelNome.gridy = 1;
+				anagraficaPanel.add(labelNome, gbc_labelNome);
+		
+				textFieldNome = new JTextField();
+				GridBagConstraints gbc_textFieldNome = new GridBagConstraints();
+				gbc_textFieldNome.fill = GridBagConstraints.BOTH;
+				gbc_textFieldNome.insets = new Insets(0, 0, 5, 5);
+				gbc_textFieldNome.gridx = 2;
+				gbc_textFieldNome.gridy = 1;
+				anagraficaPanel.add(textFieldNome, gbc_textFieldNome);
+				
+						textFieldNome.setColumns(10);
+						JLabel labelCognome = new JLabel("Cognome");
+				labelCognome.setLabelFor(textFieldCognome);
+			
+				labelCognome.setFont(new Font("Tahoma", Font.BOLD, 13));
+				labelCognome.setHorizontalAlignment(SwingConstants.LEFT);
+				GridBagConstraints gbc_labelCognome = new GridBagConstraints();
+				gbc_labelCognome.fill = GridBagConstraints.BOTH;
+				gbc_labelCognome.insets = new Insets(0, 0, 5, 5);
+				gbc_labelCognome.gridx = 4;
+				gbc_labelCognome.gridy = 1;
+				anagraficaPanel.add(labelCognome, gbc_labelCognome);
+		
+				textFieldCognome = new JTextField();
+				GridBagConstraints gbc_textFieldCognome = new GridBagConstraints();
+				gbc_textFieldCognome.fill = GridBagConstraints.BOTH;
+				gbc_textFieldCognome.insets = new Insets(0, 0, 5, 5);
+				gbc_textFieldCognome.gridx = 5;
+				gbc_textFieldCognome.gridy = 1;
+				anagraficaPanel.add(textFieldCognome, gbc_textFieldCognome);
+				
+						textFieldCognome.setColumns(10);
 		JLabel labelCf = new JLabel("CF");
 		labelCf.setFont(new Font("Tahoma", Font.BOLD, 13));
 		labelCf.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(labelCf);
-
-		textFieldCodiceFiscale = new JTextField();
+		GridBagConstraints gbc_labelCf = new GridBagConstraints();
+		gbc_labelCf.fill = GridBagConstraints.BOTH;
+		gbc_labelCf.insets = new Insets(0, 0, 5, 5);
+		gbc_labelCf.gridx = 1;
+		gbc_labelCf.gridy = 3;
+		anagraficaPanel.add(labelCf, gbc_labelCf);
 		labelCf.setLabelFor(textFieldCodiceFiscale);
-		anagraficaPanel.add(textFieldCodiceFiscale);
-		textFieldCodiceFiscale.setColumns(10);
-
-		JLabel labelDataNascita = new JLabel("Data di nascita");
-		labelDataNascita.setFont(new Font("Tahoma", Font.BOLD, 13));
-		anagraficaPanel.add(labelDataNascita);
-
-		JDateChooser dateChooser = new JDateChooser();
-		labelDataNascita.setLabelFor(dateChooser);
-		labelDataNascita.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(dateChooser);
-
-		JLabel labelVia = new JLabel("Via");
-		labelVia.setFont(new Font("Tahoma", Font.BOLD, 13));
-		anagraficaPanel.add(labelVia);
-
-		textFieldVia = new JTextField();
-		labelVia.setLabelFor(textFieldVia);
-		labelVia.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(textFieldVia);
-		textFieldVia.setColumns(10);
-
-		JLabel labelNumeroCivico = new JLabel("Nr.");
-		labelNumeroCivico.setFont(new Font("Tahoma", Font.BOLD, 13));
-		anagraficaPanel.add(labelNumeroCivico);
-
-		textFieldNumeroCivico = new JTextField();
-		labelNumeroCivico.setLabelFor(textFieldNumeroCivico);
-		labelNumeroCivico.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(textFieldNumeroCivico);
-		textFieldNumeroCivico.setColumns(10);
-
-		JLabel labelCitta = new JLabel("Citta");
-		labelCitta.setFont(new Font("Tahoma", Font.BOLD, 13));
-		anagraficaPanel.add(labelCitta);
-
-		textFieldCitta = new JTextField();
-		labelCitta.setLabelFor(textFieldCitta);
-		labelCitta.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(textFieldCitta);
-		textFieldCitta.setColumns(10);
-
-		JLabel labelCap = new JLabel("CAP");
-		labelCap.setFont(new Font("Tahoma", Font.BOLD, 13));
-		anagraficaPanel.add(labelCap);
-
-		textFieldCap = new JTextField();
-		labelCap.setLabelFor(textFieldCap);
-		labelCap.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(textFieldCap);
-		textFieldCap.setColumns(10);
-
-		JLabel labelTelefono = new JLabel("Telefono");
-		labelTelefono.setFont(new Font("Tahoma", Font.BOLD, 13));
-		anagraficaPanel.add(labelTelefono);
-
-		textFieldTelefono = new JTextField();
-		labelTelefono.setLabelFor(textFieldTelefono);
-		labelTelefono.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(textFieldTelefono);
-		textFieldTelefono.setColumns(10);
+		
+				textFieldCodiceFiscale = new JTextField();
+				GridBagConstraints gbc_textFieldCodiceFiscale = new GridBagConstraints();
+				gbc_textFieldCodiceFiscale.fill = GridBagConstraints.BOTH;
+				gbc_textFieldCodiceFiscale.insets = new Insets(0, 0, 5, 5);
+				gbc_textFieldCodiceFiscale.gridx = 2;
+				gbc_textFieldCodiceFiscale.gridy = 3;
+				anagraficaPanel.add(textFieldCodiceFiscale, gbc_textFieldCodiceFiscale);
+				textFieldCodiceFiscale.setColumns(10);
+				
+						
+						
+								JDateChooser dateChooser = new JDateChooser();
+								GridBagConstraints gbc_dateChooser = new GridBagConstraints();
+								gbc_dateChooser.fill = GridBagConstraints.BOTH;
+								gbc_dateChooser.insets = new Insets(0, 0, 5, 5);
+								gbc_dateChooser.gridx = 5;
+								gbc_dateChooser.gridy = 3;
+								anagraficaPanel.add(dateChooser, gbc_dateChooser);
+								JLabel labelVia = new JLabel("Via");
+								labelVia.setLabelFor(textFieldVia);
+								
+								JLabel labelDataNascita = new JLabel("Data di nascita");
+								labelDataNascita.setLabelFor(dateChooser);	
+										labelDataNascita.setFont(new Font("Tahoma", Font.BOLD, 13));
+										GridBagConstraints gbc_labelDataNascita = new GridBagConstraints();
+										gbc_labelDataNascita.fill = GridBagConstraints.BOTH;
+										gbc_labelDataNascita.insets = new Insets(0, 0, 5, 5);
+										gbc_labelDataNascita.gridx = 4;
+										gbc_labelDataNascita.gridy = 3;
+										anagraficaPanel.add(labelDataNascita, gbc_labelDataNascita);
+										labelDataNascita.setHorizontalAlignment(SwingConstants.LEFT);
+										
+										labelVia.setFont(new Font("Tahoma", Font.BOLD, 13));
+										GridBagConstraints gbc_labelVia = new GridBagConstraints();
+										gbc_labelVia.fill = GridBagConstraints.BOTH;
+										gbc_labelVia.insets = new Insets(0, 0, 5, 5);
+										gbc_labelVia.gridx = 1;
+										gbc_labelVia.gridy = 5;
+										anagraficaPanel.add(labelVia, gbc_labelVia);
+										labelVia.setHorizontalAlignment(SwingConstants.LEFT);
+						
+								textFieldVia = new JTextField();
+								GridBagConstraints gbc_textFieldVia = new GridBagConstraints();
+								gbc_textFieldVia.fill = GridBagConstraints.BOTH;
+								gbc_textFieldVia.insets = new Insets(0, 0, 5, 5);
+								gbc_textFieldVia.gridx = 2;
+								gbc_textFieldVia.gridy = 5;
+								anagraficaPanel.add(textFieldVia, gbc_textFieldVia);
+								textFieldVia.setColumns(10);
+								
+								JLabel labelNumeroCivico = new JLabel("Nr.");
+								labelNumeroCivico.setLabelFor(textFieldNumeroCivico);
+								labelNumeroCivico.setFont(new Font("Tahoma", Font.BOLD, 13));
+								GridBagConstraints gbc_labelNumeroCivico = new GridBagConstraints();
+								gbc_labelNumeroCivico.fill = GridBagConstraints.BOTH;
+								gbc_labelNumeroCivico.insets = new Insets(0, 0, 5, 5);
+								gbc_labelNumeroCivico.gridx = 4;
+								gbc_labelNumeroCivico.gridy = 5;
+								anagraficaPanel.add(labelNumeroCivico, gbc_labelNumeroCivico);
+								labelNumeroCivico.setHorizontalAlignment(SwingConstants.LEFT);
+				
+						textFieldNumeroCivico = new JTextField();
+						GridBagConstraints gbc_textFieldNumeroCivico = new GridBagConstraints();
+						gbc_textFieldNumeroCivico.fill = GridBagConstraints.BOTH;
+						gbc_textFieldNumeroCivico.insets = new Insets(0, 0, 5, 5);
+						gbc_textFieldNumeroCivico.gridx = 5;
+						gbc_textFieldNumeroCivico.gridy = 5;
+						anagraficaPanel.add(textFieldNumeroCivico, gbc_textFieldNumeroCivico);
+						textFieldNumeroCivico.setColumns(10);
+				
+						JLabel labelCitta = new JLabel("Citta");
+						labelCitta.setFont(new Font("Tahoma", Font.BOLD, 13));
+						GridBagConstraints gbc_labelCitta = new GridBagConstraints();
+						gbc_labelCitta.fill = GridBagConstraints.BOTH;
+						gbc_labelCitta.insets = new Insets(0, 0, 5, 5);
+						gbc_labelCitta.gridx = 1;
+						gbc_labelCitta.gridy = 7;
+						anagraficaPanel.add(labelCitta, gbc_labelCitta);
+						labelCitta.setHorizontalAlignment(SwingConstants.LEFT);
+				labelCitta.setLabelFor(textFieldCitta);
+				
+						textFieldCitta = new JTextField();
+						GridBagConstraints gbc_textFieldCitta = new GridBagConstraints();
+						gbc_textFieldCitta.fill = GridBagConstraints.BOTH;
+						gbc_textFieldCitta.insets = new Insets(0, 0, 5, 5);
+						gbc_textFieldCitta.gridx = 2;
+						gbc_textFieldCitta.gridy = 7;
+						anagraficaPanel.add(textFieldCitta, gbc_textFieldCitta);
+						textFieldCitta.setColumns(10);
+						
+						JLabel labelCap = new JLabel("CAP");
+						labelCap.setLabelFor(textFieldCap);	
+						labelCap.setFont(new Font("Tahoma", Font.BOLD, 13));
+						GridBagConstraints gbc_labelCap = new GridBagConstraints();
+						gbc_labelCap.fill = GridBagConstraints.BOTH;
+						gbc_labelCap.insets = new Insets(0, 0, 5, 5);
+						gbc_labelCap.gridx = 4;
+						gbc_labelCap.gridy = 7;
+						anagraficaPanel.add(labelCap, gbc_labelCap);
+						labelCap.setHorizontalAlignment(SwingConstants.LEFT);
+		
+				textFieldCap = new JTextField();
+				GridBagConstraints gbc_textFieldCap = new GridBagConstraints();
+				gbc_textFieldCap.fill = GridBagConstraints.BOTH;
+				gbc_textFieldCap.insets = new Insets(0, 0, 5, 5);
+				gbc_textFieldCap.gridx = 5;
+				gbc_textFieldCap.gridy = 7;
+				anagraficaPanel.add(textFieldCap, gbc_textFieldCap);
+				textFieldCap.setColumns(10);
+				
+				JLabel labelTelefono = new JLabel("Telefono");
+				labelTelefono.setLabelFor(textFieldTelefono);
+						labelTelefono.setFont(new Font("Tahoma", Font.BOLD, 13));
+						GridBagConstraints gbc_labelTelefono = new GridBagConstraints();
+						gbc_labelTelefono.fill = GridBagConstraints.BOTH;
+						gbc_labelTelefono.insets = new Insets(0, 0, 5, 5);
+						gbc_labelTelefono.gridx = 1;
+						gbc_labelTelefono.gridy = 9;
+						anagraficaPanel.add(labelTelefono, gbc_labelTelefono);
+						labelTelefono.setHorizontalAlignment(SwingConstants.LEFT);
+		
+				textFieldTelefono = new JTextField();
+				GridBagConstraints gbc_textFieldTelefono = new GridBagConstraints();
+				gbc_textFieldTelefono.fill = GridBagConstraints.BOTH;
+				gbc_textFieldTelefono.insets = new Insets(0, 0, 5, 5);
+				gbc_textFieldTelefono.gridx = 2;
+				gbc_textFieldTelefono.gridy = 9;
+				anagraficaPanel.add(textFieldTelefono, gbc_textFieldTelefono);
+				textFieldTelefono.setColumns(10);
 		
 		JLabel labelEmail = new JLabel("E-mail");
 		labelEmail.setFont(new Font("Tahoma", Font.BOLD, 13));
-		anagraficaPanel.add(labelEmail);
-
-		textFieldEmail = new JTextField();
-		labelEmail.setLabelFor(textFieldEmail);
+		GridBagConstraints gbc_labelEmail = new GridBagConstraints();
+		gbc_labelEmail.fill = GridBagConstraints.BOTH;
+		gbc_labelEmail.insets = new Insets(0, 0, 5, 5);
+		gbc_labelEmail.gridx = 4;
+		gbc_labelEmail.gridy = 9;
+		anagraficaPanel.add(labelEmail, gbc_labelEmail);
 		labelEmail.setHorizontalAlignment(SwingConstants.LEFT);
-		anagraficaPanel.add(textFieldEmail);
-		textFieldEmail.setColumns(10);
+		labelEmail.setLabelFor(textFieldEmail);
+		
+				textFieldEmail = new JTextField();
+				GridBagConstraints gbc_textFieldEmail = new GridBagConstraints();
+				gbc_textFieldEmail.insets = new Insets(0, 0, 5, 5);
+				gbc_textFieldEmail.fill = GridBagConstraints.BOTH;
+				gbc_textFieldEmail.gridx = 5;
+				gbc_textFieldEmail.gridy = 9;
+				anagraficaPanel.add(textFieldEmail, gbc_textFieldEmail);
+				textFieldEmail.setColumns(10);
 
-		JButton backButton = new JButton("BACK");
-		backButton.setHorizontalAlignment(SwingConstants.LEFT);
-		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		backButton.addActionListener(new ActionListener() {
+		  Icon icon = IconImage.BACK.getImageIcon();
+			JButton backButton = new JButton(icon);
+			backButton.setBorder(BorderFactory.createEmptyBorder());
+			backButton.setContentAreaFilled(false);
+			backButton.setHorizontalAlignment(SwingConstants.LEFT);
+			backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new RegistraPaziente(frame, user));
 			}
@@ -222,18 +321,16 @@ public class AggiungiProprietario extends CommonView {
 		JLabel titleLabel = new JLabel("Aggiungi proprietario");
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel);
-		JPanel panelSx = new JPanel();
-		centerPanel.add(panelSx, "2, 2, 1, 3, fill, fill");
-		panelSx.setMinimumSize(new Dimension(20,6));
-		centerPanel.add(anagraficaPanel, "4, 2, 3, 1, fill, fill");
-		JPanel panelDx = new JPanel();
-		centerPanel.add(panelDx, "8, 2, 1, 3, fill, fill");
+		centerPanel.setLayout(new BorderLayout(0, 0));
 		
-				
-		JButton sendButton = new JButton("SEND");
+		centerPanel.add(anagraficaPanel, BorderLayout.CENTER);
+		JPanel middlelowerPanel = new JPanel();
+		centerPanel.add(middlelowerPanel, BorderLayout.SOUTH);
+		
+		JButton sendButton = new JButton("Salva");
 		sendButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (check.checkCF(textFieldCodiceFiscale.getText()) 
+				if (check.checkCF(textFieldCodiceFiscale.getText())
 						&& check.checkEmail(textFieldEmail.getText())
 						&& check.checkPhoneNumber(textFieldTelefono.getText())
 						&& check.checkNotEmpty(textFieldNome.getText())
@@ -241,49 +338,38 @@ public class AggiungiProprietario extends CommonView {
 						&& check.checkNotEmpty(textFieldVia.getText())
 						&& check.checkNumber(textFieldNumeroCivico.getText())
 						&& check.checkNotEmpty(textFieldNumeroCivico.getText())
-						&& check.checkCap(textFieldCap.getText()) 
+				&& check.checkCap(textFieldCap.getText())
 						&& check.checkNotEmpty(textFieldCap.getText())
 						&& check.checkNotEmpty(textFieldCitta.getText())
 						&& dateChooser.getDate() != null) {
-					System.out.println("tutto ok");
-					
-					proprietario = new Proprietario();
 
+					System.out.println("tutto ok");
+					proprietario = new Proprietario();
 					proprietario.setNome(textFieldNome.getText());
 					proprietario.setCognome(textFieldCognome.getText());
 					proprietario.setCF(textFieldCodiceFiscale.getText());
 					proprietario.setIndirizzoVia(textFieldVia.getText());
 					proprietario.setIndirizzoNumero(Integer.valueOf(textFieldNumeroCivico.getText()));
-					proprietario.setIndirizzoCitta(textFieldCitta.getText());
-					proprietario.setIndirizzoCap(Integer.valueOf(textFieldCap.getText()));
-					
-					dateChooser.setDateFormatString("yyyy-MM-dd");
-					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-					String date = format.format(dateChooser.getDate());
-					proprietario.setDataNascita(date);
-					proprietario.setIndirizzoCitta(textFieldCitta.getText());
-					proprietario.setTelefono(Long.valueOf(textFieldTelefono.getText()));
-					proprietario.setEmail(textFieldEmail.getText());
-
-					controller.addNewProprietario(proprietario);
-					// paziente inserito correttamente
-					frame.getContentPane().add(new RegistraPaziente(frame, user));
-				} else {
-					// errore di compilazione della form
-					System.out.println("errore");
-				}
-			}
-		});
-
-		centerPanel.add(sendButton, "5, 3, 3, 2, center, center");
-		
-		// importante per il design
+                    proprietario.setIndirizzoCitta(textFieldCitta.getText());
+                    proprietario.setIndirizzoCap(Integer.valueOf(textFieldCap.getText()));
+                    dateChooser.setDateFormatString("yyyy-MM-dd");
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    String date = format.format(dateChooser.getDate());
+                    proprietario.setDataNascita(date);
+                    proprietario.setIndirizzoCitta(textFieldCitta.getText());
+                    proprietario.setTelefono(Long.valueOf(textFieldTelefono.getText()));
+                    proprietario.setEmail(textFieldEmail.getText());
+                    controller.addNewProprietario(proprietario);
+                    frame.getContentPane().add(new RegistraPaziente(frame, user));
+                } else {
+                    System.out.println("errore");
+                }
+            }
+        });
+		middlelowerPanel.add(sendButton);
 		//setLayout(groupLayout);
-
-		// importante per la visualizzazione 
-		this.initCommonView(frame, user);
+		//this.initCommonView(frame, user);
 
 		frame.getContentPane().setLayout(groupLayout);
 	}
-
 }

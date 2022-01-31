@@ -11,8 +11,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -215,17 +217,21 @@ public class GestioneUtilizzi extends CommonView {
 				}
 			}
 		});
-		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		
-		JButton backButton = new JButton("BACK");
-		lowerPanel.add(backButton);
-		upperPanel.setLayout(new BorderLayout(0, 0));
-		backButton.addActionListener(new ActionListener() {
+		  Icon icon = IconImage.BACK.getImageIcon();
+			JButton backButton = new JButton(icon);
+			backButton.setBorder(BorderFactory.createEmptyBorder());
+			backButton.setContentAreaFilled(false);
+			backButton.setHorizontalAlignment(SwingConstants.LEFT);
+			backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				  frame.getContentPane().add(new HomeSegretaria(frame, user));
 			}
 		});
-		
+			lowerPanel.setLayout(new BorderLayout(0, 0));
+			lowerPanel.add(backButton, BorderLayout.WEST);
+			
 		JLabel titleLabel = new JLabel("Gestione Prestazioni");
 
 		titleLabel.setBounds(409, 58, 194, 52);

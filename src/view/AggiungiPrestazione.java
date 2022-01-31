@@ -10,9 +10,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -300,13 +303,19 @@ public class AggiungiPrestazione extends CommonView {
 			}
 		});
 		
-		JButton backButton = new JButton("BACK");
-		backButton.addActionListener(new ActionListener() {
+		  Icon icon = IconImage.BACK.getImageIcon();
+				JButton backButton = new JButton(icon);
+				backButton.setBorder(BorderFactory.createEmptyBorder());
+				backButton.setContentAreaFilled(false);
+				backButton.setHorizontalAlignment(SwingConstants.LEFT);
+				backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new GestioneUtilizzi(frame, user));
 			}
 		});
-		lowerPanel.add(backButton);
+				lowerPanel.setLayout(new BorderLayout(0, 0));
+				lowerPanel.add(backButton, BorderLayout.WEST);
 		upperPanel.setLayout(new BorderLayout(0, 0));
 	
 		

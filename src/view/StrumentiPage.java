@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -70,15 +73,14 @@ public class StrumentiPage extends CommonView {
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
 		
-		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-//GroupLayout groupLayout = new GroupLayout(this);
+	GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+		//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE)
-								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 1000, GroupLayout.PREFERRED_SIZE))
+								.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE)
+								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE))
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
@@ -93,8 +95,10 @@ public class StrumentiPage extends CommonView {
 		JPanel upperMiddlePanel = new JPanel();
 		upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
 		middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
-		upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("900px"), },
-				new RowSpec[] { RowSpec.decode("25px"), }));
+		upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("900px:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("25px"),}));
 		JMenuBar menuBar = new JMenuBar();
 //frame.setJMenuBar(menuBar);
 		upperMiddlePanel.add(menuBar, "1, 1, fill, top");
@@ -134,16 +138,10 @@ public class StrumentiPage extends CommonView {
 				search(e);
 			}
 		});
-		buttonVai.setBackground(Color.LIGHT_GRAY);
-		buttonVai.setForeground(Color.BLACK);
 		menuBar.add(menuMostra);
 		menuBar.add(menuAggiungi);
 		menuBar.add(searchBar);
 		menuBar.add(buttonVai);
-		JButton orderAsc = new JButton(IconImage.ARROW.getImageIcon());
-		orderAsc.setBackground(Color.LIGHT_GRAY);
-		orderAsc.setForeground(Color.BLACK);
-		menuBar.add(orderAsc);
 		JPanel centerPanel = new JPanel();
 		centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
 		middlePanel.add(centerPanel, BorderLayout.CENTER);
@@ -167,9 +165,9 @@ public class StrumentiPage extends CommonView {
 		this.scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 2;
-		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.gridwidth = 4;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		this.initTable();
@@ -185,7 +183,7 @@ public class StrumentiPage extends CommonView {
 		JMenuItem itemInEsaurimento = new JMenuItem("In Esaurimento");
 		JMenuItem all = new JMenuItem("Tutti");
 		JMenuItem itemAddStrumento = new JMenuItem("Aggiungi Strumento");
-		JMenuItem itemModQuantita = new JMenuItem("Aggiungere Quantita");
+		JMenuItem itemModQuantita = new JMenuItem("Aggiungere Quantità");
 // itemModQuantita.setIcon(null);
 		itemScaduti.addActionListener((e) -> {
 			this.resetAndDraw(strumentiController.getStrumentiScaduti());
@@ -231,16 +229,19 @@ public class StrumentiPage extends CommonView {
 		
 //----fine ---- MENUU
 		/* LOWER PANEL */
-		JButton sendButton = new JButton("BACK");
-		sendButton.setHorizontalAlignment(SwingConstants.LEFT);
-		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		sendButton.addActionListener(new ActionListener() {
+		  Icon icon = IconImage.BACK.getImageIcon();
+				JButton backButton = new JButton(icon);
+				backButton.setBorder(BorderFactory.createEmptyBorder());
+				backButton.setContentAreaFilled(false);
+				backButton.setHorizontalAlignment(SwingConstants.LEFT);
+				backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new MagazzinoPage(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
-		lowerPanel.add(sendButton, BorderLayout.WEST);
+		lowerPanel.add(backButton, BorderLayout.WEST);
 //setLayout(groupLayout);
 		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
@@ -273,7 +274,7 @@ public class StrumentiPage extends CommonView {
 		model.addColumn("Nome");
 		model.addColumn("Descrizione");
 		model.addColumn("Scadenza");
-		model.addColumn("Quantit�");
+		model.addColumn("Quantità");
 		table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent event) {
 				selectedStrumento = table.getSelectedRow();

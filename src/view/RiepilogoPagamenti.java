@@ -14,7 +14,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -92,7 +94,7 @@ public class RiepilogoPagamenti extends CommonView {
 						x.getAnimale().getCf(),
 						x.getDataPrestazione(),
 						x.getNomePrestazione(),
-						x.getCosto() + "�",
+						x.getCosto() + "€",
 						x.isDuranteRicovero() ? "Si" : "No"
 				});
 			});
@@ -103,7 +105,7 @@ public class RiepilogoPagamenti extends CommonView {
 				model.addRow(new Object[] { 
 						x.getDataPrestazione(),
 						x.getNomePrestazione(),
-						x.getCosto() + "�",
+						x.getCosto() + "€",
 				});
 			});
 		}
@@ -167,8 +169,10 @@ public class RiepilogoPagamenti extends CommonView {
 		upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
 		middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
 		
-		upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("900px"), },
-				new RowSpec[] { RowSpec.decode("25px"), }));
+		upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] {
+				ColumnSpec.decode("900px:grow"),},
+			new RowSpec[] {
+				RowSpec.decode("25px"),}));
 		
 		JMenuBar menuBar = new JMenuBar();
 		upperMiddlePanel.add(menuBar, "1, 1, fill, top");
@@ -200,9 +204,9 @@ public class RiepilogoPagamenti extends CommonView {
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 		gbc_scrollPane.gridheight = 2;
-		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.gridwidth = 4;
 		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 1;
+		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 0;
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		
@@ -240,28 +244,27 @@ public class RiepilogoPagamenti extends CommonView {
 		JMenuItem itemPeriodo = new JMenuItem("Periodo");
 		DateTimeFormatter formatter = DateTimeFormatter.BASIC_ISO_DATE; // ("yyyy-MM-dd")
 		String dataformat = formatter.format(LocalDateTime.now());
-		textFieldTotale
-				.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " �");
+		textFieldTotale.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " €");
 		itemOggi.addActionListener((e) -> {
 			this.resetAndDraw(pagamentiController.getPagamentiOggi().stream().filter(p-> p.getCodPrestazione() != 12).collect(Collectors.toList()));
 			textFieldTotale
-					.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " �");
+					.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " €");
 		});
 		itemMese.addActionListener((e) -> {
 			this.resetAndDraw(pagamentiController.getPagamentiMensili().stream().filter(p-> p.getCodPrestazione() != 12).collect(Collectors.toList()));
 			textFieldTotale
-					.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " �");
+					.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " €");
 		});
 		itemAnno.addActionListener((e) -> {
 			this.resetAndDraw(pagamentiController.getPagamentiAnnuali().stream().filter(p-> p.getCodPrestazione() != 12).collect(Collectors.toList()));
 			textFieldTotale
-					.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " �");
+					.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " €");
 		});
 
 		itemTutti.addActionListener((e) -> {
 			this.resetAndDraw(pagamentiController.getAllPagamenti().stream().filter(p-> p.getCodPrestazione() != 12).collect(Collectors.toList()));
 			textFieldTotale
-					.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " �");
+					.setText(String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " €");
 		});
 		itemPeriodo.addActionListener((e) -> {
 			OptionPeriodo panelPeriod = new OptionPeriodo();
@@ -273,7 +276,7 @@ public class RiepilogoPagamenti extends CommonView {
 						.filter(p -> p.getCodPrestazione() != 12)
 						.collect(Collectors.toList()));
 				textFieldTotale.setText(
-						String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " �");
+						String.valueOf(this.listPagamenti.stream().mapToDouble(x -> x.getCosto()).sum()) + " €");
 			}
 		
 		});
@@ -295,15 +298,6 @@ public class RiepilogoPagamenti extends CommonView {
 					PdfWriter writer = PdfWriter.getInstance(doc, new FileOutputStream(path + ".pdf"));
 					doc.open();
 
-					// TITOLO 1 PROVA
-					/*
-					 * com.itextpdf.text.Font f = new
-					 * com.itextpdf.text.Font(com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 25.0f,
-					 * com.itextpdf.text.Font.BOLD, BaseColor.WHITE); Chunk c = new
-					 * Chunk("Total Cost:" ,f); c.setBackground(BaseColor.RED); Paragraph
-					 * parTitoloColored = new Paragraph(c); doc.add(parTitoloColored);
-					 */
-					// TITOLO 2 PROVA
 					com.itextpdf.text.Font courier9RedFont = new com.itextpdf.text.Font(
 							com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 25.0f, com.itextpdf.text.Font.BOLD,
 							BaseColor.BLACK);
@@ -333,12 +327,7 @@ public class RiepilogoPagamenti extends CommonView {
 					doc.add(parInfo);
 					parOggi.setSpacingAfter(50f);
 					doc.add(parOggi);
-					/*
-					 * Paragraph p = new Paragraph(""); // p.setSpacingAfter(72f);
-					 * DottedLineSeparator dottedline = new DottedLineSeparator();
-					 * dottedline.setOffset(-2); dottedline.setGap(2f); p.add(dottedline);
-					 * doc.add(p);
-					 */
+
 					com.itextpdf.text.Font fontDati = new com.itextpdf.text.Font(
 							com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 15.0f, com.itextpdf.text.Font.BOLD,
 							BaseColor.BLACK);
@@ -349,7 +338,7 @@ public class RiepilogoPagamenti extends CommonView {
 					com.itextpdf.text.List listPaziente = new com.itextpdf.text.List(com.itextpdf.text.List.UNORDERED);
 					listPaziente.setListSymbol("");
 					listPaziente.add(new ListItem(
-							"Prestazioni per il paziente " + proprietario.getNome() + " il cui proprietario � : "));
+							"Prestazioni per il paziente " + proprietario.getNome() + " il cui proprietario è : "));
 					listPaziente.add(new ListItem(proprietario.getNome() + " " + proprietario.getCognome()));
 					listPaziente.add(new ListItem("Telefono: " + proprietario.getTelefono()));
 					listPaziente.add(new ListItem("Email: " + proprietario.getEmail()));
@@ -396,7 +385,7 @@ public class RiepilogoPagamenti extends CommonView {
 					tbl.addCell(tableForPDF.getValueAt(tableForPDF.getRowCount() - 1, 0).toString());
 					tbl.addCell("Ricovero");
 					tbl.addCell(String.valueOf(listPagamenti.get(selectedPagamento).getCosto()
-							- ricoveri.stream().mapToDouble(r -> r.getCosto()).sum()) + "�");
+							- ricoveri.stream().mapToDouble(r -> r.getCosto()).sum()) + "€");
 					doc.add(tbl);
 
 					// PARAGRAFO TOTALE
@@ -428,10 +417,13 @@ public class RiepilogoPagamenti extends CommonView {
 
 		// ----fine ---- MENUU
 
-		JButton backButton = new JButton("BACK");
-		backButton.setHorizontalAlignment(SwingConstants.LEFT);
-		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		backButton.addActionListener(new ActionListener() {
+		  Icon icon = IconImage.BACK.getImageIcon();
+			JButton backButton = new JButton(icon);
+			backButton.setBorder(BorderFactory.createEmptyBorder());
+			backButton.setContentAreaFilled(false);
+			backButton.setHorizontalAlignment(SwingConstants.LEFT);
+			backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new HomeSegretaria(frame, user));
 			}
@@ -439,7 +431,7 @@ public class RiepilogoPagamenti extends CommonView {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(backButton, BorderLayout.WEST);
 
-		// setLayout(groupLayout);
+		 //setLayout(groupLayout);
 		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
 

@@ -8,7 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -301,9 +303,13 @@ public class UserInfo  extends CommonView {
 		textFieldEmail.setEditable(false);
 
 		JButton backButton = new JButton("Home");
-		backButton.setHorizontalAlignment(SwingConstants.LEFT);
-		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		backButton.addActionListener(new ActionListener() {
+		//  Icon icon = IconImage.H.getImageIcon();
+		//	JButton backButton = new JButton(icon);
+			backButton.setBorder(BorderFactory.createEmptyBorder());
+			backButton.setContentAreaFilled(false);
+			backButton.setHorizontalAlignment(SwingConstants.LEFT);
+			backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(user.getRuolo().equals("Veterinario") || user.getRuolo().equals("Inferemiere")  ) {
 					frame.getContentPane().add(new HomeVeterinario(frame, user));

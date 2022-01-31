@@ -6,7 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -242,16 +244,19 @@ public class NuovoStrumentoPage extends CommonView {
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		/* LOWER PANEL */
-		JButton sendButton = new JButton("BACK");
-		sendButton.setHorizontalAlignment(SwingConstants.LEFT);
-		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		sendButton.addActionListener(new ActionListener() {
+		  Icon icon = IconImage.BACK.getImageIcon();
+				JButton backButton = new JButton(icon);
+				backButton.setBorder(BorderFactory.createEmptyBorder());
+				backButton.setContentAreaFilled(false);
+				backButton.setHorizontalAlignment(SwingConstants.LEFT);
+				backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new StrumentiPage(frame, user));
 			}
 		});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
-		lowerPanel.add(sendButton, BorderLayout.WEST);
+		lowerPanel.add(backButton, BorderLayout.WEST);
 
 		//setLayout(groupLayout);
 		//new GroupLayout(this);

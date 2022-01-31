@@ -17,7 +17,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -87,17 +89,17 @@ public class GestioneAppuntamento extends CommonView {
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.TRAILING).addGroup(groupLayout
-				.createSequentialGroup()
+				.createSequentialGroup().addContainerGap()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
 						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
 						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
-						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-				.addGap(24)));
+						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE))
+				.addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE).addGap(44)
 						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE).addGap(84)
-						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE).addGap(0)));
+						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE).addGap(12)));
 		
 
 		//------MENU BAR------
@@ -106,8 +108,10 @@ public class GestioneAppuntamento extends CommonView {
 				upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
 				middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
 				
-				upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] { ColumnSpec.decode("900px"), },
-						new RowSpec[] { RowSpec.decode("25px"), }));
+				upperMiddlePanel.setLayout(new FormLayout(new ColumnSpec[] {
+						ColumnSpec.decode("900px:grow"),},
+					new RowSpec[] {
+						RowSpec.decode("25px"),}));
 				
 				JMenuBar menuBar = new JMenuBar();
 				upperMiddlePanel.add(menuBar, "1, 1, fill, top");
@@ -147,10 +151,6 @@ public class GestioneAppuntamento extends CommonView {
 						search(e);
 					}
 				});
-
-				
-				buttonVai.setBackground(Color.LIGHT_GRAY);
-				buttonVai.setForeground(Color.BLACK);
 				menuBar.add(menuMostra);
 				menuBar.add(menuAggiungi);
 				//menuBar.add(dateChooser);
@@ -276,9 +276,12 @@ public class GestioneAppuntamento extends CommonView {
 		//----fine ---- MENUU
 
 
-		JButton backButton = new JButton("BACK");
-		backButton.setHorizontalAlignment(SwingConstants.LEFT);
-		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+				Icon icon = IconImage.BACK.getImageIcon();
+				JButton backButton = new JButton(icon);
+				backButton.setBorder(BorderFactory.createEmptyBorder());
+				backButton.setContentAreaFilled(false);
+				backButton.setHorizontalAlignment(SwingConstants.LEFT);
+				backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new HomeSegretaria(frame, user));

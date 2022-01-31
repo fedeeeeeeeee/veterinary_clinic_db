@@ -11,6 +11,7 @@ import model.User;
 import utility.ReadTextToHashMap;
 import utility.ValidityFieldsChecker;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.GroupLayout.Alignment;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,6 +22,7 @@ import javax.swing.SwingConstants;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
@@ -453,13 +455,19 @@ public class AggiungiAnimale extends CommonView {
 			}
 		});
 		
-		JButton backButton = new JButton("BACK");
-		backButton.addActionListener(new ActionListener() {
+		  Icon icon = IconImage.BACK.getImageIcon();
+			JButton backButton = new JButton(icon);
+			backButton.setBorder(BorderFactory.createEmptyBorder());
+			backButton.setContentAreaFilled(false);
+			backButton.setHorizontalAlignment(SwingConstants.LEFT);
+			backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+			backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new RegistraPaziente(frame, user));
 			}
 		});
-		lowerPanel.add(backButton);
+			lowerPanel.setLayout(new BorderLayout(0, 0));
+			lowerPanel.add(backButton, BorderLayout.WEST);
 		upperPanel.setLayout(new BorderLayout(0, 0));
 		
 		animalePanel.add(resetSpecieButton, gbc_resetSpecieButton);
