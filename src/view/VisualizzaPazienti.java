@@ -101,11 +101,12 @@ public class VisualizzaPazienti extends CommonView {
 //frame.setJMenuBar(menuBar);
 		
 		upperMiddlePanel.add(menuBar, "1, 1, fill, top");
-		JMenuItem menuMostra = new JMenuItem("All");
-		//JMenuItem menuAzioni = new JMenuItem("Info");
+		JMenuItem menuMostra = new JMenuItem("Tutti");
+		menuMostra.setFont(new Font("Tahoma", Font.BOLD, 14));
 
 		searchBar = new JTextField();
 		searchBar.setText("Ricerca Animale");
+		searchBar.setFont(new Font("Tahoma", Font.ITALIC, 13));
 		searchBar.addFocusListener((FocusListener) new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -129,6 +130,7 @@ public class VisualizzaPazienti extends CommonView {
 		});
 		
 		JButton buttonVai = new JButton("Vai");
+		buttonVai.setFont(new Font("Tahoma", Font.BOLD, 14));
 		buttonVai.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -228,6 +230,8 @@ public class VisualizzaPazienti extends CommonView {
 
 	private void initTable() {
 		this.table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Animale");
 		model.addColumn("Razza");
@@ -247,9 +251,8 @@ public class VisualizzaPazienti extends CommonView {
 		});
 	}
 	
-	public void search(ActionEvent e) { // action
+	public void search(ActionEvent e) {
 		List<Paziente> lista = new ArrayList<Paziente>();
-		//listStrumenti.clear();
 		lista.addAll(searchList(searchBar.getText(), listPazienti));
 		this.resetAndDraw(lista);
 	}

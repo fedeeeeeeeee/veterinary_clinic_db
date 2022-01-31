@@ -79,8 +79,8 @@ public class InfoRicovero extends CommonView {
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
 
-	GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-//GroupLayout groupLayout = new GroupLayout(this);
+	//GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
@@ -163,6 +163,7 @@ public class InfoRicovero extends CommonView {
 		
 
 		JTable tableFarmaci = new JTable();
+		tableFarmaci.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));
 		DefaultTableModel modelFarmaci = (DefaultTableModel) tableFarmaci.getModel();
 		List<FarmacoInPrestazione> farmaci =  this.farmaciController.getFarmaciDiAnimale(ricovero.getAnimale().getCodAnimale());		
 		tableFarmaci.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -190,6 +191,7 @@ public class InfoRicovero extends CommonView {
 		
 		
 		JTable tablePatologie = new JTable();
+		tablePatologie.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));
 		DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
 		Appuntamento app = new AppuntamentoImpl();
 		app.setAnimale(ricovero.getAnimale());
@@ -212,11 +214,20 @@ public class InfoRicovero extends CommonView {
 		/* FINE search bar */
 		GridBagLayout gbl_scrollPanelLeft = new GridBagLayout();
 		gbl_scrollPanelLeft.columnWidths = new int[] { 0, 0, 0, -23, -23, 0, 0, 0, 0, 0, 0, 0 };
-		gbl_scrollPanelLeft.rowHeights = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+		gbl_scrollPanelLeft.rowHeights = new int[] { 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0 };
 		gbl_scrollPanelLeft.columnWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0,
 				Double.MIN_VALUE };
-		gbl_scrollPanelLeft.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
+		gbl_scrollPanelLeft.rowWeights = new double[] { 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE };
 		scrollPanelLeft.setLayout(gbl_scrollPanelLeft);
+		
+		JLabel lblNewLabel = new JLabel("Dati Paziente");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridwidth = 3;
+		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel.gridx = 5;
+		gbc_lblNewLabel.gridy = 1;
+		scrollPanelLeft.add(lblNewLabel, gbc_lblNewLabel);
 
 		JLabel lblAnimale = new JLabel("Nome Animale");
 		GridBagConstraints gbc_lblAnimale = new GridBagConstraints();
@@ -224,7 +235,7 @@ public class InfoRicovero extends CommonView {
 		gbc_lblAnimale.gridwidth = 4;
 		gbc_lblAnimale.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAnimale.gridx = 1;
-		gbc_lblAnimale.gridy = 1;
+		gbc_lblAnimale.gridy = 3;
 		scrollPanelLeft.add(lblAnimale, gbc_lblAnimale);
 	
 		JTextField textFieldNomA = new JTextField();
@@ -234,7 +245,7 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldNomA.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldNomA.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldNomA.gridx = 5;
-		gbc_textFieldNomA.gridy = 1;
+		gbc_textFieldNomA.gridy = 3;
 		scrollPanelLeft.add(textFieldNomA, gbc_textFieldNomA);
 		textFieldNomA.setColumns(10);
 
@@ -247,7 +258,7 @@ public class InfoRicovero extends CommonView {
 		gbc_lblAltezza.anchor = GridBagConstraints.WEST;
 		gbc_lblAltezza.insets = new Insets(0, 0, 5, 5);
 		gbc_lblAltezza.gridx = 1;
-		gbc_lblAltezza.gridy = 2;
+		gbc_lblAltezza.gridy = 4;
 		scrollPanelLeft.add(lblAltezza, gbc_lblAltezza);
 		
 		JTextField textFieldAltezza = new JTextField();
@@ -257,7 +268,7 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldAltezza.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldAltezza.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldAltezza.gridx = 4;
-		gbc_textFieldAltezza.gridy = 2;
+		gbc_textFieldAltezza.gridy = 4;
 		scrollPanelLeft.add(textFieldAltezza, gbc_textFieldAltezza);
 		textFieldAltezza.setColumns(10);
 		
@@ -266,7 +277,7 @@ public class InfoRicovero extends CommonView {
 		gbc_lblPeso.gridwidth = 2;
 		gbc_lblPeso.insets = new Insets(0, 0, 5, 5);
 		gbc_lblPeso.gridx = 6;
-		gbc_lblPeso.gridy = 2;
+		gbc_lblPeso.gridy = 4;
 		scrollPanelLeft.add(lblPeso, gbc_lblPeso);
 		
 		JTextField textFieldPeso = new JTextField();
@@ -276,7 +287,7 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldPeso.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldPeso.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldPeso.gridx = 8;
-		gbc_textFieldPeso.gridy = 2;
+		gbc_textFieldPeso.gridy = 4;
 		scrollPanelLeft.add(textFieldPeso, gbc_textFieldPeso);
 		textFieldPeso.setColumns(10);
 		
@@ -285,7 +296,7 @@ public class InfoRicovero extends CommonView {
 		gbc_lblNewLabel_1.gridwidth = 2;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 1;
-		gbc_lblNewLabel_1.gridy = 3;
+		gbc_lblNewLabel_1.gridy = 5;
 		scrollPanelLeft.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		textField = new JTextField();
@@ -296,16 +307,25 @@ public class InfoRicovero extends CommonView {
 		gbc_textField.insets = new Insets(0, 0, 5, 5);
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 5;
-		gbc_textField.gridy = 3;
+		gbc_textField.gridy = 5;
 		scrollPanelLeft.add(textField, gbc_textField);
 		textField.setColumns(10);
+		
+		JLabel lblNewLabel_2 = new JLabel("Dati Ricovero");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 11));
+		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+		gbc_lblNewLabel_2.gridwidth = 3;
+		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_2.gridx = 5;
+		gbc_lblNewLabel_2.gridy = 7;
+		scrollPanelLeft.add(lblNewLabel_2, gbc_lblNewLabel_2);
 
 		JSeparator separator = new JSeparator();
 		GridBagConstraints gbc_separator = new GridBagConstraints();
 		gbc_separator.gridwidth = 4;
 		gbc_separator.insets = new Insets(0, 0, 5, 5);
 		gbc_separator.gridx = 1;
-		gbc_separator.gridy = 5;
+		gbc_separator.gridy = 9;
 		scrollPanelLeft.add(separator, gbc_separator);
 		
 				JLabel lblData = new JLabel("Data Inizio");
@@ -314,7 +334,7 @@ public class InfoRicovero extends CommonView {
 				gbc_lblData.anchor = GridBagConstraints.NORTHWEST;
 				gbc_lblData.insets = new Insets(0, 0, 5, 5);
 				gbc_lblData.gridx = 1;
-				gbc_lblData.gridy = 6;
+				gbc_lblData.gridy = 10;
 				scrollPanelLeft.add(lblData, gbc_lblData);
 		
 				JTextField textFieldData = new JTextField();
@@ -323,7 +343,7 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldData.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldData.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldData.gridx = 4;
-		gbc_textFieldData.gridy = 6;
+		gbc_textFieldData.gridy = 10;
 		scrollPanelLeft.add(textFieldData, gbc_textFieldData);
 		textFieldData.setColumns(10);
 
@@ -332,7 +352,7 @@ public class InfoRicovero extends CommonView {
 		gbc_lblOra.anchor = GridBagConstraints.EAST;
 		gbc_lblOra.insets = new Insets(0, 0, 5, 5);
 		gbc_lblOra.gridx = 7;
-		gbc_lblOra.gridy = 6;
+		gbc_lblOra.gridy = 10;
 		scrollPanelLeft.add(lblOra, gbc_lblOra);
 		LocalTime local = LocalTime.now();
 		
@@ -342,7 +362,7 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldOra.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldOra.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldOra.gridx = 8;
-		gbc_textFieldOra.gridy = 6;
+		gbc_textFieldOra.gridy = 10;
 		scrollPanelLeft.add(textFieldOra, gbc_textFieldOra);
 		textFieldOra.setColumns(10);
         
@@ -352,7 +372,7 @@ public class InfoRicovero extends CommonView {
 		gbc_lblTipoPrestazione.gridwidth = 4;
 		gbc_lblTipoPrestazione.insets = new Insets(0, 0, 5, 5);
 		gbc_lblTipoPrestazione.gridx = 1;
-		gbc_lblTipoPrestazione.gridy = 7;
+		gbc_lblTipoPrestazione.gridy = 11;
 		scrollPanelLeft.add(lblTipoPrestazione, gbc_lblTipoPrestazione);
 		
 		JTextField textFieldTipo = new JTextField();
@@ -362,7 +382,7 @@ public class InfoRicovero extends CommonView {
 		gbc_textFieldTipo.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldTipo.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textFieldTipo.gridx = 5;
-		gbc_textFieldTipo.gridy = 7;
+		gbc_textFieldTipo.gridy = 11;
 		scrollPanelLeft.add(textFieldTipo, gbc_textFieldTipo);
 		textFieldTipo.setColumns(10);
 		
@@ -370,7 +390,7 @@ public class InfoRicovero extends CommonView {
 		GridBagConstraints gbc_separator_1 = new GridBagConstraints();
 		gbc_separator_1.gridwidth = 10;
 		gbc_separator_1.gridx = 1;
-		gbc_separator_1.gridy = 9;
+		gbc_separator_1.gridy = 13;
 		scrollPanelLeft.add(separator_1, gbc_separator_1);
 
 		splitPane.setOneTouchExpandable(true);
@@ -415,9 +435,9 @@ public class InfoRicovero extends CommonView {
 		textFieldOra.setText(ricovero.getOraInizio());
 		textFieldTipo.setText(ricovero.getMotivoRicovero());
 
-		//setLayout(groupLayout);
-	    //new GroupLayout(this);
-		frame.getContentPane().setLayout(groupLayout);
+		setLayout(groupLayout);
+	    new GroupLayout(this);
+		//frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
 
 	}

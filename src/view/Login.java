@@ -122,6 +122,7 @@ public class Login extends JPanel {
         panelLogin.add(lblPassword_1, gbc_lblPassword_1);
         
         passwordField = new JPasswordField();
+        passwordField.setFont(new Font("Tahoma", Font.PLAIN, 16));
         GridBagConstraints gbc_passwordField = new GridBagConstraints();
         gbc_passwordField.fill = GridBagConstraints.BOTH;
         gbc_passwordField.gridx = 2;
