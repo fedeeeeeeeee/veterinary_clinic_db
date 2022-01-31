@@ -531,8 +531,9 @@ public class ConclusionePrestazione extends CommonView {
 							nuovePatologie.add(panelPatologia.getSelectedPatologia());
 							
 							List<Patologia> list = new ArrayList<>();
-							list.addAll(patologie);							
+													
 							modelPatologie.setRowCount(0);
+							list.addAll(patologie);	
 							list.forEach(x -> {
 								modelPatologie.addRow(new Object[] { 
 										x.getNomePatologia(),

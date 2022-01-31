@@ -15,6 +15,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.AttributeSet.ColorAttribute;
 
 import java.awt.Color;
+import java.awt.Font;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -63,7 +65,7 @@ public class ParametriPazientiPanel extends JPanel {
 		ChartPanel cp = new ChartPanel(chart);
 		panelRight.add(cp);
 		//chartPanel.setBackground( Color.RED );
-		chart.getPlot().setBackgroundPaint( new  Color(161, 192, 200, 40)  );
+		chart.getPlot().setBackgroundPaint(new  Color(161, 192, 200, 40)  );
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelLeft, panelRight);
 		splitPane.setResizeWeight(0.5);
 		mainPanel.add(splitPane, BorderLayout.CENTER);
@@ -82,6 +84,8 @@ public class ParametriPazientiPanel extends JPanel {
 
 	private void initTable() {
 		this.table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Data");
 		model.addColumn("Peso");
@@ -90,10 +94,6 @@ public class ParametriPazientiPanel extends JPanel {
 	 
 	private XYDataset createDataset() {
 		List<ParametriPaziente> listParametri = pazienteController.getAllParametriPaziente(paziente);
-		//List<Float> listPeso = listParametri.stream().filter(p-> p.getAltezza()).map(Map.Entry::getValue).collect(Collectors.toList());
-		//List<Float> listAltezza = listParametri.stream().map(p-> p.getAltezza()).collect(Collectors.toList());
-		//List<Float> listPeso = listParametri.stream().map(p-> p.getPeso()).collect(Collectors.toList());
-		//float[] arrayAltezza = listAltezza.toArray(Float[]::new);
 		List<Pair<Float, Float>> pesiAltezze = new ArrayList<>();
 		listParametri.forEach(parametro-> {
 			pesiAltezze.add(new Pair<>(parametro.getPeso(), parametro.getAltezza()));
@@ -103,9 +103,8 @@ public class ParametriPazientiPanel extends JPanel {
 	      double[][] data = { pesiAltezze.stream().mapToDouble(pa-> pa.getX()).toArray(),
 	    		  pesiAltezze.stream().mapToDouble(pa-> pa.getX()).toArray()
 	    		  };
-	       // float[][] data = { arrayAltezza, listPeso };
 	        
-	        ds.addSeries("series1", data); // lines
+	        ds.addSeries("peso-altezza", data);
 	        return ds;
 	}
 }

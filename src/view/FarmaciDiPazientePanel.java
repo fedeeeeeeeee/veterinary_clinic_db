@@ -16,6 +16,7 @@ import model.Animale;
 import model.FarmacoInPrestazione;
 import java.awt.Insets;
 import java.awt.BorderLayout;
+import java.awt.Font;
 
 public class FarmaciDiPazientePanel extends JPanel {
 
@@ -31,10 +32,11 @@ public class FarmaciDiPazientePanel extends JPanel {
 
 	private void initTable () {
 		this.table = new JTable(); 
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model =  (DefaultTableModel) table.getModel();
 		model.addColumn("Nome Farmaco");
 		model.addColumn("Tipo Farmaco");
-		model.addColumn("Descrizione");
 		model.addColumn("Inidicazioni");
 		model.addColumn("Data inizio assunzione");
 		model.addColumn("Data fine assunzione");
@@ -45,7 +47,6 @@ public class FarmaciDiPazientePanel extends JPanel {
 			model.addRow(new Object[] { 
 					x.getFarmaco().getNomeFarmaco(),
 					x.getFarmaco().getTipoFarmaco(),
-					x.getFarmaco().getDescrizione(),
 					x.getIndicazioni(),
 					x.getDataInizioSomministrazione(),
 					x.getDataFineSomministrazione(),

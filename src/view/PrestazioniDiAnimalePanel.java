@@ -36,6 +36,8 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 	
 	private void initTable () {
 		this.table = new JTable(); 
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model =  (DefaultTableModel) table.getModel();
 		model.addColumn("Data");
 		model.addColumn("Nome Prestazione");
@@ -114,7 +116,7 @@ public class PrestazioniDiAnimalePanel extends JPanel {
 		JScrollPane scrollPaneArea = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	    textAreaReferto = new JTextArea();
-	   textAreaReferto.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+	   textAreaReferto.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		scrollPaneArea.setViewportView(textAreaReferto);
 		textAreaReferto.setLineWrap(true);
 		textAreaReferto.setWrapStyleWord(true);
