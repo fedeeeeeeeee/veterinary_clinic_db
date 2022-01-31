@@ -101,6 +101,8 @@ public class NuovoStrumentoPage extends CommonView {
 		panel.setLayout(gbl_panel);
 
 		JLabel lblNewLabel_1 = new JLabel("Nome Strumento");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 1;
@@ -119,6 +121,8 @@ public class NuovoStrumentoPage extends CommonView {
 		textNomeFarmaco.setColumns(10);
 
 		JLabel lblNewLabel_2 = new JLabel("Descrizione");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
+
 		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 		gbc_lblNewLabel_2.gridwidth = 2;
 		gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
@@ -143,6 +147,8 @@ public class NuovoStrumentoPage extends CommonView {
 		textArea.setWrapStyleWord(true);
 
 		JLabel lblDataScadenza = new JLabel("Data Scadenza");
+		lblDataScadenza.setFont(new Font("Tahoma", Font.BOLD, 13));
+
 		lblDataScadenza.setHorizontalAlignment(SwingConstants.LEFT);
 		GridBagConstraints gbc_lblDataScadenza = new GridBagConstraints();
 		gbc_lblDataScadenza.insets = new Insets(0, 0, 5, 5);
@@ -160,6 +166,8 @@ public class NuovoStrumentoPage extends CommonView {
 		panel.add(dateChooser, gbc_dateChooser);
 
 		JLabel lblNewLabel = new JLabel("Disponibilità");
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
+
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel.gridx = 1;
@@ -175,6 +183,8 @@ public class NuovoStrumentoPage extends CommonView {
 		panel.add(spinner, gbc_spinner);
 
 		JLabel lblNewLabel_4 = new JLabel("Prezzo");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.BOLD, 13));
+
 		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
 		gbc_lblNewLabel_4.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_4.gridx = 4;
@@ -228,7 +238,7 @@ public class NuovoStrumentoPage extends CommonView {
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		/* LOWER PANEL */

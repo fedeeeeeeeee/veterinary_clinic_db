@@ -127,6 +127,7 @@ public class AggiungiLotto extends CommonView {
           farmacoPanel.setLayout(gbl_farmacoPanel);
       	
       	JLabel lblFarmaco = new JLabel("Farmaco");
+      	lblFarmaco.setFont(new Font("Tahoma", Font.BOLD, 13));
       	lblFarmaco.setHorizontalAlignment(SwingConstants.CENTER);
       	GridBagConstraints gbc_lblFarmaco = new GridBagConstraints();
       	gbc_lblFarmaco.fill = GridBagConstraints.BOTH;
@@ -147,6 +148,7 @@ public class AggiungiLotto extends CommonView {
     
           
           JLabel lblDescrizione = new JLabel("Descrizione");
+          lblDescrizione.setFont(new Font("Tahoma", Font.BOLD, 13));
           lblDescrizione.setHorizontalAlignment(SwingConstants.CENTER);
           GridBagConstraints gbc_lblDescrizione = new GridBagConstraints();
           gbc_lblDescrizione.fill = GridBagConstraints.BOTH;
@@ -183,6 +185,7 @@ public class AggiungiLotto extends CommonView {
           lottoPanel.setLayout(new MigLayout("", "[217.00px][112.00][64.00px][-10.00]", "[20px][20px][20px]"));
           
           JLabel lblConfezioni = new JLabel("Confezioni");
+          lblConfezioni.setFont(new Font("Tahoma", Font.BOLD, 13));
           lblConfezioni.setHorizontalAlignment(SwingConstants.CENTER);
           lottoPanel.add(lblConfezioni, "cell 0 0,grow");
           
@@ -193,6 +196,7 @@ public class AggiungiLotto extends CommonView {
           lottoPanel.add(spinConfezioni, "cell 2 0,grow");
           
           JLabel lblQuantita = new JLabel("Quantità in Confezione");
+          lblQuantita.setFont(new Font("Tahoma", Font.BOLD, 13));
           lblQuantita.setHorizontalAlignment(SwingConstants.CENTER);
           lottoPanel.add(lblQuantita, "cell 0 1,alignx center,growy");
           
@@ -202,6 +206,7 @@ public class AggiungiLotto extends CommonView {
           lottoPanel.add(spinner, "cell 2 1,grow");
           
           JLabel chooserDataScadenza = new JLabel("Data di Scadenza");
+          chooserDataScadenza.setFont(new Font("Tahoma", Font.BOLD, 13));
           chooserDataScadenza.setHorizontalAlignment(SwingConstants.CENTER);
           lottoPanel.add(chooserDataScadenza, "cell 0 2,grow");
           
@@ -238,7 +243,7 @@ public class AggiungiLotto extends CommonView {
   		JLabel titleLabel = new JLabel("Nuovo Lotto");
   		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
   		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-  		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+  		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel);
 		
 		/*LOWER PANEL */

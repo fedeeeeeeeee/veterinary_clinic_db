@@ -109,6 +109,7 @@ public class AggiungiProprietario extends CommonView {
 		anagraficaPanel.setLayout(new GridLayout(5, 4, 0, 0));
 		
 		JLabel labelNome = new JLabel("Nome");
+		labelNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		labelNome.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(labelNome);
 
@@ -118,6 +119,7 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldNome.setColumns(10);
 		JLabel labelCognome = new JLabel("Cognome");
+		labelCognome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		labelCognome.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(labelCognome);
 
@@ -127,6 +129,7 @@ public class AggiungiProprietario extends CommonView {
 
 		textFieldCognome.setColumns(10);
 		JLabel labelCf = new JLabel("CF");
+		labelCf.setFont(new Font("Tahoma", Font.BOLD, 13));
 		labelCf.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(labelCf);
 
@@ -136,6 +139,7 @@ public class AggiungiProprietario extends CommonView {
 		textFieldCodiceFiscale.setColumns(10);
 
 		JLabel labelDataNascita = new JLabel("Data di nascita");
+		labelDataNascita.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelDataNascita);
 
 		JDateChooser dateChooser = new JDateChooser();
@@ -144,6 +148,7 @@ public class AggiungiProprietario extends CommonView {
 		anagraficaPanel.add(dateChooser);
 
 		JLabel labelVia = new JLabel("Via");
+		labelVia.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelVia);
 
 		textFieldVia = new JTextField();
@@ -153,6 +158,7 @@ public class AggiungiProprietario extends CommonView {
 		textFieldVia.setColumns(10);
 
 		JLabel labelNumeroCivico = new JLabel("Nr.");
+		labelNumeroCivico.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelNumeroCivico);
 
 		textFieldNumeroCivico = new JTextField();
@@ -162,6 +168,7 @@ public class AggiungiProprietario extends CommonView {
 		textFieldNumeroCivico.setColumns(10);
 
 		JLabel labelCitta = new JLabel("Citta");
+		labelCitta.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelCitta);
 
 		textFieldCitta = new JTextField();
@@ -171,6 +178,7 @@ public class AggiungiProprietario extends CommonView {
 		textFieldCitta.setColumns(10);
 
 		JLabel labelCap = new JLabel("CAP");
+		labelCap.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelCap);
 
 		textFieldCap = new JTextField();
@@ -180,6 +188,7 @@ public class AggiungiProprietario extends CommonView {
 		textFieldCap.setColumns(10);
 
 		JLabel labelTelefono = new JLabel("Telefono");
+		labelTelefono.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelTelefono);
 
 		textFieldTelefono = new JTextField();
@@ -189,6 +198,7 @@ public class AggiungiProprietario extends CommonView {
 		textFieldTelefono.setColumns(10);
 		
 		JLabel labelEmail = new JLabel("E-mail");
+		labelEmail.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelEmail);
 
 		textFieldEmail = new JTextField();
@@ -210,7 +220,7 @@ public class AggiungiProprietario extends CommonView {
 		
 		
 		JLabel titleLabel = new JLabel("Aggiungi proprietario");
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel);
 		JPanel panelSx = new JPanel();
 		centerPanel.add(panelSx, "2, 2, 1, 3, fill, fill");

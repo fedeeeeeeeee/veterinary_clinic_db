@@ -87,7 +87,8 @@ public class RegistraPaziente extends CommonView {
 		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
-		JLabel cercaLabel = new JLabel("Cerca proprietario\n\n");
+		JLabel cercaLabel = new JLabel("Cerca proprietario ");
+		cercaLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		GridBagConstraints gbc_cercaLabel = new GridBagConstraints();
 		gbc_cercaLabel.fill = GridBagConstraints.VERTICAL;
 		gbc_cercaLabel.insets = new Insets(0, 0, 5, 5);
@@ -137,6 +138,8 @@ public class RegistraPaziente extends CommonView {
 		centerPanel.add(scrollPane, gbc_scrollPane);
 		
 		table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		scrollPane.setViewportView(table);
 		DefaultTableModel model =  (DefaultTableModel) table.getModel();
 		model.addColumn("Animale");
