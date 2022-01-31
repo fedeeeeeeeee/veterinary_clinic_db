@@ -12,7 +12,6 @@ import utility.Pair;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.AttributeSet.ColorAttribute;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -84,6 +83,7 @@ public class ParametriPazientiPanel extends JPanel {
 
 	private void initTable() {
 		this.table = new JTable();
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model = (DefaultTableModel) table.getModel();

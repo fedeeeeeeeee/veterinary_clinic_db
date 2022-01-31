@@ -118,12 +118,13 @@ public class HomeVeterinario extends CommonView {
 		
 			/* UPPER PANEL AND TITLE */
 			upperPanel.setLayout(new BorderLayout(0, 0));
-			JLabel titleLabel = new JLabel("Home Personale Sanitario");
+			JLabel titleLabel =new JLabel("<html><font color='#56728f '>Home Personale Sanitario</font></html>");
 			titleLabel.setBounds(409, 58, 194, 52);
 			titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-			titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+			titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 			upperPanel.add(titleLabel, BorderLayout.CENTER);
+			upperPanel.add(titleLabel);
 
 				
 		//setLayout(groupLayout);

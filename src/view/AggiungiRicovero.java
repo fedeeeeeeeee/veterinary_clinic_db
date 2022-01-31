@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -288,10 +289,14 @@ public class AggiungiRicovero extends CommonView {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(backButton, BorderLayout.WEST);
 		upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
-		JLabel titleLabel = new JLabel("Nuovo Ricovero");
+		
+		upperPanel.setLayout(new BorderLayout(0, 0));
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Nuovo Ricovero</font></html>");
+		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
 		upperPanel.add(titleLabel);
 
 		// setLayout(groupLayout);
@@ -313,6 +318,8 @@ public class AggiungiRicovero extends CommonView {
 
 	private void initTable() {
 		this.table = new JTable();
+		this.table.getTableHeader().setForeground(Color.decode("#56728f"));
+		this.table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Nome");
 		model.addColumn("Specie");

@@ -75,7 +75,7 @@ public class Register extends JPanel {
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
         
-        JLabel loginLabel = new JLabel("Registrazione");
+        JLabel loginLabel = new JLabel("<html><font color='#56728f '>Registrazione</font></html>");
         loginLabel.setFont(new Font("Tahoma", Font.PLAIN, 40)); 
 
         JButton loginButton = new JButton("Accesso");

@@ -150,12 +150,13 @@ public class GestionePrestazione extends CommonView {
 				middlePanel.add(centerPanel, BorderLayout.CENTER);
 				
 				upperPanel.setLayout(new BorderLayout(0, 0));
-				JLabel titleLabel = new JLabel("Prestazioni giornaliere");
+				JLabel titleLabel =new JLabel("<html><font color='#56728f '>Prestazioni giornaliere</font></html>");
 				titleLabel.setBounds(409, 58, 194, 52);
-				titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 				titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+				titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 				upperPanel.add(titleLabel, BorderLayout.CENTER);
+				upperPanel.add(titleLabel);
 		
 
 		/*------TABLE */
@@ -246,6 +247,7 @@ private void createTable(DefaultTableModel model, List<Appuntamento> list) {
 
 private void initTable() {
 	this.table = new JTable();
+	table.getTableHeader().setForeground(Color.decode("#56728f"));
 	table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 	table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 	this.model = (DefaultTableModel) table.getModel();

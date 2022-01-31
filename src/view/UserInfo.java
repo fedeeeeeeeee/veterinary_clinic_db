@@ -323,10 +323,14 @@ public class UserInfo  extends CommonView {
 		lowerPanel.add(backButton, BorderLayout.WEST);
 		
 		
-		JLabel titleLabel = new JLabel("Profilo utente");
+		upperPanel.setLayout(new BorderLayout(0, 0));
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Profilo Utente</font></html>");
+		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
-		upperPanel.add(titleLabel);
-		setLayout(null);
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
+		//setLayout(null);
 			
 		centerPanel.add(anagraficaPanel, "4, 4, 5, 1, fill, fill");
 		JPanel datiPanel = new JPanel();
@@ -371,7 +375,7 @@ public class UserInfo  extends CommonView {
 			this.model = (DefaultTableModel) table.getModel();
 
 			JLabel lblSpecializzazioni = new JLabel("Specializzazioni");
-			table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
+			lblSpecializzazioni.setFont(new Font("Tahoma", Font.BOLD, 13));
 			GridBagConstraints gbc_lblSpecializzazioni = new GridBagConstraints();
 			gbc_lblSpecializzazioni.fill = GridBagConstraints.HORIZONTAL;
 			gbc_lblSpecializzazioni.gridwidth = 3;
@@ -441,6 +445,9 @@ public class UserInfo  extends CommonView {
 	private void initTable() {
 		this.table = new JTable(); 
 		this.model =  (DefaultTableModel) table.getModel();
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
+		table.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 12));
 		model.addColumn("Titolo");
 		model.addColumn("Anno");
 		
