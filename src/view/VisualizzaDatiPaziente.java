@@ -45,9 +45,9 @@ public class VisualizzaDatiPaziente extends CommonView {
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		//GroupLayout groupLayout = new GroupLayout(this);
-		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING,false)
+		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
-						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING,false)
+						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 								.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 975, Short.MAX_VALUE)
 								.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 975, Short.MAX_VALUE)
 								.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 975, Short.MAX_VALUE))
@@ -56,9 +56,9 @@ public class VisualizzaDatiPaziente extends CommonView {
 				.addGroup(groupLayout.createSequentialGroup()
 						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 370, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap()));
 		centerPanel.setLayout(new BorderLayout(0, 0));
 		
@@ -104,13 +104,14 @@ public class VisualizzaDatiPaziente extends CommonView {
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(sendButton, BorderLayout.WEST);
 		
-		upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
-		JLabel titleLabel = new JLabel("Cartelle Pazienti");
-		titleLabel.setText(paziente.getAnimale().getNome()); // TODO
+		upperPanel.setLayout(new BorderLayout(0, 0));
+		JLabel titleLabel = new JLabel("Ricoveri");
+		titleLabel.setText(paziente.getAnimale().getNome());
+		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-		upperPanel.add(titleLabel);
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		//setLayout(groupLayout);
 		new GroupLayout(this);
