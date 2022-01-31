@@ -13,7 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+import java.awt.Color;
 import java.awt.BorderLayout;
 import java.awt.Font;
 
@@ -68,11 +68,10 @@ public class RegistraPaziente extends CommonView {
 						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
 						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
 						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE))
-					.addContainerGap())
-		);
+					.addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE).addGap(44)
+					.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE).addGap(20)
 					.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE).addGap(30)
 					.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE).addGap(12)));
 	
@@ -149,6 +148,7 @@ public class RegistraPaziente extends CommonView {
 		table = new JTable();
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
 		DefaultTableModel model =  (DefaultTableModel) table.getModel();
 		model.addColumn("Animale");
 		model.addColumn("Razza");
@@ -207,15 +207,14 @@ GridBagLayout gbl_centerPanel = new GridBagLayout();
 		lowerPanel.add(backButton, BorderLayout.WEST);
 		
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Registrazione Paziente");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Registrazione Paziente</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
-		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 	
 
-	   //setLayout(groupLayout);
+	 //  setLayout(groupLayout);
 		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
 

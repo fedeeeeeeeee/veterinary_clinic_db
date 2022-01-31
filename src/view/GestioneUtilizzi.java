@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.GridBagConstraints;
@@ -26,6 +27,7 @@ import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import controller.PrestazioneController;
@@ -56,10 +58,11 @@ public class GestioneUtilizzi extends CommonView {
 		this.table = new JTable();
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Strumento");
 		model.addColumn("Descrizione");
-		model.addColumn("Quantità richiesta in prestazione");
+		model.addColumn("Quantità richiesta");
 		model.addColumn("Disponibilità");
 	}
 	
@@ -93,63 +96,63 @@ public class GestioneUtilizzi extends CommonView {
 		this.prestazioneController = new PrestazioneControllerImpl();
 		this.strumentoController = new StrumentiControllerImpl();
 		JPanel upperPanel = new JPanel();
-		JPanel centerPanel = new JPanel();
+		JPanel middlePanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 
-		// per la visualizzazione
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		// utile per il design
 		//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
+				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
-						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE)
-						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
-					.addContainerGap())
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
+						.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE))
+					.addContainerGap()));
+		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+					.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+					.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 41, GroupLayout.PREFERRED_SIZE))
+					.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE))
 		);
-		GridBagLayout gbl_centerPanel = new GridBagLayout();
-		gbl_centerPanel.columnWidths = new int[]{0, 24, 65, 70, 0, 0, 148, 0, 0, 133, 148, 40, 0, 0, 0};
-		gbl_centerPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
-		gbl_centerPanel.columnWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_centerPanel.rowWeights = new double[]{0.0, 0.0, 1.0, 0.0, 0.0, Double.MIN_VALUE};
-		centerPanel.setLayout(gbl_centerPanel);
-
+		
+		middlePanel.setLayout(new BorderLayout(0, 0));
+		JPanel upperMiddlePanel = new JPanel();
+		upperMiddlePanel.setBorder(new EmptyBorder(0, 10, 25, 10));
+		middlePanel.add(upperMiddlePanel, BorderLayout.NORTH);
+		GridBagLayout gbl_upperMiddlePanel = new GridBagLayout();
+		gbl_upperMiddlePanel.columnWidths = new int[]{156, 176, 30, 0, 0};
+		gbl_upperMiddlePanel.rowHeights = new int[]{23, 0};
+		gbl_upperMiddlePanel.columnWeights = new double[]{0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_upperMiddlePanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		upperMiddlePanel.setLayout(gbl_upperMiddlePanel);
 		
 		JLabel cercaLabel = new JLabel("Seleziona una prestazione ");
-		cercaLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_cercaLabel = new GridBagConstraints();
-		gbc_cercaLabel.fill = GridBagConstraints.VERTICAL;
-		gbc_cercaLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_cercaLabel.anchor = GridBagConstraints.EAST;
-		gbc_cercaLabel.gridx = 6;
+		gbc_cercaLabel.anchor = GridBagConstraints.WEST;
+		gbc_cercaLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_cercaLabel.gridx = 0;
 		gbc_cercaLabel.gridy = 0;
-		centerPanel.add(cercaLabel, gbc_cercaLabel);
+		upperMiddlePanel.add(cercaLabel, gbc_cercaLabel);
+		cercaLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
 		
 		comboBox = new JComboBox<>();
+	listPrestazioni = prestazioneController.getAllTipiDiPrestazione();
+	listPrestazioni.forEach(x -> {
+		comboBox.addItem(x.getNomePrestazione());
+	});
+	comboBox.setSelectedIndex(-1);
 		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 7;
+		gbc_comboBox.anchor = GridBagConstraints.NORTH;
+		gbc_comboBox.insets = new Insets(0, 0, 0, 5);
+		gbc_comboBox.gridx = 1;
 		gbc_comboBox.gridy = 0;
-		centerPanel.add(comboBox, gbc_comboBox);
-				
-		listPrestazioni = prestazioneController.getAllTipiDiPrestazione();
-		listPrestazioni.forEach(x -> {
-			comboBox.addItem(x.getNomePrestazione());
-		});
-		comboBox.setSelectedIndex(-1);
+		upperMiddlePanel.add(comboBox, gbc_comboBox);
+		
 		
 		Icon iconAdd = IconImage.ADD.getImageIcon();
 		JButton addPrestazione = new JButton(iconAdd);
@@ -157,31 +160,47 @@ public class GestioneUtilizzi extends CommonView {
 		addPrestazione.setBorderPainted(false);
 		addPrestazione.setContentAreaFilled(false);
 		
+
 		GridBagConstraints gbc_addPrestazione = new GridBagConstraints();
-		gbc_addPrestazione.anchor = GridBagConstraints.WEST;
-		gbc_addPrestazione.insets = new Insets(0, 0, 5, 5);
-		gbc_addPrestazione.gridx = 8;
+		gbc_addPrestazione.insets = new Insets(0, 0, 0, 5);
+		gbc_addPrestazione.anchor = GridBagConstraints.NORTHWEST;
+		gbc_addPrestazione.gridx = 2;
 		gbc_addPrestazione.gridy = 0;
-		centerPanel.add(addPrestazione, gbc_addPrestazione);
-		
+		upperMiddlePanel.add(addPrestazione, gbc_addPrestazione);	
 		addPrestazione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new AggiungiPrestazione(frame, user));
 			}
 		});
 		
-		JScrollPane scrollPane = new JScrollPane();
-		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
-		gbc_scrollPane.insets = new Insets(0, 0, 5, 5);
-		gbc_scrollPane.gridheight = 2;
-		gbc_scrollPane.gridwidth = 10;
-		gbc_scrollPane.fill = GridBagConstraints.BOTH;
-		gbc_scrollPane.gridx = 2;
-		gbc_scrollPane.gridy = 1;
-		centerPanel.add(scrollPane, gbc_scrollPane);
+		JPanel lowerMiddlePanel = new JPanel();
+		middlePanel.add(lowerMiddlePanel, BorderLayout.SOUTH);
+		JButton addUtilizzoButton = new JButton("Assegna Strumento");
+		addUtilizzoButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lowerMiddlePanel.add(addUtilizzoButton);
+		
+		
+		JPanel centerPanel = new JPanel();
+		GridBagLayout gbl_centerPanel = new GridBagLayout();
+		gbl_centerPanel.columnWidths = new int[]{40, 0};
+		gbl_centerPanel.rowHeights = new int[]{0, 0};
+		gbl_centerPanel.columnWeights = new double[]{1.0, Double.MIN_VALUE};
+		gbl_centerPanel.rowWeights = new double[]{1.0, Double.MIN_VALUE};
+		centerPanel.setLayout(gbl_centerPanel);
 	
 		this.initTable();
+		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(table);
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 0;
+		scrollPane.setViewportView(table);
+	
+		centerPanel.add(scrollPane, gbc_scrollPane);
+		centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
+		middlePanel.add(centerPanel, BorderLayout.CENTER);
+	
 
 		comboBox.addActionListener(new ActionListener() {
 			
@@ -192,12 +211,7 @@ public class GestioneUtilizzi extends CommonView {
 			}
 		});
 		
-		JButton addUtilizzoButton = new JButton("Assegna Strumento");
-		GridBagConstraints gbc_addAnimaleButton = new GridBagConstraints();
-		gbc_addAnimaleButton.insets = new Insets(0, 0, 5, 5);
-		gbc_addAnimaleButton.gridx = 7;
-		gbc_addAnimaleButton.gridy = 3;
-		centerPanel.add(addUtilizzoButton, gbc_addAnimaleButton);
+		
 	
 		addUtilizzoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -237,18 +251,17 @@ public class GestioneUtilizzi extends CommonView {
 			lowerPanel.setLayout(new BorderLayout(0, 0));
 			lowerPanel.add(backButton, BorderLayout.WEST);
 			
-		JLabel titleLabel = new JLabel("Gestione Prestazioni");
+			
+			upperPanel.setLayout(new BorderLayout(0, 0));
+			JLabel titleLabel =new JLabel("<html><font color='#56728f '>Gestione Prestazioni</font></html>");
+			titleLabel.setBounds(409, 58, 194, 52);
+			titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
+			titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			titleLabel.setVerticalAlignment(SwingConstants.CENTER);
+			upperPanel.add(titleLabel, BorderLayout.CENTER);
+			
 
-		titleLabel.setBounds(409, 58, 194, 52);
-		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		upperPanel.add(titleLabel, BorderLayout.CENTER);
-
-		//importante per il design
-	    //setLayout(groupLayout);
-
-		// importante per la visualizzazione ---> commentare GroupLayout groupLayout = new GroupLayout(this);
+	 //   setLayout(groupLayout);
 		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
 

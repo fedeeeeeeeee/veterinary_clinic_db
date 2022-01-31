@@ -77,15 +77,12 @@ public class MagazzinoPage extends CommonView {
 		btnStrumenti.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Magazzino");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Magazzino</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
-
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-		upperPanel.add(titleLabel);
 
 		/* LOWER PANEL */
 		Icon icon = IconImage.BACK.getImageIcon();

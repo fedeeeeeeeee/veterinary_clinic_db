@@ -261,7 +261,7 @@ public class NuovoFarmacoPage extends CommonView {
 	       panelSave.add(btnSave);
 	       /* UPPER PANEL AND TITLE */
 			upperPanel.setLayout(new BorderLayout(0, 0));
-			JLabel titleLabel = new JLabel("Nuovo Farmaco");
+			JLabel titleLabel =new JLabel("<html><font color='#56728f '>Nuovo Farmaco</font></html>");
 			titleLabel.setBounds(409, 58, 194, 52);
 			titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);

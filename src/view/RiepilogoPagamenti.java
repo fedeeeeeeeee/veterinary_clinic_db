@@ -31,6 +31,8 @@ import model.Pagamento;
 import model.Person;
 import model.User;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -114,6 +116,7 @@ public class RiepilogoPagamenti extends CommonView {
 		this.table = new JTable();
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Animale");
 		model.addColumn("Specie");
@@ -156,12 +159,9 @@ public class RiepilogoPagamenti extends CommonView {
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE)
-					.addGap(44)
-					.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
-					.addGap(37)
-					.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-					.addGap(0))
+					.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 121, Short.MAX_VALUE).addGap(20)
+					.addComponent(middlePanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE).addGap(37)
+					.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE).addGap(12))
 		);
 		
 		middlePanel.setLayout(new BorderLayout(0, 0));
@@ -186,11 +186,11 @@ public class RiepilogoPagamenti extends CommonView {
 		middlePanel.add(centerPanel, BorderLayout.CENTER);
 		
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Pagamenti");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Pagamenti</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		titleLabel.setVerticalAlignment(SwingConstants.CENTER);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		/*------TABLE */
@@ -225,12 +225,14 @@ public class RiepilogoPagamenti extends CommonView {
 		
 		
 		textFieldTotale = new JTextField();
+		textFieldTotale.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		textFieldTotale.setEditable(false);
 		panel.add(textFieldTotale);
 		textFieldTotale.setHorizontalAlignment(SwingConstants.RIGHT);
 		textFieldTotale.setColumns(10);
 		
 		JLabel lblTotale = new JLabel("Totale");
+		lblTotale.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblTotale.setHorizontalAlignment(SwingConstants.RIGHT);
 		panel.add(lblTotale);
 		lblTotale.setHorizontalTextPosition(SwingConstants.RIGHT);

@@ -150,7 +150,7 @@ public class StrumentiPage extends CommonView {
 		middlePanel.add(centerPanel, BorderLayout.CENTER);
 		
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Strumenti");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Strumenti</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -272,6 +272,7 @@ public class StrumentiPage extends CommonView {
 		this.table = new JTable();
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Codice");
 		model.addColumn("Nome");

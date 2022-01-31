@@ -319,8 +319,9 @@ public class AggiungiPrestazione extends CommonView {
 		upperPanel.setLayout(new BorderLayout(0, 0));
 	
 		
+		
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Nuova Prestazione");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Nuova Prestazione</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);

@@ -174,7 +174,7 @@ public class GestioneAppuntamento extends CommonView {
 				titleLabel.setBounds(409, 58, 194, 52);
 				titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 				titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-				titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+				titleLabel.setVerticalAlignment(SwingConstants.CENTER);
 				upperPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		
@@ -325,6 +325,7 @@ private void createTable(DefaultTableModel model, List<Appuntamento> list) {
 private void initTable() {
 	this.table = new JTable();
 	table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+	table.getTableHeader().setForeground(Color.decode("#56728f"));
 	table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 	this.model = (DefaultTableModel) table.getModel();
 	model.addColumn("Animale");
