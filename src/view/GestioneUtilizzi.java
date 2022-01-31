@@ -52,6 +52,8 @@ public class GestioneUtilizzi extends CommonView {
 	
 	private void initTable() {
 		this.table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Strumento");
 		model.addColumn("Descrizione");
@@ -123,7 +125,8 @@ public class GestioneUtilizzi extends CommonView {
 		centerPanel.setLayout(gbl_centerPanel);
 
 		
-		JLabel cercaLabel = new JLabel("Seleziona una prestazione\n\n");
+		JLabel cercaLabel = new JLabel("Seleziona una prestazione ");
+		cercaLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_cercaLabel = new GridBagConstraints();
 		gbc_cercaLabel.fill = GridBagConstraints.VERTICAL;
 		gbc_cercaLabel.insets = new Insets(0, 0, 5, 5);
@@ -195,7 +198,7 @@ public class GestioneUtilizzi extends CommonView {
 					OptionUtilizzo option = new OptionUtilizzo(listPrestazioni.get(comboBox.getSelectedIndex()).getCodPrestazione(), listUtilizzi);
 					int result = JOptionPane.showConfirmDialog(null,
 							option,
-							"Farmaco",
+							"Strumento",
 							JOptionPane.OK_CANCEL_OPTION,
 							JOptionPane.PLAIN_MESSAGE);
 							if (result == JOptionPane.OK_OPTION) {

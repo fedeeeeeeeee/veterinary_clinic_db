@@ -11,15 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -32,11 +29,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
-
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
@@ -111,6 +103,7 @@ public class StrumentiPage extends CommonView {
 
 		searchBar = new JTextField();
 		searchBar.setText("Ricerca Strumento");
+		searchBar.setFont(new Font("Tahoma", Font.ITALIC, 13));
 		searchBar.addFocusListener((FocusListener) new FocusListener() {
 			@Override
 			public void focusGained(FocusEvent e) {
@@ -273,6 +266,8 @@ public class StrumentiPage extends CommonView {
 
 	private void initTable() {
 		this.table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Codice");
 		model.addColumn("Nome");

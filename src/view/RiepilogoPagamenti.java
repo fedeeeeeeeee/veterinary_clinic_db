@@ -110,6 +110,8 @@ public class RiepilogoPagamenti extends CommonView {
 
 	private void initTable() {
 		this.table = new JTable();
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Animale");
 		model.addColumn("Specie");

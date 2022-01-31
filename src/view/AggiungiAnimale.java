@@ -111,7 +111,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.setLayout(gbl_animalePanel);
 		
 		JLabel labelProprietario = new JLabel("Proprietario");
-		labelProprietario.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		labelProprietario.setFont(new Font("Tahoma", Font.BOLD, 15));
 		GridBagConstraints gbc_labelProprietario = new GridBagConstraints();
 		gbc_labelProprietario.insets = new Insets(0, 0, 5, 5);
 		gbc_labelProprietario.anchor = GridBagConstraints.EAST;
@@ -120,7 +120,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.add(labelProprietario, gbc_labelProprietario);
 		
 		textFieldProprietario = new JTextField(selectedCf);
-		textFieldProprietario.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		textFieldProprietario.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		textFieldProprietario.setEditable(false);
 		labelProprietario.setLabelFor(textFieldProprietario);
 		GridBagConstraints gbc_textFieldProprietario = new GridBagConstraints();
@@ -132,7 +132,7 @@ public class AggiungiAnimale extends CommonView {
 		textFieldProprietario.setColumns(10);
 		
 		JLabel labelNome = new JLabel("Nome animale");
-		labelNome.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		labelNome.setFont(new Font("Tahoma", Font.BOLD, 15));
 		GridBagConstraints gbc_labelNome = new GridBagConstraints();
 		gbc_labelNome.anchor = GridBagConstraints.EAST;
 		gbc_labelNome.insets = new Insets(0, 0, 5, 5);
@@ -141,7 +141,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.add(labelNome, gbc_labelNome);
 		
 		textFieldNome = new JTextField();
-		textFieldNome.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		textFieldNome.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		labelNome.setLabelFor(textFieldNome);
 		GridBagConstraints gbc_textFieldNome = new GridBagConstraints();
 		gbc_textFieldNome.insets = new Insets(0, 0, 5, 5);
@@ -152,7 +152,7 @@ public class AggiungiAnimale extends CommonView {
 		textFieldNome.setColumns(10);
 		
 		JLabel labelGenere = new JLabel("Genere");
-		labelGenere.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		labelGenere.setFont(new Font("Tahoma", Font.BOLD, 15));
 		GridBagConstraints gbc_labelGenere = new GridBagConstraints();
 		gbc_labelGenere.anchor = GridBagConstraints.EAST;
 		gbc_labelGenere.insets = new Insets(0, 0, 5, 5);
@@ -161,7 +161,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.add(labelGenere, gbc_labelGenere);
 		
 		JRadioButton maleButton = new JRadioButton("M");
-		maleButton.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		maleButton.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		GridBagConstraints gbc_maleButton = new GridBagConstraints();
 		gbc_maleButton.anchor = GridBagConstraints.EAST;
 		gbc_maleButton.insets = new Insets(0, 0, 5, 5);
@@ -173,7 +173,7 @@ public class AggiungiAnimale extends CommonView {
 		group.add(maleButton);
 		
 		JRadioButton femaleButton = new JRadioButton("F");
-		femaleButton.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		femaleButton.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		GridBagConstraints gbc_femaleButton = new GridBagConstraints();
 		gbc_femaleButton.anchor = GridBagConstraints.WEST;
 		gbc_femaleButton.insets = new Insets(0, 0, 5, 5);
@@ -183,7 +183,7 @@ public class AggiungiAnimale extends CommonView {
 		group.add(femaleButton);
 	    
 		JLabel labelDataDiNascita = new JLabel("Data di nascita");
-		labelDataDiNascita.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		labelDataDiNascita.setFont(new Font("Lucida Grande", Font.BOLD, 15));
 		GridBagConstraints gbc_labelDataDiNascita = new GridBagConstraints();
 		gbc_labelDataDiNascita.anchor = GridBagConstraints.EAST;
 		gbc_labelDataDiNascita.insets = new Insets(0, 0, 5, 5);
@@ -192,7 +192,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.add(labelDataDiNascita, gbc_labelDataDiNascita);
 		
 		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.getCalendarButton().setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		dateChooser.getCalendarButton().setFont(new Font("Tahoma", Font.PLAIN, 15));
 		labelDataDiNascita.setLabelFor(dateChooser);
 		GridBagConstraints gbc_dateChooser = new GridBagConstraints();
 		gbc_dateChooser.insets = new Insets(0, 0, 5, 5);
@@ -202,7 +202,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.add(dateChooser, gbc_dateChooser);
 		
 		JLabel labelPeso = new JLabel("Peso");
-		labelPeso.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		labelPeso.setFont(new Font("Tahoma", Font.BOLD, 15));
 		GridBagConstraints gbc_labelPeso = new GridBagConstraints();
 		gbc_labelPeso.anchor = GridBagConstraints.EAST;
 		gbc_labelPeso.insets = new Insets(0, 0, 5, 5);
@@ -211,7 +211,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.add(labelPeso, gbc_labelPeso);
 		
 		textFieldPeso = new JTextField();
-		textFieldPeso.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		textFieldPeso.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		labelPeso.setLabelFor(textFieldPeso);
 		GridBagConstraints gbc_textFieldPeso = new GridBagConstraints();
 		gbc_textFieldPeso.insets = new Insets(0, 0, 5, 5);
@@ -222,7 +222,7 @@ public class AggiungiAnimale extends CommonView {
 		textFieldPeso.setColumns(10);
 		
 		JLabel labelAltezza = new JLabel("Altezza");
-		labelAltezza.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		labelAltezza.setFont(new Font("Tahoma", Font.BOLD, 15));
 		labelAltezza.setLabelFor(labelAltezza);
 		labelAltezza.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_labelAltezza = new GridBagConstraints();
@@ -233,7 +233,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.add(labelAltezza, gbc_labelAltezza);
 		
 		textFieldAltezza = new JTextField();
-		textFieldAltezza.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		textFieldAltezza.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_textFieldAltezza = new GridBagConstraints();
 		gbc_textFieldAltezza.insets = new Insets(0, 0, 5, 5);
 		gbc_textFieldAltezza.fill = GridBagConstraints.HORIZONTAL;
@@ -243,7 +243,7 @@ public class AggiungiAnimale extends CommonView {
 		textFieldAltezza.setColumns(10);
 		
 		JLabel labelSpecie = new JLabel("Specie");
-		labelSpecie.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		labelSpecie.setFont(new Font("Tahoma", Font.BOLD, 15));
 		labelSpecie.setHorizontalAlignment(SwingConstants.RIGHT);
 		GridBagConstraints gbc_labelSpecie = new GridBagConstraints();
 		gbc_labelSpecie.anchor = GridBagConstraints.EAST;
@@ -253,7 +253,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.add(labelSpecie, gbc_labelSpecie);
 		
 		JComboBox<String> comboBoxSpecie = new JComboBox<>();
-		comboBoxSpecie.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		comboBoxSpecie.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_comboBoxSpecie = new GridBagConstraints();
 		gbc_comboBoxSpecie.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxSpecie.fill = GridBagConstraints.HORIZONTAL;
@@ -264,7 +264,7 @@ public class AggiungiAnimale extends CommonView {
 		labelSpecie.setLabelFor(comboBoxSpecie);
 		
 		JButton addSpecieButton = new JButton("+");
-		addSpecieButton.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		addSpecieButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_addSpecieButton = new GridBagConstraints();
 		gbc_addSpecieButton.anchor = GridBagConstraints.ABOVE_BASELINE;
 		gbc_addSpecieButton.insets = new Insets(0, 0, 5, 5);
@@ -292,8 +292,8 @@ public class AggiungiAnimale extends CommonView {
 			}
 		});
 		
-		JButton resetSpecieButton = new JButton("RESET");
-		resetSpecieButton.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		JButton resetSpecieButton = new JButton("Reset");
+		resetSpecieButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_resetSpecieButton = new GridBagConstraints();
 		gbc_resetSpecieButton.insets = new Insets(0, 0, 5, 5);
 		gbc_resetSpecieButton.gridx = 4;
@@ -301,7 +301,7 @@ public class AggiungiAnimale extends CommonView {
 		
 		
 		JLabel labelRazza = new JLabel("Razza");
-		labelRazza.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		labelRazza.setFont(new Font("Tahoma", Font.BOLD, 15));
 		GridBagConstraints gbc_labelRazza = new GridBagConstraints();
 		gbc_labelRazza.anchor = GridBagConstraints.EAST;
 		gbc_labelRazza.insets = new Insets(0, 0, 5, 5);
@@ -310,7 +310,7 @@ public class AggiungiAnimale extends CommonView {
 		animalePanel.add(labelRazza, gbc_labelRazza);
 		
 		JComboBox<String> comboBoxRazza = new JComboBox<>();
-		comboBoxRazza.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		comboBoxRazza.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_comboBoxRazza = new GridBagConstraints();
 		gbc_comboBoxRazza.insets = new Insets(0, 0, 5, 5);
 		gbc_comboBoxRazza.fill = GridBagConstraints.HORIZONTAL;
@@ -321,7 +321,7 @@ public class AggiungiAnimale extends CommonView {
 		labelRazza.setLabelFor(comboBoxRazza);
 		
 		JButton addRazzaButton = new JButton("+");
-		addRazzaButton.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		addRazzaButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_addRazzaButton = new GridBagConstraints();
 		gbc_addRazzaButton.anchor = GridBagConstraints.ABOVE_BASELINE;
 		gbc_addRazzaButton.insets = new Insets(0, 0, 5, 5);
@@ -363,16 +363,16 @@ public class AggiungiAnimale extends CommonView {
 		map.keySet().forEach(k-> comboBoxSpecie.addItem(k));
 		comboBoxSpecie.setSelectedIndex(-1);
 		
-		JButton resetRazzaButton = new JButton("RESET");
-		resetRazzaButton.setFont(new Font("Lucida Grande", Font.PLAIN, 15));
+		JButton resetRazzaButton = new JButton("Reset");
+		resetRazzaButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_resetRazzaButton = new GridBagConstraints();
 		gbc_resetRazzaButton.insets = new Insets(0, 0, 5, 5);
 		gbc_resetRazzaButton.gridx = 4;
 		gbc_resetRazzaButton.gridy = 8;
 		animalePanel.add(resetRazzaButton, gbc_resetRazzaButton);
 		
-		JButton btnNewButton = new JButton("SAVE");
-		btnNewButton.setFont(new Font("Lucida Grande", Font.PLAIN, 16));
+		JButton btnNewButton = new JButton("Salva");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 0, 5);
 		gbc_btnNewButton.gridx = 2;

@@ -97,6 +97,8 @@ public class NuovoFarmacoPage extends CommonView {
 	       panel.setLayout(gbl_panel);
 	       
 	       JLabel lblNewLabel_1 = new JLabel("Nome Farmaco");
+	       lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 13));
+
 	       GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 	       gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 	       gbc_lblNewLabel_1.gridx = 1;
@@ -115,6 +117,7 @@ public class NuovoFarmacoPage extends CommonView {
 	       textNomeFarmaco.setColumns(10);
 	       
 	       JLabel lblNewLabel_2 = new JLabel("Descrizione");
+	       lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 13));
 	       GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
 	       gbc_lblNewLabel_2.anchor = GridBagConstraints.EAST;
 	       gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
@@ -138,6 +141,7 @@ public class NuovoFarmacoPage extends CommonView {
 	       scrollPane.setViewportView(textArea);
 	       
 	       JLabel lblNewLabel_3 = new JLabel("Tipo Farmaco");
+	       lblNewLabel_3.setFont(new Font("Tahoma", Font.BOLD, 13));
 	       GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
 	       gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
 	       gbc_lblNewLabel_3.gridx = 1;
@@ -160,6 +164,7 @@ public class NuovoFarmacoPage extends CommonView {
 	      
 	      	
 	       JLabel lblCopertura = new JLabel("Copertura");
+	       lblCopertura.setFont(new Font("Tahoma", Font.BOLD, 13));
 	       lblCopertura.setVisible(false);
 	       GridBagConstraints gbc_lblCopertura = new GridBagConstraints();
 	       gbc_lblCopertura.anchor = GridBagConstraints.EAST;

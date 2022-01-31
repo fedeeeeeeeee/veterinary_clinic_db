@@ -94,6 +94,7 @@ public class ModifyAppuntamento extends CommonView {
 	
 	private void initTable() {
 		this.table = new JTable();
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Animale");
 		model.addColumn("Data");
@@ -233,6 +234,7 @@ public class ModifyAppuntamento extends CommonView {
 		scrollPanelLeft.setLayout(gbl_scrollPanelLeft);
 
 		JLabel lblAnimale = new JLabel("Nome Animale");
+		lblAnimale.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_lblAnimale = new GridBagConstraints();
 		gbc_lblAnimale.gridwidth = 3;
 		gbc_lblAnimale.insets = new Insets(0, 0, 5, 5);
@@ -253,6 +255,7 @@ public class ModifyAppuntamento extends CommonView {
 		textFieldAnimale.setEditable(false);
 		
 		JLabel lblProprietario = new JLabel("Proprietario");
+		lblProprietario.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
 		gbc_lblNewLabel_1.gridwidth = 3;
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
@@ -273,6 +276,8 @@ public class ModifyAppuntamento extends CommonView {
 		textFieldNomeProprietario.setColumns(10);
 
 		JLabel lblTelefono = new JLabel("Telefono");
+		lblTelefono.setFont(new Font("Tahoma", Font.BOLD, 11));
+
 		GridBagConstraints gbc_lblTelefono = new GridBagConstraints();
 		gbc_lblTelefono.gridwidth = 3;
 		gbc_lblTelefono.insets = new Insets(0, 0, 5, 5);
@@ -301,6 +306,8 @@ public class ModifyAppuntamento extends CommonView {
 		scrollPanelLeft.add(separator, gbc_separator);
 
 		JLabel lblData = new JLabel("Data");
+		lblData.setFont(new Font("Tahoma", Font.BOLD, 11));
+
 		GridBagConstraints gbc_lblData = new GridBagConstraints();
 		gbc_lblData.gridwidth = 2;
 		gbc_lblData.anchor = GridBagConstraints.NORTH;
@@ -328,6 +335,8 @@ public class ModifyAppuntamento extends CommonView {
 		scrollPanelLeft.add(dateChooser, gbc_dateChooser);
 
 		JLabel lblOra = new JLabel("Ora");
+		lblOra.setFont(new Font("Tahoma", Font.BOLD, 11));
+
 		GridBagConstraints gbc_lblOra = new GridBagConstraints();
 		gbc_lblOra.insets = new Insets(0, 0, 5, 5);
 		gbc_lblOra.gridx = 5;
@@ -349,6 +358,7 @@ public class ModifyAppuntamento extends CommonView {
 		scrollPanelLeft.add(timePicker, gbc_timePicker);
         
 		JLabel lblTipoPrestazione = new JLabel("Tipo Prestazione");
+		lblTipoPrestazione.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_lblTipoPrestazione = new GridBagConstraints();
 		gbc_lblTipoPrestazione.gridwidth = 3;
 		gbc_lblTipoPrestazione.insets = new Insets(0, 0, 5, 5);
@@ -367,6 +377,7 @@ public class ModifyAppuntamento extends CommonView {
 		textTipoPrestazione.setEditable(false);
 		
 		JLabel lblNomPrestazione = new JLabel("Nome Prestazione");
+		lblNomPrestazione.setFont(new Font("Tahoma", Font.BOLD, 11));
 		GridBagConstraints gbc_lblNomPrestazione = new GridBagConstraints();
 		gbc_lblNomPrestazione.gridwidth = 3;
 		gbc_lblNomPrestazione.insets = new Insets(0, 0, 5, 5);
@@ -402,7 +413,7 @@ public class ModifyAppuntamento extends CommonView {
 		scrollPanelLeft.add(separator_1, gbc_separator_1);
 
 		JLabel lblNewLabel = new JLabel("Personale");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 13));
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.gridwidth = 3;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);

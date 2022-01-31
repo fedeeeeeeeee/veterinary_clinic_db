@@ -67,8 +67,6 @@ public class FarmaciPage extends CommonView {
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
 
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
         
       GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
       //GroupLayout groupLayout = new GroupLayout(this);
@@ -110,6 +108,7 @@ public class FarmaciPage extends CommonView {
        JMenu menuAggiungi = new JMenu("Aggiungi");
        
        searchBar = new JTextField();
+       searchBar.setFont(new Font("Tahoma", Font.ITALIC, 13));
        searchBar.setText("Ricerca Farmaco");
        searchBar.addFocusListener((FocusListener) new FocusListener() {
 
@@ -428,6 +427,8 @@ public class FarmaciPage extends CommonView {
 
 	private void initTable () {
 		this.table = new JTable(); 
+		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model =  (DefaultTableModel) table.getModel();
 		model.addColumn("CodLotto");
 		model.addColumn("Farmaco");

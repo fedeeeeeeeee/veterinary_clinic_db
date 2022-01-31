@@ -177,6 +177,7 @@ public class UserInfo  extends CommonView {
 		anagraficaPanel.setLayout(new GridLayout(5, 4, 0, 0));
 		
 		JLabel labelNome = new JLabel("Nome");
+		labelNome.setFont(new Font("Tahoma", Font.BOLD, 13));
 		labelNome.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(labelNome);
 
@@ -187,6 +188,8 @@ public class UserInfo  extends CommonView {
 
 		textFieldNome.setColumns(10);
 		JLabel labelCognome = new JLabel("Cognome");
+		labelCognome.setFont(new Font("Tahoma", Font.BOLD, 13));
+
 		labelCognome.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(labelCognome);
 		textFieldNome.setEditable(false);
@@ -199,6 +202,8 @@ public class UserInfo  extends CommonView {
 
 		textFieldCognome.setColumns(10);
 		JLabel labelCf = new JLabel("CF");
+		labelCf.setFont(new Font("Tahoma", Font.BOLD, 13));
+
 		labelCf.setHorizontalAlignment(SwingConstants.LEFT);
 		anagraficaPanel.add(labelCf);
 		textFieldCognome.setEditable(false);
@@ -211,6 +216,7 @@ public class UserInfo  extends CommonView {
 		textFieldCodiceFiscale.setEditable(false);
 
 		JLabel labelDataNascita = new JLabel("Data di nascita");
+		labelDataNascita.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelDataNascita);
 
 		JTextField textFieldData = new JTextField();
@@ -223,6 +229,7 @@ public class UserInfo  extends CommonView {
 		textFieldData.setEditable(false);
 
 		JLabel labelVia = new JLabel("Via");
+		labelVia.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelVia);
 
 		textFieldVia = new JTextField();
@@ -234,6 +241,7 @@ public class UserInfo  extends CommonView {
 		textFieldVia.setEditable(false);
 
 		JLabel labelNumeroCivico = new JLabel("Nr.");
+		labelNumeroCivico.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelNumeroCivico);
 
 		textFieldNumeroCivico = new JTextField();
@@ -245,6 +253,7 @@ public class UserInfo  extends CommonView {
 		textFieldNumeroCivico.setEditable(false);
 
 		JLabel labelCitta = new JLabel("Citta");
+		labelCitta.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelCitta);
 
 		textFieldCitta = new JTextField();
@@ -256,6 +265,7 @@ public class UserInfo  extends CommonView {
 		textFieldCitta.setEditable(false);
 
 		JLabel labelCap = new JLabel("CAP");
+		labelCap.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelCap);
 
 		textFieldCap = new JTextField();
@@ -267,6 +277,7 @@ public class UserInfo  extends CommonView {
 		textFieldCap.setEditable(false);
 
 		JLabel labelTelefono = new JLabel("Telefono");
+		labelTelefono.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelTelefono);
 
 		textFieldTelefono = new JTextField();
@@ -278,6 +289,7 @@ public class UserInfo  extends CommonView {
 		textFieldTelefono.setEditable(false);
 
 		JLabel labelEmail = new JLabel("E-mail");
+		labelEmail.setFont(new Font("Tahoma", Font.BOLD, 13));
 		anagraficaPanel.add(labelEmail);
 
 		textFieldEmail = new JTextField();
@@ -306,7 +318,7 @@ public class UserInfo  extends CommonView {
 		
 		
 		JLabel titleLabel = new JLabel("Profilo utente");
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel);
 		setLayout(null);
 			
@@ -324,6 +336,8 @@ public class UserInfo  extends CommonView {
 		datiPanel.setLayout(gbl_datiPanel);
 		
 		JLabel lblAnniServizio = new JLabel("Anni di Servizio");
+		lblAnniServizio.setFont(new Font("Tahoma", Font.BOLD, 13));
+
 		GridBagConstraints gbc_lblAnniServizio = new GridBagConstraints();
 		gbc_lblAnniServizio.gridwidth = 3;
 		gbc_lblAnniServizio.insets = new Insets(0, 0, 5, 5);
@@ -331,7 +345,17 @@ public class UserInfo  extends CommonView {
 		gbc_lblAnniServizio.gridy = 1;
 		datiPanel.add(lblAnniServizio, gbc_lblAnniServizio);
 
-	
+		textFieldAnniDiServizio = new JTextField();
+		textFieldAnniDiServizio.setText(String.valueOf(user.getAnniDiServizio()));
+		textFieldAnniDiServizio.setEditable(false);
+		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+		gbc_textField_1.gridwidth = 4;
+		gbc_textField_1.insets = new Insets(0, 0, 5, 5);
+		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField_1.gridx = 7;
+		gbc_textField_1.gridy = 1;
+		datiPanel.add(textFieldAnniDiServizio, gbc_textField_1);
+		textFieldAnniDiServizio.setColumns(10);
 		
 		if (user.getRuolo().equals("Veterinario")) {
 
@@ -339,21 +363,7 @@ public class UserInfo  extends CommonView {
 			this.listSpecializzazioni = userController.getAllSpecializzazioni(user.getCF());
 			this.createTable(model, listSpecializzazioni);
 			this.model = (DefaultTableModel) table.getModel();
-			
-				
-				textFieldAnniDiServizio = new JTextField();
-				textFieldAnniDiServizio.setText(String.valueOf(user.getAnniDiServizio()));
-				textFieldAnniDiServizio.setEditable(false);
-				GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-				gbc_textField_1.gridwidth = 4;
-				gbc_textField_1.insets = new Insets(0, 0, 5, 5);
-				gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-				gbc_textField_1.gridx = 7;
-				gbc_textField_1.gridy = 1;
-				datiPanel.add(textFieldAnniDiServizio, gbc_textField_1);
-				textFieldAnniDiServizio.setColumns(10);
-			
-			
+
 			JLabel lblSpecializzazioni = new JLabel("Specializzazioni");
 			GridBagConstraints gbc_lblSpecializzazioni = new GridBagConstraints();
 			gbc_lblSpecializzazioni.fill = GridBagConstraints.HORIZONTAL;
@@ -363,14 +373,23 @@ public class UserInfo  extends CommonView {
 			gbc_lblSpecializzazioni.gridy = 2;
 			datiPanel.add(lblSpecializzazioni, gbc_lblSpecializzazioni);
 			
-		
-			
-
 			GridBagConstraints gbc_btnAddSpecializzazione = new GridBagConstraints();
 			gbc_btnAddSpecializzazione.insets = new Insets(0, 0, 5, 5);
 			gbc_btnAddSpecializzazione.gridx = 4;
 			gbc_btnAddSpecializzazione.gridy = 2;
 			datiPanel.add(btnAddSpecializzazione, gbc_btnAddSpecializzazione);
+			
+			JScrollPane scrollPane_1 = new JScrollPane();
+			//scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+			GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+			gbc_scrollPane_1.gridheight = 3;
+			gbc_scrollPane_1.gridwidth = 12;
+			gbc_scrollPane_1.insets = new Insets(0, 0, 0, 5);
+			gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane_1.gridx = 8;
+			gbc_scrollPane_1.gridy = 2;
+			datiPanel.add(scrollPane_1, gbc_scrollPane_1);
+			scrollPane_1.setViewportView(table);
 			
 			btnAddSpecializzazione.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -391,18 +410,7 @@ public class UserInfo  extends CommonView {
 		btnAddSpecializzazione.setVisible(false);
 		btnAddSpecializzazione.setEnabled(false);
 
-			JScrollPane scrollPane_1 = new JScrollPane();
-			//scrollPane_1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-			GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
-			gbc_scrollPane_1.gridheight = 3;
-			gbc_scrollPane_1.gridwidth = 12;
-			gbc_scrollPane_1.insets = new Insets(0, 0, 0, 5);
-			gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
-			gbc_scrollPane_1.gridx = 8;
-			gbc_scrollPane_1.gridy = 2;
-			datiPanel.add(scrollPane_1, gbc_scrollPane_1);
-			scrollPane_1.setViewportView(table);
-			
+
 	 //  setLayout(groupLayout);
 		//new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
