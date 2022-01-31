@@ -136,7 +136,10 @@ public class FarmaciPage extends CommonView {
     	   }
        });
       
-       JButton buttonVai = new JButton("Vai");
+		Icon iconSearch = IconImage.SEARCH.getImageIcon();
+		JButton buttonVai = new JButton(iconSearch);
+		buttonVai.setBorderPainted(false);
+		buttonVai.setContentAreaFilled(false);
        buttonVai.addActionListener(new ActionListener() {
     	   @Override
     	   public void actionPerformed(ActionEvent e) {

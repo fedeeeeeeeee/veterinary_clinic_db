@@ -144,7 +144,10 @@ public class GestioneAppuntamento extends CommonView {
 					}
 				});
 				
-				JButton buttonVai = new JButton("Vai");
+				Icon iconSearch = IconImage.SEARCH.getImageIcon();
+				JButton buttonVai = new JButton(iconSearch);
+				buttonVai.setBorderPainted(false);
+				buttonVai.setContentAreaFilled(false);
 				buttonVai.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -282,11 +285,11 @@ public class GestioneAppuntamento extends CommonView {
 				backButton.setContentAreaFilled(false);
 				backButton.setHorizontalAlignment(SwingConstants.LEFT);
 				backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		backButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				frame.getContentPane().add(new HomeSegretaria(frame, user));
-			}
-		});
+			backButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					frame.getContentPane().add(new HomeSegretaria(frame, user));
+					}
+			});
 		lowerPanel.setLayout(new BorderLayout(0, 0));
 		lowerPanel.add(backButton, BorderLayout.WEST);
 		
