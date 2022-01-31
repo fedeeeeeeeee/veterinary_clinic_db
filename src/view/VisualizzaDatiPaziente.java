@@ -9,7 +9,9 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -88,7 +90,10 @@ public class VisualizzaDatiPaziente extends CommonView {
 		                  "Visualizza prestazioni del paziente");
 			
 		/* LOWER PANEL */
-		JButton sendButton = new JButton("BACK");
+		Icon icon = IconImage.BACK.getImageIcon();
+		JButton sendButton = new JButton(icon);
+		sendButton.setBorder(BorderFactory.createEmptyBorder());
+		sendButton.setContentAreaFilled(false);
 		sendButton.setHorizontalAlignment(SwingConstants.LEFT);
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.addActionListener(new ActionListener() {

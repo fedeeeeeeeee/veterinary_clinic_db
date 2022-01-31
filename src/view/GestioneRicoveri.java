@@ -5,7 +5,9 @@ import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -185,7 +187,11 @@ public class GestioneRicoveri extends CommonView {
 			}
 		});
 		/* LOWER PANEL */
-		JButton sendButton = new JButton("BACK");
+	//	JButton sendButton = new JButton("BACK");
+		Icon icon = IconImage.BACK.getImageIcon();
+		JButton sendButton = new JButton(icon);
+		sendButton.setBorder(BorderFactory.createEmptyBorder());
+		sendButton.setContentAreaFilled(false);
 		sendButton.setHorizontalAlignment(SwingConstants.LEFT);
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.addActionListener(new ActionListener() {

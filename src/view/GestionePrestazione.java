@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -138,8 +140,6 @@ public class GestionePrestazione extends CommonView {
 					}
 				});
 				
-			//	buttonVai.setBackground(Color.LIGHT_GRAY);
-			//	buttonVai.setForeground(Color.BLACK);
 				menuBar.add(searchBar);
 				menuBar.add(buttonVai);
 
@@ -202,7 +202,10 @@ public class GestionePrestazione extends CommonView {
 
 		/*------fine-------- table */
 
-		JButton backButton = new JButton("BACK");
+		Icon icon = IconImage.BACK.getImageIcon();
+		JButton backButton = new JButton(icon);
+		backButton.setBorder(BorderFactory.createEmptyBorder());
+		backButton.setContentAreaFilled(false);
 		backButton.setHorizontalAlignment(SwingConstants.LEFT);
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		backButton.addActionListener(new ActionListener() {

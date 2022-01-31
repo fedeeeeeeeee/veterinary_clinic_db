@@ -13,7 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -79,8 +81,8 @@ public class InfoRicovero extends CommonView {
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
 
-	//GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-GroupLayout groupLayout = new GroupLayout(this);
+GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
+//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING, false)
@@ -408,7 +410,10 @@ GroupLayout groupLayout = new GroupLayout(this);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		/* LOWER PANEL */
-		JButton sendButton = new JButton("BACK");
+		Icon icon = IconImage.BACK.getImageIcon();
+		JButton sendButton = new JButton(icon);
+		sendButton.setBorder(BorderFactory.createEmptyBorder());
+		sendButton.setContentAreaFilled(false);
 		sendButton.setHorizontalAlignment(SwingConstants.LEFT);
 		sendButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		sendButton.addActionListener(new ActionListener() {
@@ -435,9 +440,9 @@ GroupLayout groupLayout = new GroupLayout(this);
 		textFieldOra.setText(ricovero.getOraInizio());
 		textFieldTipo.setText(ricovero.getMotivoRicovero());
 
-		setLayout(groupLayout);
-	    new GroupLayout(this);
-		//frame.getContentPane().setLayout(groupLayout);
+		//setLayout(groupLayout);
+	    //new GroupLayout(this);
+		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
 
 	}
