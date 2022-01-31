@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -179,6 +180,8 @@ public class ConclusionePrestazione extends CommonView {
 		
 
 		JTable tableFarmaci = new JTable();
+		tableFarmaci.getTableHeader().setForeground(Color.decode("#56728f"));
+		tableFarmaci.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));			
 		DefaultTableModel modelFarmaci = (DefaultTableModel) tableFarmaci.getModel();
 		List<Farmaco> farmaci = prestazioneController.getFarmaciInPrestazione(appuntamento);
 				
@@ -196,7 +199,8 @@ public class ConclusionePrestazione extends CommonView {
 		
 		
 		JTable tablePatologie = new JTable();
-		DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
+		tablePatologie.getTableHeader().setForeground(Color.decode("#56728f"));
+		tablePatologie.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));		DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
 		List<Patologia> patologie = prestazioneController.getPatologieAttiveDiAnimale(appuntamento);
 
 		modelPatologie.addColumn("Nome");
@@ -468,12 +472,14 @@ public class ConclusionePrestazione extends CommonView {
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Conclusione Prestazione");
+		
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Conclusione Prestazione</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
+		upperPanel.add(titleLabel);
 
 		/* LOWER PANEL */
 		Icon icon = IconImage.BACK.getImageIcon();

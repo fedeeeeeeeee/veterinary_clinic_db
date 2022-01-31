@@ -150,11 +150,11 @@ public class VisualizzaPazienti extends CommonView {
 		middlePanel.add(centerPanel, BorderLayout.CENTER);
 		
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Visualizza Pazienti");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Visualizza Pazienti</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
-		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		/*-------------- TABLE */
@@ -234,6 +234,7 @@ public class VisualizzaPazienti extends CommonView {
 		this.table = new JTable();
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Animale");
 		model.addColumn("Razza");

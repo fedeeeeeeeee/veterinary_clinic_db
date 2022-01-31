@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -116,6 +117,7 @@ public class PatologiePazientiPanel extends JPanel {
 
 	private void initTable() {
 		this.table = new JTable();
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model = (DefaultTableModel) table.getModel();

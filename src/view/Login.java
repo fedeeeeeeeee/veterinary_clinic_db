@@ -47,7 +47,7 @@ public class Login extends JPanel {
         JPanel panel = new JPanel();
         panel.setBackground(Color.WHITE);
         
-        JLabel loginLabel = new JLabel("Accesso");
+        JLabel loginLabel = new JLabel("<html><font color='#56728f '>Accesso</font></html>");
         loginLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));        
 
 

@@ -16,6 +16,7 @@ import model.Animale;
 import model.FarmacoInPrestazione;
 import java.awt.Insets;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 
 public class FarmaciDiPazientePanel extends JPanel {
@@ -32,6 +33,7 @@ public class FarmaciDiPazientePanel extends JPanel {
 
 	private void initTable () {
 		this.table = new JTable(); 
+		this.table.getTableHeader().setForeground(Color.decode("#56728f"));
 		table.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 15));
 		this.model =  (DefaultTableModel) table.getModel();

@@ -89,10 +89,14 @@ public class DettagliAppuntamento extends CommonView {
 			panel.add(lblPrestazione);
 			upperPanel.setLayout(new BorderLayout(0, 0));
 			
-			JLabel lblNewLabel = new JLabel("Appointment detail");
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 35));
-			lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			upperPanel.add(lblNewLabel, BorderLayout.CENTER);
+			
+			JLabel titleLabel =new JLabel("<html><font color='#56728f '>Dettagli Appuntamento</font></html>");
+			titleLabel.setBounds(409, 58, 194, 52);
+			titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+			titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
+			upperPanel.add(titleLabel, BorderLayout.CENTER);
+			upperPanel.add(titleLabel);
 			
 			JPanel panelUtente = new JPanel();
 			upperPanel.add(panelUtente, BorderLayout.NORTH);

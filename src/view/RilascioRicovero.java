@@ -176,6 +176,7 @@ public class RilascioRicovero extends CommonView {
 		
 
 		JTable tableFarmaci = new JTable();
+		tableFarmaci.getTableHeader().setForeground(Color.decode("#56728f"));
 		tableFarmaci.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));
 		DefaultTableModel modelFarmaci = (DefaultTableModel) tableFarmaci.getModel();
 		List<FarmacoInPrestazione> farmaci =  this.farmaciController.getFarmaciDiAnimale(ricovero.getAnimale().getCodAnimale());		
@@ -193,6 +194,7 @@ public class RilascioRicovero extends CommonView {
 		
 		
 		JTable tablePatologie = new JTable();
+		tablePatologie.getTableHeader().setForeground(Color.decode("#56728f"));
 		tablePatologie.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));
 		DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
 		Appuntamento app = new AppuntamentoImpl();
@@ -413,11 +415,11 @@ public class RilascioRicovero extends CommonView {
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Rilascio Ricovero");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Rilascio Ricovero</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		/* LOWER PANEL */
@@ -477,7 +479,7 @@ public class RilascioRicovero extends CommonView {
 		gbl_savePanel.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
 		savePanel.setLayout(gbl_savePanel);
 		JButton saveButton = new JButton("Effettua Rilascio");
-		saveButton.setFont(new Font("Tahoma", Font.BOLD, 11));
+		saveButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		saveButton.setForeground(new Color(128, 0, 0));
 		saveButton.addActionListener(al-> {		
 			appun.setAnimale(ricovero.getAnimale());

@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -166,6 +167,7 @@ GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		
 
 		JTable tableFarmaci = new JTable();
+		tableFarmaci.getTableHeader().setForeground(Color.decode("#56728f"));
 		tableFarmaci.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));
 		DefaultTableModel modelFarmaci = (DefaultTableModel) tableFarmaci.getModel();
 		List<FarmacoInPrestazione> farmaci =  this.farmaciController.getFarmaciDiAnimale(ricovero.getAnimale().getCodAnimale());		
@@ -194,6 +196,7 @@ GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 		
 		
 		JTable tablePatologie = new JTable();
+		tablePatologie.getTableHeader().setForeground(Color.decode("#56728f"));
 		tablePatologie.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));
 		DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
 		Appuntamento app = new AppuntamentoImpl();
@@ -403,13 +406,12 @@ GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Info Ricovero");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Info Ricovero</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
-
 		/* LOWER PANEL */
 		Icon icon = IconImage.BACK.getImageIcon();
 		JButton sendButton = new JButton(icon);
