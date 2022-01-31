@@ -92,6 +92,7 @@ public class GestioneRicoveri extends CommonView {
 		centerPanel.add(panelDisponibilita, gbc_panelDisponibilita);
 
 		JLabel lblPostiLiberi = new JLabel("Posti liberi");
+		lblPostiLiberi.setFont(new Font("Tahoma", Font.BOLD, 13));
 		panelDisponibilita.add(lblPostiLiberi);
 
 		JPanel cardRicovero = new JPanel();
@@ -120,6 +121,7 @@ public class GestioneRicoveri extends CommonView {
 		});
 
 		JLabel lblModPostiLiberi = new JLabel("New label");
+		lblModPostiLiberi.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblModPostiLiberi.setText(String.valueOf(filteredPostiLiberi.size()));
 		lblModPostiLiberi.setForeground(new Color(0, 128, 0));
 		panelDisponibilita.add(lblModPostiLiberi);

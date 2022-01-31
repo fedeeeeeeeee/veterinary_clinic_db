@@ -17,6 +17,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.Font;
 
 public class HomeVeterinario extends CommonView {
@@ -50,11 +51,11 @@ public class HomeVeterinario extends CommonView {
 		 groupLayout.setVerticalGroup(
 		 	groupLayout.createParallelGroup(Alignment.LEADING)
 		 		.addGroup(groupLayout.createSequentialGroup()
-		 			.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+		 			.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 		 			.addPreferredGap(ComponentPlacement.RELATED)
-		 			.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+		 			.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
 		 			.addPreferredGap(ComponentPlacement.RELATED)
-		 			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+		 			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 10, GroupLayout.PREFERRED_SIZE)
 		 			.addGap(4))
 		 );
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
@@ -115,12 +116,15 @@ public class HomeVeterinario extends CommonView {
 		
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		
-        upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
-	  		JLabel titleLabel = new JLabel("Home Personale Sanitario");
-	  		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	  		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-	  		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-			upperPanel.add(titleLabel);
+			/* UPPER PANEL AND TITLE */
+			upperPanel.setLayout(new BorderLayout(0, 0));
+			JLabel titleLabel = new JLabel("Home Personale Sanitario");
+			titleLabel.setBounds(409, 58, 194, 52);
+			titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+			titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+			upperPanel.add(titleLabel, BorderLayout.CENTER);
+
 				
 		//setLayout(groupLayout);
 		frame.getContentPane().setLayout(groupLayout);
