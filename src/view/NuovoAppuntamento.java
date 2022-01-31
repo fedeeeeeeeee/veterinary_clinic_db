@@ -556,11 +556,11 @@ public class NuovoAppuntamento extends CommonView {
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Nuovo Appuntamento");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Nuovo Appuntamento</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		titleLabel.setVerticalAlignment(SwingConstants.CENTER);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		/* LOWER PANEL */

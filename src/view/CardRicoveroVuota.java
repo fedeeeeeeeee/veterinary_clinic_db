@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -31,7 +32,7 @@ public class CardRicoveroVuota extends JPanel {
 	public CardRicoveroVuota(JFrame frame, User user, Ricovero ricovero ) {
 		setLayout(new BorderLayout(0, 0));
 		Border border = BorderFactory.createLineBorder(Color.BLACK);
-		Border margin = new EmptyBorder(0,13,80,13);
+		Border margin = new EmptyBorder(0,13,30,13);
 		setBorder(new CompoundBorder(border, margin));
 
 		JPanel upperPanel = new JPanel();
@@ -69,7 +70,10 @@ public class CardRicoveroVuota extends JPanel {
 		gbl_lowerPanel.rowWeights = new double[]{0.0, Double.MIN_VALUE};
 		lowerPanel.setLayout(gbl_lowerPanel);
 		
-		JButton btnAdd = new JButton("add");
+		Icon iconSearch = IconImage.ADD_RICOVERO.getImageIcon();
+		JButton btnAdd = new JButton(iconSearch);
+		btnAdd.setBorderPainted(false);
+		btnAdd.setContentAreaFilled(false);
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ricovero.getPosto().setDescrizione(dimensione);

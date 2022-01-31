@@ -154,12 +154,7 @@ public class FarmaciPage extends CommonView {
        menuBar.add(searchBar);
        menuBar.add(buttonVai);
 
-       JButton orderAsc = new JButton (IconImage.ARROW.getImageIcon() );
-       orderAsc.setBackground(Color.LIGHT_GRAY);
-       orderAsc.setForeground(Color.BLACK);
-      // menuBar.add(orderAsc);
-
-       
+     
        
        JPanel centerPanel = new JPanel();
        centerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));

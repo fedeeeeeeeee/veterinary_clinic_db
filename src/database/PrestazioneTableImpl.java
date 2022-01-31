@@ -1304,7 +1304,6 @@ public class PrestazioneTableImpl implements PrestazioneTable {
             statement.get().setInt(3,  12);
             
             DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("HH:mm");
-            System.out.println("HH:mm-> "+dtf4.format(LocalDateTime.now())+":00");
 
             statement.get().setString(4, dtf4.format(LocalDateTime.now())+":00");
             

@@ -129,8 +129,10 @@ public class VisualizzaPazienti extends CommonView {
 			}
 		});
 		
-		JButton buttonVai = new JButton("Vai");
-		buttonVai.setFont(new Font("Tahoma", Font.BOLD, 14));
+		Icon iconSearch = IconImage.SEARCH.getImageIcon();
+		JButton buttonVai = new JButton(iconSearch);
+		buttonVai.setBorderPainted(false);
+		buttonVai.setContentAreaFilled(false);
 		buttonVai.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

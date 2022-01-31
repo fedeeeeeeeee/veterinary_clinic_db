@@ -294,7 +294,7 @@ public class AggiungiRicovero extends CommonView {
 		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Nuovo Ricovero</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		titleLabel.setVerticalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 		upperPanel.add(titleLabel);

@@ -70,17 +70,17 @@ public class AggiungiPrestazione extends CommonView {
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING).addGroup(groupLayout
 				.createSequentialGroup().addContainerGap()
 				.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 988, Short.MAX_VALUE))
+						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+						.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+						.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE))
 				.addContainerGap()));
 		groupLayout.setVerticalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
 						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
-						.addPreferredGap(ComponentPlacement.RELATED)
+						.addGap(20)
 						.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)));
+						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE).addGap(12)));
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		centerPanel.setLayout(null);
 		
@@ -115,7 +115,11 @@ public class AggiungiPrestazione extends CommonView {
 		animalePanel.add(comboBoxTipo, gbc_comboBoxTipo);
 		labelTipo.setLabelFor(comboBoxTipo);
 
-		JButton addTipoButton = new JButton("+");
+		Icon iconAdd = IconImage.ADD.getImageIcon();
+		JButton addTipoButton = new JButton(iconAdd);
+		addTipoButton.setBorder(BorderFactory.createEmptyBorder());
+		addTipoButton.setBorderPainted(false);
+		addTipoButton.setContentAreaFilled(false);
 		addTipoButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_addSpecieButton = new GridBagConstraints();
 		gbc_addSpecieButton.anchor = GridBagConstraints.ABOVE_BASELINE;
@@ -323,7 +327,7 @@ public class AggiungiPrestazione extends CommonView {
 		upperPanel.setLayout(new BorderLayout(0, 0));
 		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Nuova Prestazione</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
-		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);

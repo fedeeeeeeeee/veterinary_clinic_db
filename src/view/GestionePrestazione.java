@@ -210,6 +210,7 @@ public class GestionePrestazione extends CommonView {
 		backButton.setContentAreaFilled(false);
 		backButton.setHorizontalAlignment(SwingConstants.LEFT);
 		backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.getContentPane().add(new HomeVeterinario(frame, user));

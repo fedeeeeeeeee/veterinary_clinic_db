@@ -17,6 +17,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.Font;
 
 public class HomeSegretaria extends CommonView {
@@ -43,16 +44,16 @@ public class HomeSegretaria extends CommonView {
 		 		.addGroup(groupLayout.createSequentialGroup()
 		 			.addContainerGap()
 		 			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-		 				.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
-		 				.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)
-		 				.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 994, Short.MAX_VALUE)))
+		 				.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+		 				.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
+		 				.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)))
 		 );
 		 groupLayout.setVerticalGroup(
 		 	groupLayout.createParallelGroup(Alignment.LEADING)
 		 		.addGroup(groupLayout.createSequentialGroup()
-		 			.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+		 			.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
 		 			.addPreferredGap(ComponentPlacement.RELATED)
-		 			.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
+		 			.addComponent(centerPanel, GroupLayout.DEFAULT_SIZE, 381, Short.MAX_VALUE)
 		 			.addPreferredGap(ComponentPlacement.RELATED)
 		 			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 		 			.addGap(4))
@@ -147,12 +148,13 @@ public class HomeSegretaria extends CommonView {
 		
 		lowerPanel.setLayout(new BoxLayout(lowerPanel, BoxLayout.X_AXIS));
 		
-        upperPanel.setLayout(new GridLayout(0, 1, 0, 0));
-	  		JLabel titleLabel = new JLabel("Home Personale Segreteria");
-	  		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-	  		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-	  		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
-			upperPanel.add(titleLabel);
+		upperPanel.setLayout(new BorderLayout(0, 0));
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Home Personale Segreteria</font></html>");
+		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setVerticalAlignment(SwingConstants.CENTER);
+		upperPanel.add(titleLabel, BorderLayout.CENTER);
 				
 		//setLayout(groupLayout);
 		frame.getContentPane().setLayout(groupLayout);

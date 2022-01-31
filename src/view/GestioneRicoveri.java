@@ -55,7 +55,7 @@ public class GestioneRicoveri extends CommonView {
 		// JScrollPane scrollPane = new JScrollPane(centerPanel);
 
 		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		// GroupLayout groupLayout = new GroupLayout(this);
+		//GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup().addContainerGap()
 						.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
@@ -68,14 +68,16 @@ public class GestioneRicoveri extends CommonView {
 				.addGroup(groupLayout.createSequentialGroup()
 						.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 320, GroupLayout.PREFERRED_SIZE)
+						.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 310, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(arrowPanel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
+						.addComponent(arrowPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 						.addPreferredGap(ComponentPlacement.RELATED)
-						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addContainerGap()));
-
-		JButton btnFrecciaSX = new JButton("<");
+		Icon iconSx = IconImage.ARROW_SX.getImageIcon();
+		JButton btnFrecciaSX = new JButton(iconSx);
+		btnFrecciaSX.setBorderPainted(false);
+		btnFrecciaSX.setContentAreaFilled(false);
 		arrowPanel.add(btnFrecciaSX);
 
 		GridBagLayout gbl_centerPanel = new GridBagLayout();
@@ -142,7 +144,10 @@ public class GestioneRicoveri extends CommonView {
 		gbc_lblNewLabel.gridy = 3;
 		centerPanel.add(lblPage, gbc_lblNewLabel);
 
-		JButton btnFrecciaDx = new JButton(">");
+		Icon iconDx = IconImage.ARROW_DX.getImageIcon();
+		JButton btnFrecciaDx = new JButton(iconDx);
+		btnFrecciaDx.setBorderPainted(false);
+		btnFrecciaDx.setContentAreaFilled(false);
 		arrowPanel.add(btnFrecciaDx);
 
 		btnFrecciaDx.addActionListener(new ActionListener() {
@@ -211,7 +216,7 @@ public class GestioneRicoveri extends CommonView {
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 		upperPanel.add(titleLabel);
 
-		// setLayout(groupLayout);
+	// setLayout(groupLayout);
 		new GroupLayout(this);
 		frame.getContentPane().setLayout(groupLayout);
 		this.initCommonView(frame, user);
