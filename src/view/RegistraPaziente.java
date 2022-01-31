@@ -126,7 +126,12 @@ public class RegistraPaziente extends CommonView {
 		listCF.forEach(x-> {
 			comboBox.addItem(x);
 		});
-		JButton addProprietarioButton = new JButton("+");
+		Icon iconAdd = IconImage.ADD.getImageIcon();
+		JButton addProprietarioButton = new JButton(iconAdd);
+		addProprietarioButton.setBorder(BorderFactory.createEmptyBorder());
+		addProprietarioButton.setBorderPainted(false);
+		addProprietarioButton.setContentAreaFilled(false);
+
 		GridBagConstraints gbc_addProprietarioButton = new GridBagConstraints();
 		gbc_addProprietarioButton.insets = new Insets(0, 0, 0, 5);
 		gbc_addProprietarioButton.anchor = GridBagConstraints.NORTHWEST;

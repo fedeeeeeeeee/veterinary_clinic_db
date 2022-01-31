@@ -151,7 +151,12 @@ public class GestioneUtilizzi extends CommonView {
 		});
 		comboBox.setSelectedIndex(-1);
 		
-		JButton addPrestazione = new JButton("+");
+		Icon iconAdd = IconImage.ADD.getImageIcon();
+		JButton addPrestazione = new JButton(iconAdd);
+		addPrestazione.setBorder(BorderFactory.createEmptyBorder());
+		addPrestazione.setBorderPainted(false);
+		addPrestazione.setContentAreaFilled(false);
+		
 		GridBagConstraints gbc_addPrestazione = new GridBagConstraints();
 		gbc_addPrestazione.anchor = GridBagConstraints.WEST;
 		gbc_addPrestazione.insets = new Insets(0, 0, 5, 5);

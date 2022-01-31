@@ -170,9 +170,9 @@ public class GestioneAppuntamento extends CommonView {
 				middlePanel.add(centerPanel, BorderLayout.CENTER);
 				
 				upperPanel.setLayout(new BorderLayout(0, 0));
-				JLabel titleLabel = new JLabel("Appuntamenti");
+				JLabel titleLabel =new JLabel("<html><font color='#56728f '>Appuntamenti</font></html>");
 				titleLabel.setBounds(409, 58, 194, 52);
-				titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 45));
+				titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 				titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 				titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 				upperPanel.add(titleLabel, BorderLayout.CENTER);

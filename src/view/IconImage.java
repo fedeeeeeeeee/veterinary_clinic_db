@@ -10,7 +10,8 @@ public enum IconImage {
     RICOVERO("ricovero.png"),
 	ARROW("arrows-sort.png"),
 	INFO("info.png"),
-	SEARCH("search.png");
+	SEARCH("search.png"),
+	ADD("add.png");
 	
 	private static String PATH = "resources/images/";
 	private String path;
