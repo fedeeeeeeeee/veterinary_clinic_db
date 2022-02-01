@@ -100,6 +100,7 @@ public class MagazzinoPage extends CommonView {
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
+		
 		/* LOWER PANEL */
 		Icon icon = IconImage.BACK.getImageIcon();
 		JButton backButton = new JButton(icon);
