@@ -7,6 +7,7 @@ import javax.swing.SwingConstants;
 
 import model.User;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
@@ -65,8 +66,10 @@ public class HomeSegretaria extends CommonView {
 		gbl_centerPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
-		JButton appuntamentiButton = new JButton("Appuntamenti");
-		appuntamentiButton.setFont(new Font("Dialog", Font.PLAIN, 26));
+		Icon iconAppuntamenti = IconImage.APPUNTAMENTI.getImageIcon();
+		JButton appuntamentiButton = new JButton(iconAppuntamenti);
+		appuntamentiButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		appuntamentiButton.setText("Appuntamenti");
 		GridBagConstraints gbc_appuntamentiButton = new GridBagConstraints();
 		gbc_appuntamentiButton.gridwidth = 3;
 		gbc_appuntamentiButton.fill = GridBagConstraints.BOTH;
@@ -81,8 +84,11 @@ public class HomeSegretaria extends CommonView {
 			}
 		});
 		
-		JButton registraPazienteButton = new JButton("Registra paziente");
-		registraPazienteButton.setFont(new Font("Dialog", Font.PLAIN, 25));
+		
+		Icon iconRegistraPazienti = IconImage.REGISTRA_PAZIENTE.getImageIcon();
+		JButton registraPazienteButton = new JButton(iconRegistraPazienti);
+		registraPazienteButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		registraPazienteButton.setText("Registra paziente");
 		GridBagConstraints gbc_registraPazienteButton = new GridBagConstraints();
 		gbc_registraPazienteButton.gridwidth = 2;
 		gbc_registraPazienteButton.fill = GridBagConstraints.BOTH;
@@ -97,8 +103,11 @@ public class HomeSegretaria extends CommonView {
 			}
 		});
 		
-		JButton magazzinoButton = new JButton("Magazzino");
-		magazzinoButton.setFont(new Font("Dialog", Font.PLAIN, 25));
+		
+		Icon iconMagazzino = IconImage.MAGAZZINO.getImageIcon();
+		JButton magazzinoButton = new JButton(iconMagazzino);
+		magazzinoButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		magazzinoButton.setText("Magazzino");
 		GridBagConstraints gbc_magazzinoButton = new GridBagConstraints();
 		gbc_magazzinoButton.gridwidth = 2;
 		gbc_magazzinoButton.fill = GridBagConstraints.BOTH;
@@ -114,8 +123,11 @@ public class HomeSegretaria extends CommonView {
 				}
 			});
 		
-		JButton prestazioniButton = new JButton("Gestione Prestazioni");
-		prestazioniButton.setFont(new Font("Dialog", Font.PLAIN, 25));
+			
+		Icon iconPrestazioni = IconImage.AGGIUNGI_PRESTAZIONI.getImageIcon();
+		JButton prestazioniButton = new JButton(iconPrestazioni);
+		prestazioniButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		prestazioniButton.setText("Gestione Prestazioni");
 		GridBagConstraints gbc_prestazioniButton = new GridBagConstraints();
 		gbc_prestazioniButton.gridwidth = 2;
 		gbc_prestazioniButton.fill = GridBagConstraints.BOTH;
@@ -130,8 +142,10 @@ public class HomeSegretaria extends CommonView {
 			}
 		});
 		
-		JButton pagamentiButton = new JButton("Riepilogo pagamenti");
-		pagamentiButton.setFont(new Font("Dialog", Font.PLAIN, 25));
+		Icon iconPagamenti = IconImage.PAGAMENTI.getImageIcon();
+		JButton pagamentiButton = new JButton(iconPagamenti);
+		pagamentiButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		pagamentiButton.setText("Riepilogo pagamenti");
 		GridBagConstraints gbc_pagamentiButton = new GridBagConstraints();
 		gbc_pagamentiButton.gridwidth = 2;
 		gbc_pagamentiButton.fill = GridBagConstraints.BOTH;

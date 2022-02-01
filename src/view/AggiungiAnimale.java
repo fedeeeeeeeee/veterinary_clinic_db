@@ -265,7 +265,13 @@ public class AggiungiAnimale extends CommonView {
 		comboBoxSpecie.setSelectedIndex(-1);		
 		labelSpecie.setLabelFor(comboBoxSpecie);
 		
-		JButton addSpecieButton = new JButton("+");
+		
+		
+		Icon iconAddSpecie = IconImage.ADD.getImageIcon();
+		JButton addSpecieButton = new JButton(iconAddSpecie);
+		addSpecieButton.setBorder(BorderFactory.createEmptyBorder());
+		addSpecieButton.setBorderPainted(false);
+		addSpecieButton.setContentAreaFilled(false);
 		addSpecieButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_addSpecieButton = new GridBagConstraints();
 		gbc_addSpecieButton.anchor = GridBagConstraints.ABOVE_BASELINE;
@@ -322,7 +328,12 @@ public class AggiungiAnimale extends CommonView {
 		comboBoxRazza.setEnabled(false);
 		labelRazza.setLabelFor(comboBoxRazza);
 		
-		JButton addRazzaButton = new JButton("+");
+		Icon iconAddRazza = IconImage.ADD.getImageIcon();
+		JButton addRazzaButton = new JButton(iconAddRazza);
+		addRazzaButton.setBorder(BorderFactory.createEmptyBorder());
+		addRazzaButton.setBorderPainted(false);
+		addRazzaButton.setContentAreaFilled(false);
+		
 		addRazzaButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_addRazzaButton = new GridBagConstraints();
 		gbc_addRazzaButton.anchor = GridBagConstraints.ABOVE_BASELINE;
@@ -487,11 +498,11 @@ public class AggiungiAnimale extends CommonView {
 		
 		
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Nuovo Animale");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Nuovo Animale</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
-		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		// importante per il design

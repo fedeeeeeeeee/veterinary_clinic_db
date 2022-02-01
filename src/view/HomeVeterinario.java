@@ -7,9 +7,11 @@ import javax.swing.SwingConstants;
 
 import model.User;
 import javax.swing.GroupLayout;
+import javax.swing.Icon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -65,8 +67,12 @@ public class HomeVeterinario extends CommonView {
 		gbl_centerPanel.rowWeights = new double[]{1.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		centerPanel.setLayout(gbl_centerPanel);
 		
-		JButton btnPrestazione = new JButton("Gestione Prestazioni");
-		btnPrestazione.setFont(new Font("Dialog", Font.PLAIN, 26));
+		
+		Icon iconPrestazione = IconImage.GESTIONE_PRESTAZIONI.getImageIcon();
+		JButton btnPrestazione = new JButton(iconPrestazione);
+		btnPrestazione.setText("Gestione Prestazioni");
+		btnPrestazione.setFont(new Font("Tahoma", Font.PLAIN, 26));
+	
 		GridBagConstraints gbc_appuntamentiButton = new GridBagConstraints();
 		gbc_appuntamentiButton.gridwidth = 3;
 		gbc_appuntamentiButton.fill = GridBagConstraints.BOTH;
@@ -74,15 +80,18 @@ public class HomeVeterinario extends CommonView {
 		gbc_appuntamentiButton.gridx = 2;
 		gbc_appuntamentiButton.gridy = 1;
 		centerPanel.add(btnPrestazione, gbc_appuntamentiButton);
-		
+	
 		btnPrestazione.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				  frame.getContentPane().add(new GestionePrestazione(frame, user));
 			}
 		});
 		
-		JButton btnPazienti = new JButton("Pazienti");
-		btnPazienti.setFont(new Font("Dialog", Font.PLAIN, 25));
+		Icon iconPazienti = IconImage.PAZIENTI.getImageIcon();
+		JButton btnPazienti = new JButton(iconPazienti);
+		btnPazienti.setText("Pazienti");
+		btnPazienti.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		btnPazienti.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		GridBagConstraints gbc_registraPazienteButton = new GridBagConstraints();
 		gbc_registraPazienteButton.gridwidth = 2;
 		gbc_registraPazienteButton.fill = GridBagConstraints.BOTH;
@@ -97,8 +106,11 @@ public class HomeVeterinario extends CommonView {
 			}
 		});
 		
-		JButton btnRicoveri = new JButton("Ricoveri");
-		btnRicoveri.setFont(new Font("Dialog", Font.PLAIN, 25));
+		Icon iconRicoveri = IconImage.RICOVERI.getImageIcon();
+		JButton btnRicoveri = new JButton(iconRicoveri);
+		btnRicoveri.setText("Ricoveri");
+		btnRicoveri.setFont(new Font("Tahoma", Font.PLAIN, 26));
+		btnRicoveri.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		GridBagConstraints gbc_magazzinoButton = new GridBagConstraints();
 		gbc_magazzinoButton.gridwidth = 2;
 		gbc_magazzinoButton.fill = GridBagConstraints.BOTH;

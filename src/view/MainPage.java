@@ -28,14 +28,14 @@ public class MainPage extends JPanel {
         frame.getContentPane().validate();
         frame.getContentPane().repaint();
         initialize();
+        
     }
 
     private void initialize() {
-        
-        JLabel titleLabel = new JLabel("Clinica Veterinaria");
+        JLabel titleLabel = new JLabel("<html><font color='#56728f'>Clinica Veterinaria</font></html>");
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setForeground(Color.DARK_GRAY);
-        titleLabel.setFont(new Font("Caladea", Font.PLAIN, 70));
+        titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 60));
         
         JButton registerButton = new JButton("Registrazione");
         registerButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
@@ -43,18 +43,17 @@ public class MainPage extends JPanel {
         JButton loginButton = new JButton("Accesso");
         loginButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
         
-        JLabel label = new JLabel("");
-       // label.setIcon(IconImage.RICOVERO.getImageIcon());
+        JLabel label = new JLabel(IconImage.LOGO.getImageIcon());
         
         GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
         groupLayout.setHorizontalGroup(
             groupLayout.createParallelGroup(Alignment.LEADING)
                 .addGroup(groupLayout.createSequentialGroup()
-                    .addGap(191)
-                    .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, 459, Short.MAX_VALUE)
-                    .addPreferredGap(ComponentPlacement.RELATED)
+                    .addGap(100)
                     .addComponent(label, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(200))
+                    .addGap(40)
+                    .addComponent(titleLabel, GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+                    .addPreferredGap(ComponentPlacement.RELATED))
                 .addGroup(groupLayout.createSequentialGroup()
                     .addGap(209)
                     .addComponent(loginButton, GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)

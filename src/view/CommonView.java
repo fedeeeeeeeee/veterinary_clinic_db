@@ -29,7 +29,7 @@ public abstract class CommonView extends JPanel {
         menuBar.add(Box.createHorizontalGlue());
         menuBar.add(mnMenu);
         
-        JMenuItem mntmAccount = new JMenuItem("User", IconImage.RICOVERO.getImageIcon());
+        JMenuItem mntmAccount = new JMenuItem("User");
         mnMenu.add(mntmAccount);
         
         mntmAccount.addActionListener(new ActionListener() {
@@ -41,7 +41,7 @@ public abstract class CommonView extends JPanel {
         JSeparator separator = new JSeparator();
         mnMenu.add(separator);
 
-        JMenuItem mntmLogout = new JMenuItem("Logout", IconImage.RICOVERO.getImageIcon());
+        JMenuItem mntmLogout = new JMenuItem("Logout");
         mnMenu.add(mntmLogout);
         mntmLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
