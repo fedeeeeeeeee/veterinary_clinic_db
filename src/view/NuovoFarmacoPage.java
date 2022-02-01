@@ -77,9 +77,8 @@ public class NuovoFarmacoPage extends CommonView {
 	       			.addPreferredGap(ComponentPlacement.RELATED)
 	       			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 	       			.addContainerGap()));
-	       middlePanel.setLayout(new BorderLayout(0, 0));
-	       
 	      
+	       middlePanel.setLayout(new BorderLayout(0, 0));
 	       
 	       JPanel panelForm = new JPanel();
 	       middlePanel.add(panelForm, BorderLayout.CENTER);

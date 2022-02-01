@@ -302,11 +302,11 @@ public class RiepilogoPagamenti extends CommonView {
 
 					com.itextpdf.text.Font courier9RedFont = new com.itextpdf.text.Font(
 							com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 25.0f, com.itextpdf.text.Font.BOLD,
-							BaseColor.BLACK);
+							BaseColor.WHITE);
 					// Paragraph parTitolo = new Paragraph("Fattura Clinica
 					// Veterinaria",courier9RedFont);
-					Chunk c2 = new Chunk("Fattura Clinica Veterinaria:", courier9RedFont);
-					c2.setBackground(BaseColor.CYAN);
+					Chunk c2 = new Chunk("Fattura Clinica Veterinaria RagPol :", courier9RedFont);
+					c2.setBackground(new BaseColor(86, 114, 143));
 					Paragraph parTitolo = new Paragraph(c2);
 					parTitolo.setLeading(0);
 

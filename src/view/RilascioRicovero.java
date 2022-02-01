@@ -534,9 +534,8 @@ public class RilascioRicovero extends CommonView {
 					long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 					if (diff < ricovero.getDurataInGiorni()) {
 						ricoveroController.updateDurataRicovero(ricovero);
-						frame.getContentPane().add(new GestioneRicoveri(frame, user));
 					}
-
+					frame.getContentPane().add(new GestioneRicoveri(frame, user));
 				} else {
 					JOptionPane.showMessageDialog(frame,
 							"Si è verificato un errore nell'inserimento dell'appuntamaneto.", "Attenzione!",

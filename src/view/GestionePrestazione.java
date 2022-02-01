@@ -133,8 +133,11 @@ public class GestionePrestazione extends CommonView {
 					}
 				});
 				
-				JButton buttonVai = new JButton("Vai");
-				buttonVai.addActionListener(new ActionListener() {
+				Icon iconSearch = IconImage.SEARCH.getImageIcon();
+				JButton buttonVai = new JButton(iconSearch);
+				buttonVai.setBorderPainted(false);
+				buttonVai.setContentAreaFilled(false);
+		       buttonVai.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						search(e);
