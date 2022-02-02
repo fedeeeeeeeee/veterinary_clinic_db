@@ -22,7 +22,10 @@ public enum IconImage {
 	PAGAMENTI("pagamenti.png"),
 	LOGO("vet.png"),
 	AGGIUNGI_PRESTAZIONI("aggiungi_prestazioni.png"),
-	APPUNTAMENTI("appuntamento.png"),;
+	APPUNTAMENTI("appuntamento.png"),
+	HOME("home.png"),
+	USER("user.png"),
+	LOGOUT("logout.png");
 	
 	private static String PATH = "resources/images/";
 	private String path;

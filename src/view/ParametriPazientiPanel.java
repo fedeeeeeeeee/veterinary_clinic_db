@@ -19,9 +19,15 @@ import java.awt.Font;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.block.BlockBorder;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.title.TextTitle;
 import org.jfree.data.xy.DefaultXYDataset;
 import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 import controller.AnimaleController;
 import controller.AnimaleControllerImpl;
@@ -57,14 +63,10 @@ public class ParametriPazientiPanel extends JPanel {
 		panelLeft.add(scrollPaneLeft, BorderLayout.CENTER);
 
 		XYDataset ds = createDataset();
-		JFreeChart chart = 
-				ChartFactory.createXYLineChart("Evoluzione",
-				                "peso", "altezza", ds, PlotOrientation.VERTICAL, true, true,
-				                false);
+		JFreeChart chart = createChart(ds);
 		ChartPanel cp = new ChartPanel(chart);
-		panelRight.add(cp);
-		//chartPanel.setBackground( Color.RED );
 		chart.getPlot().setBackgroundPaint(new  Color(161, 192, 200, 40)  );
+		panelRight.add(cp);		
 		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelLeft, panelRight);
 		splitPane.setResizeWeight(0.5);
 		mainPanel.add(splitPane, BorderLayout.CENTER);
@@ -98,13 +100,51 @@ public class ParametriPazientiPanel extends JPanel {
 		listParametri.forEach(parametro-> {
 			pesiAltezze.add(new Pair<>(parametro.getPeso(), parametro.getAltezza()));
 		});
-				
-	      DefaultXYDataset ds = new DefaultXYDataset();
-	      double[][] data = { pesiAltezze.stream().mapToDouble(pa-> pa.getX()).toArray(),
-	    		  pesiAltezze.stream().mapToDouble(pa-> pa.getX()).toArray()
-	    		  };
+		 var series = new XYSeries("peso-altezza");
+		 for(Pair<Float, Float> pair : pesiAltezze) {
+			 series.add(pair.getX(), pair.getY());
+		 }
+		  var dataset = new XYSeriesCollection();
+	        dataset.addSeries(series);
 	        
-	        ds.addSeries("peso-altezza", data);
-	        return ds;
+	        return dataset;
 	}
+	   private JFreeChart createChart(XYDataset dataset) {
+
+	        JFreeChart chart = ChartFactory.createXYLineChart(
+	                "Evoluzione",
+	                "Peso",
+	                "Altezza",
+	                dataset,
+	                PlotOrientation.VERTICAL,
+	                true,
+	                true,
+	                false
+	        );
+
+	        XYPlot plot = chart.getXYPlot();
+
+	        var renderer = new XYLineAndShapeRenderer();
+	        renderer.setSeriesPaint(0, new Color(86, 114, 143));
+	      //  renderer.setSeriesStroke(0, new BasicStroke(2.0f));
+
+	        plot.setRenderer(renderer);
+	        plot.setBackgroundPaint(Color.white);
+
+	        plot.setRangeGridlinesVisible(true);
+	        plot.setRangeGridlinePaint(Color.BLACK);
+
+	        plot.setDomainGridlinesVisible(true);
+	        plot.setDomainGridlinePaint(Color.BLACK);
+
+	        chart.getLegend().setFrame(BlockBorder.NONE);
+
+	        chart.setTitle(new TextTitle("Evoluzione",
+	                        new Font("Serif", java.awt.Font.BOLD, 18)
+	                )
+	        );
+
+	        return chart;
+	    }
+	
 }

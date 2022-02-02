@@ -1,8 +1,11 @@
 package view;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
+import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -29,7 +32,7 @@ public abstract class CommonView extends JPanel {
         menuBar.add(Box.createHorizontalGlue());
         menuBar.add(mnMenu);
         
-        JMenuItem mntmAccount = new JMenuItem("User");
+        JMenuItem mntmAccount = new JMenuItem("Utente", IconImage.USER.getImageIcon());
         mnMenu.add(mntmAccount);
         
         mntmAccount.addActionListener(new ActionListener() {
@@ -41,7 +44,11 @@ public abstract class CommonView extends JPanel {
         JSeparator separator = new JSeparator();
         mnMenu.add(separator);
 
-        JMenuItem mntmLogout = new JMenuItem("Logout");
+    //	Icon iconLogOut = IconImage.LOGOUT.getImageIcon();
+       // JMenuItem mntmLogout = new JMenuItem(iconLogOut);
+        JMenuItem mntmLogout = new JMenuItem("Disconnetti", IconImage.LOGOUT.getImageIcon());
+		//mntmLogout.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		//mntmLogout.setText("Logout");
         mnMenu.add(mntmLogout);
         mntmLogout.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

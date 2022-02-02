@@ -84,10 +84,10 @@ public class UserInfo  extends CommonView {
 	       		.addGroup(groupLayout.createSequentialGroup()
 	       			.addContainerGap()
 	       			.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-	       				.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE)
-	       				.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE)
-	       				.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE)
-	       				.addComponent(modifyPanel, GroupLayout.PREFERRED_SIZE, 980, GroupLayout.PREFERRED_SIZE))
+	       				.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE)
+	       				.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE)
+	       				.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE)
+	       				.addComponent(modifyPanel, GroupLayout.PREFERRED_SIZE, 985, GroupLayout.PREFERRED_SIZE))
 	       			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 	       );
 	       groupLayout.setVerticalGroup(
@@ -95,11 +95,11 @@ public class UserInfo  extends CommonView {
 	       		.addGroup(groupLayout.createSequentialGroup()
 	       			.addComponent(upperPanel, GroupLayout.PREFERRED_SIZE, 121, GroupLayout.PREFERRED_SIZE)
 	       			.addPreferredGap(ComponentPlacement.RELATED)
-	       			.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 350, GroupLayout.PREFERRED_SIZE)
+	       			.addComponent(centerPanel, GroupLayout.PREFERRED_SIZE, 330, GroupLayout.PREFERRED_SIZE)
 	       			.addPreferredGap(ComponentPlacement.RELATED)
 	       			.addComponent(modifyPanel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)
 	       			.addPreferredGap(ComponentPlacement.RELATED)
-	       			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 35, GroupLayout.PREFERRED_SIZE)
+	       			.addComponent(lowerPanel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 	       			.addContainerGap()));
 		   	JButton btnSave = new JButton("Salva");
 		   	btnSave.addActionListener(new ActionListener() {
@@ -128,7 +128,11 @@ public class UserInfo  extends CommonView {
 					frame.getContentPane().add(new UserInfo(frame, user));
 				}
 			});
-			JButton btnAddSpecializzazione = new JButton("+");
+			Icon iconAdd = IconImage.ADD.getImageIcon();
+			JButton btnAddSpecializzazione = new JButton(iconAdd);
+			btnAddSpecializzazione.setBorderPainted(false);
+			btnAddSpecializzazione.setContentAreaFilled(false);
+			
 			JButton btnModifica = new JButton("Modifica");
 			btnModifica.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -302,11 +306,10 @@ public class UserInfo  extends CommonView {
 		textFieldEmail.setColumns(10);
 		textFieldEmail.setEditable(false);
 
-		JButton backButton = new JButton("Home");
-		//  Icon icon = IconImage.H.getImageIcon();
-		//	JButton backButton = new JButton(icon);
-			backButton.setBorder(BorderFactory.createEmptyBorder());
-			backButton.setContentAreaFilled(false);
+		Icon iconSearch = IconImage.HOME.getImageIcon();
+		JButton backButton = new JButton(iconSearch);
+		backButton.setBorderPainted(false);
+		backButton.setContentAreaFilled(false);
 			backButton.setHorizontalAlignment(SwingConstants.LEFT);
 			backButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
 			backButton.addActionListener(new ActionListener() {
