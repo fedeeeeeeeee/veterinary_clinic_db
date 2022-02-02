@@ -45,7 +45,7 @@ import controller.FarmaciController;
 import controller.FarmaciControllerImpl;
 import model.Farmaco;
 import model.User;
-import utility.JPanelImage;
+//import utility.JPanelImage;
 
 import javax.swing.SwingConstants;
 import javax.swing.JMenuBar;
@@ -74,7 +74,8 @@ public class FarmaciPage extends CommonView {
 		this.user = user;
 		this.farmaciController = new FarmaciControllerImpl();
 
-		JPanel upperPanel = new JPanelImage("pillole.png");
+		//JPanel upperPanel = new JPanelImage("pillole.png");
+		JPanel upperPanel = new JPanel();
 		JPanel lowerPanel = new JPanel();
 		JPanel middlePanel = new JPanel();
 

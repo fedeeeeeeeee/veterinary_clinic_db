@@ -498,7 +498,13 @@ public class NuovoAppuntamento extends CommonView {
 		});
 		comboBoxInfermiere.setSelectedIndex(-1);
 		
-		JButton addInfermiereButton = new JButton("+");
+		Icon iconAdd = IconImage.ADD.getImageIcon();
+		JButton addInfermiereButton = new JButton(iconAdd);
+		addInfermiereButton.setBorder(BorderFactory.createEmptyBorder());
+		addInfermiereButton.setBorderPainted(false);
+		addInfermiereButton.setContentAreaFilled(false);
+		addInfermiereButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 7;

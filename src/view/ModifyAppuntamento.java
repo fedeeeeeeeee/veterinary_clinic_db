@@ -96,6 +96,7 @@ public class ModifyAppuntamento extends CommonView {
 	
 	private void initTable() {
 		this.table = new JTable();
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Animale");
@@ -466,7 +467,14 @@ public class ModifyAppuntamento extends CommonView {
 		textInfermiere.setText(listInfermieri.get(0));
 		textInfermiere.setEditable(false);
 
-		JButton addInfermiereButton = new JButton("+");
+		
+		Icon iconAdd = IconImage.ADD.getImageIcon();
+		JButton addInfermiereButton = new JButton(iconAdd);
+		addInfermiereButton.setBorder(BorderFactory.createEmptyBorder());
+		addInfermiereButton.setBorderPainted(false);
+		addInfermiereButton.setContentAreaFilled(false);
+		addInfermiereButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);
 		gbc_btnNewButton.gridx = 7;
@@ -493,11 +501,11 @@ public class ModifyAppuntamento extends CommonView {
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		JLabel titleLabel = new JLabel("Gestione Appuntamento");
+		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Gestione Appuntamento</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
+		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		titleLabel.setFont(new Font("Lucida Grande", Font.PLAIN, 40));
+		titleLabel.setVerticalAlignment(SwingConstants.CENTER);
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
 
 		/* LOWER PANEL */
