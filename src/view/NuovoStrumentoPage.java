@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerNumberModel;
 
 import model.Strumento;
 import model.StrumentoImpl;
@@ -30,6 +32,7 @@ import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.text.NumberFormatter;
 import javax.swing.JTextField;
 import net.miginfocom.swing.MigLayout;
 import utility.ValidityFieldsChecker;
@@ -176,12 +179,14 @@ public class NuovoStrumentoPage extends CommonView {
 		gbc_lblNewLabel.gridy = 7;
 		panel.add(lblNewLabel, gbc_lblNewLabel);
 
-		JSpinner spinner = new JSpinner();
+		JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, null, 1));
 		GridBagConstraints gbc_spinner = new GridBagConstraints();
 		gbc_spinner.fill = GridBagConstraints.HORIZONTAL;
 		gbc_spinner.insets = new Insets(0, 0, 5, 5);
 		gbc_spinner.gridx = 2;
 		gbc_spinner.gridy = 7;
+		JFormattedTextField txt2 = ((JSpinner.NumberEditor) spinner.getEditor()).getTextField();
+		((NumberFormatter) txt2.getFormatter()).setAllowsInvalid(false);
 		panel.add(spinner, gbc_spinner);
 
 		JLabel lblNewLabel_4 = new JLabel("Prezzo");
@@ -205,7 +210,7 @@ public class NuovoStrumentoPage extends CommonView {
 		JPanel panelSave = new JPanel();
 		middlePanel.add(panelSave, BorderLayout.SOUTH);
 
-		JButton btnSave = new JButton("Save");
+		JButton btnSave = new JButton("Salva");
 
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

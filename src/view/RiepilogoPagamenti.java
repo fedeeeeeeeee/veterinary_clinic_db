@@ -340,7 +340,7 @@ public class RiepilogoPagamenti extends CommonView {
 					com.itextpdf.text.List listPaziente = new com.itextpdf.text.List(com.itextpdf.text.List.UNORDERED);
 					listPaziente.setListSymbol("");
 					listPaziente.add(new ListItem(
-							"Prestazioni per il paziente " + proprietario.getNome() + " il cui proprietario è : "));
+							"Prestazioni per il paziente " + listPagamenti.get(selectedPagamento).getAnimale().getNome()  + " il cui proprietario è : "));
 					listPaziente.add(new ListItem(proprietario.getNome() + " " + proprietario.getCognome()));
 					listPaziente.add(new ListItem("Telefono: " + proprietario.getTelefono()));
 					listPaziente.add(new ListItem("Email: " + proprietario.getEmail()));
