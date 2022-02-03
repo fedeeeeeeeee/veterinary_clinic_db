@@ -268,7 +268,7 @@ public class AggiungiPrestazione extends CommonView {
 		textArea.setWrapStyleWord(true);
 
 		JButton btnSave = new JButton("Salva");
-		btnSave.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnSave.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
 		gbc_btnNewButton.gridwidth = 7;
 		gbc_btnNewButton.insets = new Insets(0, 0, 5, 5);

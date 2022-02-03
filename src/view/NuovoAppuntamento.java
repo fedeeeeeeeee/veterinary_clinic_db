@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -91,6 +92,7 @@ public class NuovoAppuntamento extends CommonView {
 
 	private void initTable() {
 		this.table = new JTable();
+		table.getTableHeader().setForeground(Color.decode("#56728f"));
 		table.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 13));
 		this.model = (DefaultTableModel) table.getModel();
 		model.addColumn("Animale");
@@ -147,7 +149,7 @@ public class NuovoAppuntamento extends CommonView {
 					.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(44)
 					.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
-					.addGap(84)
+					.addGap(60)
 					.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(0))
 		);
@@ -532,11 +534,13 @@ public class NuovoAppuntamento extends CommonView {
 		comboBoxInfermiere2.setVisible(false);	 
 		addInfermiereButton.setEnabled(false);
 				
+		Icon iconRemove = IconImage.REMOVE.getImageIcon();
+
 		addInfermiereButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(addInfermiereButton.getText() == "+") {
-					addInfermiereButton.setText("-");
+				if(addInfermiereButton.getIcon().equals(iconAdd)) {
+					addInfermiereButton.setIcon(iconRemove);
 					if (comboBoxInfermiere.getSelectedItem() != null) {
 						comboBoxInfermiere2.setVisible(true);
 						selectedInfermiere = comboBoxInfermiere.getSelectedItem().toString();
@@ -548,13 +552,13 @@ public class NuovoAppuntamento extends CommonView {
 										comboBoxInfermiere2.addItem(x.getNome() + " " + x.getCognome());
 									});
 						}
-					}
+					} 
 				} else {
-					addInfermiereButton.setText("+");
+					addInfermiereButton.setIcon(iconAdd);
 					comboBoxInfermiere.setEnabled(true);
 					comboBoxInfermiere2.removeAllItems();
-					comboBoxInfermiere2.setVisible(false);
-				}				
+					comboBoxInfermiere2.setVisible(false);				
+				}
 			}
 		});
 		

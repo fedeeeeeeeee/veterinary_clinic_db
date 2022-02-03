@@ -25,7 +25,8 @@ public enum IconImage {
 	APPUNTAMENTI("appuntamento.png"),
 	HOME("home.png"),
 	USER("user.png"),
-	LOGOUT("logout.png");
+	LOGOUT("logout.png"), 
+	REMOVE("meno.png"),;
 	
 	private static String PATH = "resources/images/";
 	private String path;
