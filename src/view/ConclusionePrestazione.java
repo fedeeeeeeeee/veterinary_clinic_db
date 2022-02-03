@@ -10,7 +10,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.GroupLayout;
 import javax.swing.Icon;
@@ -108,8 +107,8 @@ public class ConclusionePrestazione extends CommonView {
 					.addComponent(upperPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 					.addGap(44)
 					.addComponent(middlePanel, GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
-					.addGap(84)
-					.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addGap(20)
+					.addComponent(lowerPanel, GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
 					.addGap(0))
 		);
 		middlePanel.setLayout(new BorderLayout());
@@ -135,7 +134,16 @@ public class ConclusionePrestazione extends CommonView {
 		JLabel lblFarmaci = new JLabel("Farmaci Prescritti");
 		scrollPanelRight.add(lblFarmaci, "2, 2");
 		
-		JButton btnAddFarmaco = new JButton("+");
+	//	JButton btnAddFarmaco = new JButton("+");
+		
+
+		Icon iconAddF = IconImage.ADD.getImageIcon();
+		JButton btnAddFarmaco = new JButton(iconAddF);
+		btnAddFarmaco.setBorder(BorderFactory.createEmptyBorder());
+		btnAddFarmaco.setBorderPainted(false);
+		btnAddFarmaco.setContentAreaFilled(false);
+		btnAddFarmaco.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		
 		scrollPanelRight.add(btnAddFarmaco, "4, 2");
 		
 		JPanel panelFarmaco = new JPanel();
@@ -157,8 +165,14 @@ public class ConclusionePrestazione extends CommonView {
 		
 		JLabel lblPatologie = new JLabel("Patologie Diagnosticate");
 		scrollPanelRight.add(lblPatologie, "2, 6");
+				
+		Icon iconAddP = IconImage.ADD.getImageIcon();
+		JButton btnAddPatologia = new JButton(iconAddP);
+		btnAddPatologia.setBorder(BorderFactory.createEmptyBorder());
+		btnAddPatologia.setBorderPainted(false);
+		btnAddPatologia.setContentAreaFilled(false);
+		btnAddPatologia.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		
-		JButton btnAddPatologia = new JButton("+");
 		scrollPanelRight.add(btnAddPatologia, "4, 6");
 		
 		JPanel panelPatologia = new JPanel();
@@ -200,7 +214,8 @@ public class ConclusionePrestazione extends CommonView {
 		
 		JTable tablePatologie = new JTable();
 		tablePatologie.getTableHeader().setForeground(Color.decode("#56728f"));
-		tablePatologie.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));		DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
+		tablePatologie.getTableHeader().setFont(new Font("Tahoma", Font.BOLD, 11));		
+		DefaultTableModel modelPatologie = (DefaultTableModel) tablePatologie.getModel();
 		List<Patologia> patologie = prestazioneController.getPatologieAttiveDiAnimale(appuntamento);
 
 		modelPatologie.addColumn("Nome");
@@ -472,18 +487,16 @@ public class ConclusionePrestazione extends CommonView {
 
 		/* UPPER PANEL AND TITLE */
 		upperPanel.setLayout(new BorderLayout(0, 0));
-		
 		JLabel titleLabel =new JLabel("<html><font color='#56728f '>Conclusione Prestazione</font></html>");
 		titleLabel.setBounds(409, 58, 194, 52);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setVerticalAlignment(SwingConstants.BOTTOM);
 		titleLabel.setFont(new Font("Tahoma", Font.PLAIN, 40));
 		upperPanel.add(titleLabel, BorderLayout.CENTER);
-		upperPanel.add(titleLabel);
 
 		/* LOWER PANEL */
-		Icon icon = IconImage.BACK.getImageIcon();
-		JButton backButton = new JButton(icon);
+		Icon iconBack = IconImage.BACK.getImageIcon();
+		JButton backButton = new JButton(iconBack);
 		backButton.setBorder(BorderFactory.createEmptyBorder());
 		backButton.setContentAreaFilled(false);
 		backButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -543,9 +556,9 @@ public class ConclusionePrestazione extends CommonView {
 							nuovePatologie.add(panelPatologia.getSelectedPatologia());
 							
 							List<Patologia> list = new ArrayList<>();
-													
 							modelPatologie.setRowCount(0);
-							list.addAll(patologie);	
+														list.addAll(patologie);							
+
 							list.forEach(x -> {
 								modelPatologie.addRow(new Object[] { 
 										x.getNomePatologia(),
@@ -560,7 +573,7 @@ public class ConclusionePrestazione extends CommonView {
 		
 		JPanel savePanel = new JPanel();
 		middlePanel.add(savePanel, BorderLayout.SOUTH);
-		JButton saveButton = new JButton("SAVE");
+		JButton saveButton = new JButton("Salva");
 		savePanel.add(saveButton);
 		
 		saveButton.addActionListener(al -> {
@@ -600,14 +613,12 @@ public class ConclusionePrestazione extends CommonView {
 
 				if (JOptionPane.showConfirmDialog(null, "Vuoi scaricare il referto? ", "QUESTION_MESSAGE",
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					// TODO aggiungi doc
 					new ScaricaRefertoPrestazione(frame,appuntamento);
 				} 
 				frame.getContentPane().add(new GestionePrestazione(frame, user));
 			} else {
 				JOptionPane.showMessageDialog(null, "Controlla la validita' dei campi!", "Errore!",
 						JOptionPane.ERROR_MESSAGE);
-
 			}
 
 		});
