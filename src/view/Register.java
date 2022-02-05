@@ -467,7 +467,7 @@ public class Register extends JPanel {
 				user.setTelefono(Long.valueOf(textFieldTelefono.getText()));
 				user.setEmail(textFieldEmail.getText());
 				user.setHashPassword(String.valueOf(passwordField.getPassword()));
-
+				user.setAnniDiServizio((Integer)spinner.getValue());
 				controller.addNewUser(user);
 
 				switch (user.getRuolo()) {

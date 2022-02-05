@@ -26,7 +26,6 @@ import controller.PrestazioneControllerImpl;
 import controller.ProprietarioController;
 import controller.ProprietarioControllerImpl;
 import model.Appuntamento;
-import model.Paziente;
 import model.Person;
 import model.ScaricaRefertoPrestazione;
 import model.User;

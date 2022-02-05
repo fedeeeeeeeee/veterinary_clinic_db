@@ -67,7 +67,6 @@ public class AggiungiLotto extends CommonView {
 		frame.getContentPane().repaint();
 		this.frame = frame;
 		this.user = user;
-		//this.farmaciController = new FarmaciControllerImpl();
 		this.lottoController = new LottoControllerImpl();
 		
 		JPanel upperPanel = new JPanel();
@@ -149,7 +148,7 @@ public class AggiungiLotto extends CommonView {
       	for (Farmaco farmaco : farmaci ) {
       		comboBox.addItem(farmaco.getCodFarmaco() + " - " + farmaco.getNomeFarmaco());
       	}
-          
+      	comboBox.setSelectedIndex(-1);
           JLabel lblDescrizione = new JLabel("Descrizione");
           lblDescrizione.setFont(new Font("Tahoma", Font.BOLD, 13));
           lblDescrizione.setHorizontalAlignment(SwingConstants.CENTER);
@@ -224,7 +223,10 @@ public class AggiungiLotto extends CommonView {
           JButton btnSave = new JButton("Salva");
           btnSave.addActionListener(new ActionListener(){
         		public void actionPerformed(ActionEvent e) {
-        			if(dateChooser.getDate()!= null && !spinner.getValue().equals(0) && !spinConfezioni.getValue().equals(0) ) {
+        			if(dateChooser.getDate()!= null 
+        					&& !spinner.getValue().equals(0) 
+        					&& !spinConfezioni.getValue().equals(0)
+        					&& comboBox.getSelectedIndex()!=-1) {
         				lotto = new LottoImpl();
         				lotto.setCodLotto(0);
         				lotto.setNumeroConfezioni((int) spinConfezioni.getValue());

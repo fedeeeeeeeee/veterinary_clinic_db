@@ -410,7 +410,7 @@ public class UserInfo  extends CommonView {
 					OptionSpecializzazione panelPeriod =  new OptionSpecializzazione();
 					   int result =  JOptionPane.showConfirmDialog(null,
 							   panelPeriod,
-		                        "Specializzazione : ",
+		                        "Specializzazione ",
 		                        JOptionPane.OK_CANCEL_OPTION,
 		                        JOptionPane.PLAIN_MESSAGE);
 					    if (result == JOptionPane.OK_OPTION) {

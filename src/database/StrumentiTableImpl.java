@@ -258,18 +258,88 @@ public class StrumentiTableImpl implements StrumentiTable{
 	@Override
 	public void addUtilizzo(Utilizzo utilizzo) {
 		final Connection connection = this.dataSource.getMySQLConnection();
+		if(this.checkIfUtilizzoExists(utilizzo)) {
+			this.updateQuantitaInUtilizzo(utilizzo);
+		} else {
+
+			Optional<PreparedStatement> statement = Optional.empty();
+
+			final String query = "insert into utilizzo (codStrumento, codPrestazione, quantita) values (?,?,?)";
+
+			try {
+				statement = Optional.of(connection.prepareStatement(query));
+				statement.get().setInt(1, utilizzo.getStrumento().getCodStrumento());
+				statement.get().setInt(2, utilizzo.getPrestazione().getCodPrestazione());
+				statement.get().setInt(3, utilizzo.getQuantita());
+
+				
+				statement.get().executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+					System.out.println("Errore inserimento nuovo utilizzo");
+				}
+			}
+		}
+	
+	}
+	
+	private void updateQuantitaInUtilizzo(Utilizzo utilizzo) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		Optional<PreparedStatement> statement = Optional.empty();
+		 final String query = "update utilizzo set quantita = ? where codStrumento = ? and codPrestazione = ? ";
+		 
+			try {
+				statement = Optional.of(connection.prepareStatement(query));
+				statement.get().setInt(1, utilizzo.getQuantita());
+				statement.get().setInt(2, utilizzo.getStrumento().getCodStrumento());
+		        statement.get().setInt(3, utilizzo.getPrestazione().getCodPrestazione());
+
+		           statement.get().executeUpdate();   
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					if (statement.isPresent()) {
+						statement.get().close();
+					}
+					if (connection != null) {
+						connection.close();
+					}
+				} catch (SQLException e) {
+				}
+			}
+	}
+
+	private boolean checkIfUtilizzoExists(Utilizzo utilizzo) {
+		final Connection connection = this.dataSource.getMySQLConnection();
+		boolean isPresent = false;
 		Optional<PreparedStatement> statement = Optional.empty();
 
-		final String query = " insert into utilizzo (codStrumento, codPrestazione, quantita) values (?,?,?) ";
+		final String query = "select * from utilizzo where codStrumento= ? and codPrestazione= ? ";
 
 		try {
 			statement = Optional.of(connection.prepareStatement(query));
 			statement.get().setInt(1, utilizzo.getStrumento().getCodStrumento());
-			statement.get().setInt(2, utilizzo.getPrestazione().getCodPrestazione());
-			statement.get().setInt(3, utilizzo.getQuantita());
+			statement.get().setInt(1, utilizzo.getPrestazione().getCodPrestazione());
 
-			
-			statement.get().executeUpdate();
+			final ResultSet result = statement.get().executeQuery();
+
+			if (result.next()) {
+				System.out.println("l'utente esiste");
+			} else {
+				System.out.println("l'utente non esiste");
+				isPresent = false;
+			}
+			result.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -281,9 +351,10 @@ public class StrumentiTableImpl implements StrumentiTable{
 					connection.close();
 				}
 			} catch (SQLException e) {
-				System.out.println("Errore inserimento nuovo utilizzo");
+				return false;
 			}
 		}
+		return isPresent;
 	}
 
 	@Override

@@ -59,7 +59,7 @@ public class ScaricaRefertoPrestazione {
 					com.itextpdf.text.Font.FontFamily.TIMES_ROMAN, 25.0f, com.itextpdf.text.Font.BOLD,
 					BaseColor.BLACK);
 			Chunk c2 = new Chunk("Referto -  Clinica Veterinaria RagnPol", courier9RedFont);
-			c2.setBackground(BaseColor.CYAN);
+			c2.setBackground(new BaseColor(86,114,143));
 			Paragraph parTitolo = new Paragraph(c2);
 			//parTitolo.setLeading(0);
 

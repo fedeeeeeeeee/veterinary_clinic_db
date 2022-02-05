@@ -222,14 +222,14 @@ public class GestioneUtilizzi extends CommonView {
 							"Strumento",
 							JOptionPane.OK_CANCEL_OPTION,
 							JOptionPane.PLAIN_MESSAGE);
-							if (result == JOptionPane.OK_OPTION) {
+							if (result == JOptionPane.OK_OPTION && option.getQt() != 0) {
 								Utilizzo utilizzo = new UtilizzoImpl();
 								utilizzo.setPrestazione(listPrestazioni.get(comboBox.getSelectedIndex()));
 								utilizzo.setStrumento(option.getSelectedStrumento());
 								utilizzo.setQuantita(option.getQt());
 								strumentoController.addUtilizzo(utilizzo);
 								resetAndDraw(listUtilizzi);
-							}
+							} 
 				} else {
 					JOptionPane.showMessageDialog(frame, "Seleziona una prestazione, oppure inseriscine una nuova per assegnarle gli strumenti", 
 							"Attenzione!", JOptionPane.WARNING_MESSAGE);
