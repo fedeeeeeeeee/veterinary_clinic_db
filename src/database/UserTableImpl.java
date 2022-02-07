@@ -113,10 +113,7 @@ public class UserTableImpl implements UserTable {
 	@Override
 	public boolean addNewUser(User user) {
 		final Connection connection = this.dataSource.getMySQLConnection();
-
-		// controllo se l'utente esiste
 		if (this.checkIfUserExists(user.getCF())) {
-			System.out.println("Utente già presente");
 			return false;
 		}
 
