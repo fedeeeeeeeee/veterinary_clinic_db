@@ -4,15 +4,17 @@ import java.io.*;
 import java.util.*;
 
 public class ReadTextToHashMap {
-	final static String filePath = "src/utility/animale.txt";
+	InputStream is = getClass().getClassLoader().getResourceAsStream("animale.txt");
+
 	
-	public static Map<String, List<String>> hashMapFromTextFile() {
+	public Map<String, List<String>> hashMapFromTextFile() {
 
 		Map<String, List<String>> map = new HashMap<>();
 		BufferedReader br = null;
 
 		try {
-			br = new BufferedReader(new FileReader(new File(filePath)));
+
+			br = new BufferedReader(new InputStreamReader(is));
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				String[] parts = line.split("\\r?\\n");
@@ -40,10 +42,10 @@ public class ReadTextToHashMap {
 		return map;
 	}
 	
-	public static void writeMapToFile(Map<String, List<String>> map) {
+	public void writeMapToFile(Map<String, List<String>> map) {
 		emptyFile();
 		if (map != null) {
-			try (FileWriter writer = new FileWriter(filePath, true)) {
+			try (FileWriter writer = new FileWriter(getClass().getResource("/animale.txt").getPath(), true)) {
 				for (String key : map.keySet()) {
 					List<String> value = map.get(key);
 					writer.write(key.trim());
@@ -58,7 +60,7 @@ public class ReadTextToHashMap {
 				}
 				writer.close();
 			} catch (IOException e) {
-				System.out.println("Issue: " + filePath + " in listaMap");
+				System.out.println("Issue: animale.txt in listaMap");
 			}
 		} else {
 			System.out.println("Null map passed to listaMap.");
@@ -66,9 +68,9 @@ public class ReadTextToHashMap {
 	}
 	
 	
-	private static void emptyFile() {
+	private void emptyFile() {
 		try {
-			FileWriter w = new FileWriter(filePath, false);
+			FileWriter w = new FileWriter(getClass().getResource("/animale.txt").getPath(), false);
 			w.close();
 		} catch (IOException e1) {
 			e1.printStackTrace();

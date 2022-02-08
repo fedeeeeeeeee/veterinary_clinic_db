@@ -20,7 +20,7 @@ public class Application {
                 frame.setTitle("Clinica Veterinaria");
                 frame.setBounds(100, 100, 1000, 600);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setIconImage(IconImage.RICOVERI.getImageIcon().getImage());                
+             //   frame.setIconImage(IconImage.RICOVERI.getImageIcon());                
                 Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
                 
                 int w = frame.getSize().width;

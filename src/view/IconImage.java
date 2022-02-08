@@ -1,5 +1,6 @@
 package view;
 
+import java.net.URL;
 import java.nio.file.FileSystems;
 
 import javax.swing.ImageIcon;
@@ -28,20 +29,15 @@ public enum IconImage {
 	LOGOUT("logout.png"), 
 	REMOVE("meno.png"),;
 	
-	private static String PATH = "resources/images/";
-	private String path;
+	private static String PATH = "/images/";
     private String pathImage;
-    String fileSeparator;
 
     IconImage(final String pathImage) {
         this.pathImage = pathImage;
-        String fileSeparator = FileSystems.getDefault().getSeparator();
-        path = "resources" + fileSeparator + "images"+ fileSeparator;
     }
     
     public ImageIcon getImageIcon() {
-    	return new ImageIcon(path + this.pathImage);
-    	//return new ImageIcon(this.getClass().getResource(PATH + this.pathImage));
+    	return new ImageIcon(this.getClass().getResource(PATH + this.pathImage));
         
     }
 }

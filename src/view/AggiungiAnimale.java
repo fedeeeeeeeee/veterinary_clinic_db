@@ -68,7 +68,9 @@ public class AggiungiAnimale extends CommonView {
 		this.selectedCf = selectedCf;
 		this.check = new ValidityFieldsChecker();
 		this.controller = new AnimaleControllerImpl();
-		this.map = ReadTextToHashMap.hashMapFromTextFile();
+		ReadTextToHashMap rt = new ReadTextToHashMap();
+		
+		this.map = rt.hashMapFromTextFile();
 		
 		JPanel upperPanel = new JPanel();
 		JPanel centerPanel = new JPanel();
@@ -293,7 +295,7 @@ public class AggiungiAnimale extends CommonView {
 			               "");
 				if(result!=null) {
 					map.put(result, new ArrayList<>());
-					ReadTextToHashMap.writeMapToFile(map);
+					rt.writeMapToFile(map);
 					comboBoxSpecie.addItem(result);
 				}
 			
@@ -362,7 +364,7 @@ public class AggiungiAnimale extends CommonView {
 					String value = razza.getText();
 					if(map.containsKey(key)) {
 						map.get(key).add(value);
-						ReadTextToHashMap.writeMapToFile(map);
+						rt.writeMapToFile(map);
 						if (((DefaultComboBoxModel<String>) comboBoxRazza.getModel()).getIndexOf(value) == -1) {
 							comboBoxRazza.addItem(value);
 						}
